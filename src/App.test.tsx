@@ -7,3 +7,7 @@ test('renders learn react link', () => {
   const linkElement = screen.getByText(/learn react/i);
   expect(linkElement).toBeInTheDocument();
 });
+
+test('Purposefuly fail test to check that CI works as expected', () => {
+  expect(1).toBe(2);
+});
