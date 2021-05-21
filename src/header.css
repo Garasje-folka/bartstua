@@ -1,0 +1,37 @@
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: midnightblue;
+  display: flex;
+}
+
+li {
+  float: left;
+}
+
+a {
+  display: block;
+  height: 100%;
+  width: 80px;
+  padding: 42px 16px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: black;
+}
+
+h1 {
+  color: white;
+  padding: 10px;
+}
+
+.active,
+.active:hover {
+  background-color: lightblue;
+  color: black;
+}
