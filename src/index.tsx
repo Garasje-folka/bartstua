@@ -4,12 +4,20 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { HashRouter, Route } from 'react-router-dom';
+import Home from './pages/home'
 
+
+const root = document.getElementById('root');
+if (root)
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-  document.getElementById("root")
+  <HashRouter>
+      <div>
+        <App />
+        <Route exact path="/" component={Home} />
+      </div>
+    </HashRouter>,
+  root
 );
 
 // If you want to start measuring performance in your app, pass a function
