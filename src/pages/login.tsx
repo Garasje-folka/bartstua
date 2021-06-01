@@ -1,8 +1,7 @@
 import { useState, FormEvent } from "react";
 import { auth } from "../fireConfig";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router";
+import { FormContainer, InputField, SubmitButton } from "../components/form";
 
 // TODO: Getting a bad request error when trying to log in with a valid email, but wrong password.
 
@@ -29,6 +28,9 @@ const Login = () => {
       });
   };
 
+  const handleEmailChange = (event: any) => setEmail(event.target.value);
+  const handlePasswordChange = (event: any) => setPassword(event.target.value);
+
   // TODO: Duplicate code, same as in register.tsx. How can it be removed?
   const tempNotification = (message: string, duration: number) => {
     setNotification(message);
@@ -40,27 +42,23 @@ const Login = () => {
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group>
-          <Form.Label>E-post</Form.Label>
-          <Form.Control
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          ></Form.Control>
-        </Form.Group>
+      <FormContainer onSubmit={handleSubmit}>
+        <InputField
+          type="email"
+          value={email}
+          label="E-post"
+          onChange={handleEmailChange}
+        />
 
-        <Form.Group>
-          <Form.Label>Passord</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          ></Form.Control>
-        </Form.Group>
+        <InputField
+          type="password"
+          value={password}
+          label="Passord"
+          onChange={handlePasswordChange}
+        />
 
-        <Button type="submit"> Logg inn </Button>
-      </Form>
+        <SubmitButton label="Logg inn" />
+      </FormContainer>
 
       <h4> {notification} </h4>
     </>

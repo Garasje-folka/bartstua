@@ -1,8 +1,7 @@
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import { FormEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { auth } from "../fireConfig";
+import { FormContainer, InputField, SubmitButton } from "../components/form";
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 // TODO: Need stronger password criteria. Any password with at least 6 chars pass.
@@ -65,36 +64,27 @@ const Register = () => {
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group>
-          <Form.Label>E-post</Form.Label>
-          <Form.Control
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          ></Form.Control>
-        </Form.Group>
-
-        <Form.Group>
-          <Form.Label>Passord</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          ></Form.Control>
-        </Form.Group>
-
-        <Form.Group>
-          <Form.Label>Bekreft passord</Form.Label>
-          <Form.Control
-            type="password"
-            value={passwordConf}
-            onChange={(event) => setPasswordConf(event.target.value)}
-          ></Form.Control>
-        </Form.Group>
-
-        <Button type="submit"> Registrer deg </Button>
-      </Form>
+      <FormContainer onSubmit={handleSubmit}>
+        <InputField
+          label="E-post"
+          type="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
+        <InputField
+          label="Passord"
+          type="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
+        <InputField
+          label="Bekreft passord"
+          type="password"
+          value={passwordConf}
+          onChange={(event) => setPasswordConf(event.target.value)}
+        />
+        <SubmitButton label="Registrer deg" />
+      </FormContainer>
 
       <h4> {notification} </h4>
     </>
