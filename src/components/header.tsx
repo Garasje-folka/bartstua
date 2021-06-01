@@ -1,20 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { useHistory } from "react-router";
-import { auth } from "../fireConfig";
-import firebase from "firebase";
+import firebase, { auth } from "../fireConfig";
+import { Context } from "../store";
 
 // TODO: Should probably not check for user in this component, maybe in some higher order component and pass downwards?
 
 const Header = () => {
   const history = useHistory();
-  const [user, setUser] = useState<firebase.User | null>(null);
-
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      setUser(user);
-    });
-  });
+  const { currentUser, setCurrentUser } = useContext(Context);
 
   const handleLogout = () => {
     auth.signOut();
@@ -29,7 +23,7 @@ const Header = () => {
         <Nav.Link href="/about"> Om Oss </Nav.Link>
       </Nav>
 
-      {user && user.emailVerified ? (
+      {currentUser && currentUser.emailVerified ? (
         <Button onClick={handleLogout}>Logg ut</Button>
       ) : (
         <>
