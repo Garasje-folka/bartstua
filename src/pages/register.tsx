@@ -4,9 +4,10 @@ import { FormEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { auth } from "../fireConfig";
 
-// TODO: It is currently possible to create users with non existent emails, add email confirmation?
 // TODO: Getting a Bad Request console error when creating user, look into it.
 // TODO: Need stronger password criteria. Any password with at least 6 chars pass.
+// TODO: Can create account without verifying email. How should verification be enforced?
+// TODO: No user feedback when creating an account.
 
 const Register = () => {
   const [email, setEmail] = useState<string>("");
@@ -32,7 +33,16 @@ const Register = () => {
 
     await auth
       .createUserWithEmailAndPassword(email, password)
-      .then(() => {
+      .then((userCredential) => {
+        userCredential?.user
+          ?.sendEmailVerification()
+          .then(() => {
+            console.log("Sent email verification");
+          })
+          .catch(() => {
+            console.log("Could not send email verification");
+          });
+
         history.push("/");
       })
       .catch((error) => {

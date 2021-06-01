@@ -29,7 +29,7 @@ const Header = () => {
         <Nav.Link href="/about"> Om Oss </Nav.Link>
       </Nav>
 
-      {user ? (
+      {user && user.emailVerified ? (
         <Button onClick={handleLogout}>Logg ut</Button>
       ) : (
         <>
