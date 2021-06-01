@@ -4,7 +4,6 @@ import { auth } from "../fireConfig";
 import { FormContainer, InputField, SubmitButton } from "../components/form";
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
-// TODO: Need stronger password criteria. Any password with at least 6 chars pass.
 // TODO: Can create account without verifying email. How should verification be enforced?
 // TODO: No user feedback when creating an account.
 
@@ -17,14 +16,34 @@ const Register = () => {
 
   const history = useHistory();
 
+  const validPassword = (password: string) => {
+    // Regex magic...
+    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    return re.test(password);
+  };
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    if (password !== passwordConf) {
+    let invalid = false;
+
+    if (!validPassword(password)) {
+      invalid = true;
+
+      tempNotification(
+        "Passordet er for svakt.\nDet må ha minst 8 tegn, minst en liten bokstav, minst en stor bokstav og minst et nummer.",
+        8000
+      );
+    } else if (password !== passwordConf) {
+      invalid = true;
+
       tempNotification(
         "Passordet stemmer ikke med bekreftelses passordet",
         3000
       );
+    }
+
+    if (invalid) {
       setPassword("");
       setPasswordConf("");
       return;
