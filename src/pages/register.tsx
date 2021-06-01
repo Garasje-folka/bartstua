@@ -6,6 +6,7 @@ import { auth } from "../fireConfig";
 
 // TODO: It is currently possible to create users with non existent emails, add email confirmation?
 // TODO: Getting a Bad Request console error when creating user, look into it.
+// TODO: Need stronger password criteria. Any password with at least 6 chars pass.
 
 const Register = () => {
   const [email, setEmail] = useState<string>("");
