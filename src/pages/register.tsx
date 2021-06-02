@@ -1,11 +1,8 @@
 import { useState, FormEvent } from "react";
-import { useHistory } from "react-router-dom";
 import { FormContainer, InputField, SubmitButton } from "../components/form";
 import { createUser } from "../services/userManagement";
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
-// TODO: Can create account without verifying email. How should verification be enforced?
-// TODO: No user feedback when creating an account.
 
 const Register = () => {
   const [email, setEmail] = useState<string>("");
@@ -13,8 +10,6 @@ const Register = () => {
   const [passwordConf, setPasswordConf] = useState<string>("");
 
   const [notification, setNotification] = useState<string>("");
-
-  const history = useHistory();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -32,23 +27,6 @@ const Register = () => {
 
     await createUser
       .createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        /*
-        userCredential?.user
-          ?.sendEmailVerification()
-          .then(() => {
-            console.log("Sent email verification");
-          })
-          .catch(() => {
-            console.log("Could not send email verification");
-          });
-          */
-
-        console.log(user);
-
-        //history.replace({ pathname: "/verify", state: { user: "lol" } });
-        //history.push("/verify");
-      })
       .catch((errorCode) => {
         const {
           ERROR_EMAIL_ALREADY_USED,

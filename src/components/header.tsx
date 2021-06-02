@@ -30,7 +30,6 @@ const Header = () => {
           <Button onClick={() => history.push("/login")}>Logg inn</Button>
         </>
       )}
-      <h1>{currentUser?.email}</h1>
     </Navbar>
   );
 };

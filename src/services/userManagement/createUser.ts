@@ -1,5 +1,4 @@
 import { auth } from "../../fireConfig";
-import userConverter from "../firebaseHelpers/userConverter";
 
 // TODO: Add stronger password validation
 
@@ -18,8 +17,7 @@ const createUserWithEmailAndPassword = async (
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        if (userCredential && userCredential.user)
-          resolve(userConverter(userCredential.user));
+        if (userCredential && userCredential.user) resolve(userCredential.user);
         else resolve(null);
       })
       .catch((error) => {
