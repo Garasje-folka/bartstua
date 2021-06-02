@@ -1,7 +1,7 @@
-import { FormEvent, useState } from "react";
+import { useState, FormEvent } from "react";
 import { useHistory } from "react-router-dom";
-import { auth } from "../fireConfig";
 import { FormContainer, InputField, SubmitButton } from "../components/form";
+import { createUser } from "../services/userManagement";
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 // TODO: Can create account without verifying email. How should verification be enforced?
@@ -16,42 +16,24 @@ const Register = () => {
 
   const history = useHistory();
 
-  const validPassword = (password: string) => {
-    // Regex magic...
-    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    return re.test(password);
-  };
-
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    let invalid = false;
-
-    if (!validPassword(password)) {
-      invalid = true;
-
-      tempNotification(
-        "Passordet er for svakt.\nDet må ha minst 8 tegn, minst en liten bokstav, minst en stor bokstav og minst et nummer.",
-        8000
-      );
-    } else if (password !== passwordConf) {
-      invalid = true;
-
+    if (password !== passwordConf) {
       tempNotification(
         "Passordet stemmer ikke med bekreftelses passordet",
         3000
       );
-    }
 
-    if (invalid) {
       setPassword("");
       setPasswordConf("");
       return;
     }
 
-    await auth
+    await createUser
       .createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
+      .then((user) => {
+        /*
         userCredential?.user
           ?.sendEmailVerification()
           .then(() => {
@@ -60,16 +42,34 @@ const Register = () => {
           .catch(() => {
             console.log("Could not send email verification");
           });
+          */
 
-        history.push("/");
+        console.log(user);
+
+        //history.replace({ pathname: "/verify", state: { user: "lol" } });
+        //history.push("/verify");
       })
-      .catch((error) => {
-        if (error.code === "auth/email-already-in-use")
-          tempNotification("E-posten er allerede i bruk", 3000);
-        else if (error.code === "auth/invalid-email")
-          tempNotification("E-posten er ikke gydlig", 3000);
-        else if (error.code === "auth/weak-password")
-          tempNotification("Passordet er for svakt", 3000);
+      .catch((errorCode) => {
+        const {
+          ERROR_EMAIL_ALREADY_USED,
+          ERROR_EMAIL_NOT_VALID,
+          ERROR_UNDEFINED,
+          ERROR_WEAK_PASSWORD,
+        } = createUser.createUserErrors;
+        switch (errorCode) {
+          case ERROR_EMAIL_ALREADY_USED:
+            tempNotification("E-posten er allerede i bruk", 3000);
+            break;
+          case ERROR_EMAIL_NOT_VALID:
+            tempNotification("E-posten er ikke gydlig", 3000);
+            break;
+          case ERROR_WEAK_PASSWORD:
+            tempNotification("Passordet er for svakt", 3000);
+            break;
+          case ERROR_UNDEFINED:
+            tempNotification("Noe gikk galt...", 3000);
+            break;
+        }
       });
   };
 

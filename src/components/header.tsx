@@ -1,14 +1,11 @@
-import { useContext, useEffect, useState } from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { useHistory } from "react-router";
-import firebase, { auth } from "../fireConfig";
-import { Context } from "../store";
-
-// TODO: Should probably not check for user in this component, maybe in some higher order component and pass downwards?
+import { auth } from "../fireConfig";
+import useGlobalState from "../hooks/useGlobalState";
 
 const Header = () => {
   const history = useHistory();
-  const { currentUser, setCurrentUser } = useContext(Context);
+  const { currentUser } = useGlobalState();
 
   const handleLogout = () => {
     auth.signOut();
@@ -33,6 +30,7 @@ const Header = () => {
           <Button onClick={() => history.push("/login")}>Logg inn</Button>
         </>
       )}
+      <h1>{currentUser?.email}</h1>
     </Navbar>
   );
 };

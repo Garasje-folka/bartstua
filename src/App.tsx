@@ -7,12 +7,13 @@ import About from "./pages/about";
 import Register from "./pages/register";
 import Login from "./pages/login";
 import Store from "./store";
+import Verify from "./pages/verify";
 
 const App = () => {
   return (
     <>
-      <Store>
-        <Router>
+      <Router>
+        <Store>
           <Header />
           <Switch>
             <Route exact path="/" component={Home} />
@@ -20,9 +21,10 @@ const App = () => {
             <Route path="/about" component={About} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
+            <Route path="/verify" component={Verify} />
           </Switch>
-        </Router>
-      </Store>
+        </Store>
+      </Router>
     </>
   );
 };

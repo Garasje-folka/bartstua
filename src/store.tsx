@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import firebase, { auth } from "./fireConfig";
+import { useHistory } from "react-router";
+import { auth } from "./fireConfig";
 import User from "./interfaces/User";
+import userConverter from "./services/firebaseHelpers/userConverter";
 
 const initalState = {
   currentUser: undefined,
@@ -22,17 +24,17 @@ interface StoreProps {
 const Store = (props: StoreProps) => {
   const { children } = props;
   const [currentUser, setCurrentUser] = useState<User | undefined | null>();
+  const history = useHistory();
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (!user) setCurrentUser(null);
-      else
-        setCurrentUser({
-          displayName: user.displayName ? user.displayName : "NO NAME",
-          email: user.email ? user.email : "NO EMAIL",
-          emailVerified: user.emailVerified,
-          uid: user.uid,
-        });
+      //else if (!user.email) auth.signOut();
+      else {
+        const finalUser = userConverter(user);
+        setCurrentUser(finalUser);
+      }
+      if (user && !user.emailVerified) history.push("/verify");
     });
   }, []);
 
