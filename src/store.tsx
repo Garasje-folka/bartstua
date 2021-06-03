@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { auth } from "./fireConfig";
-import User from "./interfaces/User";
+import { User } from "./services/userManagement/interfaces";
+import { userManagement } from "./services";
 
 const initalState = {
   currentUser: undefined,
@@ -26,15 +26,17 @@ const Store = (props: StoreProps) => {
   const history = useHistory();
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (!user) setCurrentUser(null);
-      else {
-        setCurrentUser(user);
+    userManagement.onCurrentUserChanged((user) => {
+      if (!user) {
+        setCurrentUser(null);
+        return;
       }
 
-      if (user && !user.emailVerified) history.push("/verify");
+      setCurrentUser(user);
+
+      if (!user.emailVerified) history.push("/verify");
     });
-  });
+  }, []);
 
   return (
     <Context.Provider value={{ currentUser, setCurrentUser }}>

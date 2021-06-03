@@ -1,6 +1,6 @@
 import { useState, FormEvent } from "react";
 import { FormContainer, InputField, SubmitButton } from "../components/form";
-import { createUser } from "../services/userManagement";
+import { userManagement } from "../services";
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 
@@ -25,16 +25,17 @@ const Register = () => {
       return;
     }
 
-    await createUser
+    await userManagement
       .createUserWithEmailAndPassword(email, password)
-      .catch((errorCode) => {
+      .catch((error) => {
         const {
           ERROR_EMAIL_ALREADY_USED,
           ERROR_EMAIL_NOT_VALID,
-          ERROR_UNDEFINED,
+          ERROR_UNKNOWN,
           ERROR_WEAK_PASSWORD,
-        } = createUser.createUserErrors;
-        switch (errorCode) {
+        } = userManagement.createUserErrors;
+
+        switch (error) {
           case ERROR_EMAIL_ALREADY_USED:
             tempNotification("E-posten er allerede i bruk", 3000);
             break;
@@ -44,7 +45,7 @@ const Register = () => {
           case ERROR_WEAK_PASSWORD:
             tempNotification("Passordet er for svakt", 3000);
             break;
-          case ERROR_UNDEFINED:
+          case ERROR_UNKNOWN:
             tempNotification("Noe gikk galt...", 3000);
             break;
         }

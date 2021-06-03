@@ -1,14 +1,14 @@
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { useHistory } from "react-router";
-import { auth } from "../fireConfig";
 import useGlobalState from "../hooks/useGlobalState";
+import { userManagement } from "../services";
 
 const Header = () => {
   const history = useHistory();
   const { currentUser } = useGlobalState();
 
   const handleLogout = () => {
-    auth.signOut();
+    userManagement.signOut();
   };
 
   return (
@@ -30,6 +30,9 @@ const Header = () => {
           <Button onClick={() => history.push("/login")}>Logg inn</Button>
         </>
       )}
+      <h1>
+        {currentUser?.email} + {currentUser?.emailVerified ? "ja" : "nei"}
+      </h1>
     </Navbar>
   );
 };
