@@ -12,6 +12,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
     "bootstrap": "^5.0.1",
+    "daypilot-pro-react": "https://npm.daypilot.org/daypilot-pro-react/trial/2020.4.4807.tar.gz",
     "email-validator": "^2.0.4",
     "firebase": "^8.6.1",
     "react": "^17.0.2",
