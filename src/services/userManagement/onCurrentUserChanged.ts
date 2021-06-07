@@ -4,7 +4,7 @@ import userConverter from "./helpers/userConverter";
 
 const onCurrentUserChanged = (callback: (user: User | null) => void) => {
   return auth.onAuthStateChanged((user) =>
-    user ? callback(userConverter(user)) : null
+    user ? callback(userConverter(user)) : callback(null)
   );
 };
 

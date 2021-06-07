@@ -14,9 +14,9 @@ const Header = () => {
 
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="/">Bartstua</Navbar.Brand>
+      <Navbar.Brand onClick={() => history.push("/")}>Bartstua</Navbar.Brand>
       <Nav className="mr-auto">
-        <Nav.Link onClick={() => history.push("/home")}> Hjem </Nav.Link>
+        <Nav.Link onClick={() => history.push("/")}> Hjem </Nav.Link>
         <Nav.Link onClick={() => history.push("/booking")}> Booking </Nav.Link>
         <Nav.Link onClick={() => history.push("/about")}> Om Oss </Nav.Link>
       </Nav>

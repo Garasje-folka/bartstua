@@ -26,7 +26,6 @@ const Verify = () => {
       })
       .catch((error) => {
         setNotification("Noe gikk galt");
-        console.log(error.code);
       });
 
     setRetry(true);
