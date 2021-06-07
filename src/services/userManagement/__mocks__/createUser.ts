@@ -27,7 +27,6 @@ const createUserWithEmailAndPassword = async (
     emailVerified: false,
     displayName: null,
     email: email,
-    sendEmailVerification: async () => {},
   };
 };
 

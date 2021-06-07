@@ -1,47 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router";
-import { User } from "./services/userManagement/interfaces";
+import * as React from "react";
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
+
+import { useDispatch } from "react-redux";
+import { combineReducers } from "redux";
+import * as reducers from "./ducks";
+import { authChanged } from "./ducks/currentUser";
 import { userManagement } from "./services";
 
-const initalState = {
-  currentUser: undefined,
-  setCurrentUser: () => {},
+const rootReducer = combineReducers(reducers);
+
+const store = configureStore({
+  reducer: rootReducer,
+});
+
+const AuthManager = () => {
+  const dispatch = useDispatch();
+
+  userManagement.onCurrentUserChanged((user) => {
+    dispatch(authChanged(user));
+  });
+  return <></>;
 };
 
-interface ContextType {
-  currentUser: User | undefined | null;
-  setCurrentUser: React.Dispatch<
-    React.SetStateAction<User | undefined | null> | User | undefined | null
-  >;
-}
-export const Context = React.createContext<ContextType>(initalState);
-
-interface StoreProps {
-  children: any;
-}
-
-const Store = (props: StoreProps) => {
-  const { children } = props;
-  const [currentUser, setCurrentUser] = useState<User | undefined | null>();
-  const history = useHistory();
-
-  useEffect(() => {
-    userManagement.onCurrentUserChanged((user) => {
-      if (!user) {
-        setCurrentUser(null);
-        return;
-      }
-
-      setCurrentUser(user);
-
-      if (!user.emailVerified) history.push("/verify");
-    });
-  }, []);
-
+const Store = (props: { children: any }) => {
   return (
-    <Context.Provider value={{ currentUser, setCurrentUser }}>
-      {children}
-    </Context.Provider>
+    <Provider store={store}>
+      <AuthManager />
+      {props.children}
+    </Provider>
   );
 };
 

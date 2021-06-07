@@ -6,8 +6,8 @@ import Header from "./components/header";
 import About from "./pages/about";
 import Register from "./pages/register";
 import Login from "./pages/login";
-import Store from "./store";
 import Verify from "./pages/verify";
+import Store from "./store";
 
 const App = () => {
   return (

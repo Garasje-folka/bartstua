@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import useGlobalState from "../hooks/useGlobalState";
+import { currentUserSelector } from "../ducks/currentUser";
+import { sendEmailVerification } from "../services/userManagement";
 
 const Verify = () => {
-  const { currentUser: user } = useGlobalState();
+  const user = useSelector(currentUserSelector);
   const [retry, setRetry] = useState<boolean>(false);
   const [notification, setNotification] = useState<string>("");
 
@@ -16,8 +18,7 @@ const Verify = () => {
   }, [user, history]);
 
   const sendVerification = () => {
-    user
-      ?.sendEmailVerification()
+    sendEmailVerification()
       .then(() => {
         setNotification(
           "En verifikasjons e-post har blitt sendt til " + user.email
