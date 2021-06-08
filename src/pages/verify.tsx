@@ -13,9 +13,9 @@ const Verify = () => {
   const history = useHistory();
 
   // TODO: Should set up proper routing guards instead
-  useEffect(() => {
-    if (!user) history.push("/");
-  }, [user, history]);
+  // useEffect(() => {
+  //   if (!user) history.push("/");
+  // }, [user, history]);
 
   const sendVerification = () => {
     sendEmailVerification()
