@@ -1,26 +1,34 @@
+import { useEffect } from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import useGlobalState from "../hooks/useGlobalState";
+import { currentUserSelector } from "../redux/selectors";
 import { userManagement } from "../services";
 
 const Header = () => {
   const history = useHistory();
-  const { currentUser } = useGlobalState();
+  const currentUser = useSelector(currentUserSelector);
 
   const handleLogout = () => {
     userManagement.signOut();
   };
 
+  useEffect(() => {
+    if (currentUser && !currentUser.emailVerified) {
+      history.push("/verify");
+    }
+  }, [currentUser, history]);
+
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="/">Bartstua</Navbar.Brand>
+      <Navbar.Brand onClick={() => history.push("/")}>Bartstua</Navbar.Brand>
       <Nav className="mr-auto">
-        <Nav.Link href="/"> Hjem </Nav.Link>
-        <Nav.Link href="/booking"> Booking </Nav.Link>
-        <Nav.Link href="/about"> Om Oss </Nav.Link>
+        <Nav.Link onClick={() => history.push("/")}> Hjem </Nav.Link>
+        <Nav.Link onClick={() => history.push("/booking")}> Booking </Nav.Link>
+        <Nav.Link onClick={() => history.push("/about")}> Om Oss </Nav.Link>
       </Nav>
 
-      {currentUser && currentUser.emailVerified ? (
+      {currentUser ? (
         <Button onClick={handleLogout}>Logg ut</Button>
       ) : (
         <>
@@ -36,5 +44,4 @@ const Header = () => {
     </Navbar>
   );
 };
-
 export default Header;

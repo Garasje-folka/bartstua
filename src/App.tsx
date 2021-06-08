@@ -6,14 +6,17 @@ import Header from "./components/header";
 import About from "./pages/about";
 import Register from "./pages/register";
 import Login from "./pages/login";
-import Store from "./store";
 import Verify from "./pages/verify";
+import store from "./redux/store";
+import { MainService } from "./mainService";
+import { Provider } from "react-redux";
 
 const App = () => {
   return (
     <>
-      <Router>
-        <Store>
+      <Provider store={store}>
+        <Router>
+          <MainService />
           <Header />
           <Switch>
             <Route exact path="/" component={Home} />
@@ -23,8 +26,8 @@ const App = () => {
             <Route path="/login" component={Login} />
             <Route path="/verify" component={Verify} />
           </Switch>
-        </Store>
-      </Router>
+        </Router>
+      </Provider>
     </>
   );
 };
