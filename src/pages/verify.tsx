@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { currentUserSelector } from "../ducks/currentUser";
+import { currentUserSelector } from "../redux/selectors";
 import { sendEmailVerification } from "../services/userManagement";
 
 const Verify = () => {
