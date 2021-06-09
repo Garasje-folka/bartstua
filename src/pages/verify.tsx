@@ -10,6 +10,7 @@ const Verify = () => {
   const [notification, setNotification] = useState<string>("");
 
   const sendVerification = () => {
+    if (!user) return;
     sendEmailVerification()
       .then(() => {
         setNotification(

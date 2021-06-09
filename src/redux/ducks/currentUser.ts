@@ -9,18 +9,49 @@ interface Action {
   };
 }
 
+export interface currentUserState {
+  data: {
+    currentUser: User | null;
+  };
+  status: {
+    loaded: boolean;
+  };
+}
+
 // Constants
 const file = "ducks/currentUser/";
 
 // Actions
 const AUTH_CHANGE = file + "AUTH_CHANGE";
 
+// Initial state
+const initialState = {
+  data: {
+    currentUser: null,
+  },
+  status: {
+    loaded: false,
+  },
+};
+
 // Reducer
-export default function reducer(state: User | null = null, action: Action) {
+export default function reducer(
+  state: currentUserState = initialState,
+  action: Action
+): currentUserState {
   switch (action.type) {
     case AUTH_CHANGE:
       const currentUser = action.data?.currentUser;
-      return currentUser ? { ...currentUser } : null;
+      return {
+        data: {
+          ...state?.data,
+          currentUser: currentUser ? { ...currentUser } : null,
+        },
+        status: {
+          ...state?.status,
+          loaded: true,
+        },
+      };
     default:
       return state;
   }
@@ -33,5 +64,9 @@ export const authChanged = (currentUser: User | null): Action => {
 
 // Selectors
 export const currentUserSelector = (state: State) => {
-  return state.currentUser;
+  return state.currentUser.data.currentUser;
+};
+
+export const loadedSelector = (state: State) => {
+  return state.currentUser.status.loaded;
 };

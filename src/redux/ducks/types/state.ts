@@ -1,5 +1,5 @@
-import { User } from "../../../services/userManagement/interfaces";
+import { currentUserState } from "../currentUser";
 
 export interface State {
-  currentUser: User;
+  currentUser: currentUserState;
 }

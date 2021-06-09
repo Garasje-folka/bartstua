@@ -3,7 +3,6 @@ import { onCurrentUserChanged } from "./onCurrentUserChanged";
 import { signInWithEmailAndPassword, signInErrors } from "./signIn";
 import { signOut } from "./signOut";
 import { sendEmailVerification } from "./sendEmailVerification";
-import { isLoggedIn } from "./isLoggedIn";
 import * as interfaces from "./interfaces";
 export {
   createUserWithEmailAndPassword,
@@ -13,6 +12,5 @@ export {
   signInErrors,
   signOut,
   sendEmailVerification,
-  isLoggedIn,
   interfaces,
 };
