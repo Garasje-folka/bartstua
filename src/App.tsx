@@ -23,7 +23,7 @@ const App = () => {
           <GuardProvider guards={[requireLogin]}>
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/booking" component={Booking} />
+              <GuardedRoute path="/booking" component={Booking} />
               <Route path="/about" component={About} />
               <Route path="/register" component={Register} />
               <Route path="/login" component={Login} />

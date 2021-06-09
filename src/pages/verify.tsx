@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router";
 import { currentUserSelector } from "../redux/selectors";
 import { sendEmailVerification } from "../services/userManagement";
 
@@ -9,13 +8,6 @@ const Verify = () => {
   const user = useSelector(currentUserSelector);
   const [retry, setRetry] = useState<boolean>(false);
   const [notification, setNotification] = useState<string>("");
-
-  const history = useHistory();
-
-  // TODO: Should set up proper routing guards instead
-  // useEffect(() => {
-  //   if (!user) history.push("/");
-  // }, [user, history]);
 
   const sendVerification = () => {
     sendEmailVerification()
