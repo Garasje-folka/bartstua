@@ -16,6 +16,8 @@
     "daypilot-pro-react": "https://npm.daypilot.org/daypilot-pro-react/trial/2020.4.4807.tar.gz",
     "email-validator": "^2.0.4",
     "firebase": "^8.6.1",
+    "firebase-admin": "^9.9.0",
+    "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.0",
     "react-dom": "^17.0.2",
