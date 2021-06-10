@@ -1,5 +1,5 @@
 import { User } from "../../services/userManagement/interfaces";
-import { State } from "./types/state";
+import { State } from "../types/state";
 
 // Interfaces
 interface Action {
@@ -10,11 +10,10 @@ interface Action {
 }
 
 export interface currentUserState {
-  data: {
-    currentUser: User | null;
-  };
+  data: User | null;
   status: {
     loaded: boolean;
+    lastUpdated?: Date;
   };
 }
 
@@ -26,9 +25,7 @@ const AUTH_CHANGE = file + "AUTH_CHANGE";
 
 // Initial state
 const initialState = {
-  data: {
-    currentUser: null,
-  },
+  data: null,
   status: {
     loaded: false,
   },
@@ -43,13 +40,11 @@ export default function reducer(
     case AUTH_CHANGE:
       const currentUser = action.data?.currentUser;
       return {
-        data: {
-          ...state?.data,
-          currentUser: currentUser ? { ...currentUser } : null,
-        },
+        data: currentUser ? { ...currentUser } : null,
         status: {
           ...state?.status,
           loaded: true,
+          lastUpdated: new Date(),
         },
       };
     default:
@@ -64,7 +59,7 @@ export const authChanged = (currentUser: User | null): Action => {
 
 // Selectors
 export const currentUserSelector = (state: State) => {
-  return state.currentUser.data.currentUser;
+  return state.currentUser.data;
 };
 
 export const loadedSelector = (state: State) => {
