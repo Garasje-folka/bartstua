@@ -26,7 +26,7 @@ class Scheduler extends React.Component<SchedulerProps, any> {
                     }]
                 }
     }
-
+    
     handleClick () {
         this.setState({ events : [{
                         id: 1,
