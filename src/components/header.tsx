@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -12,12 +11,6 @@ const Header = () => {
   const handleLogout = () => {
     userManagement.signOut();
   };
-
-  useEffect(() => {
-    if (currentUser && !currentUser.emailVerified) {
-      history.push("/verify");
-    }
-  }, [currentUser, history]);
 
   return (
     <Navbar bg="light" expand="lg">

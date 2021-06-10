@@ -10,6 +10,8 @@ import Verify from "./pages/verify";
 import store from "./redux/store";
 import { MainService } from "./mainService";
 import { Provider } from "react-redux";
+import { GuardProvider, GuardedRoute } from "react-router-guards";
+import { requireLogin } from "./router";
 
 const App = () => {
   return (
@@ -18,14 +20,16 @@ const App = () => {
         <Router>
           <MainService />
           <Header />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/booking" component={Booking} />
-            <Route path="/about" component={About} />
-            <Route path="/register" component={Register} />
-            <Route path="/login" component={Login} />
-            <Route path="/verify" component={Verify} />
-          </Switch>
+          <GuardProvider guards={[requireLogin]}>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <GuardedRoute path="/booking" component={Booking} />
+              <Route path="/about" component={About} />
+              <Route path="/register" component={Register} />
+              <Route path="/login" component={Login} />
+              <GuardedRoute path="/verify" component={Verify} />
+            </Switch>
+          </GuardProvider>
         </Router>
       </Provider>
     </>
