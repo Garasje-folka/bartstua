@@ -1,4 +1,4 @@
-import { User } from "../../services/userManagement/interfaces";
+import { User } from "../../types";
 import { State } from "../types/state";
 
 // Interfaces

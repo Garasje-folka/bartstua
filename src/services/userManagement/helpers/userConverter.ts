@@ -1,5 +1,5 @@
 import firebase from "firebase";
-import { User } from "../interfaces/user";
+import { User } from "../../../types";
 
 const userConverter = (user: firebase.User): User => {
   return {

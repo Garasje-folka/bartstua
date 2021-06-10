@@ -21,3 +21,4 @@ export const storage = firebase.storage();
 export default firebase;
 
 auth.useEmulator("http://localhost:9099");
+firestore.useEmulator("localhost", 8080);

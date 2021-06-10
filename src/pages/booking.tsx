@@ -1,100 +1,78 @@
-import React from 'react';
-import { DayPilotScheduler } from 'daypilot-pro-react';
-import { Button } from 'react-bootstrap';
-import { addBooking } from '../services/bookingManagement';
+import React, { useState } from "react";
+import { DayPilotScheduler } from "daypilot-pro-react";
+import { Button } from "react-bootstrap";
+import { addBooking } from "../services/bookingManagement";
 
 interface SchedulerProps {}
+interface Event {
+  id: number;
+  text: string;
+  start: string;
+  end: string;
+  resource: string;
+  barColor: string;
+}
 
-class Scheduler extends React.Component<SchedulerProps, any> {
-  constructor(props: SchedulerProps) {
-    super(props);
+const Scheduler: React.FC<SchedulerProps> = ({}) => {
+  const initialEvents: Event[] = [
+    {
+      id: 2,
+      text: "Reservation 2",
+      start: "2021-01-02T00:00:00",
+      end: "2021-01-05T00:00:00",
+      resource: "B",
+      barColor: "#38761d",
+    },
+    {
+      id: 1,
+      text: "Reservation 1",
+      start: "2021-02-02T00:00:00",
+      end: "2021-02-04T00:00:00",
+      resource: "A",
+      barColor: "#3d85c6",
+    },
+  ];
 
-    this.state = {
-      events: [
-        {
-          id: 2,
-          text: 'Reservation 2',
-          start: '2021-01-02T00:00:00',
-          end: '2021-01-05T00:00:00',
-          resource: 'B',
-          barColor: '#38761d',
-        },
-        {
-          id: 1,
-          text: 'Reservation 1',
-          start: '2021-02-02T00:00:00',
-          end: '2021-02-04T00:00:00',
-          resource: 'A',
-          barColor: '#3d85c6',
-        },
-      ],
-    };
-  }
+  const [events, setEvents] = useState<Event[]>(initialEvents);
 
-  handleClick() {
-    this.setState({
-      events: [
-        {
-          id: 1,
-          text: 'Reservation 1',
-          start: '2021-02-02T00:00:00',
-          end: '2021-02-04T00:00:00',
-          resource: 'A',
-          barColor: '#3d85c6',
-        },
-      ],
-    });
+  const handleClick = () => {
+    setEvents([
+      {
+        id: 1,
+        text: "Reservation 1",
+        start: "2021-02-02T00:00:00",
+        end: "2021-02-04T00:00:00",
+        resource: "A",
+        barColor: "#3d85c6",
+      },
+    ]);
 
     addBooking(new Date());
-  }
+  };
 
-  render() {
-    return (
-      <>
-        <DayPilotScheduler
-          startDate={'2021-01-01'}
-          days={365}
-          scale={'Day'}
-          timeHeaders={[{ groupBy: 'Month' }, { groupBy: 'Day', format: 'd' }]}
-          resources={[
-            { name: 'Badestue 1', id: 'A' },
-            { name: 'Badestue 2', id: 'B' },
-          ]}
-          events={this.state.events}
-          //events={ { this.state.events } }
-          /*{
-                        id: 1,
-                        text: "Reservation 1",
-                        start: "2021-02-02T00:00:00",
-                        end: "2021-02-04T00:00:00",
-                        resource: "A",
-                        barColor: "#3d85c6"
-                    },
-                    {
-                        id: 2,
-                        text: "Reservation 2",
-                        start: "2021-01-02T00:00:00",
-                        end: "2021-01-05T00:00:00",
-                        resource: "B",
-                        barColor: "#38761d"
-                    }
-                */
-        />
-        <br></br>
-        <Button
-          onClick={() => {
-            this.handleClick();
-          }}
-        >
-          Endre reservasjon
-        </Button>
+  return (
+    <>
+      <DayPilotScheduler
+        startDate={"2021-01-01"}
+        days={365}
+        scale={"Day"}
+        timeHeaders={[{ groupBy: "Month" }, { groupBy: "Day", format: "d" }]}
+        resources={[
+          { name: "Badestue 1", id: "A" },
+          { name: "Badestue 2", id: "B" },
+        ]}
+        events={events}
+      />
+      <br></br>
+      <Button onClick={handleClick}>Endre reservasjon</Button>
+      {events.map((event) => (
         <p>
-          Din reservasjon er fra {this.state.events[0].start} til {this.state.events[0].end}
+          Din reservasjon er fra {event.start} til {event.end}
         </p>
-      </>
-    );
-  }
-}
+      ))}
+    </>
+  );
+};
 
 const Booking: React.FC = () => {
   return (

@@ -6,15 +6,19 @@ import { SESSIONS } from "./constants";
 import parseDate from "./helpers/parseDate";
 
 const addBooking = (date: Date) => {
-    // Could take user as an argument instead
-    const user = auth.currentUser;
-    if (!user) return;
+  // Could take user as an argument instead
+  const user = auth.currentUser;
+  if (!user) return;
 
-    const sessionId = parseDate(date);
+  const sessionId = parseDate(date);
 
-    const sessionRef = firestore.collection(SESSIONS).doc(sessionId);
+  const sessionRef = firestore.collection(SESSIONS).doc(sessionId);
 
-    sessionRef.get()
+  sessionRef.set({
+    participants: [user.uid],
+  });
+
+  /* sessionRef.get()
     .then((docSnapshot) => {
         if (docSnapshot.exists) {
             sessionRef.update({
@@ -29,8 +33,7 @@ const addBooking = (date: Date) => {
     })
     .catch((error) => {
         console.log(error);
-    })
-}
-
+    }) */
+};
 
 export { addBooking };
