@@ -1,10 +1,11 @@
 import * as EmailValidator from "email-validator";
 import { createUserErrors } from "../";
+import { User } from "../interfaces";
 
 const createUserWithEmailAndPassword = async (
   email: string,
   password: string
-) => {
+): Promise<User> => {
   if (!EmailValidator.validate(email)) {
     throw createUserErrors.ERROR_EMAIL_NOT_VALID;
   } else if (password.length < 6) {
@@ -16,18 +17,17 @@ const createUserWithEmailAndPassword = async (
   }
 
   await new Promise((resolve) => {
-    const fakeUser = {
-      uid: "id",
-      emailVerified: false,
-      displayName: null,
-      email: email,
-      sendEmailVerification: async () => {},
-    };
-
     setTimeout(() => {
-      resolve(fakeUser);
+      resolve(null);
     }, 200);
   });
+
+  return {
+    uid: "id",
+    emailVerified: false,
+    displayName: null,
+    email: email,
+  };
 };
 
 export { createUserWithEmailAndPassword, createUserErrors };
