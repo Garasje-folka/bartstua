@@ -9,7 +9,11 @@ const Header = () => {
   const currentUser = useSelector(currentUserSelector);
 
   const handleLogout = () => {
-    userManagement.signOut();
+    userManagement.signOut().then(() => {
+      // Quick fix for kicking logged out user out of protected page:
+      // Reload page so that requireLogin router guard executes.
+      window.location.reload();
+    });
   };
 
   return (
