@@ -33,7 +33,11 @@ const Header = () => {
     userManagement.signOut().then(() => {
       // Quick fix for kicking logged out user out of protected page:
       // Reload page so that requireLogin router guard executes.
-      window.location.reload();
+      //window.location.reload();
+      //const path = history.location.pathname;
+      history.push(SIGNIN);
+      //history.replace("/hei");
+      //history.push(path);
     });
   };
 

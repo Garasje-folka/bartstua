@@ -11,7 +11,7 @@ const signInErrors = {
 
 const signInWithEmailAndPassword = async (email: string, password: string) => {
   try {
-    auth.signInWithEmailAndPassword(email, password);
+    await auth.signInWithEmailAndPassword(email, password);
   } catch (error) {
     switch (error.code) {
       case "auth/invalid-email":
