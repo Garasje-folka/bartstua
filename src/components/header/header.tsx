@@ -71,7 +71,7 @@ const Header = () => {
         ) : (
           <Nav className="mr-auto">
             {items.map((item) => (
-              <NavLink onClick={() => history.push(item.url)}>
+              <NavLink key={item.url} onClick={() => history.push(item.url)}>
                 {item.title}
               </NavLink>
             ))}
