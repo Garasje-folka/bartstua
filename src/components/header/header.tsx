@@ -11,6 +11,8 @@ import {
 } from "./header.styled";
 import { Button } from "../button";
 import { useMobileScreen } from "../../hooks/useMobileScreen";
+import { DropDownNavigation } from "./dropDownNavigation";
+import { NavigationItems } from "./types/navigationItems";
 
 const Header = () => {
   const history = useHistory();
@@ -21,15 +23,36 @@ const Header = () => {
     userManagement.signOut();
   };
 
+  const items: NavigationItems[] = [
+    {
+      title: "Hjem",
+      url: "/",
+    },
+    {
+      title: "Booking",
+      url: "/booking",
+    },
+    {
+      title: "Om Oss",
+      url: "/about",
+    },
+  ];
+
   return (
     <StyledNavbar bg="light" expand="lg">
       <LeftAlignedContent>
         <Navbar.Brand onClick={() => history.push("/")}>Bartstua</Navbar.Brand>
-        <Nav className="mr-auto">
-          <Nav.Link onClick={() => history.push("/")}> Hjem </Nav.Link>
-          <Nav.Link onClick={() => history.push("/booking")}>Booking</Nav.Link>
-          <Nav.Link onClick={() => history.push("/about")}> Om Oss </Nav.Link>
-        </Nav>
+        {isMobileScreen ? (
+          <DropDownNavigation items={items} />
+        ) : (
+          <Nav className="mr-auto">
+            {items.map((item) => (
+              <Nav.Link onClick={() => history.push(item.url)}>
+                {item.title}
+              </Nav.Link>
+            ))}
+          </Nav>
+        )}
       </LeftAlignedContent>
       <RightAlignedContent>
         {!isMobileScreen &&
