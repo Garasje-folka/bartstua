@@ -1,4 +1,4 @@
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { currentUserSelector } from "../../redux/selectors";
@@ -7,67 +7,87 @@ import {
   StyledNavbar,
   RightAlignedContent,
   LeftAlignedContent,
-  LoginButton,
+  SignInButton,
+  Nav,
+  NavLink,
 } from "./header.styled";
 import { Button } from "../button";
 import { useMobileScreen } from "../../hooks/useMobileScreen";
 import { DropDownNavigation } from "./dropDownNavigation";
 import { NavigationItems } from "./types/navigationItems";
+import { SignOutIcon } from "../../icons";
+import { theme } from "../../theme";
+import {
+  ABOUT,
+  BOOKING,
+  HOME,
+  SIGNIN,
+  REGISTER,
+} from "../../router/routeConstants";
 
 const Header = () => {
   const history = useHistory();
   const currentUser = useSelector(currentUserSelector);
   const isMobileScreen = useMobileScreen();
 
-  const handleLogout = () => {
+  const handleSignOut = () => {
     userManagement.signOut();
   };
 
   const items: NavigationItems[] = [
     {
       title: "Hjem",
-      url: "/",
+      url: HOME,
     },
     {
       title: "Booking",
-      url: "/booking",
+      url: BOOKING,
     },
     {
       title: "Om Oss",
-      url: "/about",
+      url: ABOUT,
     },
   ];
+
+  const signOutButton: React.ReactNode = (
+    <Button icon={SignOutIcon} onClick={handleSignOut}>
+      Sign out
+    </Button>
+  );
+
+  const signInButton: React.ReactNode = (
+    <SignInButton onClick={() => history.push(SIGNIN)}>Sign in</SignInButton>
+  );
+
+  const registerButton: React.ReactNode = (
+    <Button onClick={() => history.push(REGISTER)}>Register</Button>
+  );
 
   return (
     <StyledNavbar bg="light" expand="lg">
       <LeftAlignedContent>
-        <Navbar.Brand onClick={() => history.push("/")}>Bartstua</Navbar.Brand>
+        <Navbar.Brand onClick={() => history.push(HOME)}>Bartstua</Navbar.Brand>
         {isMobileScreen ? (
           <DropDownNavigation items={items} />
         ) : (
           <Nav className="mr-auto">
             {items.map((item) => (
-              <Nav.Link onClick={() => history.push(item.url)}>
+              <NavLink onClick={() => history.push(item.url)}>
                 {item.title}
-              </Nav.Link>
+              </NavLink>
             ))}
           </Nav>
         )}
       </LeftAlignedContent>
       <RightAlignedContent>
-        {!isMobileScreen &&
-          (currentUser ? (
-            <Button onClick={handleLogout}>Logg ut</Button>
-          ) : (
-            <>
-              <Button onClick={() => history.push("/register")}>
-                Registrer deg
-              </Button>
-              <LoginButton onClick={() => history.push("/login")}>
-                Logg inn
-              </LoginButton>
-            </>
-          ))}
+        {currentUser ? (
+          signOutButton
+        ) : (
+          <>
+            {!isMobileScreen && registerButton}
+            {signInButton}
+          </>
+        )}
       </RightAlignedContent>
       {/* <h1>
           {currentUser?.email} + {currentUser?.emailVerified ? "ja" : "nei"}

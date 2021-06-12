@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import { FormContainer, InputField, SubmitButton } from "../components/form";
 import { userManagement } from "../services";
 import { CardContainer, CardHeader } from "../components/card";
+import { HOME } from "../router/routeConstants";
 
 // TODO: Getting a bad request error when trying to log in with a valid email, but wrong password.
 
@@ -20,7 +21,7 @@ const Login = () => {
     await userManagement
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        history.push("/");
+        history.push(HOME);
       })
       .catch((error) => {
         tempNotification(error, 3000);

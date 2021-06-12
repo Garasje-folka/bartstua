@@ -1,5 +1,6 @@
 import { NavDropdown } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router";
+import { HOME } from "../../router/routeConstants";
 import { NavigationItems } from "./types/navigationItems";
 
 interface DropdownNavigationProps {
@@ -13,7 +14,7 @@ const DropDownNavigation: React.FC<DropdownNavigationProps> = (props) => {
 
   const getCurrentPage = () => {
     const currentPage = items
-      .filter((item) => item.url !== "/")
+      .filter((item) => item.url !== HOME)
       .filter((item) => location.pathname.includes(item.url))
       .pop();
     return currentPage ? currentPage.title : "Hjem";

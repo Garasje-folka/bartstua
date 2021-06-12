@@ -1,4 +1,9 @@
 export const theme = {
+  colorPalette: {
+    primary: {
+      default: "#0a58ca",
+    },
+  },
   radius: {
     ROUND: "5px",
   },
