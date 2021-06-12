@@ -1,8 +1,10 @@
+import { CardContainer, CardHeader } from "../components/card";
+
 const Booking = () => {
   return (
-    <>
-      <h1> Book </h1>
-    </>
+    <CardContainer>
+      <CardHeader title="Booking" />
+    </CardContainer>
   );
 };
 

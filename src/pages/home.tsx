@@ -1,8 +1,9 @@
+import { CardContainer, CardHeader } from "../components/card";
 const Home = () => {
   return (
-    <>
-      <h1> Hjem </h1>
-    </>
+    <CardContainer>
+      <CardHeader title="Hjem" />
+    </CardContainer>
   );
 };
 
