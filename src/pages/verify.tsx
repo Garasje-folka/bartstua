@@ -40,4 +40,4 @@ const Verify = () => {
   );
 };
 
-export default Verify;
+export { Verify };
