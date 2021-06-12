@@ -8,8 +8,8 @@ import {
   Verify,
   PasswordChange,
 } from "./pages";
+import { Header } from "./components/header";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Header from "./components/header";
 import store from "./redux/store";
 import { MainService } from "./mainService";
 import { Provider } from "react-redux";

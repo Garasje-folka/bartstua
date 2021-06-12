@@ -1,8 +1,10 @@
+import { CardContainer, CardHeader } from "../components/card";
+
 const About = () => {
   return (
-    <>
-      <h1> Om Oss </h1>
-    </>
+    <CardContainer>
+      <CardHeader title="Om oss" />
+    </CardContainer>
   );
 };
 
