@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import { useSelector } from "react-redux";
 import { currentUserSelector } from "../redux/selectors";
 import { sendEmailVerification } from "../services/userManagement";
+import { CardContainer, CardHeader, CardBody } from "../components/card";
 
 const Verify = () => {
   const user = useSelector(currentUserSelector);
@@ -26,11 +27,15 @@ const Verify = () => {
 
   return (
     <>
-      <h2> Du må verifisere e-posten din</h2>
-      <Button onClick={sendVerification}>
-        {retry ? "Prøv å sende på nytt" : "Send verifikasjons e-post"}
-      </Button>
-      <h4>{notification}</h4>
+      <CardContainer>
+        <CardHeader title="Du må verifisere e-posten din" />
+        <CardBody>
+          <Button onClick={sendVerification}>
+            {retry ? "Prøv å sende på nytt" : "Send verifikasjons e-post"}
+          </Button>
+          <h4>{notification}</h4>
+        </CardBody>
+      </CardContainer>
     </>
   );
 };

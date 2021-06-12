@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import Home from "./pages/home";
 import Booking from "./pages/booking";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Header from "./components/header";
+import { Header } from "./components/header";
 import About from "./pages/about";
 import Register from "./pages/register";
 import Login from "./pages/login";
@@ -12,6 +12,14 @@ import { MainService } from "./mainService";
 import { Provider } from "react-redux";
 import { GuardProvider, GuardedRoute } from "react-router-guards";
 import { requireLogin } from "./router";
+import {
+  ABOUT,
+  BOOKING,
+  HOME,
+  SIGNIN,
+  REGISTER,
+  VERIFY,
+} from "./router/routeConstants";
 
 const App = () => {
   return (
@@ -22,12 +30,12 @@ const App = () => {
           <Header />
           <GuardProvider guards={[requireLogin]}>
             <Switch>
-              <Route exact path="/" component={Home} />
-              <GuardedRoute path="/booking" component={Booking} />
-              <Route path="/about" component={About} />
-              <Route path="/register" component={Register} />
-              <Route path="/login" component={Login} />
-              <GuardedRoute path="/verify" component={Verify} />
+              <Route exact path={HOME} component={Home} />
+              <GuardedRoute path={BOOKING} component={Booking} />
+              <Route path={ABOUT} component={About} />
+              <Route path={REGISTER} component={Register} />
+              <Route path={SIGNIN} component={Login} />
+              <GuardedRoute path={VERIFY} component={Verify} />
             </Switch>
           </GuardProvider>
         </Router>

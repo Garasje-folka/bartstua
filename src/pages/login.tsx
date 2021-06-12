@@ -2,6 +2,8 @@ import { useState, FormEvent } from "react";
 import { useHistory } from "react-router";
 import { FormContainer, InputField, SubmitButton } from "../components/form";
 import { userManagement } from "../services";
+import { CardContainer, CardHeader, CardBody } from "../components/card";
+import { HOME } from "../router/routeConstants";
 
 // TODO: Getting a bad request error when trying to log in with a valid email, but wrong password.
 
@@ -19,7 +21,7 @@ const Login = () => {
     await userManagement
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        history.push("/");
+        history.push(HOME);
       })
       .catch((error) => {
         tempNotification(error, 3000);
@@ -42,25 +44,30 @@ const Login = () => {
 
   return (
     <>
-      <FormContainer onSubmit={handleSubmit}>
-        <InputField
-          type="email"
-          value={email}
-          label="E-post"
-          onChange={handleEmailChange}
-        />
+      <CardContainer>
+        <CardHeader title="Logg inn" />
+        <CardBody>
+          <FormContainer onSubmit={handleSubmit}>
+            <InputField
+              type="email"
+              value={email}
+              label="E-post"
+              onChange={handleEmailChange}
+            />
 
-        <InputField
-          type="password"
-          value={password}
-          label="Passord"
-          onChange={handlePasswordChange}
-        />
+            <InputField
+              type="password"
+              value={password}
+              label="Passord"
+              onChange={handlePasswordChange}
+            />
 
-        <SubmitButton label="Logg inn" />
-      </FormContainer>
+            <SubmitButton label="Logg inn" />
+          </FormContainer>
 
-      <h4> {notification} </h4>
+          <h4> {notification} </h4>
+        </CardBody>
+      </CardContainer>
     </>
   );
 };

@@ -5,6 +5,7 @@ import { authChanged } from "./redux/ducks/currentUser";
 
 import { userManagement } from "./services";
 import { currentUserSelector } from "./redux/selectors";
+import { VERIFY } from "./router/routeConstants";
 
 const MainService = () => {
   const dispatch = useDispatch();
@@ -16,11 +17,11 @@ const MainService = () => {
 
   useEffect(() => {
     if (
-      location.pathname !== "/verify" &&
+      location.pathname !== VERIFY &&
       currentUser &&
       !currentUser.emailVerified
     ) {
-      history.push("/verify");
+      history.push(VERIFY);
     }
   }, [currentUser, history, location]);
 
