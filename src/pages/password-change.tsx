@@ -97,4 +97,4 @@ const PasswordChange = () => {
   );
 };
 
-export default PasswordChange;
+export { PasswordChange };

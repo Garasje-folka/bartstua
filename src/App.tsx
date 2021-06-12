@@ -1,20 +1,13 @@
 import "bootstrap/dist/css/bootstrap.css";
-import {
-  Home,
-  Booking,
-  About,
-  Register,
-  Login,
-  Verify,
-  PasswordChange,
-} from "./pages";
-import { Header } from "./components/header";
+import { Home, Booking, About, Login, Register, Verify, PasswordChange } from "./pages";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Header } from "./components/header";
 import store from "./redux/store";
 import { MainService } from "./mainService";
 import { Provider } from "react-redux";
 import { GuardProvider, GuardedRoute } from "react-router-guards";
 import { requireLogin } from "./router";
+import * as paths from "./router/routeConstants";
 
 const App = () => {
   return (
@@ -25,12 +18,12 @@ const App = () => {
           <Header />
           <GuardProvider guards={[requireLogin]}>
             <Switch>
-              <Route exact path="/" component={Home} />
-              <GuardedRoute path="/booking" component={Booking} />
-              <Route path="/about" component={About} />
-              <Route path="/register" component={Register} />
-              <Route path="/login" component={Login} />
-              <GuardedRoute path="/verify" component={Verify} />
+              <Route exact path={paths.HOME} component={Home} />
+              <GuardedRoute path={paths.BOOKING} component={Booking} />
+              <Route path={paths.ABOUT} component={About} />
+              <Route path={paths.REGISTER} component={Register} />
+              <Route path={paths.SIGNIN} component={Login} />
+              <GuardedRoute path={paths.VERIFY} component={Verify} />
               <GuardedRoute
                 path="/password-change"
                 component={PasswordChange}

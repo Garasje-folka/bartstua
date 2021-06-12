@@ -1,7 +1,8 @@
 import { useState, FormEvent } from "react";
 import { FormContainer, InputField, SubmitButton } from "../components/form";
 import { userManagement } from "../services";
-import { CardContainer, CardHeader } from "../components/card";
+import { CardContainer, CardHeader, CardBody } from "../components/card";
+import { useTranslation } from "react-i18next";
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 
@@ -11,6 +12,7 @@ const Register = () => {
   const [passwordConf, setPasswordConf] = useState<string>("");
 
   const [notification, setNotification] = useState<string>("");
+  const { t } = useTranslation();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -64,33 +66,35 @@ const Register = () => {
   return (
     <>
       <CardContainer>
-        <CardHeader title="Registrer" />
-        <FormContainer onSubmit={handleSubmit}>
-          <InputField
-            label="E-post"
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-          <InputField
-            label="Passord"
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-          <InputField
-            label="Bekreft passord"
-            type="password"
-            value={passwordConf}
-            onChange={(event) => setPasswordConf(event.target.value)}
-          />
-          <SubmitButton label="Registrer deg" />
-        </FormContainer>
+        <CardHeader title={t("label_register")} />
+        <CardBody>
+          <FormContainer onSubmit={handleSubmit}>
+            <InputField
+              label={t("label_email")}
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+            <InputField
+              label={t("label_password")}
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            <InputField
+              label={t("label_confirm_password")}
+              type="password"
+              value={passwordConf}
+              onChange={(event) => setPasswordConf(event.target.value)}
+            />
+            <SubmitButton label={t("label_register_user")} />
+          </FormContainer>
 
-        <h4> {notification} </h4>
+          <h4> {notification} </h4>
+        </CardBody>
       </CardContainer>
     </>
   );
 };
 
-export default Register;
+export { Register };

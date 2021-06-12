@@ -1,9 +1,7 @@
-import Home from "./home";
-import Booking from "./booking";
-import About from "./about";
-import Register from "./register";
-import Login from "./login";
-import Verify from "./verify";
-import PasswordChange from "./password-change";
-
-export { Home, Booking, About, Register, Login, Verify, PasswordChange };
+export * from "./about";
+export * from "./booking";
+export * from "./home";
+export * from "./login";
+export * from "./register";
+export * from "./verify";
+export * from "./password-change";

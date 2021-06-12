@@ -2,6 +2,7 @@ import store from "../../redux/store";
 import { GuardFunction } from "react-router-guards";
 import { State } from "../../redux/types/state";
 import * as currentUser from "../../redux/ducks/currentUser";
+import { SIGNIN } from "../routeConstants";
 
 const requireLogin: GuardFunction = (to, from, next) => {
   const doChecksIfLoggedIn = (unsub: (() => void) | undefined) => {
@@ -11,7 +12,7 @@ const requireLogin: GuardFunction = (to, from, next) => {
       if (currentUser.currentUserSelector(newState)) {
         next();
       } else {
-        next.redirect("/login");
+        next.redirect(SIGNIN);
       }
       return true;
     } else {

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 const Divider = styled.hr`
-  border-top: 3px solid #bbb;
-  border-radius: 3px;
+  border-top: 2px solid #bbb;
+  border-radius: 2px;
   background-color: transparent;
-  height: 3px;
+  height: 2px;
 `;
 
 export { Divider };

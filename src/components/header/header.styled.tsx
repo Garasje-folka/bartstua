@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { theme } from "../../theme";
 import { Button } from "../button";
-import { Navbar } from "react-bootstrap";
+import { Navbar, Nav as BootstrapNav } from "react-bootstrap";
 
 export const StyledNavbar = styled(Navbar)`
   display: flex;
@@ -22,6 +22,17 @@ export const LeftAlignedContent = styled(NavbarContent)`
   flex-grow: 1;
 `;
 
-export const LoginButton = styled(Button)`
+export const SignInButton = styled(Button)`
   margin-left: ${theme.alignment.margin.REGULAR};
+`;
+
+export const Nav = styled(BootstrapNav)`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+`;
+
+export const NavLink = styled(BootstrapNav.Link)`
+  margin-left: ${theme.alignment.margin.REGULAR};
+  margin-right: ${theme.alignment.margin.REGULAR};
 `;
