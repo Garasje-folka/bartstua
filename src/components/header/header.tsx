@@ -16,7 +16,6 @@ import { useMobileScreen } from "../../hooks/useMobileScreen";
 import { DropDownNavigation } from "./dropDownNavigation";
 import { NavigationItems } from "./types/navigationItems";
 import { SignOutIcon } from "../../icons";
-import { theme } from "../../theme";
 import {
   ABOUT,
   BOOKING,

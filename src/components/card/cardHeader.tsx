@@ -9,12 +9,14 @@ interface CardHeaderProps {
 const CardHeader: React.FC<CardHeaderProps> = (props) => {
   const { title } = props;
   return (
-    <StyledHeaderWrapper>
-      <ContentContainer>
-        <Heading type={HeadingTypes.HEADING1}>{title}</Heading>
-      </ContentContainer>
+    <>
+      <StyledHeaderWrapper>
+        <ContentContainer>
+          <Heading type={HeadingTypes.HEADING1}>{title}</Heading>
+        </ContentContainer>
+      </StyledHeaderWrapper>
       <Divider />
-    </StyledHeaderWrapper>
+    </>
   );
 };
 
