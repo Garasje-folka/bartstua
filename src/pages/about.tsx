@@ -3,7 +3,7 @@ import { CardContainer, CardHeader } from "../components/card";
 const About = () => {
   return (
     <CardContainer>
-      <CardHeader title="About" />
+      <CardHeader title="Om oss" />
     </CardContainer>
   );
 };

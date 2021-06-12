@@ -28,8 +28,7 @@ const Verify = () => {
   return (
     <>
       <CardContainer>
-        <CardHeader title="Hjem" />
-        <h2> Du må verifisere e-posten din</h2>
+        <CardHeader title="Du må verifisere e-posten din" />
         <Button onClick={sendVerification}>
           {retry ? "Prøv å sende på nytt" : "Send verifikasjons e-post"}
         </Button>

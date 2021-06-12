@@ -44,7 +44,7 @@ const Login = () => {
   return (
     <>
       <CardContainer>
-        <CardHeader title="Logg in" />
+        <CardHeader title="Logg inn" />
         <FormContainer onSubmit={handleSubmit}>
           <InputField
             type="email"
