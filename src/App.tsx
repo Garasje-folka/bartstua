@@ -1,5 +1,13 @@
 import "bootstrap/dist/css/bootstrap.css";
-import { Home, Booking, About, Login, Register, Verify } from "./pages";
+import {
+  Home,
+  Booking,
+  About,
+  Login,
+  Register,
+  Verify,
+  PasswordChange,
+} from "./pages";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Header } from "./components/header";
 import store from "./redux/store";
@@ -24,6 +32,10 @@ const App = () => {
               <Route path={paths.REGISTER} component={Register} />
               <Route path={paths.SIGNIN} component={Login} />
               <GuardedRoute path={paths.VERIFY} component={Verify} />
+              <GuardedRoute
+                path={paths.PASSWORD_CHANGE}
+                component={PasswordChange}
+              />
             </Switch>
           </GuardProvider>
         </Router>

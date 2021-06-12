@@ -30,7 +30,11 @@ const Header = () => {
   const isMobileScreen = useMobileScreen();
 
   const handleSignOut = () => {
-    userManagement.signOut();
+    userManagement.signOut().then(() => {
+      // Quick fix for kicking logged out user out of protected page:
+      // Reload page so that requireLogin router guard executes.
+      history.push(SIGNIN);
+    });
   };
 
   const items: NavigationItems[] = [

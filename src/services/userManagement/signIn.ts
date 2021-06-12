@@ -6,7 +6,7 @@ const signInErrors = {
   ERROR_USER_DISABLED: USER_MANAGEMENT + "/user-disabled",
   ERROR_USER_NOT_FOUND: USER_MANAGEMENT + "/user-not-found",
   ERROR_WRONG_PASSWORD: USER_MANAGEMENT + "/wrong-password",
-  ERROR_UNKNOWN: userManagementErrors.ERROR_UNKNOWN_USER_MANAGEMENT,
+  ERROR_UNKNOWN: userManagementErrors.ERROR_UNKNOWN,
 };
 
 const signInWithEmailAndPassword = async (email: string, password: string) => {

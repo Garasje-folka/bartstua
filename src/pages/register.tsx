@@ -43,7 +43,7 @@ const Register = () => {
             tempNotification("E-posten er allerede i bruk", 3000);
             break;
           case ERROR_EMAIL_NOT_VALID:
-            tempNotification("E-posten er ikke gydlig", 3000);
+            tempNotification("E-posten er ikke gyldig", 3000);
             break;
           case ERROR_WEAK_PASSWORD:
             tempNotification("Passordet er for svakt", 3000);

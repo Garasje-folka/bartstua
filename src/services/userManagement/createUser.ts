@@ -7,7 +7,7 @@ const createUserErrors = {
   ERROR_EMAIL_NOT_VALID: USER_MANAGEMENT + "/invalid-email",
   ERROR_WEAK_PASSWORD: USER_MANAGEMENT + "/weak-password",
   ERROR_UNSUPPORTED_OPERATION: USER_MANAGEMENT + "/operation-not-allowed",
-  ERROR_UNKNOWN: userManagementErrors.ERROR_UNKNOWN_USER_MANAGEMENT,
+  ERROR_UNKNOWN: userManagementErrors.ERROR_UNKNOWN,
 };
 
 const createUserWithEmailAndPassword = async (
@@ -15,12 +15,7 @@ const createUserWithEmailAndPassword = async (
   password: string
 ) => {
   try {
-    const userCredential = await auth.createUserWithEmailAndPassword(
-      email,
-      password
-    );
-    if (userCredential && userCredential.user) return userCredential.user;
-    else return null;
+    await auth.createUserWithEmailAndPassword(email, password);
   } catch (error) {
     switch (error.code) {
       case "auth/email-already-in-use":
