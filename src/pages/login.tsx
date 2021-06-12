@@ -4,6 +4,7 @@ import { FormContainer, InputField, SubmitButton } from "../components/form";
 import { userManagement } from "../services";
 import { CardContainer, CardHeader, CardBody } from "../components/card";
 import { HOME } from "../router/routeConstants";
+import { useTranslation } from "react-i18next";
 
 // TODO: Getting a bad request error when trying to log in with a valid email, but wrong password.
 
@@ -14,6 +15,7 @@ const Login = () => {
   const [notification, setNotification] = useState<string>("");
 
   const history = useHistory();
+  const { t } = useTranslation();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -45,13 +47,13 @@ const Login = () => {
   return (
     <>
       <CardContainer>
-        <CardHeader title="Logg inn" />
+        <CardHeader title={t("label_sign_in")} />
         <CardBody>
           <FormContainer onSubmit={handleSubmit}>
             <InputField
               type="email"
               value={email}
-              label="E-post"
+              label={t("label_email")}
               onChange={handleEmailChange}
             />
 
@@ -62,7 +64,7 @@ const Login = () => {
               onChange={handlePasswordChange}
             />
 
-            <SubmitButton label="Logg inn" />
+            <SubmitButton label={t("label_sign_in")} />
           </FormContainer>
 
           <h4> {notification} </h4>
@@ -72,4 +74,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export { Login };

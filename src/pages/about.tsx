@@ -1,11 +1,14 @@
 import { CardContainer, CardHeader } from "../components/card";
+import { useTranslation } from "react-i18next";
 
 const About = () => {
+  const { t } = useTranslation();
+
   return (
     <CardContainer>
-      <CardHeader title="Om oss" />
+      <CardHeader title={t("label_about_us")} />
     </CardContainer>
   );
 };
 
-export default About;
+export { About };
