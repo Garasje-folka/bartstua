@@ -5,7 +5,6 @@ import { userManagement } from "../services";
 import { CardContainer, CardHeader, CardBody } from "../components/card";
 import { HOME } from "../router/routeConstants";
 import { useTranslation } from "react-i18next";
-import { signInErrorCodes } from "../services/userManagement";
 
 // TODO: Getting a bad request error when trying to log in with a valid email, but wrong password.
 
