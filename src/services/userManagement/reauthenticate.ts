@@ -11,7 +11,8 @@ const reauthenticateErrorCodes = {
 const reauthenticate = async (password: string) => {
   const user = firebase.auth().currentUser;
 
-  if (!user || !user.email) throw reauthenticateErrorCodes.ERROR_NO_USER;
+  if (!user || !user.email)
+    throw createError(reauthenticateErrorCodes.ERROR_NO_USER);
   const cred = firebase.auth.EmailAuthProvider.credential(user.email, password);
 
   try {
