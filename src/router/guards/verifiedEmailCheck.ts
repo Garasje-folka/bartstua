@@ -4,13 +4,13 @@ import { GuardFunction } from "../types/guardFunction";
 
 const verifiedEmailCheck: (
   currentUser: User | null,
-  meta?: boolean
-) => GuardFunction = (currentUser, meta) => () => ({
+  expectedValue?: boolean
+) => GuardFunction = (currentUser, expectedValue) => () => ({
   accepted:
     !!currentUser &&
-    ((meta && currentUser.emailVerified) ||
-      (!meta && !currentUser.emailVerified)),
-  redirectPath: currentUser ? (meta ? VERIFY : HOME) : SIGNIN,
+    ((expectedValue && currentUser.emailVerified) ||
+      (!expectedValue && !currentUser.emailVerified)),
+  redirectPath: currentUser ? (expectedValue ? VERIFY : HOME) : SIGNIN,
 });
 
 export { verifiedEmailCheck };

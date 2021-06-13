@@ -8,7 +8,7 @@ interface Routing {
   path: string;
   component: React.ComponentType<any>;
   guardType: GuardType;
-  meta?: boolean;
+  expectedValue?: boolean;
 }
 
 export type { Routing };

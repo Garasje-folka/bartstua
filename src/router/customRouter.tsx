@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { currentUserSelector } from "../redux/selectors";
 import { loadedSelector } from "../redux/ducks/currentUser";
 import { routings } from "./routings";
-import { loginCheck, verifiedEmailCheck } from "./guards";
+import { signInCheck, verifiedEmailCheck } from "./guards";
 import { GuardFunction } from "./types/guardFunction";
 import { GuardedRoute } from "./guardedRoute";
 import { GuardType } from "./types/routing";
@@ -24,10 +24,16 @@ const CustomRouter: React.FC = () => {
 
               switch (routing.guardType) {
                 case GuardType.SIGN_IN_CHECK:
-                  guardFunction = loginCheck(currentUser, routing.meta);
+                  guardFunction = signInCheck(
+                    currentUser,
+                    routing.expectedValue
+                  );
                   break;
                 case GuardType.VERIFICATION_CHECK:
-                  guardFunction = verifiedEmailCheck(currentUser, routing.meta);
+                  guardFunction = verifiedEmailCheck(
+                    currentUser,
+                    routing.expectedValue
+                  );
                   break;
               }
 
