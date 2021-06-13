@@ -1,20 +1,18 @@
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { Header } from "../components/header";
-import { requireLogin } from "./";
 import { useSelector } from "react-redux";
 import { currentUserSelector } from "../redux/selectors";
 import { loadedSelector } from "../redux/ducks/currentUser";
 import { routings } from "./routings";
-import { requireVerifiedEmail } from "./guards";
+import { loginCheck, verifiedEmailCheck } from "./guards";
 import { GuardFunction } from "./types/guardFunction";
 import { GuardedRoute } from "./guardedRoute";
+import { GuardType } from "./types/routing";
 
 const CustomRouter: React.FC = () => {
   const currentUser = useSelector(currentUserSelector);
   const userIsLoaded = useSelector(loadedSelector);
 
-  const signedInChecker = requireLogin(currentUser);
-  const verificationChecker = requireVerifiedEmail(currentUser);
   return (
     <>
       {userIsLoaded && (
@@ -23,9 +21,16 @@ const CustomRouter: React.FC = () => {
           <Switch>
             {routings.map((routing) => {
               let guardFunction: GuardFunction | null = null;
-              if (routing.signInRequired) guardFunction = signedInChecker;
-              if (routing.verificationRequired)
-                guardFunction = verificationChecker;
+
+              switch (routing.guardType) {
+                case GuardType.SIGN_IN_CHECK:
+                  guardFunction = loginCheck(currentUser, routing.meta);
+                  break;
+                case GuardType.VERIFICATION_CHECK:
+                  guardFunction = verifiedEmailCheck(currentUser, routing.meta);
+                  break;
+              }
+
               return (
                 <GuardedRoute
                   exact

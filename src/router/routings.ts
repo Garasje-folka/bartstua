@@ -1,48 +1,46 @@
 import * as pages from "../pages";
 import * as paths from "./routeConstants";
-import { Routing } from "./types/routing";
+import { Routing, GuardType } from "./types/routing";
 
 export const routings: Routing[] = [
   {
     component: pages.Home,
     path: paths.HOME,
-    signInRequired: false,
-    verificationRequired: false,
+    guardType: GuardType.NONE,
   },
   {
     component: pages.Booking,
     path: paths.BOOKING,
-    signInRequired: true,
-    verificationRequired: true,
+    guardType: GuardType.VERIFICATION_CHECK,
+    meta: true,
   },
   {
     component: pages.About,
     path: paths.ABOUT,
-    signInRequired: false,
-    verificationRequired: false,
+    guardType: GuardType.NONE,
   },
   {
     component: pages.Register,
     path: paths.REGISTER,
-    signInRequired: false,
-    verificationRequired: false,
+    guardType: GuardType.SIGN_IN_CHECK,
+    meta: false,
   },
   {
     component: pages.Login,
     path: paths.SIGNIN,
-    signInRequired: false,
-    verificationRequired: false,
+    guardType: GuardType.SIGN_IN_CHECK,
+    meta: false,
   },
   {
     component: pages.Verify,
     path: paths.VERIFY,
-    signInRequired: true,
-    verificationRequired: false,
+    guardType: GuardType.VERIFICATION_CHECK,
+    meta: false,
   },
   {
     component: pages.PasswordChange,
     path: paths.PASSWORD_CHANGE,
-    signInRequired: true,
-    verificationRequired: true,
+    guardType: GuardType.VERIFICATION_CHECK,
+    meta: true,
   },
 ];
