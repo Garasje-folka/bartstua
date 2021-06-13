@@ -5,6 +5,7 @@ import { userManagement } from "../services";
 import { CardContainer, CardHeader, CardBody } from "../components/card";
 import { HOME } from "../router/routeConstants";
 import { useTranslation } from "react-i18next";
+import { signInErrorCodes } from "../services/userManagement";
 
 // TODO: Getting a bad request error when trying to log in with a valid email, but wrong password.
 
@@ -26,9 +27,31 @@ const SignIn = () => {
         history.push(HOME);
       })
       .catch((error) => {
-        tempNotification(error.code, 3000);
-        setEmail("");
-        setPassword("");
+        const { signInErrorCodes } = userManagement;
+
+        switch (error.code) {
+          case signInErrorCodes.ERROR_INVALID_EMAIL:
+            tempNotification("Ugyldig e-post", 3000);
+            setEmail("");
+            break;
+
+          case signInErrorCodes.ERROR_USER_NOT_FOUND:
+            tempNotification("Det finnes ingen brukere med den e-posten", 3000);
+            setEmail("");
+            setPassword("");
+            break;
+
+          case signInErrorCodes.ERROR_WRONG_PASSWORD:
+            tempNotification("Feil passord", 3000);
+            setPassword("");
+            break;
+
+          default:
+            tempNotification("Noe gikk galt", 3000);
+            setEmail("");
+            setPassword("");
+            break;
+        }
       });
   };
 
