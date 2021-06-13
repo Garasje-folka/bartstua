@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 // TODO: Getting a bad request error when trying to log in with a valid email, but wrong password.
 
-const Login = () => {
+const SignIn = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -74,4 +74,4 @@ const Login = () => {
   );
 };
 
-export { Login };
+export { SignIn };

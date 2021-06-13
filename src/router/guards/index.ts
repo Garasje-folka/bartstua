@@ -1,2 +1,2 @@
-export * from "./requireLogin";
-export * from "./requireVerifiedEmail";
+export * from "./signInCheck";
+export * from "./verifiedEmailCheck";
