@@ -1,9 +1,10 @@
 import { auth } from "../fireConfig";
-import { reauthenticate, reauthenticateErrors } from "./";
+import { reauthenticate, reauthenticateErrorCodes } from "./";
 import { USER_MANAGEMENT, userManagementErrors } from "./constants";
+import { createError } from "./helpers/createError";
 
-const changePasswordErrors = {
-  ...reauthenticateErrors,
+const changePasswordErrorCodes = {
+  ...reauthenticateErrorCodes,
   ERROR_WEAK_PASSWORD: USER_MANAGEMENT + "/weak-password",
   ERROR_UNKNOWN: userManagementErrors.ERROR_UNKNOWN,
 };
@@ -11,18 +12,18 @@ const changePasswordErrors = {
 const changePassword = async (currentPassword: string, newPassword: string) => {
   await reauthenticate(currentPassword);
   const user = auth.currentUser;
-  if (!user) throw changePasswordErrors.ERROR_NO_USER;
+  if (!user) throw createError(changePasswordErrorCodes.ERROR_NO_USER);
 
   try {
     await user.updatePassword(newPassword);
   } catch (error) {
     switch (error.code) {
       case "auth/weak-password":
-        throw changePasswordErrors.ERROR_WEAK_PASSWORD;
+        throw createError(changePasswordErrorCodes.ERROR_WEAK_PASSWORD);
       default:
-        throw changePasswordErrors.ERROR_UNKNOWN;
+        throw createError(changePasswordErrorCodes.ERROR_UNKNOWN);
     }
   }
 };
 
-export { changePassword, changePasswordErrors };
+export { changePassword, changePasswordErrorCodes };

@@ -26,7 +26,7 @@ const SignIn = () => {
         history.push(HOME);
       })
       .catch((error) => {
-        tempNotification(error, 3000);
+        tempNotification(error.code, 3000);
         setEmail("");
         setPassword("");
       });

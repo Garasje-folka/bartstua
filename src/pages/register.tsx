@@ -36,9 +36,9 @@ const Register = () => {
           ERROR_EMAIL_NOT_VALID,
           ERROR_UNKNOWN,
           ERROR_WEAK_PASSWORD,
-        } = userManagement.createUserErrors;
+        } = userManagement.createUserErrorCodes;
 
-        switch (error) {
+        switch (error.code) {
           case ERROR_EMAIL_ALREADY_USED:
             tempNotification("E-posten er allerede i bruk", 3000);
             break;
