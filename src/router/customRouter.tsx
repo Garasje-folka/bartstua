@@ -26,13 +26,13 @@ const CustomRouter: React.FC = () => {
                 case GuardType.SIGN_IN_CHECK:
                   guardFunction = signInCheck(
                     currentUser,
-                    routing.expectedValue
+                    routing.expectedGuardValue
                   );
                   break;
                 case GuardType.VERIFICATION_CHECK:
                   guardFunction = verifiedEmailCheck(
                     currentUser,
-                    routing.expectedValue
+                    routing.expectedGuardValue
                   );
                   break;
               }

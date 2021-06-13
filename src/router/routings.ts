@@ -12,7 +12,7 @@ export const routings: Routing[] = [
     component: pages.Booking,
     path: paths.BOOKING,
     guardType: GuardType.VERIFICATION_CHECK,
-    expectedValue: true,
+    expectedGuardValue: true,
   },
   {
     component: pages.About,
@@ -23,24 +23,24 @@ export const routings: Routing[] = [
     component: pages.Register,
     path: paths.REGISTER,
     guardType: GuardType.SIGN_IN_CHECK,
-    expectedValue: false,
+    expectedGuardValue: false,
   },
   {
     component: pages.SignIn,
     path: paths.SIGNIN,
     guardType: GuardType.SIGN_IN_CHECK,
-    expectedValue: false,
+    expectedGuardValue: false,
   },
   {
     component: pages.Verify,
     path: paths.VERIFY,
     guardType: GuardType.VERIFICATION_CHECK,
-    expectedValue: false,
+    expectedGuardValue: false,
   },
   {
     component: pages.PasswordChange,
     path: paths.PASSWORD_CHANGE,
     guardType: GuardType.VERIFICATION_CHECK,
-    expectedValue: true,
+    expectedGuardValue: true,
   },
 ];
