@@ -39,6 +39,7 @@ const CustomRouter: React.FC = () => {
 
               return (
                 <GuardedRoute
+                  key={routing.path}
                   exact
                   path={routing.path}
                   component={routing.component}

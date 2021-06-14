@@ -1,16 +1,17 @@
-import { signInErrors } from "../";
+import { signInErrorCodes } from "../";
 import { userChangedCallback } from "./onCurrentUserChanged";
 import * as EmailValidator from "email-validator";
+import { createError } from "../helpers/createError";
 
 const signInWithEmailAndPassword = async (email: string, password: string) => {
   if (!EmailValidator.validate(email)) {
-    throw signInErrors.ERROR_INVALID_EMAIL;
+    throw createError(signInErrorCodes.ERROR_INVALID_EMAIL);
   }
   // TODO: Hardcoded for now
   else if (email !== "taken@hotmail.com") {
-    throw signInErrors.ERROR_USER_NOT_FOUND;
+    throw createError(signInErrorCodes.ERROR_USER_NOT_FOUND);
   } else if (email === "taken@hotmail.com" && password !== "Bestepassord123") {
-    throw signInErrors.ERROR_WRONG_PASSWORD;
+    throw createError(signInErrorCodes.ERROR_WRONG_PASSWORD);
   }
 
   await new Promise((resolve) => {
@@ -30,4 +31,4 @@ const signInWithEmailAndPassword = async (email: string, password: string) => {
   });
 };
 
-export { signInWithEmailAndPassword, signInErrors };
+export { signInWithEmailAndPassword, signInErrorCodes };

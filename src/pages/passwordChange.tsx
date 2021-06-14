@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { FormContainer, InputField, SubmitButton } from "../components/form";
 import {
   changePassword,
-  changePasswordErrors,
+  changePasswordErrorCodes,
 } from "../services/userManagement";
 
 const PasswordChange = () => {
@@ -45,9 +45,9 @@ const PasswordChange = () => {
       })
       .catch((error) => {
         const { ERROR_WRONG_PASSWORD, ERROR_WEAK_PASSWORD, ERROR_UNKNOWN } =
-          changePasswordErrors;
+          changePasswordErrorCodes;
 
-        switch (error) {
+        switch (error.code) {
           case ERROR_WRONG_PASSWORD:
             tempNotification("Du har ikke skrevet riktig passord", 3000);
             setCurrentPassword("");

@@ -1,7 +1,8 @@
 import firebase from "../fireConfig";
 import { userManagementErrors, USER_MANAGEMENT } from "./constants";
+import { createError } from "./helpers/createError";
 
-const reauthenticateErrors = {
+const reauthenticateErrorCodes = {
   ERROR_NO_USER: userManagementErrors.ERROR_NO_USER,
   ERROR_WRONG_PASSWORD: USER_MANAGEMENT + "/wrong-password",
   ERROR_UNKNOWN: userManagementErrors.ERROR_UNKNOWN,
@@ -10,7 +11,8 @@ const reauthenticateErrors = {
 const reauthenticate = async (password: string) => {
   const user = firebase.auth().currentUser;
 
-  if (!user || !user.email) throw reauthenticateErrors.ERROR_NO_USER;
+  if (!user || !user.email)
+    throw createError(reauthenticateErrorCodes.ERROR_NO_USER);
   const cred = firebase.auth.EmailAuthProvider.credential(user.email, password);
 
   try {
@@ -18,11 +20,11 @@ const reauthenticate = async (password: string) => {
   } catch (error) {
     switch (error.code) {
       case "auth/wrong-password":
-        throw reauthenticateErrors.ERROR_WRONG_PASSWORD;
+        throw createError(reauthenticateErrorCodes.ERROR_WRONG_PASSWORD);
       default:
-        throw reauthenticateErrors.ERROR_UNKNOWN;
+        throw createError(reauthenticateErrorCodes.ERROR_UNKNOWN);
     }
   }
 };
 
-export { reauthenticate, reauthenticateErrors };
+export { reauthenticate, reauthenticateErrorCodes };
