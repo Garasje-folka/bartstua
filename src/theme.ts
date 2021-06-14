@@ -20,4 +20,10 @@ export const theme = {
   shadow: {
     REGULAR: "0px 4px 17px 0px rgba(0,0,0,0.10)",
   },
+  form: {
+    colors: {
+      ERROR: "#ff0f0f",
+      WARNING: "#ffac14",
+    },
+  },
 };

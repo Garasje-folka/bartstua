@@ -6,6 +6,8 @@ export const StyledButton = styled(BootstrapButton)`
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
+  margin-bottom: ${theme.alignment.margin.REGULAR};
+  margin-top: ${theme.alignment.margin.REGULAR};
 `;
 
 export const IconWrapper = styled.div`
