@@ -5,6 +5,8 @@ import {
   changePassword,
   changePasswordErrors,
 } from "../services/userManagement";
+import { Notification, NotificationType } from "../components/notification";
+import tempStateChange from "./helpers/tempStateChange";
 
 const PasswordChange = () => {
   const [currentPassword, setCurrentPassword] = useState<string>("");
@@ -15,25 +17,17 @@ const PasswordChange = () => {
 
   const history = useHistory();
 
-  // TODO: Code duplication, same as in register.tsx.
-  const tempNotification = (message: string, duration: number) => {
-    setNotification(message);
-
-    setTimeout(() => {
-      setNotification("");
-    }, duration);
-  };
-
   // TODO: Why is async needed here if there is no await?
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     if (newPassword !== newPasswordConf) {
-      tempNotification(
+      tempStateChange<string>(
         "Det nye passordet stemmer ikke med bekreftelses passordet",
+        "",
+        setNotification,
         3000
       );
-
       setNewPassword("");
       setNewPasswordConf("");
       return;
@@ -49,19 +43,34 @@ const PasswordChange = () => {
 
         switch (error) {
           case ERROR_WRONG_PASSWORD:
-            tempNotification("Du har ikke skrevet riktig passord", 3000);
+            tempStateChange<string>(
+              "Du har ikke skrevet riktig passord",
+              "",
+              setNotification,
+              3000
+            );
             setCurrentPassword("");
             break;
           case ERROR_WEAK_PASSWORD:
+            tempStateChange<string>(
+              "Det nye passordet er for svakt",
+              "",
+              setNotification,
+              3000
+            );
             setNewPassword("");
             setNewPasswordConf("");
-            tempNotification("Det nye passordet er for svakt", 3000);
             break;
           case ERROR_UNKNOWN:
             setCurrentPassword("");
             setNewPassword("");
             setNewPasswordConf("");
-            tempNotification("Noe gikk galt...", 3000);
+            tempStateChange<string>(
+              "Noe gikk galt...",
+              "",
+              setNotification,
+              3000
+            );
             break;
         }
       });
@@ -92,7 +101,10 @@ const PasswordChange = () => {
         <SubmitButton label="Bytt passord" />
       </FormContainer>
 
-      <h4> {notification} </h4>
+      <Notification
+        heading={notification}
+        type={NotificationType.ERROR}
+      ></Notification>
     </>
   );
 };

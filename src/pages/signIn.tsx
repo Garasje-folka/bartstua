@@ -5,6 +5,8 @@ import { userManagement } from "../services";
 import { CardContainer, CardHeader, CardBody } from "../components/card";
 import { HOME } from "../router/routeConstants";
 import { useTranslation } from "react-i18next";
+import { Notification, NotificationType } from "../components/notification";
+import tempStateChange from "./helpers/tempStateChange";
 
 // TODO: Getting a bad request error when trying to log in with a valid email, but wrong password.
 
@@ -26,7 +28,7 @@ const SignIn = () => {
         history.push(HOME);
       })
       .catch((error) => {
-        tempNotification(error, 3000);
+        tempStateChange<string>(error, "", setNotification, 3000);
         setEmail("");
         setPassword("");
       });
@@ -34,15 +36,6 @@ const SignIn = () => {
 
   const handleEmailChange = (event: any) => setEmail(event.target.value);
   const handlePasswordChange = (event: any) => setPassword(event.target.value);
-
-  // TODO: Duplicate code, same as in register.tsx. How can it be removed?
-  const tempNotification = (message: string, duration: number) => {
-    setNotification(message);
-
-    setTimeout(() => {
-      setNotification("");
-    }, duration);
-  };
 
   return (
     <>
@@ -67,7 +60,10 @@ const SignIn = () => {
             <SubmitButton label={t("label_sign_in")} />
           </FormContainer>
 
-          <h4> {notification} </h4>
+          <Notification
+            heading={notification}
+            type={NotificationType.ERROR}
+          ></Notification>
         </CardBody>
       </CardContainer>
     </>

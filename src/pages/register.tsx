@@ -3,6 +3,8 @@ import { FormContainer, InputField, SubmitButton } from "../components/form";
 import { userManagement } from "../services";
 import { CardContainer, CardHeader, CardBody } from "../components/card";
 import { useTranslation } from "react-i18next";
+import { Notification, NotificationType } from "../components/notification";
+import tempStateChange from "./helpers/tempStateChange";
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 
@@ -18,11 +20,12 @@ const Register = () => {
     event.preventDefault();
 
     if (password !== passwordConf) {
-      tempNotification(
+      tempStateChange<string>(
         "Passordet stemmer ikke med bekreftelses passordet",
+        "",
+        setNotification,
         3000
       );
-
       setPassword("");
       setPasswordConf("");
       return;
@@ -40,27 +43,39 @@ const Register = () => {
 
         switch (error) {
           case ERROR_EMAIL_ALREADY_USED:
-            tempNotification("E-posten er allerede i bruk", 3000);
+            tempStateChange<string>(
+              "E-posten er allerede i bruk",
+              "",
+              setNotification,
+              3000
+            );
             break;
           case ERROR_EMAIL_NOT_VALID:
-            tempNotification("E-posten er ikke gyldig", 3000);
+            tempStateChange<string>(
+              "E-posten er ikke gyldig",
+              "",
+              setNotification,
+              3000
+            );
             break;
           case ERROR_WEAK_PASSWORD:
-            tempNotification("Passordet er for svakt", 3000);
+            tempStateChange<string>(
+              "Passordet er for svakt",
+              "",
+              setNotification,
+              3000
+            );
             break;
           case ERROR_UNKNOWN:
-            tempNotification("Noe gikk galt...", 3000);
+            tempStateChange<string>(
+              "Passordet er for svakt",
+              "",
+              setNotification,
+              3000
+            );
             break;
         }
       });
-  };
-
-  const tempNotification = (message: string, duration: number) => {
-    setNotification(message);
-
-    setTimeout(() => {
-      setNotification("");
-    }, duration);
   };
 
   return (
@@ -90,7 +105,10 @@ const Register = () => {
             <SubmitButton label={t("label_register_user")} />
           </FormContainer>
 
-          <h4> {notification} </h4>
+          <Notification
+            heading={notification}
+            type={NotificationType.ERROR}
+          ></Notification>
         </CardBody>
       </CardContainer>
     </>
