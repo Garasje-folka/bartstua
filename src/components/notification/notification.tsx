@@ -1,7 +1,10 @@
-import { Alert } from "react-bootstrap";
+import {
+  NotificationContainer,
+  NotificationHeading,
+  NotificationText,
+} from "./";
 
 interface NotificationProps {
-  title?: string;
   children?: string;
   className?: string;
   type: NotificationType;
@@ -15,14 +18,13 @@ enum NotificationType {
 
 const Notification: React.FC<NotificationProps> = (props) => {
   const { children, type, heading } = props;
-
   return (
     <>
       {(heading || children) && (
-        <Alert variant={type}>
-          <Alert.Heading>{heading}</Alert.Heading>
-          <p>{children}</p>
-        </Alert>
+        <NotificationContainer variant={type}>
+          <NotificationHeading>{heading}</NotificationHeading>
+          <NotificationText>{children}</NotificationText>
+        </NotificationContainer>
       )}
     </>
   );
