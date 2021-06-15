@@ -1,30 +1,55 @@
 import { Form } from "react-bootstrap";
+import { Error, StyledFormGroup, StyledFormControl } from "./inputField.styled";
 
 declare type FormControlElement =
   | HTMLInputElement
   | HTMLSelectElement
   | HTMLTextAreaElement;
 
+enum InputFieldSize {
+  REGULAR = "REGULAR",
+  SMALL = "SMALL",
+}
 interface InputFieldProps {
-  label?: string | undefined;
-  description?: string | undefined;
-  type?: string | undefined;
-  value?: string | number | string[] | undefined;
+  label?: string;
+  description?: string;
+  type?: string;
+  value?: string | number | string[];
   onChange?: (event: React.ChangeEvent<FormControlElement>) => void;
+  errorText?: string;
+  errorSerious?: boolean;
+  size?: InputFieldSize;
 }
 
-const InputField = (props: InputFieldProps) => {
-  const { type, value, description, label, onChange } = props;
+const InputField: React.FC<InputFieldProps> = (props) => {
+  const {
+    type,
+    value,
+    description,
+    label,
+    onChange,
+    errorText,
+    errorSerious,
+    size,
+  } = props;
+
   return (
-    <Form.Group>
+    <StyledFormGroup size={size}>
       {label ? <Form.Label>{label}</Form.Label> : undefined}
       {description ? <Form.Text>{"\n" + description}</Form.Text> : undefined}
-      <Form.Control
+      <StyledFormControl
         type={type}
         value={value}
         onChange={onChange}
-      ></Form.Control>
-    </Form.Group>
+        isError={!!errorText}
+        serious={errorSerious}
+      />
+      <Error serious={errorSerious}>{errorText}</Error>
+    </StyledFormGroup>
   );
 };
-export default InputField;
+
+InputField.defaultProps = {
+  size: InputFieldSize.REGULAR,
+};
+export { InputField, InputFieldSize };

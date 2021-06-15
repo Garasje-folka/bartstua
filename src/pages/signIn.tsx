@@ -5,6 +5,7 @@ import { userManagement } from "../services";
 import { CardContainer, CardHeader, CardBody } from "../components/card";
 import { HOME } from "../router/routeConstants";
 import { useTranslation } from "react-i18next";
+import { InputFieldSize } from "../components/form/inputField";
 
 // TODO: Getting a bad request error when trying to log in with a valid email, but wrong password.
 
@@ -77,6 +78,9 @@ const SignIn = () => {
               value={email}
               label={t("label_email")}
               onChange={handleEmailChange}
+              size={InputFieldSize.SMALL}
+              errorText="Litt dårlig epost"
+              errorSerious
             />
 
             <InputField
@@ -84,6 +88,7 @@ const SignIn = () => {
               value={password}
               label="Passord"
               onChange={handlePasswordChange}
+              size={InputFieldSize.SMALL}
             />
 
             <SubmitButton label={t("label_sign_in")} />

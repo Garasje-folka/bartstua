@@ -1,4 +1,4 @@
-import Button from "react-bootstrap/Button";
+import { Button } from "../button";
 
 interface SubmitButtonProps {
   label: string;
