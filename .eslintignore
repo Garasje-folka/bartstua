@@ -1,0 +1,6 @@
+/.github/*
+firebase.json
+firestore.indexes.json
+firestore.rules
+/functions/*
+storage.rules
