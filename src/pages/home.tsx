@@ -1,9 +1,13 @@
+import { CardContainer, CardHeader } from "../components/card";
+import { useTranslation } from "react-i18next";
+
 const Home = () => {
+  const { t } = useTranslation();
   return (
-    <>
-      <h1> Hjem </h1>
-    </>
+    <CardContainer>
+      <CardHeader title={t("label_home")} />
+    </CardContainer>
   );
 };
 
-export default Home;
+export { Home };

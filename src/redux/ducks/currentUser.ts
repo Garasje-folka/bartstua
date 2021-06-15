@@ -13,7 +13,7 @@ export interface currentUserState {
   data: User | null;
   status: {
     loaded: boolean;
-    lastUpdated?: Date;
+    lastUpdated?: string;
   };
 }
 
@@ -44,7 +44,7 @@ export default function reducer(
         status: {
           ...state?.status,
           loaded: true,
-          lastUpdated: new Date(),
+          lastUpdated: new Date().toJSON(),
         },
       };
     default:

@@ -13,7 +13,7 @@ interface Event {
   barColor: string;
 }
 
-const Scheduler: React.FC<SchedulerProps> = ({}) => {
+const Scheduler: React.FC<SchedulerProps> = () => {
   const initialEvents: Event[] = [
     {
       id: 2,
@@ -80,6 +80,6 @@ const Booking: React.FC = () => {
       <Scheduler />
     </div>
   );
-};
+}
 
-export default Booking;
+export { Booking };
