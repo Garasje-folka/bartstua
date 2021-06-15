@@ -1,6 +1,3 @@
-// TODO: Don't know if we should use this...
-import * as admin from "firebase-admin";
-
 import { firestore, auth } from "../fireConfig";
 import { SESSIONS } from "./constants";
 import parseDate from "./helpers/parseDate";

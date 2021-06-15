@@ -1,4 +1,4 @@
-import { User } from "../../types";
+import { User } from "./interfaces";
 import { auth } from "../fireConfig";
 import userConverter from "./helpers/userConverter";
 

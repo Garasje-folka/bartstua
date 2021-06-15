@@ -1,4 +1,4 @@
-import { User } from "../../../types";
+import { User } from "../interfaces";
 
 let userChangedCallback: ((user: User | null) => void) | null = null;
 
