@@ -15,6 +15,8 @@ const SignIn = () => {
   const [password, setPassword] = useState<string>("");
 
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [isEmailError, setIsEmailError] = useState<boolean>(false);
+  const [isPasswordError, setIsPasswordError] = useState<boolean>(false);
 
   const history = useHistory();
   const { t } = useTranslation();
@@ -33,26 +35,29 @@ const SignIn = () => {
         switch (error.code) {
           case signInErrorCodes.ERROR_INVALID_EMAIL:
             setErrorMessage("Ugyldig e-post");
-            setEmail("");
+            setIsEmailError(true);
+            setIsPasswordError(false);
             break;
 
           case signInErrorCodes.ERROR_USER_NOT_FOUND:
             setErrorMessage("Det finnes ingen brukere med den e-posten");
-            setEmail("");
-            setPassword("");
+            setIsEmailError(true);
+            setIsPasswordError(false);
             break;
 
           case signInErrorCodes.ERROR_WRONG_PASSWORD:
             setErrorMessage("Feil passord");
-            setPassword("");
+            setIsEmailError(false);
+            setIsPasswordError(true);
             break;
 
           default:
             setErrorMessage("Noe gikk galt");
-            setEmail("");
-            setPassword("");
+            setIsEmailError(true);
+            setIsPasswordError(true);
             break;
         }
+        setPassword("");
       });
   };
 
@@ -71,8 +76,8 @@ const SignIn = () => {
               label={t("label_email")}
               onChange={handleEmailChange}
               size={InputFieldSize.SMALL}
-              errorText="Litt dårlig epost"
-              errorSerious
+              errorSerious={!!errorMessage}
+              errorText={isEmailError ? errorMessage : undefined}
             />
 
             <InputField
@@ -81,19 +86,12 @@ const SignIn = () => {
               label="Passord"
               onChange={handlePasswordChange}
               size={InputFieldSize.SMALL}
+              errorSerious={!!errorMessage}
+              errorText={isPasswordError ? errorMessage : undefined}
             />
 
             <SubmitButton label={t("label_sign_in")} />
           </FormContainer>
-
-          {errorMessage && (
-            <Notification
-              heading={"Innlogging feilet"}
-              type={NotificationType.ERROR}
-            >
-              {errorMessage}
-            </Notification>
-          )}
         </CardBody>
       </CardContainer>
     </>

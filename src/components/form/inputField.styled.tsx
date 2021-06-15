@@ -31,5 +31,11 @@ export const StyledFormControl = styled(Form.Control)`
       border-color: ${props.serious
         ? theme.form.colors.ERROR
         : theme.form.colors.WARNING};
+
+      &: focus {
+        border-color: ${props.serious
+          ? theme.form.colors.ERROR
+          : theme.form.colors.WARNING};
+      }
     `}
 `;
