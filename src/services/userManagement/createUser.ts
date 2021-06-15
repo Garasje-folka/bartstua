@@ -1,8 +1,9 @@
 import { auth } from "../fireConfig";
 import { USER_MANAGEMENT, userManagementErrors } from "./constants";
+import { createError } from "./helpers/createError";
 // TODO: Add stronger password validation
 
-const createUserErrors = {
+const createUserErrorCodes = {
   ERROR_EMAIL_ALREADY_USED: USER_MANAGEMENT + "/email-already-in-use",
   ERROR_EMAIL_NOT_VALID: USER_MANAGEMENT + "/invalid-email",
   ERROR_WEAK_PASSWORD: USER_MANAGEMENT + "/weak-password",
@@ -19,21 +20,21 @@ const createUserWithEmailAndPassword = async (
   } catch (error) {
     switch (error.code) {
       case "auth/email-already-in-use":
-        throw createUserErrors.ERROR_EMAIL_ALREADY_USED;
+        throw createError(createUserErrorCodes.ERROR_EMAIL_ALREADY_USED);
 
       case "auth/invalid-email":
-        throw createUserErrors.ERROR_EMAIL_NOT_VALID;
+        throw createError(createUserErrorCodes.ERROR_EMAIL_NOT_VALID);
 
       case "auth/weak-password":
-        throw createUserErrors.ERROR_WEAK_PASSWORD;
+        throw createError(createUserErrorCodes.ERROR_WEAK_PASSWORD);
 
       case "auth/operation-not-allowed":
-        throw createUserErrors.ERROR_UNSUPPORTED_OPERATION;
+        throw createError(createUserErrorCodes.ERROR_UNSUPPORTED_OPERATION);
 
       default:
-        throw createUserErrors.ERROR_UNKNOWN;
+        throw createError(createUserErrorCodes.ERROR_UNKNOWN);
     }
   }
 };
 
-export { createUserWithEmailAndPassword, createUserErrors };
+export { createUserWithEmailAndPassword, createUserErrorCodes };

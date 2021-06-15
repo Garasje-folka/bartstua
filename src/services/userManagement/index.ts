@@ -1,22 +1,25 @@
-import { createUserWithEmailAndPassword, createUserErrors } from "./createUser";
+import {
+  createUserWithEmailAndPassword,
+  createUserErrorCodes,
+} from "./createUser";
 import { onCurrentUserChanged } from "./onCurrentUserChanged";
-import { signInWithEmailAndPassword, signInErrors } from "./signIn";
+import { signInWithEmailAndPassword, signInErrorCodes } from "./signIn";
 import { signOut } from "./signOut";
 import { sendEmailVerification } from "./sendEmailVerification";
-import { reauthenticate, reauthenticateErrors } from "./reauthenticate";
-import { changePassword, changePasswordErrors } from "./changePassword";
+import { reauthenticate, reauthenticateErrorCodes } from "./reauthenticate";
+import { changePassword, changePasswordErrorCodes } from "./changePassword";
 import * as interfaces from "./interfaces";
 export {
   createUserWithEmailAndPassword,
-  createUserErrors,
+  createUserErrorCodes,
   onCurrentUserChanged,
   signInWithEmailAndPassword,
-  signInErrors,
+  signInErrorCodes,
   signOut,
   sendEmailVerification,
   reauthenticate,
-  reauthenticateErrors,
+  reauthenticateErrorCodes,
   changePassword,
-  changePasswordErrors,
+  changePasswordErrorCodes,
   interfaces,
 };

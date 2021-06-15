@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { FormContainer, InputField, SubmitButton } from "../components/form";
 import {
   changePassword,
-  changePasswordErrors,
+  changePasswordErrorCodes,
 } from "../services/userManagement";
 import { Notification, NotificationType } from "../components/notification";
 import tempStateChange from "./helpers/tempStateChange";
@@ -39,9 +39,9 @@ const PasswordChange = () => {
       })
       .catch((error) => {
         const { ERROR_WRONG_PASSWORD, ERROR_WEAK_PASSWORD, ERROR_UNKNOWN } =
-          changePasswordErrors;
+          changePasswordErrorCodes;
 
-        switch (error) {
+        switch (error.code) {
           case ERROR_WRONG_PASSWORD:
             tempStateChange<string>(
               "Du har ikke skrevet riktig passord",

@@ -1,5 +1,6 @@
 import * as EmailValidator from "email-validator";
-import { createUserErrors } from "../";
+import { createUserErrorCodes } from "../";
+import { createError } from "../helpers/createError";
 import { User } from "../interfaces";
 
 const createUserWithEmailAndPassword = async (
@@ -7,13 +8,13 @@ const createUserWithEmailAndPassword = async (
   password: string
 ): Promise<User> => {
   if (!EmailValidator.validate(email)) {
-    throw createUserErrors.ERROR_EMAIL_NOT_VALID;
+    throw createError(createUserErrorCodes.ERROR_EMAIL_NOT_VALID);
   } else if (password.length < 6) {
-    throw createUserErrors.ERROR_WEAK_PASSWORD;
+    throw createError(createUserErrorCodes.ERROR_WEAK_PASSWORD);
   }
   // Hardcoded in taken email for now
   else if (email === "taken@hotmail.com") {
-    throw createUserErrors.ERROR_EMAIL_ALREADY_USED;
+    throw createError(createUserErrorCodes.ERROR_EMAIL_ALREADY_USED);
   }
 
   await new Promise((resolve) => {
@@ -30,4 +31,4 @@ const createUserWithEmailAndPassword = async (
   };
 };
 
-export { createUserWithEmailAndPassword, createUserErrors };
+export { createUserWithEmailAndPassword, createUserErrorCodes };
