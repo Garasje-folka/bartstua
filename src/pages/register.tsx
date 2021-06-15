@@ -4,7 +4,6 @@ import { userManagement } from "../services";
 import { CardContainer, CardHeader, CardBody } from "../components/card";
 import { useTranslation } from "react-i18next";
 import { Notification, NotificationType } from "../components/notification";
-import tempStateChange from "./helpers/tempStateChange";
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 
@@ -13,19 +12,14 @@ const Register = () => {
   const [password, setPassword] = useState<string>("");
   const [passwordConf, setPasswordConf] = useState<string>("");
 
-  const [notification, setNotification] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const { t } = useTranslation();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     if (password !== passwordConf) {
-      tempStateChange<string>(
-        "Passordet stemmer ikke med bekreftelses passordet",
-        "",
-        setNotification,
-        3000
-      );
+      setErrorMessage("Passordet stemmer ikke med bekreftelses passordet");
       setPassword("");
       setPasswordConf("");
       return;
@@ -43,36 +37,23 @@ const Register = () => {
 
         switch (error.code) {
           case ERROR_EMAIL_ALREADY_USED:
-            tempStateChange<string>(
-              "E-posten er allerede i bruk",
-              "",
-              setNotification,
-              3000
-            );
+            setErrorMessage("E-posten er allerede i bruk");
+            setEmail("");
             break;
           case ERROR_EMAIL_NOT_VALID:
-            tempStateChange<string>(
-              "E-posten er ikke gyldig",
-              "",
-              setNotification,
-              3000
-            );
+            setErrorMessage("E-posten er ikke gyldig");
+            setEmail("");
             break;
           case ERROR_WEAK_PASSWORD:
-            tempStateChange<string>(
-              "Passordet er for svakt",
-              "",
-              setNotification,
-              3000
-            );
+            setErrorMessage("Passordet er for svakt");
+            setPassword("");
+            setPasswordConf("");
             break;
           case ERROR_UNKNOWN:
-            tempStateChange<string>(
-              "Passordet er for svakt",
-              "",
-              setNotification,
-              3000
-            );
+            setErrorMessage("Noe gikk galt");
+            setEmail("");
+            setPassword("");
+            setPasswordConf("");
             break;
         }
       });
@@ -104,11 +85,14 @@ const Register = () => {
             />
             <SubmitButton label={t("label_register_user")} />
           </FormContainer>
-
-          <Notification
-            heading={notification}
-            type={NotificationType.ERROR}
-          ></Notification>
+          {errorMessage && (
+            <Notification
+              heading="Registrering feilet"
+              type={NotificationType.ERROR}
+            >
+              {errorMessage}
+            </Notification>
+          )}
         </CardBody>
       </CardContainer>
     </>

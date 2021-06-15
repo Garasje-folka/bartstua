@@ -9,23 +9,17 @@ interface NotificationProps {
 }
 
 enum NotificationType {
-  ERROR,
+  ERROR = "danger",
+  SUCCESS = "success",
 }
 
 const Notification: React.FC<NotificationProps> = (props) => {
   const { children, type, heading } = props;
 
-  const getVariant = (type: NotificationType) => {
-    switch (type) {
-      case NotificationType.ERROR:
-        return "danger";
-    }
-  };
-
   return (
     <>
       {(heading || children) && (
-        <Alert variant={getVariant(type)}>
+        <Alert variant={type}>
           <Alert.Heading>{heading}</Alert.Heading>
           <p>{children}</p>
         </Alert>
