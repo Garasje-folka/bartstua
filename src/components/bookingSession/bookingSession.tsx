@@ -4,6 +4,8 @@ import { currentUserSelector } from "../../redux/selectors";
 import { addBooking } from "../../services/bookingManagement";
 import { MAX_SESSION_PARTICIPANTS } from "../../services/bookingManagement/constants";
 import { getSession } from "../../services/bookingManagement/getSession";
+import { Heading, HeadingTypes } from "../text";
+import { SessionContainer } from "./";
 
 interface BookingSessionProps {
   date: Date;
@@ -16,6 +18,15 @@ const BookingSession = (props: BookingSessionProps) => {
     undefined
   );
   const { date } = props;
+
+  // TODO: Should propably create generalized formatting methods or use an existing library instead
+  const dateToHourRange = () => {
+    const hour = date.getHours();
+
+    return (
+      ("0" + hour).slice(-2) + ":00 - " + ("0" + (hour + 1)).slice(-2) + ":00"
+    );
+  };
 
   const fetchData = () => {
     getSession(date).then((snapshot) => {
@@ -44,10 +55,10 @@ const BookingSession = (props: BookingSessionProps) => {
   return (
     <>
       {spaceLeft && userHasSession !== undefined && (
-        <div onClick={handleBooking}>
-          {"Time: " + date.getHours()} {"Ledige plasser: " + spaceLeft}{" "}
-          {"Du har booket: " + userHasSession}
-        </div>
+        <SessionContainer onClick={handleBooking}>
+          <Heading type={HeadingTypes.HEADING4}>{dateToHourRange()}</Heading>
+          {"Ledige plasser: " + spaceLeft} {"Du har booket: " + userHasSession}
+        </SessionContainer>
       )}
     </>
   );

@@ -18,6 +18,11 @@ const addBooking = async (date: Date) => {
     .then((docSnapshot) => {
       if (docSnapshot.exists) {
         const participants = docSnapshot.get("participants");
+        if (participants.includes(user.uid)) {
+          // TODO: Throw exception
+          return;
+        }
+
         sessionRef.update({
           participants: [...participants, user.uid],
         });
