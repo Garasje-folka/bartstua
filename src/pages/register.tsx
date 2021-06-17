@@ -28,14 +28,14 @@ const Register = () => {
 
   const checkPasswordFields = useCallback(() => {
     if (password !== passwordConf) {
-      setErrorPassword2("Passordet stemmer ikke med bekreftelses passordet");
+      setErrorPassword2(t("text_passwords_not_matching"));
 
       return true;
     } else {
       setErrorPassword2(undefined);
       return false;
     }
-  }, [password, passwordConf]);
+  }, [password, passwordConf, t]);
 
   useEffect(() => {
     checkPasswordFields();
@@ -62,22 +62,22 @@ const Register = () => {
 
         switch (error.code) {
           case ERROR_EMAIL_ALREADY_USED:
-            setErrorEmail("E-posten er allerede i bruk");
+            setErrorEmail(t("text_email_already_used"));
             setEmail("");
             break;
           case ERROR_EMAIL_NOT_VALID:
-            setErrorEmail("E-posten er ikke gyldig");
+            setErrorEmail(t("text_email_not_valid"));
             setEmail("");
             break;
           case ERROR_WEAK_PASSWORD:
-            setErrorPassword1("Passordet er for svakt");
+            setErrorPassword1(t("text_password_too_weak"));
             setPassword("");
             setPasswordConf("");
             break;
           case ERROR_UNKNOWN:
             setErrorEmail("");
             setErrorPassword1("");
-            setErrorPassword2("Noe gikk galt");
+            setErrorPassword2(t("text_something_went_wrong"));
             setEmail("");
             setPassword("");
             setPasswordConf("");
