@@ -50,16 +50,16 @@ const Header = () => {
 
   const signOutButton: React.ReactNode = (
     <Button icon={SignOutIcon} onClick={handleSignOut}>
-      Sign out
+      Logg ut
     </Button>
   );
 
   const signInButton: React.ReactNode = (
-    <SignInButton onClick={() => history.push(SIGNIN)}>Sign in</SignInButton>
+    <SignInButton onClick={() => history.push(SIGNIN)}>Logg inn</SignInButton>
   );
 
   const registerButton: React.ReactNode = (
-    <Button onClick={() => history.push(REGISTER)}>Register</Button>
+    <Button onClick={() => history.push(REGISTER)}>Registrer</Button>
   );
 
   return (

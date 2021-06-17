@@ -3,6 +3,8 @@ import { FormContainer, InputField, SubmitButton } from "../components/form";
 import { userManagement } from "../services";
 import { CardContainer, CardHeader, CardBody } from "../components/card";
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
+import { useCallback } from "react";
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 
@@ -11,22 +13,42 @@ const Register = () => {
   const [password, setPassword] = useState<string>("");
   const [passwordConf, setPasswordConf] = useState<string>("");
 
-  const [notification, setNotification] = useState<string>("");
   const { t } = useTranslation();
+
+  const [errorEmail, setErrorEmail] = useState<undefined | string>();
+  const [errorPassword1, setErrorPassword1] = useState<undefined | string>();
+  const [errorPassword2, setErrorPassword2] = useState<undefined | string>();
+  const [serious, setSerious] = useState<boolean>(false);
+
+  const resetFieldErrors = () => {
+    setErrorEmail(undefined);
+    setErrorPassword1(undefined);
+    setErrorPassword2(undefined);
+  };
+
+  const checkPasswordFields = useCallback(() => {
+    if (password !== passwordConf) {
+      setErrorPassword2(t("text_passwords_not_matching"));
+
+      return true;
+    } else {
+      setErrorPassword2(undefined);
+      return false;
+    }
+  }, [password, passwordConf, t]);
+
+  useEffect(() => {
+    checkPasswordFields();
+  }, [checkPasswordFields]);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    if (password !== passwordConf) {
-      tempNotification(
-        "Passordet stemmer ikke med bekreftelses passordet",
-        3000
-      );
+    resetFieldErrors();
 
-      setPassword("");
-      setPasswordConf("");
-      return;
-    }
+    setSerious(true);
+
+    if (!checkPasswordFields()) return;
 
     await userManagement
       .createUserWithEmailAndPassword(email, password)
@@ -40,27 +62,28 @@ const Register = () => {
 
         switch (error.code) {
           case ERROR_EMAIL_ALREADY_USED:
-            tempNotification("E-posten er allerede i bruk", 3000);
+            setErrorEmail(t("text_email_already_used"));
+            setEmail("");
             break;
           case ERROR_EMAIL_NOT_VALID:
-            tempNotification("E-posten er ikke gyldig", 3000);
+            setErrorEmail(t("text_email_not_valid"));
+            setEmail("");
             break;
           case ERROR_WEAK_PASSWORD:
-            tempNotification("Passordet er for svakt", 3000);
+            setErrorPassword1(t("text_password_too_weak"));
+            setPassword("");
+            setPasswordConf("");
             break;
           case ERROR_UNKNOWN:
-            tempNotification("Noe gikk galt...", 3000);
+            setErrorEmail("");
+            setErrorPassword1("");
+            setErrorPassword2(t("text_something_went_wrong"));
+            setEmail("");
+            setPassword("");
+            setPasswordConf("");
             break;
         }
       });
-  };
-
-  const tempNotification = (message: string, duration: number) => {
-    setNotification(message);
-
-    setTimeout(() => {
-      setNotification("");
-    }, duration);
   };
 
   return (
@@ -74,23 +97,27 @@ const Register = () => {
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
+              errorSerious={serious}
+              errorText={errorEmail}
             />
             <InputField
               label={t("label_password")}
               type="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
+              errorSerious={serious}
+              errorText={errorPassword1}
             />
             <InputField
               label={t("label_confirm_password")}
               type="password"
               value={passwordConf}
               onChange={(event) => setPasswordConf(event.target.value)}
+              errorSerious={serious}
+              errorText={errorPassword2}
             />
             <SubmitButton label={t("label_register_user")} />
           </FormContainer>
-
-          <h4> {notification} </h4>
         </CardBody>
       </CardContainer>
     </>

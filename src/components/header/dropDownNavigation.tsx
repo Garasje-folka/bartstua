@@ -22,7 +22,7 @@ const DropDownNavigation: React.FC<DropdownNavigationProps> = (props) => {
   return (
     <NavDropdown title={getCurrentPage()} id="navbarScrollingDropdown">
       {items.map((item) => (
-        <NavDropdown.Item onClick={() => history.push(item.url)}>
+        <NavDropdown.Item key={item.url} onClick={() => history.push(item.url)}>
           {item.title}
         </NavDropdown.Item>
       ))}
