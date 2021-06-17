@@ -41,8 +41,8 @@ const InputField: React.FC<InputFieldProps> = (props) => {
         type={type}
         value={value}
         onChange={onChange}
-        isError={!!errorText}
-        serious={errorSerious}
+        $isError={!!errorText}
+        $serious={errorSerious}
       />
       <Error serious={errorSerious}>{errorText}</Error>
     </StyledFormGroup>
