@@ -1,17 +1,21 @@
 import React from "react";
-import { BookingDate } from "../components/bookingDate/bookingDate";
+import { BookingDay } from "../components/bookingDay/bookingDay";
 import { Container, Row, Col } from "react-bootstrap";
+import { DateDay } from "../services/bookingManagement/interfaces";
+import createDateDayFromDate from "../services/bookingManagement/helpers/createDateDay";
 
 const Booking: React.FC = () => {
-  const getBookingDates = (startDate: Date) => {
+  const getBookingDates = (startDay: DateDay, columns: number) => {
     const bookingDates = [];
+    for (let i = 0; i < columns; i++) {
+      const offsetDay = {
+        ...startDay,
+        day: startDay.day + i,
+      };
 
-    for (let i = 0; i < 5; i++) {
-      const offsetDate = new Date();
-      offsetDate.setDate(startDate.getDate() + i);
       bookingDates.push(
-        <Col>
-          <BookingDate key={i} date={offsetDate} />
+        <Col key={i}>
+          <BookingDay dateDay={offsetDay} />
         </Col>
       );
     }
@@ -20,7 +24,7 @@ const Booking: React.FC = () => {
   };
   return (
     <Container>
-      <Row>{getBookingDates(new Date())}</Row>
+      <Row>{getBookingDates(createDateDayFromDate(new Date()), 5)}</Row>
     </Container>
   );
 };

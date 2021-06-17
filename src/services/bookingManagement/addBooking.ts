@@ -1,19 +1,19 @@
 import { firestore, auth } from "../fireConfig";
-import { SESSIONS } from "./constants";
-import parseDate from "./helpers/parseDate";
+import { MAX_EVENT_PARTICIPANTS, EVENTS } from "./constants";
+import { getBookingEventId } from "./getBookingEventId";
+import { DateHour } from "./interfaces";
 
-const addBooking = async (date: Date) => {
-  // Could take user as an argument instead
+const addBooking = async (dateHour: DateHour) => {
   const user = auth.currentUser;
 
   // TODO: Throw error instead
   if (!user) return;
 
-  const sessionId = parseDate(date);
+  const eventId = getBookingEventId(dateHour);
 
-  const sessionRef = firestore.collection(SESSIONS).doc(sessionId);
+  const eventRef = firestore.collection(EVENTS).doc(eventId);
 
-  await sessionRef
+  await eventRef
     .get()
     .then((docSnapshot) => {
       if (docSnapshot.exists) {
@@ -22,12 +22,16 @@ const addBooking = async (date: Date) => {
           // TODO: Throw exception
           return;
         }
+        if (participants.length >= MAX_EVENT_PARTICIPANTS) {
+          // TODO: Throw exception
+          return;
+        }
 
-        sessionRef.update({
+        eventRef.update({
           participants: [...participants, user.uid],
         });
       } else {
-        sessionRef.set({
+        eventRef.set({
           participants: [user.uid],
         });
       }

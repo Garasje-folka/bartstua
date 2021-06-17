@@ -2,26 +2,27 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { currentUserSelector } from "../../redux/selectors";
 import { addBooking } from "../../services/bookingManagement";
-import { MAX_SESSION_PARTICIPANTS } from "../../services/bookingManagement/constants";
-import { getSession } from "../../services/bookingManagement/getSession";
+import { MAX_EVENT_PARTICIPANTS } from "../../services/bookingManagement/constants";
+import { getBookingEvent } from "../../services/bookingManagement/getBookingEvent";
 import { Heading, HeadingTypes } from "../text";
-import { SessionContainer } from "./";
+import { SessionContainer } from ".";
+import { DateHour } from "../../services/bookingManagement/interfaces";
 
-interface BookingSessionProps {
-  date: Date;
+interface BookingEventProps {
+  dateHour: DateHour;
 }
 
-const BookingSession = (props: BookingSessionProps) => {
+const BookingEvent = (props: BookingEventProps) => {
   const user = useSelector(currentUserSelector);
   const [spaceLeft, setSpaceLeft] = useState<number | undefined>(undefined);
   const [userHasSession, setUserHasSession] = useState<boolean | undefined>(
     undefined
   );
-  const { date } = props;
+  const { dateHour } = props;
 
   // TODO: Should propably create generalized formatting methods or use an existing library instead
   const dateToHourRange = () => {
-    const hour = date.getHours();
+    const hour = dateHour.hour;
 
     return (
       ("0" + hour).slice(-2) + ":00 - " + ("0" + (hour + 1)).slice(-2) + ":00"
@@ -29,13 +30,13 @@ const BookingSession = (props: BookingSessionProps) => {
   };
 
   const fetchData = () => {
-    getSession(date).then((snapshot) => {
+    getBookingEvent(dateHour).then((snapshot) => {
       if (snapshot.exists) {
         const participants = snapshot.get("participants");
-        setSpaceLeft(MAX_SESSION_PARTICIPANTS - participants.length);
+        setSpaceLeft(MAX_EVENT_PARTICIPANTS - participants.length);
         setUserHasSession(participants.includes(user?.uid));
       } else {
-        setSpaceLeft(MAX_SESSION_PARTICIPANTS);
+        setSpaceLeft(MAX_EVENT_PARTICIPANTS);
         setUserHasSession(false);
       }
     });
@@ -47,7 +48,7 @@ const BookingSession = (props: BookingSessionProps) => {
 
   const handleBooking = () => {
     if (userHasSession) return;
-    addBooking(date).then(() => {
+    addBooking(dateHour).then(() => {
       fetchData();
     });
   };
@@ -64,4 +65,4 @@ const BookingSession = (props: BookingSessionProps) => {
   );
 };
 
-export { BookingSession };
+export { BookingEvent };

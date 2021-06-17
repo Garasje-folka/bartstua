@@ -1,2 +1,5 @@
 import { addBooking } from "./addBooking";
-export { addBooking };
+import * as interfaces from "./interfaces";
+import { getBookingEventStartingHour } from "./getBookingStartingHour";
+
+export { addBooking, interfaces, getBookingEventStartingHour };

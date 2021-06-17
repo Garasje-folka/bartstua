@@ -1,9 +1,11 @@
-const isToday = (date: Date) => {
+import { DateDay, DateHour } from "../interfaces";
+
+const isToday = (date: DateDay | DateHour) => {
   let currentDate = new Date();
   return (
-    date.getFullYear() === currentDate.getFullYear() &&
-    date.getMonth() === currentDate.getMonth() &&
-    date.getDay() === currentDate.getDay()
+    date.year === currentDate.getFullYear() &&
+    date.month === currentDate.getMonth() + 1 &&
+    date.day === currentDate.getDate()
   );
 };
 
