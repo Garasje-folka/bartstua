@@ -12,14 +12,17 @@ const Register = () => {
   const [password, setPassword] = useState<string>("");
   const [passwordConf, setPasswordConf] = useState<string>("");
 
-  const [errorMessage, setErrorMessage] = useState<string>("");
   const { t } = useTranslation();
+
+  const [errorEmail1, setErrorEmail1] = useState<undefined | string>();
+  const [errorPassword1, setErrorPassword1] = useState<undefined | string>();
+  const [errorPassword2, setErrorPassword2] = useState<undefined | string>();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     if (password !== passwordConf) {
-      setErrorMessage("Passordet stemmer ikke med bekreftelses passordet");
+      setErrorPassword2("Passordet stemmer ikke med bekreftelses passordet");
       setPassword("");
       setPasswordConf("");
       return;
@@ -37,20 +40,28 @@ const Register = () => {
 
         switch (error.code) {
           case ERROR_EMAIL_ALREADY_USED:
-            setErrorMessage("E-posten er allerede i bruk");
+            setErrorEmail1("E-posten er allerede i bruk");
+            setErrorPassword1("");
+            setErrorPassword2("");
             setEmail("");
             break;
           case ERROR_EMAIL_NOT_VALID:
-            setErrorMessage("E-posten er ikke gyldig");
+            setErrorEmail1("E-posten er ikke gyldig");
+            setErrorPassword1("");
+            setErrorPassword2("");
             setEmail("");
             break;
           case ERROR_WEAK_PASSWORD:
-            setErrorMessage("Passordet er for svakt");
+            setErrorEmail1("");
+            setErrorPassword2("");
+            setErrorPassword1("Passordet er for svakt");
             setPassword("");
             setPasswordConf("");
             break;
           case ERROR_UNKNOWN:
-            setErrorMessage("Noe gikk galt");
+            setErrorEmail1("");
+            setErrorPassword1("");
+            setErrorPassword2("Noe gikk galt");
             setEmail("");
             setPassword("");
             setPasswordConf("");
@@ -70,29 +81,27 @@ const Register = () => {
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
+              errorSerious
+              errorText={errorEmail1}
             />
             <InputField
               label={t("label_password")}
               type="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
+              errorSerious
+              errorText={errorPassword1}
             />
             <InputField
               label={t("label_confirm_password")}
               type="password"
               value={passwordConf}
               onChange={(event) => setPasswordConf(event.target.value)}
+              errorSerious
+              errorText={errorPassword2}
             />
             <SubmitButton label={t("label_register_user")} />
           </FormContainer>
-          {errorMessage && (
-            <Notification
-              heading="Registrering feilet"
-              type={NotificationType.ERROR}
-            >
-              {errorMessage}
-            </Notification>
-          )}
         </CardBody>
       </CardContainer>
     </>
