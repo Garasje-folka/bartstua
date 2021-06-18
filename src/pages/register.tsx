@@ -30,10 +30,10 @@ const Register = () => {
     if (password !== passwordConf) {
       setErrorPassword2(t("text_passwords_not_matching"));
 
-      return true;
+      return false;
     } else {
       setErrorPassword2(undefined);
-      return false;
+      return true;
     }
   }, [password, passwordConf, t]);
 
