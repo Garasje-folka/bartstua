@@ -41,7 +41,7 @@ export const StyledFormControl = styled(Form.Control)<StyledFormControlProps>`
         : theme.form.colors.WARNING};
 
       &: focus {
-        border-color: ${props.serious
+        border-color: ${$serious
           ? theme.form.colors.ERROR
           : theme.form.colors.WARNING};
       }
