@@ -1,4 +1,5 @@
+export const BOOKINGS = "bookings";
 export const EVENTS = "events";
-export const MAX_EVENT_PARTICIPANTS = 10;
-export const FIRST_EVENT_TIME = 6;
-export const LAST_EVENT_TIME = 22;
+export const MAX_EVENT_SPACES = 10;
+export const BOOKING_STARTING_TIME = 6;
+export const BOOKING_ENDING_TIME = 22;

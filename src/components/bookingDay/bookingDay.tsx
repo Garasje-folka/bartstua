@@ -1,5 +1,5 @@
-import { LAST_EVENT_TIME } from "../../services/bookingManagement/constants";
-import { getBookingEventStartingHour } from "../../services/bookingManagement";
+import { BOOKING_ENDING_TIME } from "../../services/bookingManagement/constants";
+import { getEventStartingHour } from "../../services/bookingManagement";
 import { createDateHourFromDateDay } from "../../services/bookingManagement/helpers/createDateHour";
 import parseDateDay from "../../services/bookingManagement/helpers/parseDateDay";
 import { DateDay } from "../../services/bookingManagement/interfaces";
@@ -10,17 +10,16 @@ interface bookingDayProps {
   dateDay: DateDay;
 }
 
-// TODO: Remove duplicate code, almost same as parseDate
 const BookingDay = (props: bookingDayProps) => {
   const { dateDay } = props;
 
   const getBookingEvents = () => {
-    const startHour = getBookingEventStartingHour(dateDay);
+    const startHour = getEventStartingHour(dateDay);
     if (!startHour) return [];
 
-    const sessions = [];
-    for (let hour = startHour; hour <= LAST_EVENT_TIME; hour++) {
-      sessions.push(
+    const events = [];
+    for (let hour = startHour; hour <= BOOKING_ENDING_TIME; hour++) {
+      events.push(
         <BookingEvent
           key={hour}
           dateHour={createDateHourFromDateDay(dateDay, hour)}
@@ -28,7 +27,7 @@ const BookingDay = (props: bookingDayProps) => {
       );
     }
 
-    return sessions;
+    return events;
   };
 
   return (

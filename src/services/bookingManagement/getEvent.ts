@@ -1,13 +1,13 @@
 import { firestore } from "../fireConfig";
 import { EVENTS } from "./constants";
-import { getBookingEventId } from "./getBookingEventId";
+import { getEventId } from "./getEventId";
 import { DateHour } from "./interfaces";
 
 // TODO: Add error handling
 
-const getBookingEvent = (date: DateHour) => {
-  const eventId = getBookingEventId(date);
+const getEvent = (date: DateHour) => {
+  const eventId = getEventId(date);
   return firestore.collection(EVENTS).doc(eventId).get();
 };
 
-export { getBookingEvent };
+export { getEvent };

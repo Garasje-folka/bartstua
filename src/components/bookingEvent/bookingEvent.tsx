@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { currentUserSelector } from "../../redux/selectors";
 import { addBooking } from "../../services/bookingManagement";
-import { MAX_EVENT_PARTICIPANTS } from "../../services/bookingManagement/constants";
-import { getBookingEvent } from "../../services/bookingManagement/getBookingEvent";
+import { MAX_EVENT_SPACES } from "../../services/bookingManagement/constants";
+import { getEvent } from "../../services/bookingManagement/getEvent";
 import { Heading, HeadingTypes } from "../text";
 import { SessionContainer } from ".";
 import { DateHour } from "../../services/bookingManagement/interfaces";
@@ -13,11 +11,7 @@ interface BookingEventProps {
 }
 
 const BookingEvent = (props: BookingEventProps) => {
-  const user = useSelector(currentUserSelector);
   const [spaceLeft, setSpaceLeft] = useState<number | undefined>(undefined);
-  const [userHasSession, setUserHasSession] = useState<boolean | undefined>(
-    undefined
-  );
   const { dateHour } = props;
 
   // TODO: Should propably create generalized formatting methods or use an existing library instead
@@ -30,14 +24,12 @@ const BookingEvent = (props: BookingEventProps) => {
   };
 
   const fetchData = () => {
-    getBookingEvent(dateHour).then((snapshot) => {
+    getEvent(dateHour).then((snapshot) => {
       if (snapshot.exists) {
-        const participants = snapshot.get("participants");
-        setSpaceLeft(MAX_EVENT_PARTICIPANTS - participants.length);
-        setUserHasSession(participants.includes(user?.uid));
+        const spacesTaken = snapshot.get("spacesTaken");
+        setSpaceLeft(MAX_EVENT_SPACES - spacesTaken);
       } else {
-        setSpaceLeft(MAX_EVENT_PARTICIPANTS);
-        setUserHasSession(false);
+        setSpaceLeft(MAX_EVENT_SPACES);
       }
     });
   };
@@ -47,18 +39,17 @@ const BookingEvent = (props: BookingEventProps) => {
   });
 
   const handleBooking = () => {
-    if (userHasSession) return;
-    addBooking(dateHour).then(() => {
+    addBooking(dateHour, 1).then(() => {
       fetchData();
     });
   };
 
   return (
     <>
-      {spaceLeft && userHasSession !== undefined && (
+      {spaceLeft !== undefined && (
         <SessionContainer onClick={handleBooking}>
           <Heading type={HeadingTypes.HEADING4}>{dateToHourRange()}</Heading>
-          {"Ledige plasser: " + spaceLeft} {"Du har booket: " + userHasSession}
+          {"Ledige plasser: " + spaceLeft}
         </SessionContainer>
       )}
     </>
