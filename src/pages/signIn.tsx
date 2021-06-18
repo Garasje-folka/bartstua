@@ -13,7 +13,9 @@ const SignIn = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const [notification, setNotification] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [isEmailError, setIsEmailError] = useState<boolean>(false);
+  const [isPasswordError, setIsPasswordError] = useState<boolean>(false);
 
   const history = useHistory();
   const { t } = useTranslation();
@@ -31,41 +33,35 @@ const SignIn = () => {
 
         switch (error.code) {
           case signInErrorCodes.ERROR_INVALID_EMAIL:
-            tempNotification("Ugyldig e-post", 3000);
-            setEmail("");
+            setErrorMessage("Ugyldig e-post");
+            setIsEmailError(true);
+            setIsPasswordError(false);
             break;
 
           case signInErrorCodes.ERROR_USER_NOT_FOUND:
-            tempNotification("Det finnes ingen brukere med den e-posten", 3000);
-            setEmail("");
-            setPassword("");
+            setErrorMessage("Det finnes ingen brukere med den e-posten");
+            setIsEmailError(true);
+            setIsPasswordError(false);
             break;
 
           case signInErrorCodes.ERROR_WRONG_PASSWORD:
-            tempNotification("Feil passord", 3000);
-            setPassword("");
+            setErrorMessage("Feil passord");
+            setIsEmailError(false);
+            setIsPasswordError(true);
             break;
 
           default:
-            tempNotification("Noe gikk galt", 3000);
-            setEmail("");
-            setPassword("");
+            setErrorMessage("Noe gikk galt");
+            setIsEmailError(true);
+            setIsPasswordError(true);
             break;
         }
+        setPassword("");
       });
   };
 
   const handleEmailChange = (event: any) => setEmail(event.target.value);
   const handlePasswordChange = (event: any) => setPassword(event.target.value);
-
-  // TODO: Duplicate code, same as in register.tsx. How can it be removed?
-  const tempNotification = (message: string, duration: number) => {
-    setNotification(message);
-
-    setTimeout(() => {
-      setNotification("");
-    }, duration);
-  };
 
   return (
     <>
@@ -79,8 +75,8 @@ const SignIn = () => {
               label={t("label_email")}
               onChange={handleEmailChange}
               size={InputFieldSize.SMALL}
-              errorText="Litt dårlig epost"
-              errorSerious
+              errorSerious={!!errorMessage}
+              errorText={isEmailError ? errorMessage : undefined}
             />
 
             <InputField
@@ -89,12 +85,12 @@ const SignIn = () => {
               label="Passord"
               onChange={handlePasswordChange}
               size={InputFieldSize.SMALL}
+              errorSerious={!!errorMessage}
+              errorText={isPasswordError ? errorMessage : undefined}
             />
 
             <SubmitButton label={t("label_sign_in")} />
           </FormContainer>
-
-          <h4> {notification} </h4>
         </CardBody>
       </CardContainer>
     </>

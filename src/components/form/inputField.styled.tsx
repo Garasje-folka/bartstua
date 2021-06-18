@@ -1,11 +1,14 @@
 import { Form } from "react-bootstrap";
 import styled, { css } from "styled-components";
-import { theme } from "../../theme";
 import { InputFieldSize } from "./inputField";
 
-export const Error = styled.div`
-  color: ${(props: { serious?: boolean }) =>
-    props.serious ? theme.form.colors.ERROR : theme.form.colors.WARNING};
+interface ErrorProps {
+  serious?: boolean;
+}
+
+export const Error = styled.div<ErrorProps>`
+  color: ${({ serious, theme }) =>
+    serious ? theme.form.colors.ERROR : theme.form.colors.WARNING};
 `;
 
 const getMaxWidth = (size: InputFieldSize) => {
@@ -19,17 +22,28 @@ const getMaxWidth = (size: InputFieldSize) => {
 };
 
 export const StyledFormGroup = styled(Form.Group)`
-  margin-bottom: ${theme.alignment.margin.REGULAR};
-  margin-top: ${theme.alignment.margin.REGULAR};
+  margin-bottom: ${({ theme }) => theme.alignment.margin.REGULAR};
+  margin-top: ${({ theme }) => theme.alignment.margin.REGULAR};
   max-width: ${(props: { size: InputFieldSize }) => getMaxWidth(props.size)};
 `;
 
-export const StyledFormControl = styled(Form.Control)`
-  ${(props: { isError: boolean; serious: boolean }) =>
-    props.isError &&
+interface StyledFormControlProps {
+  $isError: boolean;
+  $serious: boolean;
+}
+
+export const StyledFormControl = styled(Form.Control)<StyledFormControlProps>`
+  ${({ $isError, $serious, theme }) =>
+    $isError &&
     css`
-      border-color: ${props.serious
+      border-color: ${$serious
         ? theme.form.colors.ERROR
         : theme.form.colors.WARNING};
+
+      &: focus {
+        border-color: ${props.serious
+          ? theme.form.colors.ERROR
+          : theme.form.colors.WARNING};
+      }
     `}
 `;

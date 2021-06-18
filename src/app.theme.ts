@@ -1,4 +1,4 @@
-export const theme = {
+export const themeConfig = {
   colorPalette: {
     primary: {
       default: "#0a58ca",
@@ -27,3 +27,5 @@ export const theme = {
     },
   },
 };
+
+export const Theme = typeof themeConfig;
