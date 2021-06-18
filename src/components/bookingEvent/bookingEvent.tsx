@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { addBooking } from "../../services/bookingManagement";
 import { MAX_EVENT_SPACES } from "../../services/bookingManagement/constants";
-import { getEvent } from "../../services/bookingManagement/getEvent";
+import {
+  getEvent,
+  subscribeEvent,
+} from "../../services/bookingManagement/getEvent";
 import { Heading, HeadingTypes } from "../text";
 import { SessionContainer } from ".";
 import { DateHour } from "../../services/bookingManagement/interfaces";
@@ -24,10 +27,9 @@ const BookingEvent = (props: BookingEventProps) => {
   };
 
   const fetchData = () => {
-    getEvent(dateHour).then((snapshot) => {
-      if (snapshot.exists) {
-        const spacesTaken = snapshot.get("spacesTaken");
-        setSpaceLeft(MAX_EVENT_SPACES - spacesTaken);
+    subscribeEvent(dateHour, (event) => {
+      if (event) {
+        setSpaceLeft(MAX_EVENT_SPACES - event.spacesTaken);
       } else {
         setSpaceLeft(MAX_EVENT_SPACES);
       }
@@ -36,7 +38,7 @@ const BookingEvent = (props: BookingEventProps) => {
 
   useEffect(() => {
     fetchData();
-  });
+  }, []);
 
   const handleBooking = () => {
     addBooking(dateHour, 1).then(() => {
