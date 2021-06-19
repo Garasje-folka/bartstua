@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { addBooking } from "../../services/bookingManagement";
 import { MAX_EVENT_SPACES } from "../../services/bookingManagement/constants";
-import {
-  getEvent,
-  subscribeEvent,
-} from "../../services/bookingManagement/getEvent";
+import { subscribeEvent } from "../../services/bookingManagement/getEvent";
 import { Heading, HeadingTypes } from "../text";
 import { SessionContainer } from ".";
-import { DateHour } from "../../services/bookingManagement/interfaces";
+import {
+  DateHour,
+  EventDoc,
+} from "../../services/bookingManagement/interfaces";
 
 interface BookingEventProps {
   dateHour: DateHour;
@@ -26,24 +26,26 @@ const BookingEvent = (props: BookingEventProps) => {
     );
   };
 
-  const fetchData = () => {
-    subscribeEvent(dateHour, (event) => {
-      if (event) {
-        setSpaceLeft(MAX_EVENT_SPACES - event.spacesTaken);
-      } else {
-        setSpaceLeft(MAX_EVENT_SPACES);
-      }
-    });
+  const handleEventUpdate = (event: EventDoc | undefined) => {
+    if (event) {
+      setSpaceLeft(MAX_EVENT_SPACES - event.spacesTaken);
+    } else {
+      setSpaceLeft(MAX_EVENT_SPACES);
+    }
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    const unsubscribe = subscribeEvent(dateHour, (event) => {
+      handleEventUpdate(event);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dateHour]);
 
   const handleBooking = () => {
-    addBooking(dateHour, 1).then(() => {
-      fetchData();
-    });
+    addBooking(dateHour, 1);
   };
 
   return (

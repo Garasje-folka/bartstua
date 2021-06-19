@@ -5,6 +5,7 @@ import { DateDay } from "../services/bookingManagement/interfaces";
 import createDateDayFromDate from "../services/bookingManagement/helpers/createDateDay";
 import { Button } from "../components/button";
 import addToDateDay from "../services/bookingManagement/helpers/addToDateDay";
+import parseDateDay from "../services/bookingManagement/helpers/parseDateDay";
 
 const Booking: React.FC = () => {
   const [startDay, setStartDay] = useState<DateDay>(
@@ -23,7 +24,7 @@ const Booking: React.FC = () => {
       const offsetDay = addToDateDay(startDay, i);
 
       bookingDates.push(
-        <Col key={i}>
+        <Col key={parseDateDay(offsetDay, true, true, true)}>
           <BookingDay dateDay={offsetDay} />
         </Col>
       );

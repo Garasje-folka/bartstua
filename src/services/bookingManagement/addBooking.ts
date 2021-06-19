@@ -1,10 +1,12 @@
 import { firestore, auth } from "../fireConfig";
 import { createError } from "../userManagement/helpers/createError";
 import { MAX_EVENT_SPACES, EVENTS, BOOKINGS } from "./constants";
-import { getEventId } from "./getEventId";
+import { getEvent } from "./getEvent";
 import { DateHour } from "./interfaces";
 
-const addBooking = async (dateHour: DateHour, spacesRequested: number) => {
+// TODO: Add proper error handling
+
+const addBooking = async (date: DateHour, spacesRequested: number) => {
   const user = auth.currentUser;
 
   // TODO: Throw error instead
@@ -14,8 +16,10 @@ const addBooking = async (dateHour: DateHour, spacesRequested: number) => {
   if (spacesRequested <= 0) return;
 
   try {
-    const eventId = getEventId(dateHour);
-    const eventRef = firestore.collection(EVENTS).doc(eventId);
+    const event = await getEvent(date);
+    const eventRef = event
+      ? firestore.collection(EVENTS).doc(event.id)
+      : firestore.collection(EVENTS).doc();
 
     await firestore.runTransaction((transaction) => {
       return transaction.get(eventRef).then((docSnapshot) => {
@@ -32,12 +36,13 @@ const addBooking = async (dateHour: DateHour, spacesRequested: number) => {
 
         transaction.set(newBookingRef, {
           uid: user.uid,
-          eventid: eventId,
+          eventid: eventRef.id,
           spaces: spacesRequested,
         });
 
         if (!docSnapshot.exists) {
           transaction.set(eventRef, {
+            ...date,
             spacesTaken: spacesRequested,
           });
         } else {
