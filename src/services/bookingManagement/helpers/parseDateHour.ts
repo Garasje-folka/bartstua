@@ -1,4 +1,4 @@
-import { DateHour } from "../interfaces";
+import { DateHour } from "../types";
 import parseDateDay from "./parseDateDay";
 
 const parseDateHour = (

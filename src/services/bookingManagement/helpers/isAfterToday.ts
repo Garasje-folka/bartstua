@@ -1,4 +1,4 @@
-import { DateDay } from "../interfaces";
+import { DateDay } from "../types";
 
 const isAfterToday = (dateDay: DateDay) => {
   const currentDate = new Date();

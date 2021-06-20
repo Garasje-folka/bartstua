@@ -1,4 +1,4 @@
-import { DateDay } from "../interfaces";
+import { DateDay } from "../types";
 
 const createDateDayFromDate = (date: Date): DateDay => {
   return {

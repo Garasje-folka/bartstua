@@ -4,10 +4,7 @@ import { MAX_EVENT_SPACES } from "../../services/bookingManagement/constants";
 import { subscribeEvent } from "../../services/bookingManagement/getEvent";
 import { Heading, HeadingTypes } from "../text";
 import { SessionContainer } from ".";
-import {
-  DateHour,
-  EventDoc,
-} from "../../services/bookingManagement/interfaces";
+import { DateHour, EventData } from "../../services/bookingManagement/types";
 
 interface BookingEventProps {
   dateHour: DateHour;
@@ -26,18 +23,21 @@ const BookingEvent = (props: BookingEventProps) => {
     );
   };
 
-  const handleEventUpdate = (event: EventDoc | undefined) => {
+  const handleEventUpdate = (
+    event: EventData | undefined,
+    hourInDay: number
+  ) => {
     if (event) {
-      setSpaceLeft(MAX_EVENT_SPACES - event.spacesTaken);
+      setSpaceLeft(MAX_EVENT_SPACES - event.spacesTakenByHours[hourInDay]);
     } else {
       setSpaceLeft(MAX_EVENT_SPACES);
     }
   };
 
   useEffect(() => {
-    const unsubscribe = subscribeEvent(dateHour, (event) => {
-      handleEventUpdate(event);
-    });
+    const unsubscribe = subscribeEvent(dateHour, (event) =>
+      handleEventUpdate(event, dateHour.hour)
+    );
 
     return () => {
       unsubscribe();
@@ -45,7 +45,10 @@ const BookingEvent = (props: BookingEventProps) => {
   }, [dateHour]);
 
   const handleBooking = () => {
-    addBooking(dateHour, 1);
+    addBooking({
+      date: dateHour,
+      spaces: 1,
+    });
   };
 
   return (

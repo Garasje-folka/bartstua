@@ -1,6 +1,5 @@
-export interface DateHour {
+export interface DateDay {
   year: number;
   month: number;
   day: number;
-  hour: number;
 }
