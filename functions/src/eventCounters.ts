@@ -4,6 +4,7 @@ import {
   BookingData,
   DateDay,
   DateHour,
+  duplicateEventData,
   EventData,
   initialEventData,
 } from "./types";
@@ -22,7 +23,36 @@ const dateDayToEventId = async (dateDay: DateDay) => {
   const eventData: EventData = initialEventData(dateDay);
 
   const newDocRef = await docRef.add(eventData);
+  functions.logger.info(
+    `Created a new event document with id "${newDocRef.id}"`
+  );
   return newDocRef.id;
+};
+
+const getEventData = async (
+  eventId: string,
+  transaction: FirebaseFirestore.Transaction
+) => {
+  const eventDocRef = admin.firestore().collection(EVENTS).doc(eventId);
+  const value = await transaction.get(eventDocRef);
+  const eventData = value.data() as EventData;
+  return eventData;
+};
+
+const updateSpacesTaken = async (
+  eventId: string,
+  previousEventData: EventData,
+  updatedEventData: EventData,
+  transaction: FirebaseFirestore.Transaction
+) => {
+  const eventDocRef = admin.firestore().collection(EVENTS).doc(eventId);
+
+  transaction.update(eventDocRef, {
+    spacesTakenByHours: updatedEventData.spacesTakenByHours,
+  });
+  functions.logger.info(
+    `Spaces in ${eventId} is updated from ${previousEventData.spacesTakenByHours} to ${updatedEventData.spacesTakenByHours}`
+  );
 };
 
 const regulateEventSpacesTaken = async (
@@ -30,18 +60,19 @@ const regulateEventSpacesTaken = async (
   hourInDay: number,
   additionValue: number
 ) => {
-  const eventDocRef = admin.firestore().collection(EVENTS).doc(eventId);
+  admin.firestore().runTransaction(async (transaction) => {
+    const previousEventData: EventData = await getEventData(
+      eventId,
+      transaction
+    );
+    const updatedEventData: EventData = duplicateEventData(previousEventData);
+    updatedEventData.spacesTakenByHours[hourInDay] += additionValue;
 
-  await admin.firestore().runTransaction(async (transaction) => {
-    const value = await transaction.get(eventDocRef);
-    const eventData = value.data() as EventData;
-    const newSpacesTaken = [...eventData.spacesTakenByHours];
-    newSpacesTaken[hourInDay] += additionValue;
-    transaction.update(eventDocRef, {
-      spacesTakenByHours: newSpacesTaken,
-    });
-    functions.logger.info(
-      `Spaces in ${eventId} is updated from ${eventData.spacesTakenByHours} to ${newSpacesTaken}`
+    updateSpacesTaken(
+      eventId,
+      previousEventData,
+      updatedEventData,
+      transaction
     );
   });
 };
@@ -57,7 +88,7 @@ export const incrementSpacesTakenOnBookingCreate = functions.firestore
   .onCreate(async (snapshot) => {
     const bookingData: BookingData = snapshot.data() as BookingData;
     const eventId = await dateDayToEventId(dateHourToDateDay(bookingData.date));
-    regulateEventSpacesTaken(
+    await regulateEventSpacesTaken(
       eventId,
       bookingData.date.hour,
       bookingData.spaces
@@ -69,7 +100,7 @@ export const decrementSpacesTakenOnBookingDelete = functions.firestore
   .onDelete(async (snapshot) => {
     const bookingData: BookingData = snapshot.data() as BookingData;
     const eventId = await dateDayToEventId(dateHourToDateDay(bookingData.date));
-    regulateEventSpacesTaken(
+    await regulateEventSpacesTaken(
       eventId,
       bookingData.date.hour,
       -bookingData.spaces
@@ -79,24 +110,73 @@ export const decrementSpacesTakenOnBookingDelete = functions.firestore
 export const adjustSpacesTakenOnBookingUpdate = functions.firestore
   .document("/bookings/{booking}")
   .onUpdate(async (change) => {
-    const oldBookingData = change.before.data() as BookingData;
-    const newBookingData = change.after.data() as BookingData;
+    const previousBookingData = change.before.data() as BookingData;
+    const updatedBookingData = change.after.data() as BookingData;
 
-    const oldEventId = await dateDayToEventId(
-      dateHourToDateDay(oldBookingData.date)
+    const previousEventIdPromise = dateDayToEventId(
+      dateHourToDateDay(previousBookingData.date)
     );
-    const newEventId = await dateDayToEventId(
-      dateHourToDateDay(newBookingData.date)
+    const updatedEventIdPromise = dateDayToEventId(
+      dateHourToDateDay(updatedBookingData.date)
     );
 
-    regulateEventSpacesTaken(
-      oldEventId,
-      oldBookingData.date.hour,
-      -oldBookingData.spaces
-    );
-    regulateEventSpacesTaken(
-      newEventId,
-      newBookingData.date.hour,
-      newBookingData.spaces
-    );
+    const [previousEventId, updatedEventId] = await Promise.all([
+      previousEventIdPromise,
+      updatedEventIdPromise,
+    ]);
+
+    admin.firestore().runTransaction(async (transaction) => {
+      if (previousEventId === updatedEventId) {
+        // If same event-document, prevents dirty read
+        const previousEventData = await getEventData(
+          previousEventId,
+          transaction
+        );
+        const updatedEventData = duplicateEventData(previousEventData);
+        updatedEventData.spacesTakenByHours[previousBookingData.date.hour] -=
+          previousBookingData.spaces;
+        updatedEventData.spacesTakenByHours[updatedBookingData.date.hour] +=
+          updatedBookingData.spaces;
+
+        await updateSpacesTaken(
+          previousEventId,
+          previousEventData,
+          updatedEventData,
+          transaction
+        );
+      } else {
+        // Removing counts from old eventData for the booking
+        const previousOldEventData = await getEventData(
+          previousEventId,
+          transaction
+        );
+        const previousNewEventData = duplicateEventData(previousOldEventData);
+        previousNewEventData.spacesTakenByHours[
+          previousBookingData.date.hour
+        ] -= previousBookingData.spaces;
+
+        // Adding counts to new eventData for the booking
+        const updatedOldEventData = await getEventData(
+          updatedEventId,
+          transaction
+        );
+        const updatedNewEventData = duplicateEventData(updatedOldEventData);
+        updatedNewEventData.spacesTakenByHours[updatedBookingData.date.hour] +=
+          updatedBookingData.spaces;
+
+        // Executes update on both old and new eventData
+        await updateSpacesTaken(
+          previousEventId,
+          previousOldEventData,
+          previousNewEventData,
+          transaction
+        );
+        updateSpacesTaken(
+          updatedEventId,
+          updatedOldEventData,
+          updatedNewEventData,
+          transaction
+        );
+      }
+    });
   });

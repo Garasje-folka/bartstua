@@ -1,4 +1,4 @@
-import { DateDay } from "./dateDay";
+import { DateDay, duplicateDateDay } from "./dateDay";
 
 export interface EventData {
   spacesTakenByHours: [
@@ -38,3 +38,8 @@ export const initialEventData = (dateDay: DateDay): EventData => {
     ],
   };
 };
+
+export const duplicateEventData = (oldEventData: EventData): EventData => ({
+  date: duplicateDateDay(oldEventData.date),
+  spacesTakenByHours: { ...oldEventData.spacesTakenByHours },
+});

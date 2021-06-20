@@ -3,3 +3,7 @@ export interface DateDay {
   month: number;
   day: number;
 }
+
+export const duplicateDateDay = (oldDateDay: DateDay): DateDay => ({
+  ...oldDateDay,
+});
