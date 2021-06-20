@@ -1,45 +1,18 @@
-import { DateDay, duplicateDateDay } from "./dateDay";
+import { DateHour, duplicateDateHour } from "./dateHour";
 
 export interface EventData {
-  spacesTakenByHours: [
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number
-  ];
-  date: DateDay;
+  spacesTaken: number;
+  date: DateHour;
 }
 
-export const initialEventData = (dateDay: DateDay): EventData => {
+export const initialEventData = (dateHour: DateHour): EventData => {
   return {
-    date: dateDay,
-    spacesTakenByHours: [
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    ],
+    date: dateHour,
+    spacesTaken: 0,
   };
 };
 
 export const duplicateEventData = (oldEventData: EventData): EventData => ({
-  date: duplicateDateDay(oldEventData.date),
-  spacesTakenByHours: { ...oldEventData.spacesTakenByHours },
+  ...oldEventData,
+  date: duplicateDateHour(oldEventData.date),
 });

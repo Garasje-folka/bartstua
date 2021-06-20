@@ -1,4 +1,4 @@
 export interface Doc<T> {
-  uid: string;
+  id: string;
   data: T;
 }

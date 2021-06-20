@@ -45,7 +45,8 @@
     "eject": "react-scripts eject",
     "postinstall": "husky install",
     "emulators": "concurrently -m 1 --kill-others \"yarn install-functions\" \"yarn build-functions\" \"firebase emulators:start\" ",
-    "emu": "yarn emulators"
+    "emu": "yarn emulators",
+    "compile-rules": "fireward -i firestore.rules.ward > firestore.rules"
   },
   "eslintConfig": {
     "extends": [
@@ -70,6 +71,7 @@
   },
   "devDependencies": {
     "concurrently": "^6.2.0",
+    "fireward": "^1.6.0",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "2.3.1"

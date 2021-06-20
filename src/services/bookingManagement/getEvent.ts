@@ -4,16 +4,8 @@ import firebase, { firestore } from "../fireConfig";
 
 // TODO: Add error handling
 
-const getEventQueryRef = (date: DateDay) => {
-  const filteredDate: DateDay = {
-    day: date.day,
-    month: date.month,
-    year: date.year,
-  };
-  return firestore
-    .collection(EVENTS)
-    .where("date", "==", filteredDate)
-    .limit(1);
+const getEventQueryRef = (date: DateHour) => {
+  return firestore.collection(EVENTS).where("date", "==", date).limit(1);
 };
 
 const querySnapshotToEventDoc = (
@@ -23,7 +15,7 @@ const querySnapshotToEventDoc = (
 
   const doc = querySnapshot.docs[0];
   return {
-    uid: doc.id,
+    id: doc.id,
     data: doc.data() as EventData,
   } as Doc<EventData>;
 };

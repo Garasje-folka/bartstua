@@ -1,0 +1,62 @@
+rules_version = '2';
+
+type DateHour = {
+  hour: int,
+  year: int,
+  month: int,
+  day: int,
+}
+
+type EventData = {
+  spacesTaken: int,
+  date: DateHour,
+}
+
+type BookingData = {
+  date: DateHour,
+  spaces: int,
+  uid: string,
+}
+
+function maximumAvailableSpaces() {
+  return 10;
+}
+
+function isAuthenticated() { 
+  let a = request.auth;
+  return a!=null; 
+}
+
+function isBookedByCurrentUser(bookingId) { 
+  return exist(/databases/$(database)/documents/bookings/$(bookingId))
+  && (get(/databases/$(database)/documents/bookings/$(bookingId)).data.uid == request.auth.uid)
+}
+
+function isEventSpacesAvailable(spaces, eventId) {
+  return (spaces <= maximumAvailableSpaces())
+  && (
+    (!exist(/databases/$(database)/documents/events/$(eventId)))
+    || 
+    (
+      ((get(/databases/$(database)/documents/events/$(eventId)).data.spacesTaken + spaces) <= maximumAvailableSpaces())
+    )
+  )
+}
+
+function dataContainsUid(bookingId) { 
+  return request.resource.data.uid == request.auth.uid
+}
+
+//match /{document=**} {
+//    allow read, write: if true;
+//}
+match /events/{eventDoc} is EventData{
+  allow read: true;
+}
+match /bookings/{bookingDoc} is BookingData {
+  allow read: isBookedByCurrentUser(bookingDoc);
+  allow create: dataContainsUid(bookingDoc) 
+  //&& isEventSpacesAvailable(request.data.spaces, bookingDoc);
+}
+
+

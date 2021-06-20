@@ -5,12 +5,15 @@ import { subscribeEvent } from "../../services/bookingManagement/getEvent";
 import { Heading, HeadingTypes } from "../text";
 import { SessionContainer } from ".";
 import { DateHour, EventData } from "../../services/bookingManagement/types";
+import { useSelector } from "react-redux";
+import { currentUserSelector } from "../../redux/selectors";
 
 interface BookingEventProps {
   dateHour: DateHour;
 }
 
 const BookingEvent = (props: BookingEventProps) => {
+  const currentUser = useSelector(currentUserSelector);
   const [spaceLeft, setSpaceLeft] = useState<number | undefined>(undefined);
   const { dateHour } = props;
 
@@ -28,7 +31,7 @@ const BookingEvent = (props: BookingEventProps) => {
     hourInDay: number
   ) => {
     if (event) {
-      setSpaceLeft(MAX_EVENT_SPACES - event.spacesTakenByHours[hourInDay]);
+      setSpaceLeft(MAX_EVENT_SPACES - event.spacesTaken);
     } else {
       setSpaceLeft(MAX_EVENT_SPACES);
     }
@@ -45,9 +48,12 @@ const BookingEvent = (props: BookingEventProps) => {
   }, [dateHour]);
 
   const handleBooking = () => {
+    if (!currentUser) return;
+
     addBooking({
       date: dateHour,
       spaces: 1,
+      uid: currentUser.uid,
     });
   };
 
