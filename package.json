@@ -38,12 +38,13 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "update-functions": "cd functions && npm run build",
+    "build-functions": "cd functions && npm run build",
+    "install-functions": "cd functions && npm install",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "postinstall": "husky install",
-    "emulators": "concurrently -m 1 --kill-others \"yarn update-functions\" \"firebase emulators:start\" ",
+    "emulators": "concurrently -m 1 --kill-others \"yarn install-functions\" \"yarn build-functions\" \"firebase emulators:start\" ",
     "emu": "yarn emulators"
   },
   "eslintConfig": {
