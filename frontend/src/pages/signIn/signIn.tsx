@@ -1,11 +1,21 @@
 import { useState, FormEvent } from "react";
 import { useHistory } from "react-router";
-import { FormContainer, InputField, SubmitButton } from "../components/form";
-import { userManagement } from "../services";
-import { CardContainer, CardHeader, CardBody } from "../components/card";
-import { HOME } from "../router/routeConstants";
+import { FormContainer, InputField, SubmitButton } from "../../components/form";
+import { userManagement } from "../../services";
+import { CardContainer, CardHeader, CardBody } from "../../components/card";
+import { HOME } from "../../router/routeConstants";
 import { useTranslation } from "react-i18next";
-import { InputFieldSize } from "../components/form/inputField";
+import { InputFieldSize } from "../../components/form/inputField";
+import { Button } from "../../components/button";
+import {
+  Background,
+  LeftContainer,
+  CenterContainer,
+  HeadingContainer,
+  ActionsContainer,
+} from "./signIn.styled";
+import { Heading } from "../../components/text";
+import { SignInButton } from "./signIn.styled";
 
 // TODO: Getting a bad request error when trying to log in with a valid email, but wrong password.
 
@@ -65,34 +75,47 @@ const SignIn = () => {
 
   return (
     <>
-      <CardContainer>
-        <CardHeader title={t("label_sign_in")} />
-        <CardBody>
-          <FormContainer onSubmit={handleSubmit}>
-            <InputField
-              type="email"
-              value={email}
-              label={t("label_email")}
-              onChange={handleEmailChange}
-              size={InputFieldSize.SMALL}
-              errorSerious={!!errorMessage}
-              errorText={isEmailError ? errorMessage : undefined}
-            />
+      <Background>
+        <LeftContainer>
+          <CenterContainer>
+            <HeadingContainer>
+              <Heading type={Heading.types.HEADING1}>
+                {t("label_bartstua")}
+              </Heading>
+              <Heading type={Heading.types.HEADING3}>
+                {t("label_bartstua_quote")}
+              </Heading>
+            </HeadingContainer>
+            <ActionsContainer>
+              <SignInButton>{t("label_sign_in")}</SignInButton>
+            </ActionsContainer>
+          </CenterContainer>
+        </LeftContainer>
+      </Background>
 
-            <InputField
-              type="password"
-              value={password}
-              label="Passord"
-              onChange={handlePasswordChange}
-              size={InputFieldSize.SMALL}
-              errorSerious={!!errorMessage}
-              errorText={isPasswordError ? errorMessage : undefined}
-            />
+      {/* <FormContainer onSubmit={handleSubmit}>
+        <InputField
+        type="email"
+        value={email}
+        label={t("label_email")}
+        onChange={handleEmailChange}
+          size={InputFieldSize.SMALL}
+          errorSerious={!!errorMessage}
+          errorText={isEmailError ? errorMessage : undefined}
+        />
 
-            <SubmitButton label={t("label_sign_in")} />
-          </FormContainer>
-        </CardBody>
-      </CardContainer>
+        <InputField
+          type="password"
+          value={password}
+          label="Passord"
+          onChange={handlePasswordChange}
+          size={InputFieldSize.SMALL}
+          errorSerious={!!errorMessage}
+          errorText={isPasswordError ? errorMessage : undefined}
+        />
+
+        <SubmitButton label={t("label_sign_in")} />
+      </FormContainer> */}
     </>
   );
 };

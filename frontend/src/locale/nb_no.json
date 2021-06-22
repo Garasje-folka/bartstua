@@ -12,5 +12,7 @@
   "text_email_already_used": "E-posten er allerede i bruk",
   "text_email_not_valid": "E-posten er ikke gyldig",
   "text_password_too_weak": "Passordet er for svakt",
-  "text_something_went_wrong": "Noe gikk galt"
+  "text_something_went_wrong": "Noe gikk galt",
+  "label_bartstua": "Bartstua",
+  "label_bartstua_quote": "QUOTE"
 }
