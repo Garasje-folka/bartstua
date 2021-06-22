@@ -13,17 +13,9 @@ import {
   CenterContainer,
   HeadingContainer,
   ActionsContainer,
-  RightContainer,
-  SignInContainer,
-  SignInHeader,
-  SignInLabel,
-  EmailField,
-  PasswordField,
-  SignInBottom,
 } from "./signIn.styled";
 import { Heading } from "../../components/text";
 import { SignInButton } from "./signIn.styled";
-import { createEmitAndSemanticDiagnosticsBuilderProgram } from "typescript";
 
 // TODO: Getting a bad request error when trying to log in with a valid email, but wrong password.
 
@@ -95,26 +87,10 @@ const SignIn = () => {
               </Heading>
             </HeadingContainer>
             <ActionsContainer>
-              <SignInButton>{t("label_register_user")}</SignInButton>
+              <SignInButton>{t("label_sign_in")}</SignInButton>
             </ActionsContainer>
           </CenterContainer>
         </LeftContainer>
-        <RightContainer>
-          <SignInContainer>
-            <SignInHeader>
-              <SignInLabel>
-                <Heading type={Heading.types.HEADING1}>
-                  {t("label_sign_in")}
-                </Heading>
-              </SignInLabel>
-            </SignInHeader>
-            <EmailField ghostText="E-post" />
-            <PasswordField ghostText="Passord" />
-            <SignInBottom>
-              <SignInButton>{t("label_sign_in")}</SignInButton>
-            </SignInBottom>
-          </SignInContainer>
-        </RightContainer>
       </Background>
 
       {/* <FormContainer onSubmit={handleSubmit}>
