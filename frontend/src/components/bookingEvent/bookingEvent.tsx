@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { addReservation } from "../../services/bookingManagement";
 import { MAX_EVENT_SPACES } from "../../services/bookingManagement/constants";
 import { subscribeEvent } from "../../services/bookingManagement";
-import { Heading, HeadingTypes } from "../text";
+import { Heading } from "../text";
 import { SessionContainer } from ".";
 import { DateHour, EventData } from "utils";
 import { useSelector } from "react-redux";
@@ -65,7 +65,7 @@ const BookingEvent = (props: BookingEventProps) => {
     <>
       {spaceLeft !== undefined && (
         <SessionContainer onClick={handleBooking}>
-          <Heading type={HeadingTypes.HEADING4}>{dateToHourRange()}</Heading>
+          <Heading type={Heading.types.HEADING4}>{dateToHourRange()}</Heading>
           {"Ledige plasser: " + spaceLeft}
         </SessionContainer>
       )}
