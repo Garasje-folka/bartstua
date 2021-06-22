@@ -11,6 +11,7 @@ export const themeConfig = {
     margin: {
       REGULAR: "10px",
       LARGE: "30px",
+      EXTRA_LARGE: "60px",
     },
   },
   page: {
