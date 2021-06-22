@@ -1,8 +1,8 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { BookingData, DateHour, EventData, initialEventData } from "./types";
+import { EVENTS } from "./constants";
 
-const EVENTS = "events";
 admin.initializeApp();
 
 const dateHourToEventId = async (dateHour: DateHour) => {

@@ -1,3 +1,4 @@
+import firebase from "firebase";
 import { firestore, auth } from "../fireConfig";
 import { createError } from "../userManagement/helpers/createError";
 import { BOOKINGS, EVENTS, MAX_EVENT_SPACES } from "./constants";
@@ -7,6 +8,10 @@ import { BookingData } from "./types";
 // TODO: Add proper error handling
 
 const addBooking = async (booking: BookingData) => {
+  const call = firebase.functions().httpsCallable("addBooking");
+  call(booking);
+
+  /*
   const user = auth.currentUser;
 
   // TODO: Throw error instead
@@ -39,6 +44,7 @@ const addBooking = async (booking: BookingData) => {
       console.log(error);
     }
   });
+  */
 };
 
 export { addBooking };
