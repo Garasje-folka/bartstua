@@ -1,5 +1,5 @@
 import { auth } from "../fireConfig";
-import { userManagementErrors, USER_MANAGEMENT } from "./constants";
+import { userManagementErrorCodes, USER_MANAGEMENT } from "./constants";
 import { createError } from "./helpers/createError";
 
 const signInErrorCodes = {
@@ -7,7 +7,7 @@ const signInErrorCodes = {
   ERROR_USER_DISABLED: USER_MANAGEMENT + "/user-disabled",
   ERROR_USER_NOT_FOUND: USER_MANAGEMENT + "/user-not-found",
   ERROR_WRONG_PASSWORD: USER_MANAGEMENT + "/wrong-password",
-  ERROR_UNKNOWN: userManagementErrors.ERROR_UNKNOWN,
+  ERROR_UNKNOWN: userManagementErrorCodes.ERROR_UNKNOWN,
 };
 
 const signInWithEmailAndPassword = async (email: string, password: string) => {

@@ -1,2 +1,1 @@
-import { User } from "./user";
-export type { User };
+export * from "./user";

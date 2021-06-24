@@ -1,2 +1,3 @@
 import * as userManagement from "./userManagement";
-export { userManagement };
+import * as bookingManagement from "./bookingManagement";
+export { userManagement, bookingManagement };

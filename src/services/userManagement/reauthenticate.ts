@@ -1,11 +1,11 @@
 import firebase from "../fireConfig";
-import { userManagementErrors, USER_MANAGEMENT } from "./constants";
+import { userManagementErrorCodes, USER_MANAGEMENT } from "./constants";
 import { createError } from "./helpers/createError";
 
 const reauthenticateErrorCodes = {
-  ERROR_NO_USER: userManagementErrors.ERROR_NO_USER,
+  ERROR_NO_USER: userManagementErrorCodes.ERROR_NO_USER,
   ERROR_WRONG_PASSWORD: USER_MANAGEMENT + "/wrong-password",
-  ERROR_UNKNOWN: userManagementErrors.ERROR_UNKNOWN,
+  ERROR_UNKNOWN: userManagementErrorCodes.ERROR_UNKNOWN,
 };
 
 const reauthenticate = async (password: string) => {

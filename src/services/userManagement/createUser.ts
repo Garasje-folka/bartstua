@@ -1,5 +1,5 @@
 import { auth } from "../fireConfig";
-import { USER_MANAGEMENT, userManagementErrors } from "./constants";
+import { USER_MANAGEMENT, userManagementErrorCodes } from "./constants";
 import { createError } from "./helpers/createError";
 // TODO: Add stronger password validation
 
@@ -8,7 +8,7 @@ const createUserErrorCodes = {
   ERROR_EMAIL_NOT_VALID: USER_MANAGEMENT + "/invalid-email",
   ERROR_WEAK_PASSWORD: USER_MANAGEMENT + "/weak-password",
   ERROR_UNSUPPORTED_OPERATION: USER_MANAGEMENT + "/operation-not-allowed",
-  ERROR_UNKNOWN: userManagementErrors.ERROR_UNKNOWN,
+  ERROR_UNKNOWN: userManagementErrorCodes.ERROR_UNKNOWN,
 };
 
 const createUserWithEmailAndPassword = async (

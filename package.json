@@ -16,9 +16,11 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.10",
     "bootstrap": "^5.0.1",
+    "daypilot-pro-react": "https://npm.daypilot.org/daypilot-pro-react/trial/2020.4.4807.tar.gz",
     "email-validator": "^2.0.4",
     "firebase": "^8.6.1",
     "i18next": "^20.3.1",
+    "moment": "^2.29.1",
     "prettier-eslint": "^12.0.0",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.0",
@@ -36,10 +38,15 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "build-functions": "cd functions && npm run build",
+    "install-functions": "cd functions && npm install",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "emulators": "concurrently -m 1 --kill-others \"yarn install-functions\" \"yarn build-functions\" \"firebase emulators:start\" ",
+    "emu": "yarn emulators",
+    "compile-rules": "fireward -i firestore.rules.ward > firestore.rules"
   },
   "eslintConfig": {
     "extends": [
@@ -63,6 +70,8 @@
     "styled-components": "^5"
   },
   "devDependencies": {
+    "concurrently": "^6.2.0",
+    "fireward": "^1.6.0",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "2.3.1"

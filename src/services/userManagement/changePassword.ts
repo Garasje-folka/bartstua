@@ -1,12 +1,12 @@
 import { auth } from "../fireConfig";
 import { reauthenticate, reauthenticateErrorCodes } from "./";
-import { USER_MANAGEMENT, userManagementErrors } from "./constants";
+import { USER_MANAGEMENT, userManagementErrorCodes } from "./constants";
 import { createError } from "./helpers/createError";
 
 const changePasswordErrorCodes = {
   ...reauthenticateErrorCodes,
   ERROR_WEAK_PASSWORD: USER_MANAGEMENT + "/weak-password",
-  ERROR_UNKNOWN: userManagementErrors.ERROR_UNKNOWN,
+  ERROR_UNKNOWN: userManagementErrorCodes.ERROR_UNKNOWN,
 };
 
 const changePassword = async (currentPassword: string, newPassword: string) => {

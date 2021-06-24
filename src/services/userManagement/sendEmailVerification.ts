@@ -1,10 +1,10 @@
 import { auth } from "../fireConfig";
-import { userManagementErrors } from "./constants";
+import { userManagementErrorCodes } from "./constants";
 import { createError } from "./helpers/createError";
 
 const sendEmailVerificationErrorCodes = {
-  ERROR_NO_USER: userManagementErrors.ERROR_NO_USER,
-  ERROR_UNKNOWN: userManagementErrors.ERROR_UNKNOWN,
+  ERROR_NO_USER: userManagementErrorCodes.ERROR_NO_USER,
+  ERROR_UNKNOWN: userManagementErrorCodes.ERROR_UNKNOWN,
 };
 
 const sendEmailVerification = async () => {
