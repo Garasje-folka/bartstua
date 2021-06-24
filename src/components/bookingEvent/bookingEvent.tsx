@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { addBooking } from "../../services/bookingManagement";
 import { MAX_EVENT_SPACES } from "../../services/bookingManagement/constants";
-import { subscribeEvent } from "../../services/bookingManagement/getEvent";
+import { subscribeEvent } from "../../services/bookingManagement";
 import { Heading, HeadingTypes } from "../text";
 import { SessionContainer } from ".";
 import { DateHour, EventData } from "../../services/bookingManagement/types";

@@ -1,4 +1,4 @@
-import { DateHour, DateDay, EventData, Doc } from "./types";
+import { DateHour, EventData, Doc } from "./types";
 import { EVENTS } from "./constants";
 import firebase, { firestore } from "../fireConfig";
 
@@ -20,11 +20,6 @@ const querySnapshotToEventDoc = (
   } as Doc<EventData>;
 };
 
-const getEvent = async (date: DateHour) => {
-  const querySnapshot = await getEventQueryRef(date).get();
-  return querySnapshotToEventDoc(querySnapshot);
-};
-
 const subscribeEvent = (
   date: DateHour,
   callback: (event: EventData | undefined) => void
@@ -38,4 +33,4 @@ const subscribeEvent = (
   };
 };
 
-export { getEvent, subscribeEvent };
+export { subscribeEvent };
