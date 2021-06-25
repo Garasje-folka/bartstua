@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { addBooking } from "../../services/bookingManagement";
-import { MAX_EVENT_SPACES } from "../../services/bookingManagement/constants";
+import { MAX_EVENT_SPACES } from "../../shared/bookingManagement/constants";
 import { subscribeEvent } from "../../services/bookingManagement";
 import { Heading, HeadingTypes } from "../text";
 import { SessionContainer } from ".";
-import { DateHour, EventData } from "../../services/bookingManagement/types";
+import { DateHour, EventData } from "../../shared/bookingManagement/types";
 import { useSelector } from "react-redux";
 import { currentUserSelector } from "../../redux/selectors";
 
@@ -53,7 +53,7 @@ const BookingEvent = (props: BookingEventProps) => {
     addBooking({
       date: dateHour,
       spaces: 1,
-      uid: currentUser.uid,
+      //uid: currentUser.uid,
     });
   };
 

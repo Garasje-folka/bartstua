@@ -1,4 +1,4 @@
-import { DateHour } from "../types";
+import { DateHour } from "../../../shared/bookingManagement/types";
 import parseDateDay from "./parseDateDay";
 
 const parseDateHour = (

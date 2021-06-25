@@ -1,4 +1,4 @@
-import { DateDay } from "../types";
+import { DateDay } from "../../../shared/bookingManagement/types";
 
 const createDateDayFromDate = (date: Date): DateDay => {
   return {

@@ -1,5 +1,5 @@
-import { DateHour, EventData, Doc } from "./types";
-import { EVENTS } from "./constants";
+import { DateHour, EventData, Doc } from "../../shared/bookingManagement/types";
+import { EVENTS } from "../../shared/bookingManagement/constants";
 import firebase, { firestore } from "../fireConfig";
 
 // TODO: Add error handling

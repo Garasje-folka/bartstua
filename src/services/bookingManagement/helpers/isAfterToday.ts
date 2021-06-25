@@ -1,4 +1,4 @@
-import { DateDay } from "../types";
+import { DateDay } from "../../../shared/bookingManagement/types";
 
 const isAfterToday = (dateDay: DateDay) => {
   const currentDate = new Date();

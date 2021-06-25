@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BookingDay } from "../components/bookingDay/bookingDay";
 import { Container, Row, Col } from "react-bootstrap";
-import { DateDay } from "../services/bookingManagement/types";
+import { DateDay } from "../shared/bookingManagement/types";
 import createDateDayFromDate from "../services/bookingManagement/helpers/createDateDay";
 import { Button } from "../components/button";
 import addToDateDay from "../services/bookingManagement/helpers/addToDateDay";
