@@ -53,7 +53,7 @@ const BookingEvent = (props: BookingEventProps) => {
     addBooking({
       date: dateHour,
       spaces: 1,
-      //uid: currentUser.uid,
+      uid: currentUser.uid,
     });
   };
 
