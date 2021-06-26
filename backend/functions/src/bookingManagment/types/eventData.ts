@@ -1,9 +1,15 @@
-import { DateHour, duplicateDateHour } from "./dateHour";
+import { DateHour, dateHourSchema, duplicateDateHour } from "./dateHour";
+import * as yup from "yup";
 
-export interface EventData {
+export const eventDataSchema = yup.object({
+  spacesTaken: yup.number().required(),
+  date: dateHourSchema.required(),
+});
+
+export type EventData = {
   spacesTaken: number;
   date: DateHour;
-}
+};
 
 export const initialEventData = (dateHour: DateHour): EventData => {
   return {

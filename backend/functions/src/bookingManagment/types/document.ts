@@ -1,4 +1,4 @@
-export interface Doc<T> {
+export type Doc<T> = {
   id: string;
   data: T;
-}
+};
