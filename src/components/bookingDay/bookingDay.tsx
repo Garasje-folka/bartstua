@@ -1,7 +1,7 @@
 import { BOOKING_ENDING_TIME } from "../../shared/bookingManagement/constants";
-import { getEventStartingHour } from "../../services/bookingManagement";
-import { createDateHourFromDateDay } from "../../services/bookingManagement/helpers/createDateHour";
-import parseDateDay from "../../services/bookingManagement/helpers/parseDateDay";
+import { getEventStartingHour } from "../../shared/bookingManagement/helpers";
+import { createDateHourFromDateDay } from "../../shared/bookingManagement/helpers";
+import { parseDateDay } from "../../shared/bookingManagement/helpers/parseDateDay";
 import { DateDay } from "../../shared/bookingManagement/types";
 import { BookingEvent } from "../bookingEvent";
 import { Heading, HeadingTypes } from "../text";
