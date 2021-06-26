@@ -4,7 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { DateDay } from "../shared/bookingManagement/types";
 import { createDateDayFromDate } from "../shared/bookingManagement/helpers/createDateDay";
 import { Button } from "../components/button";
-import addToDateDay from "../shared/bookingManagement/helpers/addToDateDay";
+import { addToDateDay } from "../shared/bookingManagement/helpers";
 import { parseDateDay } from "../shared/bookingManagement/helpers";
 
 const Booking: React.FC = () => {
