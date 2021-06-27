@@ -4,7 +4,8 @@ import { getEvent } from "./getEvent";
 import { BOOKINGS, EVENTS, MAX_EVENT_SPACES } from "./constants";
 import { bookingDataSchema } from "./types";
 
-exports.addBooking = functions.https.onCall(async (data, context) => {
+export const addBooking = functions.https.onCall(async (data, context) => {
+  // Check data format
   try {
     await bookingDataSchema.validate(data);
   } catch (error) {
@@ -15,8 +16,17 @@ exports.addBooking = functions.https.onCall(async (data, context) => {
     );
   }
 
-  // TODO: User validation
+  // User authentication and validation
+  const auth = context.auth;
 
+  if (!auth || auth.uid !== data.uid || auth.token.uid !== auth.uid) {
+    throw new functions.https.HttpsError(
+      "unauthenticated",
+      "User is not authenticated"
+    );
+  }
+
+  // Transaction that adds booking to firestore
   // TODO: Don't think this is correct error handling...
   try {
     await admin.firestore().runTransaction(async (transaction) => {
@@ -33,7 +43,7 @@ exports.addBooking = functions.https.onCall(async (data, context) => {
 
       if (spacesTaken + data.spaces > MAX_EVENT_SPACES) {
         throw new functions.https.HttpsError(
-          "invalid-argument",
+          "failed-precondition",
           "Not enough space"
         );
       }
