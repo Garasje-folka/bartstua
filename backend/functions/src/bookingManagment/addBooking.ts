@@ -2,13 +2,24 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { getEvent } from "./getEvent";
 import { BOOKINGS, EVENTS, MAX_EVENT_SPACES } from "./constants";
+import { bookingDataSchema } from "./types";
 
-exports.addBooking = functions.https.onCall((data, context) => {
-  // TODO: Throw error instead
-  if (data.spaces <= 0) return;
+exports.addBooking = functions.https.onCall(async (data, context) => {
+  try {
+    await bookingDataSchema.validate(data);
+  } catch (error) {
+    console.log(error);
+    throw new functions.https.HttpsError(
+      "invalid-argument",
+      "Not the expected data format"
+    );
+  }
 
-  admin.firestore().runTransaction(async (transaction) => {
-    try {
+  // TODO: User validation
+
+  // TODO: Don't think this is correct error handling...
+  try {
+    await admin.firestore().runTransaction(async (transaction) => {
       const event = await getEvent(data.date);
 
       let spacesTaken: number = 0;
@@ -30,8 +41,8 @@ exports.addBooking = functions.https.onCall((data, context) => {
       const newBookingRef = admin.firestore().collection(BOOKINGS).doc();
 
       transaction.set(newBookingRef, data);
-    } catch (error) {
-      console.log(error);
-    }
-  });
+    });
+  } catch (error) {
+    throw error;
+  }
 });
