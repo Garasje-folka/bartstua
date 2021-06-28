@@ -3,17 +3,22 @@ import * as admin from "firebase-admin";
 import { getEvent } from "./getEvent";
 import { BOOKINGS, EVENTS, MAX_EVENT_SPACES } from "./constants";
 import { bookingDataSchema } from "./types";
+import isValidEventDate from "./helpers/isValidEventDate";
 
 export const addBooking = functions.https.onCall(async (data, context) => {
   // Check data format
   try {
     await bookingDataSchema.validate(data);
   } catch (error) {
-    console.log(error);
     throw new functions.https.HttpsError(
       "invalid-argument",
       "Not the expected data format"
     );
+  }
+
+  // Date validation
+  if (!isValidEventDate(data.date)) {
+    throw new functions.https.HttpsError("invalid-argument", "Invalid date");
   }
 
   // User authentication and validation
@@ -27,7 +32,7 @@ export const addBooking = functions.https.onCall(async (data, context) => {
   }
 
   // Transaction that adds booking to firestore
-  // TODO: Don't think this is correct error handling...
+  // TODO: Don't know if this is the correct way to catch the errors
   try {
     await admin.firestore().runTransaction(async (transaction) => {
       const event = await getEvent(data.date);
@@ -69,7 +74,6 @@ export const addBooking = functions.https.onCall(async (data, context) => {
       }
     });
   } catch (error) {
-    console.log(error);
     throw error;
   }
 });
