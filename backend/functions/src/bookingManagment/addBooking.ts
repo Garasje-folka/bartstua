@@ -31,11 +31,14 @@ export const addBooking = functions.https.onCall(async (data, context) => {
   try {
     await admin.firestore().runTransaction(async (transaction) => {
       const event = await getEvent(data.date);
+      let eventRef:
+        | FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
+        | undefined = undefined;
 
       let spacesTaken: number = 0;
 
       if (event) {
-        const eventRef = admin.firestore().collection(EVENTS).doc(event.id);
+        eventRef = admin.firestore().collection(EVENTS).doc(event.id);
         const docSnapshot = await transaction.get(eventRef);
 
         if (docSnapshot.exists) spacesTaken = docSnapshot.get("spacesTaken");
@@ -51,8 +54,22 @@ export const addBooking = functions.https.onCall(async (data, context) => {
       const newBookingRef = admin.firestore().collection(BOOKINGS).doc();
 
       transaction.set(newBookingRef, data);
+
+      // Increment event spaces counter
+      if (eventRef) {
+        transaction.update(eventRef, {
+          spacesTaken: admin.firestore.FieldValue.increment(data.spaces),
+        });
+      } else {
+        eventRef = admin.firestore().collection(EVENTS).doc();
+        transaction.set(eventRef, {
+          date: data.date,
+          spacesTaken: data.spaces,
+        });
+      }
     });
   } catch (error) {
+    console.log(error);
     throw error;
   }
 });
