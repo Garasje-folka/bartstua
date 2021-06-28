@@ -5,7 +5,11 @@ import { BookingData } from "./types";
 
 const addBooking = async (booking: BookingData) => {
   const call = firebase.functions().httpsCallable("addBooking");
-  call(booking);
+  try {
+    await call(booking);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export { addBooking };
