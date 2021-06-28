@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "yup": "^0.32.9"
+  },
+  "scripts": {
+    "build-functions": "cd functions && npm run build",
+    "install-functions": "cd functions && npm install",
+    "emulators": "concurrently -m 1 --kill-others \"yarn install-functions\" \"yarn build-functions\" \"firebase emulators:start\" ",
+    "emu": "yarn emulators",
+    "compile-rules": "fireward -i firestore.rules.ward > firestore.rules"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.0",
+    "fireward": "^1.6.0"
+  }
+}

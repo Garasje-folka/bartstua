@@ -1,5 +1,5 @@
 export * from "./dateDay";
 export * from "./dateHour";
-export * from "./bookingDoc";
-export * from "./eventDoc";
+export * from "./bookingData";
+export * from "./eventData";
 export * from "./document";

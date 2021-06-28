@@ -47,14 +47,18 @@ const BookingEvent = (props: BookingEventProps) => {
     };
   }, [dateHour]);
 
-  const handleBooking = () => {
+  const handleBooking = async () => {
     if (!currentUser) return;
 
-    addBooking({
-      date: dateHour,
-      spaces: 1,
-      uid: currentUser.uid,
-    });
+    try {
+      await addBooking({
+        date: dateHour,
+        spaces: 1,
+        uid: currentUser.uid,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

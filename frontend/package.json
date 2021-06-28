@@ -38,14 +38,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build-functions": "cd functions && npm run build",
-    "install-functions": "cd functions && npm install",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "emulators": "concurrently -m 1 --kill-others \"yarn install-functions\" \"yarn build-functions\" \"firebase emulators:start\" ",
-    "emu": "yarn emulators",
-    "compile-rules": "fireward -i firestore.rules.ward > firestore.rules"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -70,7 +65,6 @@
   },
   "devDependencies": {
     "concurrently": "^6.2.0",
-    "fireward": "^1.6.0",
     "lint-staged": "^11.0.0",
     "prettier": "2.3.1"
   },
