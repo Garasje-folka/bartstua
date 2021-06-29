@@ -95,7 +95,7 @@ const SignIn = () => {
               </Heading>
             </HeadingContainer>
             <ActionsContainer>
-              <SignInButton>{t("label_sign_in")}</SignInButton>
+              <SignInButton>{t("label_register_user")}</SignInButton>
             </ActionsContainer>
           </CenterContainer>
         </LeftContainer>
@@ -103,13 +103,13 @@ const SignIn = () => {
           <SignInContainer>
             <SignInHeader>
               <SignInLabel>
-                <Heading type = {Heading.types.HEADING1}>
+                <Heading type={Heading.types.HEADING1}>
                   {t("label_sign_in")}
                 </Heading>
               </SignInLabel>
             </SignInHeader>
-            <EmailField />
-            <PasswordField/>
+            <EmailField ghostText="E-post" />
+            <PasswordField ghostText="Passord" />
             <SignInBottom>
               <SignInButton>{t("label_sign_in")}</SignInButton>
             </SignInBottom>
