@@ -1,1 +1,1 @@
-export * from "shared";
+export * from "bartstua-shared";

@@ -1,8 +1,8 @@
 {
   "private": true,
   "workspaces": [
+    "bartstua-shared",
     "frontend",
-    "shared",
     "firestore",
     "functions"
   ],
