@@ -1,5 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Button } from "../../components/button";
+import { InputField } from "../../components/form";
 
 export const Background = styled.div`
   background-color: #04ffbb;
@@ -34,4 +35,45 @@ export const ActionsContainer = styled.div`
 
 export const SignInButton = styled(Button)`
   margin: auto;
+`;
+
+export const RightContainer = styled.div `
+  display: flex;
+  box-shadow: ${({ theme }) => theme.shadow.REGULAR};
+  display: flex;
+  flex-grow: 1;
+`;
+
+export const SignInContainer = styled.div `
+  margin: auto;
+  background-color: white;
+  min-width: 400px;
+  min-height: 500px;
+  padding: ${({ theme }) => theme.alignment.padding.LARGE};
+`;
+
+export const SignInHeader = styled.div`
+  min-height: 200px;
+  display: flex;
+`;
+
+export const SignInLabel = styled.div`
+  margin: auto;
+`;
+
+const InputFieldCommonStyle = css`
+
+`;
+
+export const EmailField = styled(InputField)`
+  
+`;
+
+export const PasswordField = styled(InputField)`
+`;
+
+export const SignInBottom = styled.div`
+  padding-right: ${({ theme }) => theme.alignment.padding.EXTRA_EXTRA_LARGE};
+  padding-top:  ${({ theme }) => theme.alignment.padding.REGULAR};
+  
 `;
