@@ -1,4 +1,4 @@
-import { User } from "../interfaces";
+import { User } from "shared/src/types";
 
 let userChangedCallback: ((user: User | null) => void) | null = null;
 

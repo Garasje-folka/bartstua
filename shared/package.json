@@ -1,0 +1,9 @@
+{
+  "name": "shared",
+  "version": "0.0.1",
+  "main": "index.ts",
+  "license": "MIT",
+  "dependencies": {
+    "yup": "^0.32.9"
+  }
+}

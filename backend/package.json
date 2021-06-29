@@ -1,16 +1,20 @@
 {
-  "dependencies": {
-    "yup": "^0.32.9"
-  },
+  "name": "backend",
+  "version": "0.0.1",
+  "private": true,
+  "workspaces": [
+    "functions",
+    "firstore"
+  ],
   "scripts": {
+    "start": "",
     "build-functions": "cd functions && npm run build",
     "install-functions": "cd functions && npm install",
-    "emulators": "concurrently -m 1 --kill-others \"yarn install-functions\" \"yarn build-functions\" \"firebase emulators:start\" ",
+    "emulators": "concurrently -m 1 --kill-others \"yarn workspace functions install\" \"yarn workspace functions build\" \"firebase emulators:start\" ",
     "emu": "yarn emulators",
     "compile-rules": "fireward -i firestore.rules.ward > firestore.rules"
   },
-  "devDependencies": {
-    "concurrently": "^6.2.0",
-    "fireward": "^1.6.0"
+  "dependencies": {
+    "concurrently": "^6.2.0"
   }
 }

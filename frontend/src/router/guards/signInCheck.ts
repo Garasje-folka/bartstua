@@ -1,5 +1,5 @@
 import { HOME, SIGNIN } from "../routeConstants";
-import { User } from "../../services/userManagement/interfaces";
+import { User } from "shared/src/types";
 import { GuardFunction } from "../types/guardFunction";
 
 const signInCheck: (

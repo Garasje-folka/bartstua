@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "shared",
+    "firestore",
+    "functions"
+  ],
+  "scripts": {
+    "start": "yarn workspace frontend start",
+    "emulators": "concurrently -m 1 --kill-others \"yarn workspace functions install\" \"yarn workspace functions build\" \"firebase emulators:start\" yarn workspace backend emulators"
+  },
+  "dependencies": {
+    "concurrently": "^6.2.0"
+  }
+}

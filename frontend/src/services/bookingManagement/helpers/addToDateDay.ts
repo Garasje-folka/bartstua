@@ -1,4 +1,4 @@
-import { DateDay } from "../types";
+import { DateDay } from "shared/src/types";
 import createDateDayFromDate from "./createDateDay";
 import createDateFromDateDay from "./createDateFromDateDay";
 

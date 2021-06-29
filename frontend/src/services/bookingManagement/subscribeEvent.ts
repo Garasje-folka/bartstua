@@ -1,4 +1,4 @@
-import { DateHour, EventData, Doc } from "./types";
+import { DateHour, EventData, Doc } from "shared/src/types";
 import { EVENTS } from "./constants";
 import firebase, { firestore } from "../fireConfig";
 
