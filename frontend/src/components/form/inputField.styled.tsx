@@ -21,10 +21,21 @@ const getMaxWidth = (size: InputFieldSize) => {
   }
 };
 
-export const StyledFormGroup = styled(Form.Group)`
-  margin-bottom: ${({ theme }) => theme.alignment.margin.REGULAR};
-  margin-top: ${({ theme }) => theme.alignment.margin.REGULAR};
-  max-width: ${(props: { size: InputFieldSize }) => getMaxWidth(props.size)};
+interface StyledFormGroupProps {
+  $largeSpacing: boolean;
+  $size: InputFieldSize;
+}
+
+export const StyledFormGroup = styled(Form.Group)<StyledFormGroupProps>`
+  margin-bottom: ${({ theme, $largeSpacing }) =>
+    $largeSpacing
+      ? theme.alignment.margin.LARGE
+      : theme.alignment.margin.REGULAR};
+  margin-top: ${({ theme, $largeSpacing }) =>
+    $largeSpacing
+      ? theme.alignment.margin.LARGE
+      : theme.alignment.margin.REGULAR};
+  max-width: ${({ $size }) => getMaxWidth($size)};
 `;
 
 interface StyledFormControlProps {
@@ -33,6 +44,8 @@ interface StyledFormControlProps {
 }
 
 export const StyledFormControl = styled(Form.Control)<StyledFormControlProps>`
+  border-color: transparent;
+  box-shadow: ${({ theme }) => theme.shadow.REGULAR};
   ${({ $isError, $serious, theme }) =>
     $isError &&
     css`
@@ -45,5 +58,5 @@ export const StyledFormControl = styled(Form.Control)<StyledFormControlProps>`
           ? theme.form.colors.ERROR
           : theme.form.colors.WARNING};
       }
-    `}
+    `};
 `;

@@ -19,6 +19,8 @@ interface InputFieldProps {
   errorText?: string;
   errorSerious?: boolean;
   size?: InputFieldSize;
+  ghostText?: string;
+  largeSpacing?: boolean;
 }
 
 const InputField: React.FC<InputFieldProps> = (props) => {
@@ -31,10 +33,12 @@ const InputField: React.FC<InputFieldProps> = (props) => {
     errorText,
     errorSerious,
     size,
+    ghostText,
+    largeSpacing,
   } = props;
 
   return (
-    <StyledFormGroup size={size}>
+    <StyledFormGroup size={size} $largeSpacing={largeSpacing}>
       {label ? <Form.Label>{label}</Form.Label> : undefined}
       {description ? <Form.Text>{"\n" + description}</Form.Text> : undefined}
       <StyledFormControl
@@ -43,6 +47,7 @@ const InputField: React.FC<InputFieldProps> = (props) => {
         onChange={onChange}
         $isError={!!errorText}
         $serious={errorSerious}
+        placeholder={ghostText}
       />
       <Error serious={errorSerious}>{errorText}</Error>
     </StyledFormGroup>
