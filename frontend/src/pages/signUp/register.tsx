@@ -1,10 +1,26 @@
 import { useState, FormEvent } from "react";
-import { FormContainer, InputField, SubmitButton } from "../components/form";
-import { userManagement } from "../services";
-import { CardContainer, CardHeader, CardBody } from "../components/card";
+import { FormContainer, InputField, SubmitButton } from "../../components/form";
+import { userManagement } from "../../services";
+import { CardContainer, CardHeader, CardBody } from "../../components/card";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { useCallback } from "react";
+import {
+  ActionsContainer,
+  Background,
+  CenterContainer,
+  EmailField,
+  HeadingContainer,
+  LeftContainer,
+  PasswordField,
+  RightContainer,
+  SignInBottom,
+  SignInContainer,
+  SignInHeader,
+  SignInLabel,
+} from "../signIn/signIn.styled";
+import { Heading } from "../../components/text";
+import { SignInButton } from "../../components/header/header.styled";
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 
@@ -87,7 +103,42 @@ const Register = () => {
   };
 
   return (
-    <>
+    <Background>
+      <LeftContainer>
+        <CenterContainer>
+          <HeadingContainer>
+            <Heading type={Heading.types.HEADING1}>
+              {t("label_bartstua")}
+            </Heading>
+            <Heading type={Heading.types.HEADING3}>
+              {t("label_bartstua_quote")}
+            </Heading>
+          </HeadingContainer>
+          <ActionsContainer>
+            <SignInButton>{t("label_sign_in")}</SignInButton>
+          </ActionsContainer>
+        </CenterContainer>
+      </LeftContainer>
+      <RightContainer>
+        <SignInContainer>
+          <SignInHeader>
+            <SignInLabel>
+              <Heading type={Heading.types.HEADING1}>
+                {t("label_register_user")}
+              </Heading>
+            </SignInLabel>
+          </SignInHeader>
+          <EmailField ghostText="E-post" />
+          <PasswordField ghostText="Passord" />
+          <PasswordField ghostText="Passord på nytt" />
+          <SignInBottom>
+            <SignInButton>{t("label_register_user")}</SignInButton>
+          </SignInBottom>
+        </SignInContainer>
+      </RightContainer>
+    </Background>
+
+    /*<>
       <CardContainer>
         <CardHeader title={t("label_register")} />
         <CardBody>
@@ -120,7 +171,8 @@ const Register = () => {
           </FormContainer>
         </CardBody>
       </CardContainer>
-    </>
+      
+    </>*/
   );
 };
 
