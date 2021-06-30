@@ -1,3 +1,4 @@
+/*
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { getEvent } from "./getEvent";
@@ -77,3 +78,4 @@ export const addBooking = functions.https.onCall(async (data, context) => {
     throw error;
   }
 });
+*/
