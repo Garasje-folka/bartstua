@@ -40,7 +40,6 @@ export const SignInButton = styled(Button)`
 export const RightContainer = styled.div`
   display: flex;
   box-shadow: ${({ theme }) => theme.shadow.REGULAR};
-  display: flex;
   flex-grow: 1;
 `;
 
