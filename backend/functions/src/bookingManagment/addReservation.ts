@@ -1,10 +1,15 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { getEvent } from "./getEvent";
-import { EVENTS, MAX_EVENT_SPACES, RESERVATIONS } from "./constants";
+import {
+  EVENTS,
+  MAX_EVENT_SPACES,
+  RESERVATIONS,
+  RESERVATION_EXPIRATION_TIME,
+} from "./constants";
 import { bookingDataSchema } from "./types";
 import isValidEventDate from "./helpers/isValidEventDate";
-import createTimestamp from "./helpers/createTimestamp";
+import { removeExpiredReservation } from "./removeExpiredReservations";
 
 export const addReservation = functions.https.onCall(async (data, context) => {
   // Check data format
@@ -35,52 +40,56 @@ export const addReservation = functions.https.onCall(async (data, context) => {
   // Transaction that adds the reservation to firestore
   // TODO: Don't know if this is the correct way to catch the errors
   try {
-    await admin.firestore().runTransaction(async (transaction) => {
-      const event = await getEvent(data.date);
-      let eventRef:
-        | FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
-        | undefined = undefined;
+    const reservationId = await admin
+      .firestore()
+      .runTransaction(async (transaction) => {
+        const event = await getEvent(data.date);
+        let eventRef:
+          | FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
+          | undefined = undefined;
 
-      let spacesTaken: number = 0;
+        let spacesTaken: number = 0;
 
-      if (event) {
-        eventRef = admin.firestore().collection(EVENTS).doc(event.id);
-        const docSnapshot = await transaction.get(eventRef);
+        if (event) {
+          eventRef = admin.firestore().collection(EVENTS).doc(event.id);
+          const docSnapshot = await transaction.get(eventRef);
 
-        if (docSnapshot.exists) spacesTaken = docSnapshot.get("spacesTaken");
-      }
+          if (docSnapshot.exists) spacesTaken = docSnapshot.get("spacesTaken");
+        }
 
-      if (spacesTaken + data.spaces > MAX_EVENT_SPACES) {
-        throw new functions.https.HttpsError(
-          "failed-precondition",
-          "Not enough space"
-        );
-      }
+        if (spacesTaken + data.spaces > MAX_EVENT_SPACES) {
+          throw new functions.https.HttpsError(
+            "failed-precondition",
+            "Not enough space"
+          );
+        }
 
-      const newReservationRef = admin
-        .firestore()
-        .collection(RESERVATIONS)
-        .doc();
+        const newReservationRef = admin
+          .firestore()
+          .collection(RESERVATIONS)
+          .doc();
 
-      const timestamp = createTimestamp(new Date());
-      transaction.set(newReservationRef, {
-        ...data,
-        timestamp: timestamp,
+        transaction.set(newReservationRef, data);
+
+        // Increment event spaces counter
+        if (eventRef) {
+          transaction.update(eventRef, {
+            spacesTaken: admin.firestore.FieldValue.increment(data.spaces),
+          });
+        } else {
+          eventRef = admin.firestore().collection(EVENTS).doc();
+          transaction.set(eventRef, {
+            date: data.date,
+            spacesTaken: data.spaces,
+          });
+        }
+
+        return newReservationRef.id;
       });
 
-      // Increment event spaces counter
-      if (eventRef) {
-        transaction.update(eventRef, {
-          spacesTaken: admin.firestore.FieldValue.increment(data.spaces),
-        });
-      } else {
-        eventRef = admin.firestore().collection(EVENTS).doc();
-        transaction.set(eventRef, {
-          date: data.date,
-          spacesTaken: data.spaces,
-        });
-      }
-    });
+    setTimeout(() => {
+      removeExpiredReservation(reservationId);
+    }, RESERVATION_EXPIRATION_TIME * 60 * 1000);
   } catch (error) {
     throw error;
   }
