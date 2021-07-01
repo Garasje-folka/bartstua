@@ -14,8 +14,8 @@
     }
   },
   "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
+    "rules": "firstore/firestore.rules",
+    "indexes": "firstore/firestore.indexes.json"
   },
   "functions": {
     "predeploy": [
@@ -24,6 +24,6 @@
     ]
   },
   "storage": {
-    "rules": "storage.rules"
+    "rules": "storage/storage.rules"
   }
 }

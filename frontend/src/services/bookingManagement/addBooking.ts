@@ -1,5 +1,5 @@
 import firebase from "firebase";
-import { BookingData } from "./types";
+import { BookingData } from "utils";
 
 // TODO: Add proper error handling
 

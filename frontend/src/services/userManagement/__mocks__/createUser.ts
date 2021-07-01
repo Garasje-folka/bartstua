@@ -1,7 +1,7 @@
 import * as EmailValidator from "email-validator";
 import { createUserErrorCodes } from "../";
 import { createError } from "../helpers/createError";
-import { User } from "../interfaces";
+import { User } from "utils";
 
 const createUserWithEmailAndPassword = async (
   email: string,

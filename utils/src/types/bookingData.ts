@@ -1,6 +1,6 @@
 import { DateHour, dateHourSchema } from "./dateHour";
 import * as yup from "yup";
-import { MAX_EVENT_SPACES } from "../constants";
+import { MAX_EVENT_SPACES } from "./constants";
 
 // TODO: Don't know if this is the correct way to do nested schemas
 export const bookingDataSchema = yup.object({

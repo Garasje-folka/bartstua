@@ -2,7 +2,7 @@ import { BOOKING_ENDING_TIME } from "../../services/bookingManagement/constants"
 import { getEventStartingHour } from "../../services/bookingManagement";
 import { createDateHourFromDateDay } from "../../services/bookingManagement/helpers/createDateHour";
 import parseDateDay from "../../services/bookingManagement/helpers/parseDateDay";
-import { DateDay } from "../../services/bookingManagement/types";
+import { DateDay } from "utils";
 import { BookingEvent } from "../bookingEvent";
 import { Heading, HeadingTypes } from "../text";
 

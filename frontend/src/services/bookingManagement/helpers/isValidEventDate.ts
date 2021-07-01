@@ -1,5 +1,5 @@
 import { BOOKING_ENDING_TIME, BOOKING_STARTING_TIME } from "../constants";
-import { DateHour } from "../types";
+import { DateHour } from "utils";
 import isBeforeToday from "./isBeforeToday";
 import { isToday } from "./isToday";
 import isValidDateHour from "./isValidDateHour";
