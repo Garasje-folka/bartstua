@@ -11,16 +11,21 @@ import {
   CenterContainer,
   EmailField,
   HeadingContainer,
+  IconInputContainer,
   LeftContainer,
   PasswordField,
   RightContainer,
   SignInBottom,
-  SignInContainer,
-  SignInHeader,
-  SignInLabel,
-} from "../signIn/signIn.styled";
+  SignUpButton,
+  SignUpContainer,
+  SignUpHeader,
+  SignUpLabel,
+} from "../signUp/signUp.styled";
 import { Heading } from "../../components/text";
 import { SignInButton } from "../../components/header/header.styled";
+import Feedback from "react-bootstrap/esm/Feedback";
+import { FaEnvelope, FaKey } from "react-icons/fa";
+import { right } from "@popperjs/core";
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 
@@ -115,26 +120,35 @@ const Register = () => {
             </Heading>
           </HeadingContainer>
           <ActionsContainer>
-            <SignInButton>{t("label_sign_in")}</SignInButton>
+            <SignUpButton>{t("label_sign_in")}</SignUpButton>
           </ActionsContainer>
         </CenterContainer>
       </LeftContainer>
       <RightContainer>
-        <SignInContainer>
-          <SignInHeader>
-            <SignInLabel>
+        <SignUpContainer>
+          <SignUpHeader>
+            <SignUpLabel>
               <Heading type={Heading.types.HEADING1}>
                 {t("label_register_user")}
               </Heading>
-            </SignInLabel>
-          </SignInHeader>
-          <EmailField ghostText="E-post" />
-          <PasswordField ghostText="Passord" />
-          <PasswordField ghostText="Passord på nytt" />
+            </SignUpLabel>
+          </SignUpHeader>
+          <IconInputContainer>
+            <FaEnvelope style={{ margin: "5px" }} />
+            <EmailField ghostText="E-post" />
+          </IconInputContainer>
+          <IconInputContainer>
+            <FaKey style={{ margin: "5px" }} />
+            <PasswordField ghostText="Passord" />
+          </IconInputContainer>
+          <IconInputContainer>
+            <FaKey style={{ margin: "5px" }} />
+            <PasswordField ghostText="Passord på nytt" />
+          </IconInputContainer>
           <SignInBottom>
             <SignInButton>{t("label_register_user")}</SignInButton>
           </SignInBottom>
-        </SignInContainer>
+        </SignUpContainer>
       </RightContainer>
     </Background>
 
