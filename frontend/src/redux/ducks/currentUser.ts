@@ -1,4 +1,4 @@
-import { User } from "bartstua-shared";
+import { User } from "utils";
 import { State } from "../types/state";
 
 // Interfaces

@@ -4,7 +4,7 @@ import { MAX_EVENT_SPACES } from "../../services/bookingManagement/constants";
 import { subscribeEvent } from "../../services/bookingManagement";
 import { Heading, HeadingTypes } from "../text";
 import { SessionContainer } from ".";
-import { DateHour, EventData } from "bartstua-shared";
+import { DateHour, EventData } from "utils";
 import { useSelector } from "react-redux";
 import { currentUserSelector } from "../../redux/selectors";
 

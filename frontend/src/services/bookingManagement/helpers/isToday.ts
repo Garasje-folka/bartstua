@@ -1,4 +1,4 @@
-import { DateDay, DateHour } from "bartstua-shared";
+import { DateDay, DateHour } from "utils";
 
 const isToday = (date: DateDay | DateHour) => {
   let currentDate = new Date();

@@ -1,7 +1,7 @@
 import { BOOKING_STARTING_TIME, BOOKING_ENDING_TIME } from "./constants";
 import isAfterToday from "./helpers/isAfterToday";
 import { isToday } from "./helpers/isToday";
-import { DateDay } from "bartstua-shared";
+import { DateDay } from "utils";
 
 // Returns the first valid event hour for the given DateDay
 // Returns undefined if there is no valid starting hour for the given DateDay

@@ -1,4 +1,4 @@
-import { DateHour, DateDay } from "bartstua-shared";
+import { DateHour, DateDay } from "utils";
 import createDateDay from "./createDateDay";
 
 const createDateHourFromDate = (date: Date): DateHour => {

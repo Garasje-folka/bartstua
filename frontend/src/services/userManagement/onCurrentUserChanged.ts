@@ -1,4 +1,4 @@
-import { User } from "bartstua-shared";
+import { User } from "utils";
 import { auth } from "../fireConfig";
 import userConverter from "./helpers/userConverter";
 

@@ -1,7 +1,7 @@
 {
   "private": true,
   "workspaces": [
-    "shared",
+    "utils",
     "frontend",
     "backend/firestore",
     "backend/functions"
@@ -10,7 +10,7 @@
     "start:frontend": "yarn workspace frontend start",
     "emulators": "cd backend && firebase emulators:start",
     "start:backend": "concurrently -m 1 --kill-others \"yarn workspace functions install\" \"yarn workspace functions build\" \"cd backend && firebase emulators:start\"",
-    "start:shared": "yarn workspace bartstua-shared build-watch",
+    "start:shared": "yarn workspace utils build-watch",
     "start": "concurrently -m 3 --kill-others \"yarn start:shared\" \"yarn start:backend\" \"yarn start:frontend\""
   },
   "dependencies": {

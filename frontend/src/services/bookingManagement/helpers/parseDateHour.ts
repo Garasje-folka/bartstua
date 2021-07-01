@@ -1,4 +1,4 @@
-import { DateHour } from "bartstua-shared";
+import { DateHour } from "utils";
 import parseDateDay from "./parseDateDay";
 
 const parseDateHour = (

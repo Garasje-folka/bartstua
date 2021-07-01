@@ -1,4 +1,4 @@
-import { DateDay } from "bartstua-shared";
+import { DateDay } from "utils";
 
 const createDateDayFromDate = (date: Date): DateDay => {
   return {
