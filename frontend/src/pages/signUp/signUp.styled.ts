@@ -33,7 +33,7 @@ export const ActionsContainer = styled.div`
   display: flex;
 `;
 
-export const SignInButton = styled(Button)`
+export const SignUpButton = styled(Button)`
   margin: auto;
 `;
 
@@ -43,7 +43,7 @@ export const RightContainer = styled.div`
   flex-grow: 1;
 `;
 
-export const SignInContainer = styled.div`
+export const SignUpContainer = styled.div`
   margin: auto;
   background-color: white;
   min-width: 400px;
@@ -52,18 +52,20 @@ export const SignInContainer = styled.div`
   border-radius: 25px;
 `;
 
-export const SignInHeader = styled.div`
+export const SignUpHeader = styled.div`
   min-height: 200px;
   display: flex;
 `;
 
-export const SignInLabel = styled.div`
+export const SignUpLabel = styled.div`
   margin: auto;
 `;
 
 const InputFieldCommonStyle = css``;
 
-export const EmailField = styled(InputField)``;
+export const EmailField = styled(InputField)`
+  position: relative;
+`;
 
 export const PasswordField = styled(InputField)``;
 
@@ -71,3 +73,11 @@ export const SignInBottom = styled.div`
   padding-right: ${({ theme }) => theme.alignment.padding.EXTRA_EXTRA_LARGE};
   padding-top: ${({ theme }) => theme.alignment.padding.REGULAR};
 `;
+
+export const IconInputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const emailIcon = styled.div``;
