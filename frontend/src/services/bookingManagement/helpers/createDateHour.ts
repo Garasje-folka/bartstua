@@ -1,4 +1,4 @@
-import { DateHour, DateDay } from "../types";
+import { DateHour, DateDay } from "utils";
 import createDateDay from "./createDateDay";
 
 const createDateHourFromDate = (date: Date): DateHour => {

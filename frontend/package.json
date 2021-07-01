@@ -1,6 +1,6 @@
 {
-  "name": "bartstua-frontend",
-  "version": "0.1.0",
+  "name": "frontend",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@popperjs/core": "^2.9.2",
@@ -15,6 +15,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.10",
+    "utils": "^1.0.0",
     "bootstrap": "^5.0.1",
     "daypilot-pro-react": "https://npm.daypilot.org/daypilot-pro-react/trial/2020.4.4807.tar.gz",
     "email-validator": "^2.0.4",
@@ -33,9 +34,8 @@
     "react-scripts": "4.0.3",
     "redux": "^4.1.0",
     "styled-components": "^5.3.0",
-    "typescript": "^4.2.4",
-    "web-vitals": "^1.0.1",
-    "yup": "^0.32.9"
+    "typescript": "^4.3.4",
+    "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -66,6 +66,8 @@
   },
   "devDependencies": {
     "concurrently": "^6.2.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-config-react-app": "^6.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "2.3.1"
   },

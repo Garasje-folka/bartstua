@@ -8,7 +8,6 @@ import { signOut } from "./signOut";
 import { sendEmailVerification } from "./sendEmailVerification";
 import { reauthenticate, reauthenticateErrorCodes } from "./reauthenticate";
 import { changePassword, changePasswordErrorCodes } from "./changePassword";
-import * as interfaces from "./interfaces";
 export {
   createUserWithEmailAndPassword,
   createUserErrorCodes,
@@ -21,5 +20,4 @@ export {
   reauthenticateErrorCodes,
   changePassword,
   changePasswordErrorCodes,
-  interfaces,
 };

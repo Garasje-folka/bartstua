@@ -1,4 +1,4 @@
-import { DateDay, DateHour } from "../types";
+import { DateDay, DateHour } from "utils";
 
 const isToday = (date: DateDay | DateHour) => {
   let currentDate = new Date();
