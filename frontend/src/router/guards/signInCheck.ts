@@ -1,5 +1,5 @@
 import { HOME, SIGNIN } from "../routeConstants";
-import { User } from "shared/src/types";
+import { User } from "bartstua-shared";
 import { GuardFunction } from "../types/guardFunction";
 
 const signInCheck: (

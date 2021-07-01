@@ -1,5 +1,5 @@
 import firebase from "firebase";
-import { User } from "shared/src/types";
+import { User } from "bartstua-shared";
 
 const userConverter = (user: firebase.User): User => {
   return {

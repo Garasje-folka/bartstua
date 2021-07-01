@@ -1,14 +1,17 @@
 {
   "private": true,
   "workspaces": [
-    "bartstua-shared",
+    "shared",
     "frontend",
-    "firestore",
-    "functions"
+    "backend/firestore",
+    "backend/functions"
   ],
   "scripts": {
-    "start": "yarn workspace frontend start",
-    "emulators": "concurrently -m 1 --kill-others \"yarn workspace functions install\" \"yarn workspace functions build\" \"firebase emulators:start\" yarn workspace backend emulators"
+    "start:frontend": "yarn workspace frontend start",
+    "emulators": "cd backend && firebase emulators:start",
+    "start:backend": "concurrently -m 1 --kill-others \"yarn workspace functions install\" \"yarn workspace functions build\" \"cd backend && firebase emulators:start\"",
+    "start:shared": "yarn workspace bartstua-shared build-watch",
+    "start": "concurrently -m 3 --kill-others \"yarn start:shared\" \"yarn start:backend\" \"yarn start:frontend\""
   },
   "dependencies": {
     "concurrently": "^6.2.0"

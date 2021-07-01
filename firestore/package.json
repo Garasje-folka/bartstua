@@ -1,8 +1,0 @@
-{
-  "name": "firestore",
-  "version": "1.0.0",
-  "scripts": {},
-  "devDependencies": {
-    "fireward": "^1.6.0"
-  }
-}

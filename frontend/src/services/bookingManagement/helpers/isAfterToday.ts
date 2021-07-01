@@ -1,4 +1,4 @@
-import { DateDay } from "shared/src/types";
+import { DateDay } from "bartstua-shared";
 
 const isAfterToday = (dateDay: DateDay) => {
   const currentDate = new Date();

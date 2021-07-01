@@ -1,5 +1,5 @@
 import firebase from "firebase";
-import { BookingData } from "shared/src/types";
+import { BookingData } from "bartstua-shared";
 
 // TODO: Add proper error handling
 

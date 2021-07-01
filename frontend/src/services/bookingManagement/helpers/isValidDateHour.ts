@@ -1,4 +1,4 @@
-import { DateHour } from "shared/src/types";
+import { DateHour } from "bartstua-shared";
 import isValidDate from "./isValidDate";
 
 const isValidDateHour = (date: DateHour) => {

@@ -1,4 +1,4 @@
-import { User } from "shared/src/types";
+import { User } from "bartstua-shared";
 
 let userChangedCallback: ((user: User | null) => void) | null = null;
 

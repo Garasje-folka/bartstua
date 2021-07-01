@@ -1,4 +1,4 @@
-import { DateDay, DateHour } from "shared/src/types";
+import { DateDay, DateHour } from "bartstua-shared";
 
 const parseDateDay = (
   date: DateDay | DateHour,

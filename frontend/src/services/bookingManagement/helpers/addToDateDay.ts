@@ -1,4 +1,4 @@
-import { DateDay } from "shared/src/types";
+import { DateDay } from "bartstua-shared";
 import createDateDayFromDate from "./createDateDay";
 import createDateFromDateDay from "./createDateFromDateDay";
 

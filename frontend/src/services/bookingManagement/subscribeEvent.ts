@@ -1,4 +1,4 @@
-import { DateHour, EventData, Doc } from "shared/src/types";
+import { DateHour, EventData, Doc } from "bartstua-shared";
 import { EVENTS } from "./constants";
 import firebase, { firestore } from "../fireConfig";
 
