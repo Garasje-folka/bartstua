@@ -11,8 +11,7 @@ export const routings: Routing[] = [
   {
     component: pages.Booking,
     path: paths.BOOKING,
-    guardType: GuardType.VERIFICATION_CHECK,
-    expectedGuardValue: true,
+    guardType: GuardType.NONE,
   },
   {
     component: pages.About,
@@ -22,13 +21,13 @@ export const routings: Routing[] = [
   {
     component: pages.Register,
     path: paths.REGISTER,
-    guardType: GuardType.SIGN_IN_CHECK,
+    guardType: GuardType.EMAIL_SIGN_IN_CHECK,
     expectedGuardValue: false,
   },
   {
     component: pages.SignIn,
     path: paths.SIGNIN,
-    guardType: GuardType.SIGN_IN_CHECK,
+    guardType: GuardType.EMAIL_SIGN_IN_CHECK,
     expectedGuardValue: false,
   },
   {
@@ -40,7 +39,7 @@ export const routings: Routing[] = [
   {
     component: pages.PasswordChange,
     path: paths.PASSWORD_CHANGE,
-    guardType: GuardType.VERIFICATION_CHECK,
+    guardType: GuardType.EMAIL_SIGN_IN_CHECK,
     expectedGuardValue: true,
   },
 ];

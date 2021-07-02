@@ -7,6 +7,7 @@ import { SessionContainer } from ".";
 import { DateHour, EventData } from "utils";
 import { useSelector } from "react-redux";
 import { currentUserSelector } from "../../redux/selectors";
+import { signInAnonymously } from "../../services/userManagement/signInAnonymously";
 
 interface BookingEventProps {
   dateHour: DateHour;
@@ -48,13 +49,19 @@ const BookingEvent = (props: BookingEventProps) => {
   }, [dateHour]);
 
   const handleBooking = async () => {
-    if (!currentUser) return;
-
     try {
+      let uid = currentUser?.uid;
+      if (!uid) {
+        const userCred = await signInAnonymously();
+        uid = userCred?.user?.uid;
+      }
+
+      if (!uid) return;
+
       await addBooking({
         date: dateHour,
         spaces: 1,
-        uid: currentUser.uid,
+        uid: uid,
       });
     } catch (error) {
       console.log(error);

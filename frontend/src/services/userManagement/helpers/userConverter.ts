@@ -3,8 +3,8 @@ import { User } from "utils";
 
 const userConverter = (user: firebase.User): User => {
   return {
-    displayName: user.displayName ? user.displayName : "NO NAME",
-    email: user.email ? user.email : "NO EMAIL",
+    displayName: user.displayName,
+    email: user.email,
     emailVerified: user.emailVerified,
     uid: user.uid,
   };
