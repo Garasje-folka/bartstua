@@ -5,8 +5,8 @@ import { signInAnonymously } from "../userManagement/signInAnonymously";
 
 // TODO: Add proper error handling
 
-const addBooking = async (booking: BookingData) => {
-  const call = firebase.functions().httpsCallable("addBooking");
+const addReservation = async (booking: BookingData) => {
+  const call = firebase.functions().httpsCallable("addReservation");
   try {
     await call(booking);
   } catch (error) {
@@ -14,4 +14,4 @@ const addBooking = async (booking: BookingData) => {
   }
 };
 
-export { addBooking };
+export { addReservation };
