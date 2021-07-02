@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { addBooking } from "../../services/bookingManagement";
+import { addReservation } from "../../services/bookingManagement";
 import { MAX_EVENT_SPACES } from "../../services/bookingManagement/constants";
 import { subscribeEvent } from "../../services/bookingManagement";
 import { Heading, HeadingTypes } from "../text";
@@ -51,7 +51,7 @@ const BookingEvent = (props: BookingEventProps) => {
     if (!currentUser) return;
 
     try {
-      await addBooking({
+      await addReservation({
         date: dateHour,
         spaces: 1,
         uid: currentUser.uid,

@@ -4,7 +4,8 @@ import { DateHour, EventData, initialEventData } from "./types";
 import { EVENTS } from "./constants"; */
 
 admin.initializeApp();
-/* 
+
+/*
 const dateHourToEventId = async (dateHour: DateHour) => {
   const docRef = admin.firestore().collection(EVENTS);
   const existingEventSnapshot = await docRef
