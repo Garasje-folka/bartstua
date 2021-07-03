@@ -15,7 +15,6 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.10",
-    "utils": "^1.0.0",
     "bootstrap": "^5.0.1",
     "daypilot-pro-react": "https://npm.daypilot.org/daypilot-pro-react/trial/2020.4.4807.tar.gz",
     "email-validator": "^2.0.4",
@@ -35,6 +34,7 @@
     "redux": "^4.1.0",
     "styled-components": "^5.3.0",
     "typescript": "^4.3.4",
+    "utils": "^1.0.0",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -68,6 +68,7 @@
     "concurrently": "^6.2.0",
     "eslint-config-react": "^1.1.7",
     "eslint-config-react-app": "^6.0.0",
+    "jsdoc-to-markdown": "^7.0.1",
     "lint-staged": "^11.0.0",
     "prettier": "2.3.1"
   },

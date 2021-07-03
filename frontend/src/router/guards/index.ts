@@ -1,2 +1,2 @@
-export * from "./signInCheck";
+export * from "./emailSignInCheck";
 export * from "./verifiedEmailCheck";

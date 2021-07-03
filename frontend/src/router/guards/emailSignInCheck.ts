@@ -2,13 +2,14 @@ import { HOME, SIGNIN } from "../routeConstants";
 import { User } from "utils";
 import { GuardFunction } from "../types/guardFunction";
 
-const signInCheck: (
+const emailSignInCheck: (
   currentUser: User | null,
   expectedValue?: boolean
 ) => GuardFunction = (currentUser, expectedValue) => () => ({
   accepted:
-    (expectedValue && !!currentUser) || (!expectedValue && !currentUser),
+    (expectedValue && !!currentUser && !!currentUser.email) ||
+    (!expectedValue && (!currentUser || !currentUser.email)),
   redirectPath: expectedValue ? SIGNIN : HOME,
 });
 
-export { signInCheck };
+export { emailSignInCheck };

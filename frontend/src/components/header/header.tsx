@@ -79,7 +79,7 @@ const Header = () => {
         )}
       </LeftAlignedContent>
       <RightAlignedContent>
-        {currentUser ? (
+        {currentUser && currentUser.email ? (
           signOutButton
         ) : (
           <>

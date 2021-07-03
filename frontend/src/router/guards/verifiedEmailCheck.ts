@@ -8,9 +8,11 @@ const verifiedEmailCheck: (
 ) => GuardFunction = (currentUser, expectedValue) => () => ({
   accepted:
     !!currentUser &&
+    !!currentUser.email &&
     ((expectedValue && currentUser.emailVerified) ||
       (!expectedValue && !currentUser.emailVerified)),
-  redirectPath: currentUser ? (expectedValue ? VERIFY : HOME) : SIGNIN,
+  redirectPath:
+    currentUser && currentUser.email ? (expectedValue ? VERIFY : HOME) : SIGNIN,
 });
 
 export { verifiedEmailCheck };

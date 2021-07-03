@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { BookingDay } from "../components/bookingDay/bookingDay";
 import { Container, Row, Col } from "react-bootstrap";
-import { DateDay } from "utils";
+import { BookingRequest, DateDay } from "utils";
 import createDateDayFromDate from "../services/bookingManagement/helpers/createDateDay";
 import { Button } from "../components/button";
 import addToDateDay from "../services/bookingManagement/helpers/addToDateDay";
 import parseDateDay from "../services/bookingManagement/helpers/parseDateDay";
+import { useSelector } from "react-redux";
+import { currentUserSelector } from "../redux/selectors";
+import { addReservation } from "../services/bookingManagement";
+import { signInAnonymously } from "../services/userManagement/signInAnonymously";
 
 const Booking: React.FC = () => {
+  const currentUser = useSelector(currentUserSelector);
+
   const [startDay, setStartDay] = useState<DateDay>(
     createDateDayFromDate(new Date())
   );
@@ -25,14 +31,25 @@ const Booking: React.FC = () => {
 
       bookingDates.push(
         <Col key={parseDateDay(offsetDay, true, true, true)}>
-          <BookingDay dateDay={offsetDay} />
+          <BookingDay dateDay={offsetDay} onBooking={handleBooking} />
         </Col>
       );
     }
 
     return bookingDates;
   };
-  return (
+
+  const handleBooking = async (booking: BookingRequest) => {
+    try {
+      let uid = currentUser?.uid;
+      if (!uid) return;
+      await addReservation(booking);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return currentUser?.uid ? (
     <>
       <Button onClick={() => incrementStartDate(false)}> Bakover </Button>
       <Button onClick={() => incrementStartDate(true)}> Forover </Button>
@@ -40,6 +57,8 @@ const Booking: React.FC = () => {
         <Row>{getBookingDates(5)}</Row>
       </Container>
     </>
+  ) : (
+    <Button onClick={() => signInAnonymously()}>Logg in som gjest</Button>
   );
 };
 
