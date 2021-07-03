@@ -3,16 +3,21 @@ import Form from "react-bootstrap/Form";
 
 interface FormContainerProps {
   children: React.ReactNode;
-  onSubmit: (event: FormEvent) => {};
+  onSubmit: (event: FormEvent) => void;
+  className?: string;
 }
 
 const FormContainer = (props: FormContainerProps) => {
-  const { children, onSubmit } = props;
+  const { children, onSubmit, className } = props;
 
   const handleSubmit = (event: FormEvent) => {
     onSubmit(event);
   };
 
-  return <Form onSubmit={handleSubmit}>{children}</Form>;
+  return (
+    <Form onSubmit={handleSubmit} className={className}>
+      {children}
+    </Form>
+  );
 };
 export default FormContainer;

@@ -30,6 +30,7 @@ export const themeConfig = {
     colors: {
       ERROR: "#ff0f0f",
       WARNING: "#ffac14",
+      GREYED_OUT: "#6D757D",
     },
   },
 };
