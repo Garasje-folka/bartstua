@@ -8,7 +8,7 @@ const signInAnonymouslyErrorCodes = {
 
 const signInAnonymously = async () => {
   try {
-    return await auth.signInAnonymously();
+    auth.signInAnonymously();
   } catch (error) {
     switch (error.code) {
       case "auth/operation-not-allowed": {

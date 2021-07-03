@@ -7,43 +7,56 @@ import {
   RESERVATIONS,
   RESERVATION_EXPIRATION_TIME,
 } from "./constants";
-import { bookingDataSchema } from "./types";
+import {
+  BookingRequest,
+  bookingRequestSchema,
+  BookingData,
+  EventData,
+} from "./types";
 import isValidEventDate from "./helpers/isValidEventDate";
 import { removeExpiredReservation } from "./removeExpiredReservations";
 
-export const addReservation = functions.https.onCall(async (data, context) => {
-  // Check data format
-  try {
-    await bookingDataSchema.validate(data);
-  } catch (error) {
-    throw new functions.https.HttpsError(
-      "invalid-argument",
-      "Not the expected data format"
-    );
-  }
+export const addReservation = functions.https.onCall(
+  async (data: BookingRequest, context) => {
+    functions.logger.info("hei");
 
-  // Date validation
-  if (!isValidEventDate(data.date)) {
-    throw new functions.https.HttpsError("invalid-argument", "Invalid date");
-  }
+    // Check data format
+    try {
+      await bookingRequestSchema.validate(data);
+    } catch (error) {
+      throw new functions.https.HttpsError(
+        "invalid-argument",
+        "Not the expected data format"
+      );
+    }
 
-  // User authentication and validation
-  const auth = context.auth;
+    // Date validation
+    if (!isValidEventDate(data.date)) {
+      throw new functions.https.HttpsError("invalid-argument", "Invalid date");
+    }
 
-  if (!auth || auth.uid !== data.uid || auth.token.uid !== auth.uid) {
-    throw new functions.https.HttpsError(
-      "unauthenticated",
-      "User is not authenticated"
-    );
-  }
+    // User authentication and validation
+    const auth = context.auth;
 
-  // Transaction that adds the reservation to firestore
-  // TODO: Don't know if this is the correct way to catch the errors
-  try {
+    if (!auth || !auth.uid) {
+      throw new functions.https.HttpsError(
+        "unauthenticated",
+        "User is not authenticated"
+      );
+    }
+
+    const booking: BookingData = {
+      ...data,
+      uid: auth.uid,
+    };
+
+    // Transaction that adds the reservation to firestore
+    // TODO: Don't know if this is the correct way to catch the errors
+
     const reservationId = await admin
       .firestore()
       .runTransaction(async (transaction) => {
-        const event = await getEvent(data.date);
+        const event = await getEvent(booking.date);
         let eventRef:
           | FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
           | undefined = undefined;
@@ -51,13 +64,17 @@ export const addReservation = functions.https.onCall(async (data, context) => {
         let spacesTaken: number = 0;
 
         if (event) {
+          // Event already exists
           eventRef = admin.firestore().collection(EVENTS).doc(event.id);
           const docSnapshot = await transaction.get(eventRef);
 
-          if (docSnapshot.exists) spacesTaken = docSnapshot.get("spacesTaken");
+          if (docSnapshot.exists) {
+            const eventData = docSnapshot.data() as EventData;
+            spacesTaken = eventData.spacesTaken;
+          }
         }
 
-        if (spacesTaken + data.spaces > MAX_EVENT_SPACES) {
+        if (spacesTaken + booking.spaces > MAX_EVENT_SPACES) {
           throw new functions.https.HttpsError(
             "failed-precondition",
             "Not enough space"
@@ -69,18 +86,18 @@ export const addReservation = functions.https.onCall(async (data, context) => {
           .collection(RESERVATIONS)
           .doc();
 
-        transaction.set(newReservationRef, data);
+        transaction.set(newReservationRef, booking);
 
         // Increment event spaces counter
-        if (eventRef) {
+        if (event && eventRef) {
           transaction.update(eventRef, {
-            spacesTaken: admin.firestore.FieldValue.increment(data.spaces),
+            spacesTaken: admin.firestore.FieldValue.increment(booking.spaces),
           });
         } else {
           eventRef = admin.firestore().collection(EVENTS).doc();
           transaction.set(eventRef, {
-            date: data.date,
-            spacesTaken: data.spaces,
+            date: booking.date,
+            spacesTaken: booking.spaces,
           });
         }
 
@@ -90,7 +107,5 @@ export const addReservation = functions.https.onCall(async (data, context) => {
     setTimeout(() => {
       removeExpiredReservation(reservationId);
     }, RESERVATION_EXPIRATION_TIME * 60 * 1000);
-  } catch (error) {
-    throw error;
   }
-});
+);
