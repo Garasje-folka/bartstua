@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Button } from "../../components/button";
-import { InputField } from "../../components/form";
+import { FormContainer, InputField, SubmitButton } from "../../components/form";
 
 export const Background = styled.div`
   background-color: #5ab9ea;
@@ -33,7 +33,7 @@ export const ActionsContainer = styled.div`
   display: flex;
 `;
 
-export const SignUpButton = styled(Button)`
+export const SignInButton = styled(Button)`
   margin: auto;
 `;
 
@@ -61,18 +61,9 @@ export const SignUpLabel = styled.div`
   margin: auto;
 `;
 
-const InputFieldCommonStyle = css``;
-
-export const EmailField = styled(InputField)`
-  position: relative;
-`;
+export const EmailField = styled(InputField)``;
 
 export const PasswordField = styled(InputField)``;
-
-export const SignInBottom = styled.div`
-  padding-right: ${({ theme }) => theme.alignment.padding.EXTRA_EXTRA_LARGE};
-  padding-top: ${({ theme }) => theme.alignment.padding.REGULAR};
-`;
 
 export const IconInputContainer = styled.div`
   display: flex;
@@ -80,4 +71,12 @@ export const IconInputContainer = styled.div`
   align-items: center;
 `;
 
-export const emailIcon = styled.div``;
+export const StyledFormContainer = styled(FormContainer)`
+  margin: auto;
+`;
+
+export const OuterFormContainer = styled.div`
+  display: flex;
+`;
+
+export const SignUpButton = styled(SubmitButton)``;

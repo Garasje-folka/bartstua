@@ -1,5 +1,5 @@
 import { useState, FormEvent } from "react";
-import { FormContainer, InputField, SubmitButton } from "../../components/form";
+import { InputField, SubmitButton, FormContainer } from "../../components/form";
 import { userManagement } from "../../services";
 import { CardContainer, CardHeader, CardBody } from "../../components/card";
 import { useTranslation } from "react-i18next";
@@ -15,17 +15,19 @@ import {
   LeftContainer,
   PasswordField,
   RightContainer,
-  SignInBottom,
-  SignUpButton,
+  SignInButton,
   SignUpContainer,
   SignUpHeader,
   SignUpLabel,
+  SignUpButton,
+  StyledFormContainer,
+  OuterFormContainer,
 } from "../signUp/signUp.styled";
 import { Heading } from "../../components/text";
-import { SignInButton } from "../../components/header/header.styled";
 import Feedback from "react-bootstrap/esm/Feedback";
-import { FaEnvelope, FaKey } from "react-icons/fa";
 import { right } from "@popperjs/core";
+import { EmailIcon, PasswordIcon } from "../../icons";
+import { InputFieldSize } from "../../components/form/inputField";
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 
@@ -120,7 +122,7 @@ const Register = () => {
             </Heading>
           </HeadingContainer>
           <ActionsContainer>
-            <SignUpButton>{t("label_sign_in")}</SignUpButton>
+            <SignInButton>{t("label_sign_in")}</SignInButton>
           </ActionsContainer>
         </CenterContainer>
       </LeftContainer>
@@ -133,21 +135,26 @@ const Register = () => {
               </Heading>
             </SignUpLabel>
           </SignUpHeader>
-          <IconInputContainer>
-            <FaEnvelope style={{ margin: "5px" }} />
-            <EmailField ghostText="E-post" />
-          </IconInputContainer>
-          <IconInputContainer>
-            <FaKey style={{ margin: "5px" }} />
-            <PasswordField ghostText="Passord" />
-          </IconInputContainer>
-          <IconInputContainer>
-            <FaKey style={{ margin: "5px" }} />
-            <PasswordField ghostText="Passord på nytt" />
-          </IconInputContainer>
-          <SignInBottom>
-            <SignInButton>{t("label_register_user")}</SignInButton>
-          </SignInBottom>
+          <OuterFormContainer>
+            <StyledFormContainer onSubmit={() => {}}>
+              <EmailField
+                ghostText={t("label_email")}
+                icon={EmailIcon}
+                size={InputFieldSize.SMALL}
+              />
+              <PasswordField
+                ghostText={t("label_password")}
+                icon={PasswordIcon}
+                size={InputFieldSize.SMALL}
+              />
+              <PasswordField
+                ghostText={t("label_repeat_password")}
+                icon={PasswordIcon}
+                size={InputFieldSize.SMALL}
+              />
+              <SignUpButton label={t("label_register_user")} />
+            </StyledFormContainer>
+          </OuterFormContainer>
         </SignUpContainer>
       </RightContainer>
     </Background>
