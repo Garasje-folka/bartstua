@@ -14,8 +14,8 @@
     }
   },
   "firestore": {
-    "rules": "firstore/firestore.rules",
-    "indexes": "firstore/firestore.indexes.json"
+    "rules": "firestore/firestore.rules",
+    "indexes": "firestore/firestore.indexes.json"
   },
   "functions": {
     "predeploy": [

@@ -1,0 +1,15 @@
+{
+  "name": "firestore",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "yup": "^0.32.9"
+  },
+  "scripts": {
+    "compile-rules": "fireward -i firestore.rules.ward > firestore.rules"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.0",
+    "fireward": "^1.6.0"
+  }
+}
