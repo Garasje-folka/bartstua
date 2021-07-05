@@ -6189,6 +6189,11 @@ firebase@^8.6.1:
     "@firebase/storage" "0.5.5"
     "@firebase/util" "1.1.0"
 
+fireward@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/fireward/-/fireward-1.6.0.tgz#56022ea1d5934aa735e7c2caf1a17d568a21003e"
+  integrity sha512-F0ITic4+JSzUKukTJDbiv3mIhy9ie4Sthnus6fE6PV3fervaN5aaqbMd/Rb6U1Vf7pWQXDkA+SezlsvWMqrqVg==
+
 flat-cache@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-3.0.4.tgz#61b0338302b2fe9f957dcc32fc2a87f1c3048b11"
