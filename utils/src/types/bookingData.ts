@@ -11,6 +11,7 @@ export const bookingDataSchema = bookingRequestSchema.shape({
   date: dateHourSchema,
   spaces: yup.number().min(1).max(MAX_EVENT_SPACES).required(),
   uid: yup.string().required(),
+  paymentid: yup.string().required(),
 });
 
 export type BookingRequest = yup.InferType<typeof bookingRequestSchema>;

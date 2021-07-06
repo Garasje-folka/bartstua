@@ -43,7 +43,9 @@ const Booking: React.FC = () => {
     try {
       let uid = currentUser?.uid;
       if (!uid) return;
-      await addReservation(booking);
+      // TODO: Use client secret to finish payment
+      const secret = await addReservation(booking);
+      console.log(secret);
     } catch (error) {
       console.log(error);
     }
