@@ -33,7 +33,7 @@ export const ActionsContainer = styled.div`
   display: flex;
 `;
 
-export const SignUpButton = styled(Button)`
+export const SignInButton = styled(Button)`
   margin: auto;
 `;
 
@@ -61,6 +61,7 @@ export const SignUpLabel = styled.div`
   margin: auto;
 `;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 export const EmailField = styled(InputField)``;
 =======
@@ -94,10 +95,24 @@ export const SignInBottom = styled.div`
   padding-top: ${({ theme }) => theme.alignment.padding.REGULAR};
 `;
 
+=======
+export const EmailField = styled(InputField)``;
+
+export const PasswordField = styled(InputField)``;
+
+>>>>>>> e77c508... Improved design on signUp-page (#41)
 export const IconInputContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
 
-export const emailIcon = styled.div``;
+export const StyledFormContainer = styled(FormContainer)`
+  margin: auto;
+`;
+
+export const OuterFormContainer = styled.div`
+  display: flex;
+`;
+
+export const SignUpButton = styled(SubmitButton)``;

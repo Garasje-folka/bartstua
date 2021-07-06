@@ -1,9 +1,13 @@
 import { useState, FormEvent } from "react";
+<<<<<<< HEAD
 <<<<<<< HEAD:frontend/src/pages/signUp/register.tsx
 import { InputField, SubmitButton, FormContainer } from "../../components/form";
 =======
 import { FormContainer, InputField, SubmitButton } from "../../components/form";
 >>>>>>> c554304... design of register page:frontend/src/pages/register.tsx
+=======
+import { InputField, SubmitButton, FormContainer } from "../../components/form";
+>>>>>>> e77c508... Improved design on signUp-page (#41)
 import { userManagement } from "../../services";
 import { CardContainer, CardHeader, CardBody } from "../../components/card";
 import { useTranslation } from "react-i18next";
@@ -22,6 +26,7 @@ import {
   PasswordField,
   RightContainer,
   SignInButton,
+<<<<<<< HEAD
   SignUpContainer,
   SignUpHeader,
   SignUpLabel,
@@ -43,19 +48,31 @@ import { InputFieldSize } from "../../components/form/inputField";
   RightContainer,
   SignInBottom,
   SignUpButton,
+=======
+>>>>>>> e77c508... Improved design on signUp-page (#41)
   SignUpContainer,
   SignUpHeader,
   SignUpLabel,
+  SignUpButton,
+  StyledFormContainer,
+  OuterFormContainer,
 } from "../signUp/signUp.styled";
 import { Heading } from "../../components/text";
+<<<<<<< HEAD
 import { SignInButton } from "../../components/header/header.styled";
 <<<<<<< HEAD
 >>>>>>> c554304... design of register page:frontend/src/pages/register.tsx
 =======
+=======
+>>>>>>> e77c508... Improved design on signUp-page (#41)
 import Feedback from "react-bootstrap/esm/Feedback";
-import { FaEnvelope, FaKey } from "react-icons/fa";
 import { right } from "@popperjs/core";
+<<<<<<< HEAD
 >>>>>>> 87d22c7... register setup
+=======
+import { EmailIcon, PasswordIcon } from "../../icons";
+import { InputFieldSize } from "../../components/form/inputField";
+>>>>>>> e77c508... Improved design on signUp-page (#41)
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 
@@ -150,7 +167,7 @@ const Register = () => {
             </Heading>
           </HeadingContainer>
           <ActionsContainer>
-            <SignUpButton>{t("label_sign_in")}</SignUpButton>
+            <SignInButton>{t("label_sign_in")}</SignInButton>
           </ActionsContainer>
         </CenterContainer>
       </LeftContainer>
@@ -200,6 +217,7 @@ const Register = () => {
               </Heading>
             </SignUpLabel>
           </SignUpHeader>
+<<<<<<< HEAD
           <IconInputContainer>
             <FaEnvelope style={{ margin: "5px" }} />
             <EmailField ghostText="E-post" />
@@ -219,6 +237,28 @@ const Register = () => {
         </SignInContainer>
 >>>>>>> c554304... design of register page:frontend/src/pages/register.tsx
 =======
+=======
+          <OuterFormContainer>
+            <StyledFormContainer onSubmit={() => {}}>
+              <EmailField
+                ghostText={t("label_email")}
+                icon={EmailIcon}
+                size={InputFieldSize.SMALL}
+              />
+              <PasswordField
+                ghostText={t("label_password")}
+                icon={PasswordIcon}
+                size={InputFieldSize.SMALL}
+              />
+              <PasswordField
+                ghostText={t("label_repeat_password")}
+                icon={PasswordIcon}
+                size={InputFieldSize.SMALL}
+              />
+              <SignUpButton label={t("label_register_user")} />
+            </StyledFormContainer>
+          </OuterFormContainer>
+>>>>>>> e77c508... Improved design on signUp-page (#41)
         </SignUpContainer>
 >>>>>>> 87d22c7... register setup
       </RightContainer>
