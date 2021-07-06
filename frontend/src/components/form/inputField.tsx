@@ -64,6 +64,7 @@ const InputField: InputFieldType = (props) => {
       $largeSpacing={largeSpacing || false}
     >
       <StyledFormGroup>
+        <IconWrapper>{Icon && <Icon />}</IconWrapper>
         {label ? <Form.Label>{label}</Form.Label> : undefined}
         {description ? <Form.Text>{"\n" + description}</Form.Text> : undefined}
         <StyledFormControl
@@ -76,7 +77,6 @@ const InputField: InputFieldType = (props) => {
         />
         <Error serious={errorSerious}>{errorText}</Error>
       </StyledFormGroup>
-      <IconWrapper>{Icon && <Icon />}</IconWrapper>
     </Wrapper>
   );
 };

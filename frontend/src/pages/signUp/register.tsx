@@ -1,13 +1,5 @@
 import { useState, FormEvent } from "react";
-<<<<<<< HEAD
-<<<<<<< HEAD:frontend/src/pages/signUp/register.tsx
 import { InputField, SubmitButton, FormContainer } from "../../components/form";
-=======
-import { FormContainer, InputField, SubmitButton } from "../../components/form";
->>>>>>> c554304... design of register page:frontend/src/pages/register.tsx
-=======
-import { InputField, SubmitButton, FormContainer } from "../../components/form";
->>>>>>> e77c508... Improved design on signUp-page (#41)
 import { userManagement } from "../../services";
 import { CardContainer, CardHeader, CardBody } from "../../components/card";
 import { useTranslation } from "react-i18next";
@@ -19,14 +11,10 @@ import {
   CenterContainer,
   EmailField,
   HeadingContainer,
-<<<<<<< HEAD
-<<<<<<< HEAD:frontend/src/pages/signUp/register.tsx
   IconInputContainer,
   LeftContainer,
   PasswordField,
   RightContainer,
-  SignInButton,
-<<<<<<< HEAD
   SignUpContainer,
   SignUpHeader,
   SignUpLabel,
@@ -39,40 +27,7 @@ import Feedback from "react-bootstrap/esm/Feedback";
 import { right } from "@popperjs/core";
 import { EmailIcon, PasswordIcon } from "../../icons";
 import { InputFieldSize } from "../../components/form/inputField";
-=======
-=======
-  IconInputContainer,
->>>>>>> 87d22c7... register setup
-  LeftContainer,
-  PasswordField,
-  RightContainer,
-  SignInBottom,
-  SignUpButton,
-=======
->>>>>>> e77c508... Improved design on signUp-page (#41)
-  SignUpContainer,
-  SignUpHeader,
-  SignUpLabel,
-  SignUpButton,
-  StyledFormContainer,
-  OuterFormContainer,
-} from "../signUp/signUp.styled";
-import { Heading } from "../../components/text";
-<<<<<<< HEAD
 import { SignInButton } from "../../components/header/header.styled";
-<<<<<<< HEAD
->>>>>>> c554304... design of register page:frontend/src/pages/register.tsx
-=======
-=======
->>>>>>> e77c508... Improved design on signUp-page (#41)
-import Feedback from "react-bootstrap/esm/Feedback";
-import { right } from "@popperjs/core";
-<<<<<<< HEAD
->>>>>>> 87d22c7... register setup
-=======
-import { EmailIcon, PasswordIcon } from "../../icons";
-import { InputFieldSize } from "../../components/form/inputField";
->>>>>>> e77c508... Improved design on signUp-page (#41)
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 
@@ -155,116 +110,57 @@ const Register = () => {
   };
 
   return (
-    <Background>
-      <LeftContainer>
-        <CenterContainer>
-          <HeadingContainer>
-            <Heading type={Heading.types.HEADING1}>
-              {t("label_bartstua")}
-            </Heading>
-            <Heading type={Heading.types.HEADING3}>
-              {t("label_bartstua_quote")}
-            </Heading>
-          </HeadingContainer>
-          <ActionsContainer>
-            <SignInButton>{t("label_sign_in")}</SignInButton>
-          </ActionsContainer>
-        </CenterContainer>
-      </LeftContainer>
-      <RightContainer>
-<<<<<<< HEAD
-<<<<<<< HEAD:frontend/src/pages/signUp/register.tsx
-        <SignUpContainer>
-          <SignUpHeader>
-            <SignUpLabel>
+    <>
+      <Background>
+        <LeftContainer>
+          <CenterContainer>
+            <HeadingContainer>
               <Heading type={Heading.types.HEADING1}>
-                {t("label_register_user")}
+                {t("label_bartstua")}
               </Heading>
-            </SignUpLabel>
-          </SignUpHeader>
-          <OuterFormContainer>
-            <StyledFormContainer onSubmit={() => {}}>
-              <EmailField
-                ghostText={t("label_email")}
-                icon={EmailIcon}
-                size={InputFieldSize.SMALL}
-              />
-              <PasswordField
-                ghostText={t("label_password")}
-                icon={PasswordIcon}
-                size={InputFieldSize.SMALL}
-              />
-              <PasswordField
-                ghostText={t("label_repeat_password")}
-                icon={PasswordIcon}
-                size={InputFieldSize.SMALL}
-              />
-              <SignUpButton label={t("label_register_user")} />
-            </StyledFormContainer>
-          </OuterFormContainer>
-        </SignUpContainer>
-=======
-        <SignInContainer>
-          <SignInHeader>
-            <SignInLabel>
-=======
-        <SignUpContainer>
-          <SignUpHeader>
-            <SignUpLabel>
->>>>>>> 87d22c7... register setup
-              <Heading type={Heading.types.HEADING1}>
-                {t("label_register_user")}
+              <Heading type={Heading.types.HEADING3}>
+                {t("label_bartstua_quote")}
               </Heading>
-            </SignUpLabel>
-          </SignUpHeader>
-<<<<<<< HEAD
-          <IconInputContainer>
-            <FaEnvelope style={{ margin: "5px" }} />
-            <EmailField ghostText="E-post" />
-          </IconInputContainer>
-          <IconInputContainer>
-            <FaKey style={{ margin: "5px" }} />
-            <PasswordField ghostText="Passord" />
-          </IconInputContainer>
-          <IconInputContainer>
-            <FaKey style={{ margin: "5px" }} />
-            <PasswordField ghostText="Passord på nytt" />
-          </IconInputContainer>
-          <SignInBottom>
-            <SignInButton>{t("label_register_user")}</SignInButton>
-          </SignInBottom>
-<<<<<<< HEAD
-        </SignInContainer>
->>>>>>> c554304... design of register page:frontend/src/pages/register.tsx
-=======
-=======
-          <OuterFormContainer>
-            <StyledFormContainer onSubmit={() => {}}>
-              <EmailField
-                ghostText={t("label_email")}
-                icon={EmailIcon}
-                size={InputFieldSize.SMALL}
-              />
-              <PasswordField
-                ghostText={t("label_password")}
-                icon={PasswordIcon}
-                size={InputFieldSize.SMALL}
-              />
-              <PasswordField
-                ghostText={t("label_repeat_password")}
-                icon={PasswordIcon}
-                size={InputFieldSize.SMALL}
-              />
-              <SignUpButton label={t("label_register_user")} />
-            </StyledFormContainer>
-          </OuterFormContainer>
->>>>>>> e77c508... Improved design on signUp-page (#41)
-        </SignUpContainer>
->>>>>>> 87d22c7... register setup
-      </RightContainer>
-    </Background>
+            </HeadingContainer>
+            <ActionsContainer>
+              <SignUpButton>{t("label_sign_in")}</SignUpButton>
+            </ActionsContainer>
+          </CenterContainer>
+        </LeftContainer>
+        <RightContainer>
+          <SignUpContainer>
+            <SignUpHeader>
+              <SignUpLabel>
+                <Heading type={Heading.types.HEADING1}>
+                  {t("label_register_user")}
+                </Heading>
+              </SignUpLabel>
+            </SignUpHeader>
+            <OuterFormContainer>
+              <StyledFormContainer onSubmit={() => {}}>
+                <EmailField
+                  ghostText={t("label_email")}
+                  icon={EmailIcon}
+                  size={InputFieldSize.SMALL}
+                />
+                <PasswordField
+                  ghostText={t("label_password")}
+                  icon={PasswordIcon}
+                  size={InputFieldSize.SMALL}
+                />
+                <PasswordField
+                  ghostText={t("label_repeat_password")}
+                  icon={PasswordIcon}
+                  size={InputFieldSize.SMALL}
+                />
+                {/*<SignUpButton label={t("label_register_user")} />*/}
+              </StyledFormContainer>
+            </OuterFormContainer>
+          </SignUpContainer>
+        </RightContainer>
+      </Background>
 
-    /*<>
+      {/*<>
       <CardContainer>
         <CardHeader title={t("label_register")} />
         <CardBody>
@@ -297,8 +193,9 @@ const Register = () => {
           </FormContainer>
         </CardBody>
       </CardContainer>
-      
-    </>*/
+
+    */}
+    </>
   );
 };
 
