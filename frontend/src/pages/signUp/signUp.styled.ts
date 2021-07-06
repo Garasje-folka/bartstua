@@ -33,7 +33,7 @@ export const ActionsContainer = styled.div`
   display: flex;
 `;
 
-export const SignInButton = styled(Button)`
+export const SignUpButton = styled(Button)`
   margin: auto;
 `;
 
@@ -61,7 +61,15 @@ export const SignUpLabel = styled.div`
   margin: auto;
 `;
 
+<<<<<<< HEAD
 export const EmailField = styled(InputField)``;
+=======
+const InputFieldCommonStyle = css``;
+
+export const EmailField = styled(InputField)`
+  position: relative;
+`;
+>>>>>>> 87d22c7... register setup
 
 export const PasswordField = styled(InputField)``;
 
@@ -85,3 +93,11 @@ export const SignInBottom = styled.div`
   padding-right: ${({ theme }) => theme.alignment.padding.EXTRA_EXTRA_LARGE};
   padding-top: ${({ theme }) => theme.alignment.padding.REGULAR};
 `;
+
+export const IconInputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const emailIcon = styled.div``;

@@ -15,6 +15,7 @@ import {
   CenterContainer,
   EmailField,
   HeadingContainer,
+<<<<<<< HEAD
 <<<<<<< HEAD:frontend/src/pages/signUp/register.tsx
   IconInputContainer,
   LeftContainer,
@@ -34,17 +35,27 @@ import { right } from "@popperjs/core";
 import { EmailIcon, PasswordIcon } from "../../icons";
 import { InputFieldSize } from "../../components/form/inputField";
 =======
+=======
+  IconInputContainer,
+>>>>>>> 87d22c7... register setup
   LeftContainer,
   PasswordField,
   RightContainer,
   SignInBottom,
-  SignInContainer,
-  SignInHeader,
-  SignInLabel,
-} from "../signIn/signIn.styled";
+  SignUpButton,
+  SignUpContainer,
+  SignUpHeader,
+  SignUpLabel,
+} from "../signUp/signUp.styled";
 import { Heading } from "../../components/text";
 import { SignInButton } from "../../components/header/header.styled";
+<<<<<<< HEAD
 >>>>>>> c554304... design of register page:frontend/src/pages/register.tsx
+=======
+import Feedback from "react-bootstrap/esm/Feedback";
+import { FaEnvelope, FaKey } from "react-icons/fa";
+import { right } from "@popperjs/core";
+>>>>>>> 87d22c7... register setup
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 
@@ -139,11 +150,12 @@ const Register = () => {
             </Heading>
           </HeadingContainer>
           <ActionsContainer>
-            <SignInButton>{t("label_sign_in")}</SignInButton>
+            <SignUpButton>{t("label_sign_in")}</SignUpButton>
           </ActionsContainer>
         </CenterContainer>
       </LeftContainer>
       <RightContainer>
+<<<<<<< HEAD
 <<<<<<< HEAD:frontend/src/pages/signUp/register.tsx
         <SignUpContainer>
           <SignUpHeader>
@@ -178,19 +190,37 @@ const Register = () => {
         <SignInContainer>
           <SignInHeader>
             <SignInLabel>
+=======
+        <SignUpContainer>
+          <SignUpHeader>
+            <SignUpLabel>
+>>>>>>> 87d22c7... register setup
               <Heading type={Heading.types.HEADING1}>
                 {t("label_register_user")}
               </Heading>
-            </SignInLabel>
-          </SignInHeader>
-          <EmailField ghostText="E-post" />
-          <PasswordField ghostText="Passord" />
-          <PasswordField ghostText="Passord på nytt" />
+            </SignUpLabel>
+          </SignUpHeader>
+          <IconInputContainer>
+            <FaEnvelope style={{ margin: "5px" }} />
+            <EmailField ghostText="E-post" />
+          </IconInputContainer>
+          <IconInputContainer>
+            <FaKey style={{ margin: "5px" }} />
+            <PasswordField ghostText="Passord" />
+          </IconInputContainer>
+          <IconInputContainer>
+            <FaKey style={{ margin: "5px" }} />
+            <PasswordField ghostText="Passord på nytt" />
+          </IconInputContainer>
           <SignInBottom>
             <SignInButton>{t("label_register_user")}</SignInButton>
           </SignInBottom>
+<<<<<<< HEAD
         </SignInContainer>
 >>>>>>> c554304... design of register page:frontend/src/pages/register.tsx
+=======
+        </SignUpContainer>
+>>>>>>> 87d22c7... register setup
       </RightContainer>
     </Background>
 
