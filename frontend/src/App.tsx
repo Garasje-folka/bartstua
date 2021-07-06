@@ -15,11 +15,11 @@ const App = () => {
         fonts={[
           {
             font: "Roboto",
-            weights: [400, "400i"],
+            weights: [100, "400i"],
           },
           {
             font: "Roboto Mono",
-            weights: [400, 700],
+            weights: [100, 700],
           },
         ]}
         subsets={["cyrillic-ext", "greek"]}
