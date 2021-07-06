@@ -6,7 +6,7 @@ import { CustomRouter } from "./router/customRouter";
 import { ThemeProvider } from "styled-components";
 import { themeConfig } from "./app.theme";
 import GoogleFontLoader from "react-google-font-loader";
-import { MainFont } from "./App-styled";
+import { FontProvider } from "./App-styled";
 
 const App = () => {
   return (
@@ -28,9 +28,9 @@ const App = () => {
       <Provider store={store}>
         <ThemeProvider theme={themeConfig}>
           <MainService />
-          <MainFont>
+          <FontProvider>
             <CustomRouter />
-          </MainFont>
+          </FontProvider>
         </ThemeProvider>
       </Provider>
     </>
