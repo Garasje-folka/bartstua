@@ -41,6 +41,7 @@ export const StyledFormControl = styled(Form.Control)<StyledFormControlProps>`
   border-color: transparent;
   box-shadow: ${({ theme }) => theme.shadow.REGULAR};
   background-color: transparent;
+  padding-left: 25px;
   ${fieldRadius}
   ${fieldHeight}
 
@@ -87,12 +88,12 @@ export const Wrapper = styled.div<WrapperProps>`
 
 export const IconWrapper = styled.div`
   position: absolute;
-  right: 0;
+  left: 0;
   top: 0;
   ${fieldHeight}
   display: flex;
   align-items: center;
-  margin-right: 15px;
+  margin-left: 5px;
   pointer-events: none;
 `;
 

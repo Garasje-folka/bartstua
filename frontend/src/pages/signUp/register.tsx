@@ -11,7 +11,6 @@ import {
   CenterContainer,
   EmailField,
   HeadingContainer,
-  IconInputContainer,
   LeftContainer,
   PasswordField,
   RightContainer,
@@ -148,8 +147,8 @@ const Register = () => {
                 size={InputFieldSize.SMALL}
               />
               <PasswordField
-                ghostText={t("label_repeat_password")}
                 icon={PasswordIcon}
+                ghostText={t("label_repeat_password")}
                 size={InputFieldSize.SMALL}
               />
               <SignUpButton label={t("label_register_user")} />

@@ -65,12 +65,6 @@ export const EmailField = styled(InputField)``;
 
 export const PasswordField = styled(InputField)``;
 
-export const IconInputContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
 export const StyledFormContainer = styled(FormContainer)`
   margin: auto;
 `;
