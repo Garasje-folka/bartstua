@@ -71,4 +71,13 @@ export const PasswordField = styled(InputField)``;
 export const SignInBottom = styled.div`
   padding-right: ${({ theme }) => theme.alignment.padding.EXTRA_EXTRA_LARGE};
   padding-top: ${({ theme }) => theme.alignment.padding.REGULAR};
+  background-color: blue;
+`;
+
+export const OuterFormContainer = styled.div`
+  display: flex;
+`;
+
+export const StyledFormContainer = styled.div`
+  margin: auto;
 `;
