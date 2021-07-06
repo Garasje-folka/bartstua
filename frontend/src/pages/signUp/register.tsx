@@ -1,5 +1,9 @@
 import { useState, FormEvent } from "react";
+<<<<<<< HEAD:frontend/src/pages/signUp/register.tsx
 import { InputField, SubmitButton, FormContainer } from "../../components/form";
+=======
+import { FormContainer, InputField, SubmitButton } from "../../components/form";
+>>>>>>> c554304... design of register page:frontend/src/pages/register.tsx
 import { userManagement } from "../../services";
 import { CardContainer, CardHeader, CardBody } from "../../components/card";
 import { useTranslation } from "react-i18next";
@@ -11,6 +15,7 @@ import {
   CenterContainer,
   EmailField,
   HeadingContainer,
+<<<<<<< HEAD:frontend/src/pages/signUp/register.tsx
   IconInputContainer,
   LeftContainer,
   PasswordField,
@@ -28,6 +33,18 @@ import Feedback from "react-bootstrap/esm/Feedback";
 import { right } from "@popperjs/core";
 import { EmailIcon, PasswordIcon } from "../../icons";
 import { InputFieldSize } from "../../components/form/inputField";
+=======
+  LeftContainer,
+  PasswordField,
+  RightContainer,
+  SignInBottom,
+  SignInContainer,
+  SignInHeader,
+  SignInLabel,
+} from "../signIn/signIn.styled";
+import { Heading } from "../../components/text";
+import { SignInButton } from "../../components/header/header.styled";
+>>>>>>> c554304... design of register page:frontend/src/pages/register.tsx
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 
@@ -127,6 +144,7 @@ const Register = () => {
         </CenterContainer>
       </LeftContainer>
       <RightContainer>
+<<<<<<< HEAD:frontend/src/pages/signUp/register.tsx
         <SignUpContainer>
           <SignUpHeader>
             <SignUpLabel>
@@ -156,6 +174,23 @@ const Register = () => {
             </StyledFormContainer>
           </OuterFormContainer>
         </SignUpContainer>
+=======
+        <SignInContainer>
+          <SignInHeader>
+            <SignInLabel>
+              <Heading type={Heading.types.HEADING1}>
+                {t("label_register_user")}
+              </Heading>
+            </SignInLabel>
+          </SignInHeader>
+          <EmailField ghostText="E-post" />
+          <PasswordField ghostText="Passord" />
+          <PasswordField ghostText="Passord på nytt" />
+          <SignInBottom>
+            <SignInButton>{t("label_register_user")}</SignInButton>
+          </SignInBottom>
+        </SignInContainer>
+>>>>>>> c554304... design of register page:frontend/src/pages/register.tsx
       </RightContainer>
     </Background>
 

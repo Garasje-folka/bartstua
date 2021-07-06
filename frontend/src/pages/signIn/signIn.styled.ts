@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 import { Button } from "../../components/button";
 import { InputField } from "../../components/form";
-import { createGlobalStyle } from "styled-components";
 
 export const Background = styled.div`
   background-color: #5ab9ea;

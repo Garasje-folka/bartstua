@@ -80,3 +80,8 @@ export const OuterFormContainer = styled.div`
 `;
 
 export const SignUpButton = styled(SubmitButton)``;
+
+export const SignInBottom = styled.div`
+  padding-right: ${({ theme }) => theme.alignment.padding.EXTRA_EXTRA_LARGE};
+  padding-top: ${({ theme }) => theme.alignment.padding.REGULAR};
+`;
