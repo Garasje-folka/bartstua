@@ -18,8 +18,6 @@ import { removeExpiredReservation } from "./removeExpiredReservations";
 
 export const addReservation = functions.https.onCall(
   async (data: BookingRequest, context) => {
-    functions.logger.info("hei");
-
     // Check data format
     try {
       await bookingRequestSchema.validate(data);
