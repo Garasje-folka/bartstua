@@ -22,7 +22,22 @@ const getMaxWidth = (size?: InputFieldSize) => {
   }
 };
 
-export const StyledFormGroup = styled(Form.Group)``;
+interface StyledFormGroupProps {
+  $largeSpacing: boolean;
+  $size: InputFieldSize;
+}
+
+export const StyledFormGroup = styled(Form.Group)<StyledFormGroupProps>`
+  margin-bottom: ${({ theme, $largeSpacing }) =>
+    $largeSpacing
+      ? theme.alignment.margin.LARGE
+      : theme.alignment.margin.REGULAR};
+  margin-top: ${({ theme, $largeSpacing }) =>
+    $largeSpacing
+      ? theme.alignment.margin.LARGE
+      : theme.alignment.margin.REGULAR};
+  max-width: ${({ $size }) => getMaxWidth($size)};
+`;
 
 interface StyledFormControlProps {
   $isError: boolean;
