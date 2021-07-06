@@ -9,6 +9,7 @@ export const Background = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: row;
+  background-image: url(./images/sauna.jpeg);
 `;
 
 export const LeftContainer = styled.div`
@@ -30,11 +31,18 @@ export const HeadingContainer = styled.div`
 `;
 
 export const ActionsContainer = styled.div`
-  display: flex;
+  display: inline-flex;
+  align-items: center;
 `;
 
-export const SignUpButton = styled(Button)`
+export const SignUpButton = styled(Button)``;
+
+export const SignInButtonsContainer = styled.div`
   margin: auto;
+`;
+
+export const SignInButton = styled(Button)`
+  margin-left: 5px;
 `;
 
 export const RightContainer = styled.div`
@@ -97,3 +105,7 @@ export const IconInputContainer = styled.div`
 `;
 
 export const emailIcon = styled.div``;
+s;
+export const ImageContainer = styled.div`
+  width: 670px;
+`;

@@ -21,13 +21,15 @@ import {
   SignUpButton,
   StyledFormContainer,
   OuterFormContainer,
+  SignInButtonsContainer,
 } from "../signUp/signUp.styled";
 import { Heading } from "../../components/text";
 import Feedback from "react-bootstrap/esm/Feedback";
 import { right } from "@popperjs/core";
-import { EmailIcon, PasswordIcon } from "../../icons";
+import { EmailIcon, PasswordIcon, SignInIcon, SignUpIcon } from "../../icons";
 import { InputFieldSize } from "../../components/form/inputField";
 import { SignInButton } from "../../components/header/header.styled";
+import saunaImg from "./images/sauna.jpeg";
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 
@@ -123,7 +125,10 @@ const Register = () => {
               </Heading>
             </HeadingContainer>
             <ActionsContainer>
-              <SignUpButton>{t("label_sign_in")}</SignUpButton>
+              <p>Har du en bruker?</p>
+              <SignInButton icon={SignInIcon}>
+                {t("label_sign_in")}
+              </SignInButton>
             </ActionsContainer>
           </CenterContainer>
         </LeftContainer>
@@ -132,7 +137,7 @@ const Register = () => {
             <SignUpHeader>
               <SignUpLabel>
                 <Heading type={Heading.types.HEADING1}>
-                  {t("label_register_user")}
+                  {t("label_bartstua")}
                 </Heading>
               </SignUpLabel>
             </SignUpHeader>
@@ -149,11 +154,14 @@ const Register = () => {
                   size={InputFieldSize.SMALL}
                 />
                 <PasswordField
-                  ghostText={t("label_repeat_password")}
                   icon={PasswordIcon}
+                  ghostText={t("label_repeat_password")}
                   size={InputFieldSize.SMALL}
                 />
-                {/*<SignUpButton label={t("label_register_user")} />*/}
+                <SignUpButton
+                  icon={SignUpIcon}
+                  label={t("label_register_user")}
+                />
               </StyledFormContainer>
             </OuterFormContainer>
           </SignUpContainer>
