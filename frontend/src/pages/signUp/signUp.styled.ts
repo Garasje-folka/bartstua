@@ -9,6 +9,7 @@ export const Background = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: row;
+  background-image: url(./images/sauna.jpeg);
 `;
 
 export const LeftContainer = styled.div`
@@ -30,11 +31,16 @@ export const HeadingContainer = styled.div`
 `;
 
 export const ActionsContainer = styled.div`
-  display: flex;
+  display: inline-flex;
+  align-items: center;
+`;
+
+export const SignInButtonsContainer = styled.div`
+  margin: auto;
 `;
 
 export const SignInButton = styled(Button)`
-  margin: auto;
+  margin-left: 5px;
 `;
 
 export const RightContainer = styled.div`
@@ -74,3 +80,7 @@ export const OuterFormContainer = styled.div`
 `;
 
 export const SignUpButton = styled(SubmitButton)``;
+
+export const ImageContainer = styled.div`
+  width: 670px;
+`;

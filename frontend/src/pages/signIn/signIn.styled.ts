@@ -9,6 +9,7 @@ export const Background = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: row;
+  background-image: url(./sauna.jpeg);
 `;
 
 export const LeftContainer = styled.div`

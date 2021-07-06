@@ -21,12 +21,14 @@ import {
   SignUpButton,
   StyledFormContainer,
   OuterFormContainer,
+  SignInButtonsContainer,
 } from "../signUp/signUp.styled";
 import { Heading } from "../../components/text";
 import Feedback from "react-bootstrap/esm/Feedback";
 import { right } from "@popperjs/core";
-import { EmailIcon, PasswordIcon } from "../../icons";
+import { EmailIcon, PasswordIcon, SignInIcon, SignUpIcon } from "../../icons";
 import { InputFieldSize } from "../../components/form/inputField";
+import saunaImg from "./images/sauna.jpeg";
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 
@@ -121,7 +123,8 @@ const Register = () => {
             </Heading>
           </HeadingContainer>
           <ActionsContainer>
-            <SignInButton>{t("label_sign_in")}</SignInButton>
+            <p>Har du en bruker?</p>
+            <SignInButton icon={SignInIcon}>{t("label_sign_in")}</SignInButton>
           </ActionsContainer>
         </CenterContainer>
       </LeftContainer>
@@ -151,7 +154,10 @@ const Register = () => {
                 ghostText={t("label_repeat_password")}
                 size={InputFieldSize.SMALL}
               />
-              <SignUpButton label={t("label_register_user")} />
+              <SignUpButton
+                icon={SignUpIcon}
+                label={t("label_register_user")}
+              />
             </StyledFormContainer>
           </OuterFormContainer>
         </SignUpContainer>
