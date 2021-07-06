@@ -10850,6 +10850,13 @@ react-error-overlay@^6.0.9:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.9.tgz#3c743010c9359608c375ecd6bc76f35d93995b0a"
   integrity sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
 
+react-google-font-loader@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-google-font-loader/-/react-google-font-loader-1.1.0.tgz#9c9ae97aae3d2177e922c9bf4ab6312b903abc79"
+  integrity sha512-mnPYxBdhYEldTtREYPKllbmMvCGkTbpdmNjR6iTM3eTNWcg17OrfXjq9HRDZe+1+mhnUnI/AOcpvG0LIQPcLIw==
+  dependencies:
+    prop-types "^15.6.2"
+
 react-i18next@^11.10.0:
   version "11.11.0"
   resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-11.11.0.tgz#2f7c6cb4f81f94d1728a02d60e4bb5216709f942"
