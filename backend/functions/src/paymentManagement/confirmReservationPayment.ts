@@ -1,8 +1,13 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { acceptReservations, getReservations } from "../bookingManagment";
-import { confirmPaymentIntent, createPaymentIntent } from "./stripeUtility";
+import {
+  cancelPaymentIntent,
+  confirmPaymentIntent,
+  createPaymentIntent,
+} from "./stripeUtility";
 import { PAYMENTS, STRIPE_CUSTOMERS } from "./constants";
+import Stripe from "stripe";
 
 export const confirmReservationPayment = functions.https.onCall(
   async (data, context) => {
@@ -29,26 +34,29 @@ export const confirmReservationPayment = functions.https.onCall(
       totalSpaces += doc.get("spaces");
     });
 
-    const amount = totalSpaces * 100 * 100;
+    let paymentIntent: Stripe.Response<Stripe.PaymentIntent> | null = null;
+    let paymentResult: Stripe.Response<Stripe.PaymentIntent> | null = null;
     try {
-      const paymentIntent = await createPaymentIntent(amount, data.paymentid);
-      const res = await confirmPaymentIntent(paymentIntent.id);
-      if (res.status === "succeeded") {
-        const bookingIds = await acceptReservations(reservations);
-        await admin
-          .firestore()
-          .collection(STRIPE_CUSTOMERS)
-          .doc(auth.uid)
-          .collection(PAYMENTS)
-          .add({
-            bookings: bookingIds,
-          });
-      }
-
-      return res;
+      const amount = totalSpaces * 100 * 100;
+      paymentIntent = await createPaymentIntent(amount, data.paymentid);
+      paymentResult = await confirmPaymentIntent(paymentIntent.id);
     } catch (error) {
+      if (paymentIntent) await cancelPaymentIntent(paymentIntent.id);
       // TODO: Add proper error handling
       throw new functions.https.HttpsError("invalid-argument", "Invalid card");
     }
+
+    if (paymentResult.status === "succeeded") {
+      const bookingIds = await acceptReservations(reservations);
+      await admin
+        .firestore()
+        .collection(STRIPE_CUSTOMERS)
+        .doc(auth.uid)
+        .collection(PAYMENTS)
+        .add({
+          bookings: bookingIds,
+        });
+    }
+    return paymentResult;
   }
 );
