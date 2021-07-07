@@ -14,12 +14,12 @@ const Button: React.FC<ButtonProps> = (props) => {
   const Icon = icon;
   return (
     <StyledButton className={className} onClick={onClick} type={type}>
-      {children}
       {Icon && (
         <IconWrapper>
           <Icon />
         </IconWrapper>
       )}
+      {children}
     </StyledButton>
   );
 };

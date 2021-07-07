@@ -35,8 +35,6 @@ export const ActionsContainer = styled.div`
   align-items: center;
 `;
 
-export const SignUpButton = styled(Button)``;
-
 export const SignInButtonsContainer = styled.div`
   margin: auto;
 `;
@@ -98,14 +96,8 @@ export const SignInBottom = styled.div`
   padding-top: ${({ theme }) => theme.alignment.padding.REGULAR};
 `;
 
-export const IconInputContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
+export const EmailIcon = styled.div``;
 
-export const emailIcon = styled.div``;
-s;
 export const ImageContainer = styled.div`
   width: 670px;
 `;

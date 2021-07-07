@@ -26,7 +26,7 @@ import {
 import { Heading } from "../../components/text";
 import { SignInButton } from "./signIn.styled";
 import { createEmitAndSemanticDiagnosticsBuilderProgram } from "typescript";
-import { EmailIcon, PasswordIcon } from "../../icons";
+import { EmailIcon, PasswordIcon, SignInIcon, SignUpIcon } from "../../icons";
 
 // TODO: Getting a bad request error when trying to log in with a valid email, but wrong password.
 
@@ -98,7 +98,9 @@ const SignIn = () => {
               </Heading>
             </HeadingContainer>
             <ActionsContainer>
-              <SignInButton>{t("label_register_user")}</SignInButton>
+              <SignInButton icon={SignUpIcon}>
+                {t("label_register_user")}
+              </SignInButton>
             </ActionsContainer>
           </CenterContainer>
         </LeftContainer>
@@ -123,7 +125,9 @@ const SignIn = () => {
                   icon={PasswordIcon}
                   size={InputFieldSize.SMALL}
                 />
-                <SignInButton>{t("label_sign_in")}</SignInButton>
+                <SignInButton icon={SignInIcon}>
+                  {t("label_sign_in")}
+                </SignInButton>
               </StyledFormContainer>
             </OuterFormContainer>
           </SignInContainer>

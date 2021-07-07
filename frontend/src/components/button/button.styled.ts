@@ -10,8 +10,9 @@ export const StyledButton = styled(BootstrapButton)`
 `;
 
 export const IconWrapper = styled.div`
-  margin-left: ${({ theme }) => theme.alignment.margin.REGULAR};
+  margin-left: ${({ theme }) => theme.alignment.margin.SMALL};
   margin-top: auto;
   margin-bottom: auto;
   display: flex;
+  margin-right: 10px;
 `;
