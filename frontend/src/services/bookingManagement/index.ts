@@ -1,5 +1,4 @@
-import { addReservation } from "./addReservation";
-import { subscribeEvent } from "./subscribeEvent";
-import { getEventStartingHour } from "./getEventStartingHour";
-
-export { addReservation, subscribeEvent, getEventStartingHour };
+export * from "./addReservation";
+export * from "./subscribeEvent";
+export * from "./getEventStartingHour";
+export * from "./confirmReservationPayment";

@@ -1,6 +1,7 @@
 /* import * as functions from "firebase-functions"; */
 
 export * from "./bookingManagment";
+export * from "./paymentManagement";
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //

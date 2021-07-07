@@ -15,7 +15,6 @@ import {
 } from "./types";
 import isValidEventDate from "./helpers/isValidEventDate";
 import { removeExpiredReservation } from "./removeExpiredReservations";
-import { cancelPaymentIntent, createPaymentIntent } from "../paymentManagement";
 
 export const addReservation = functions.https.onCall(
   async (data: BookingRequest, context) => {
@@ -44,14 +43,9 @@ export const addReservation = functions.https.onCall(
       );
     }
 
-    // Create PaymentIntent
-    const amount = data.spaces * 100 * 100;
-    const paymentIntent = await createPaymentIntent(amount);
-
     const booking: BookingData = {
       ...data,
       uid: auth.uid,
-      paymentid: paymentIntent.id,
     };
 
     // Transaction that adds the reservation to firestore
@@ -111,10 +105,7 @@ export const addReservation = functions.https.onCall(
       setTimeout(() => {
         removeExpiredReservation(reservationId);
       }, RESERVATION_EXPIRATION_TIME * 60 * 1000);
-
-      return paymentIntent.client_secret;
     } catch (error) {
-      await cancelPaymentIntent(paymentIntent.id);
       throw error;
     }
   }
