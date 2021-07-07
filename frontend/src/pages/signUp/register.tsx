@@ -29,7 +29,6 @@ import { right } from "@popperjs/core";
 import { EmailIcon, PasswordIcon, SignInIcon, SignUpIcon } from "../../icons";
 import { InputFieldSize } from "../../components/form/inputField";
 import { SignInButton } from "../../components/header/header.styled";
-import saunaImg from "./images/sauna.jpeg";
 
 // TODO: Getting a Bad Request console error when creating user, look into it.
 

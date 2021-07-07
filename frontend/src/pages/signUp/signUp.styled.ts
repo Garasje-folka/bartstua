@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { Button } from "../../components/button";
 import { FormContainer, InputField, SubmitButton } from "../../components/form";
+import saunaImg from "../../media/sauna.jpeg";
 
 export const Background = styled.div`
   background-color: #5ab9ea;
@@ -9,7 +10,6 @@ export const Background = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: row;
-  background-image: url(./images/sauna.jpeg);
 `;
 
 export const LeftContainer = styled.div`
