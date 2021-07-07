@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { BookingDay } from "../components/bookingDay/bookingDay";
 import { Container, Row, Col } from "react-bootstrap";
 import { BookingRequest, DateDay } from "utils";
@@ -10,9 +10,16 @@ import { useSelector } from "react-redux";
 import { currentUserSelector } from "../redux/selectors";
 import { addReservation } from "../services/bookingManagement";
 import { signInAnonymously } from "../services/userManagement/signInAnonymously";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 
 const Booking: React.FC = () => {
   const currentUser = useSelector(currentUserSelector);
+  const [clientSecret, setClientSecret] = useState<string | undefined>(
+    undefined
+  );
+
+  const stripe = useStripe();
+  const elements = useElements();
 
   const [startDay, setStartDay] = useState<DateDay>(
     createDateDayFromDate(new Date())
@@ -43,16 +50,44 @@ const Booking: React.FC = () => {
     try {
       let uid = currentUser?.uid;
       if (!uid) return;
-      // TODO: Use client secret to finish payment
       const secret = await addReservation(booking);
-      console.log(secret);
+      setClientSecret(secret);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const handleCardConfirmation = async (event: FormEvent) => {
+    event.preventDefault();
+
+    if (!stripe || !elements || !clientSecret) return;
+
+    const card = elements.getElement(CardElement);
+    if (!card) return;
+
+    const result = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: card,
+      },
+    });
+
+    if (result.error) {
+      console.log(result.error.message);
+    } else {
+      if (result.paymentIntent.status === "succeeded") {
+        console.log("Payment succeeded!");
+      } else {
+        console.log("Payment failed!");
+      }
+    }
+  };
+
   return currentUser?.uid ? (
     <>
+      <form onSubmit={handleCardConfirmation}>
+        <CardElement />
+        <button disabled={!stripe}> Confirm order </button>
+      </form>
       <Button onClick={() => incrementStartDate(false)}> Bakover </Button>
       <Button onClick={() => incrementStartDate(true)}> Forover </Button>
       <Container>
