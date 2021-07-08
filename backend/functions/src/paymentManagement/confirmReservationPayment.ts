@@ -41,8 +41,10 @@ export const confirmReservationPayment = functions.https.onCall(
       paymentResult = await confirmPaymentIntent(paymentIntent.id);
     } catch (error) {
       if (paymentIntent) await cancelPaymentIntent(paymentIntent.id);
-      // TODO: Add proper error handling
-      throw new functions.https.HttpsError("invalid-argument", "Invalid card");
+
+      // TODO: Maybe add error object to details
+      // Correct https error code?
+      throw new functions.https.HttpsError("invalid-argument", error.code);
     }
 
     if (paymentResult.status === "succeeded") {
