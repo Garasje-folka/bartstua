@@ -1,17 +1,18 @@
 import * as admin from "firebase-admin";
-import { EVENTS } from "./constants";
-import { DateHour, Doc, EventData } from "./types";
+import {EVENTS} from "./constants";
+import {DateHour, Doc, EventData} from "./types";
 
 const getEventQueryRef = (date: DateHour) => {
   return admin
-    .firestore()
-    .collection(EVENTS)
-    .where("date", "==", date)
-    .limit(1);
+      .firestore()
+      .collection(EVENTS)
+      .where("date", "==", date)
+      .limit(1);
 };
 
 const querySnapshotToEventDoc = (
-  querySnapshot: FirebaseFirestore.QuerySnapshot<FirebaseFirestore.DocumentData>
+    querySnapshot: FirebaseFirestore.QuerySnapshot<
+        FirebaseFirestore.DocumentData>
 ) => {
   if (querySnapshot.empty) return undefined;
 
@@ -27,4 +28,4 @@ const getEvent = async (date: DateHour) => {
   return querySnapshotToEventDoc(querySnapshot);
 };
 
-export { getEvent };
+export {getEvent};

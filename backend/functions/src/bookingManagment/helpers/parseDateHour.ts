@@ -1,12 +1,12 @@
-import { DateHour } from "../types";
+import {DateHour} from "../types";
 import parseDateDay from "./parseDateDay";
 
 const parseDateHour = (
-  date: DateHour,
-  includeYear: boolean,
-  includeMonth: boolean,
-  includeDay: boolean,
-  includeHour: boolean
+    date: DateHour,
+    includeYear: boolean,
+    includeMonth: boolean,
+    includeDay: boolean,
+    includeHour: boolean
 ) => {
   let parsed = parseDateDay(date, includeYear, includeMonth, includeDay);
 

@@ -1,12 +1,13 @@
 import * as admin from "firebase-admin";
-import { PAYMENTS, STRIPE_CUSTOMERS } from "../paymentManagement/constants";
-import { BOOKINGS } from "./constants";
+import {PAYMENTS, STRIPE_CUSTOMERS} from "../paymentManagement/constants";
+import {BOOKINGS} from "./constants";
 
 // This is probably just going to be a helper method
 // that is used when the booking payment has been accepted
 export const acceptReservations = async (
-  uid: string,
-  reservations: FirebaseFirestore.QuerySnapshot<FirebaseFirestore.DocumentData>
+    uid: string,
+    reservations: FirebaseFirestore.QuerySnapshot<
+        FirebaseFirestore.DocumentData>
 ) => {
   const batch = admin.firestore().batch();
 
@@ -20,11 +21,11 @@ export const acceptReservations = async (
   });
 
   const newPaymentRef = admin
-    .firestore()
-    .collection(STRIPE_CUSTOMERS)
-    .doc(uid)
-    .collection(PAYMENTS)
-    .doc();
+      .firestore()
+      .collection(STRIPE_CUSTOMERS)
+      .doc(uid)
+      .collection(PAYMENTS)
+      .doc();
 
   batch.set(newPaymentRef, {
     bookings: bookingIds,

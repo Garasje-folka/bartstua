@@ -1,6 +1,6 @@
 import * as admin from "firebase-admin";
-import { EVENTS, RESERVATIONS } from "./constants";
-import { getEvent } from "./getEvent";
+import {EVENTS, RESERVATIONS} from "./constants";
+import {getEvent} from "./getEvent";
 
 export const removeExpiredReservation = async (docid: string) => {
   await admin.firestore().runTransaction(async (transaction) => {
