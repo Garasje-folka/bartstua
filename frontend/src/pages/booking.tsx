@@ -13,16 +13,13 @@ import {
   confirmReservationPayment,
 } from "../services/bookingManagement";
 import { signInAnonymously } from "../services/userManagement/signInAnonymously";
-import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import { Link } from "react-router-dom";
 
 const Booking: React.FC = () => {
   const currentUser = useSelector(currentUserSelector);
   const [clientSecret, setClientSecret] = useState<string | undefined>(
     undefined
   );
-
-  const stripe = useStripe();
-  const elements = useElements();
 
   const [startDay, setStartDay] = useState<DateDay>(
     createDateDayFromDate(new Date())
@@ -59,46 +56,17 @@ const Booking: React.FC = () => {
     }
   };
 
-  const handleCardConfirmation = async (event: FormEvent) => {
-    event.preventDefault();
 
-    if (!stripe || !elements) return;
-
-    const card = elements.getElement(CardElement);
-    if (!card) return;
-
-    const payment = await stripe.createPaymentMethod({
-      type: "card",
-      card: card,
-    });
-
-    if (!payment.paymentMethod) return;
-
-    try {
-      const result = await confirmReservationPayment(payment.paymentMethod.id);
-
-      if (result.status === "succeeded") {
-        console.log("Payment succeeded!");
-      } else {
-        console.log("Payment failed!");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return currentUser?.uid ? (
-    <>
-      <form onSubmit={handleCardConfirmation}>
-        <CardElement />
-        <button disabled={!stripe}> Confirm order </button>
-      </form>
+    <div>
+      <Link to="/checkout">Checkout</Link>
       <Button onClick={() => incrementStartDate(false)}> Bakover </Button>
       <Button onClick={() => incrementStartDate(true)}> Forover </Button>
       <Container>
         <Row>{getBookingDates(5)}</Row>
       </Container>
-    </>
+    </div>
   ) : (
     <Button onClick={() => signInAnonymously()}>Logg in som gjest</Button>
   );
