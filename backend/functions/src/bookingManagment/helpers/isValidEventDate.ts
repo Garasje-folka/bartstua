@@ -1,7 +1,7 @@
-import {BOOKING_ENDING_TIME, BOOKING_STARTING_TIME} from "../constants";
-import {DateHour} from "../types";
+import { BOOKING_ENDING_TIME, BOOKING_STARTING_TIME } from "../constants";
+import { DateHour } from "../types";
 import isBeforeToday from "./isBeforeToday";
-import {isToday} from "./isToday";
+import { isToday } from "./isToday";
 import isValidDateHour from "./isValidDateHour";
 
 const isValidEventDate = (date: DateHour) => {

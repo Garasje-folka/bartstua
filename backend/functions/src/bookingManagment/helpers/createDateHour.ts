@@ -1,4 +1,4 @@
-import {DateHour, DateDay} from "../types";
+import { DateHour, DateDay } from "../types";
 import createDateDay from "./createDateDay";
 
 const createDateHourFromDate = (date: Date): DateHour => {
@@ -9,8 +9,8 @@ const createDateHourFromDate = (date: Date): DateHour => {
 };
 
 const createDateHourFromDateDay = (
-    dateDay: DateDay,
-    hour: number
+  dateDay: DateDay,
+  hour: number
 ): DateHour => {
   return {
     ...dateDay,
@@ -18,4 +18,4 @@ const createDateHourFromDateDay = (
   };
 };
 
-export {createDateHourFromDate, createDateHourFromDateDay};
+export { createDateHourFromDate, createDateHourFromDateDay };

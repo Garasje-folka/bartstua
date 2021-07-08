@@ -1,4 +1,4 @@
-import {DateDay} from "../types";
+import { DateDay } from "../types";
 
 const isBeforeToday = (dateDay: DateDay) => {
   const currentDate = new Date();

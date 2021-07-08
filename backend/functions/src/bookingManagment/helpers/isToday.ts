@@ -1,4 +1,4 @@
-import {DateDay, DateHour} from "../types";
+import { DateDay, DateHour } from "../types";
 
 const isToday = (date: DateDay | DateHour) => {
   const currentDate = new Date();
@@ -9,4 +9,4 @@ const isToday = (date: DateDay | DateHour) => {
   );
 };
 
-export {isToday};
+export { isToday };

@@ -1,8 +1,8 @@
 const isValidDate = (
-    year: number,
-    month: number,
-    day: number,
-    hour?: number
+  year: number,
+  month: number,
+  day: number,
+  hour?: number
 ) => {
   if (!Number.isInteger(year) || year < 0) return false;
 
