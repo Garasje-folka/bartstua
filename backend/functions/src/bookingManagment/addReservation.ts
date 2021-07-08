@@ -49,64 +49,59 @@ export const addReservation = functions.https.onCall(
     };
 
     // Transaction that adds the reservation to firestore
-    // TODO: Don't know if this is the correct way to catch the errors
+    const reservationId = await admin
+      .firestore()
+      .runTransaction(async (transaction) => {
+        const event = await getEvent(booking.date);
+        let eventRef:
+          | FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
+          | undefined = undefined;
 
-    try {
-      const reservationId = await admin
-        .firestore()
-        .runTransaction(async (transaction) => {
-          const event = await getEvent(booking.date);
-          let eventRef:
-            | FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
-            | undefined = undefined;
+        let spacesTaken: number = 0;
 
-          let spacesTaken: number = 0;
+        if (event) {
+          // Event already exists
+          eventRef = admin.firestore().collection(EVENTS).doc(event.id);
+          const docSnapshot = await transaction.get(eventRef);
 
-          if (event) {
-            // Event already exists
-            eventRef = admin.firestore().collection(EVENTS).doc(event.id);
-            const docSnapshot = await transaction.get(eventRef);
-
-            if (docSnapshot.exists) {
-              const eventData = docSnapshot.data() as EventData;
-              spacesTaken = eventData.spacesTaken;
-            }
+          if (docSnapshot.exists) {
+            const eventData = docSnapshot.data() as EventData;
+            spacesTaken = eventData.spacesTaken;
           }
+        }
 
-          if (spacesTaken + booking.spaces > MAX_EVENT_SPACES) {
-            throw new functions.https.HttpsError(
-              "failed-precondition",
-              "Not enough space"
-            );
-          }
+        if (spacesTaken + booking.spaces > MAX_EVENT_SPACES) {
+          throw new functions.https.HttpsError(
+            "failed-precondition",
+            "Not enough space"
+          );
+        }
 
-          const newReservationRef = admin
-            .firestore()
-            .collection(RESERVATIONS)
-            .doc();
+        const newReservationRef = admin
+          .firestore()
+          .collection(RESERVATIONS)
+          .doc();
 
-          transaction.set(newReservationRef, booking);
+        transaction.set(newReservationRef, booking);
 
-          // Increment event spaces counter
-          if (event && eventRef) {
-            transaction.update(eventRef, {
-              spacesTaken: admin.firestore.FieldValue.increment(booking.spaces),
-            });
-          } else {
-            eventRef = admin.firestore().collection(EVENTS).doc();
-            transaction.set(eventRef, {
-              date: booking.date,
-              spacesTaken: booking.spaces,
-            });
-          }
+        // Increment event spaces counter
+        if (event && eventRef) {
+          transaction.update(eventRef, {
+            spacesTaken: admin.firestore.FieldValue.increment(booking.spaces),
+          });
+        } else {
+          eventRef = admin.firestore().collection(EVENTS).doc();
+          transaction.set(eventRef, {
+            date: booking.date,
+            spacesTaken: booking.spaces,
+          });
+        }
 
-          return newReservationRef.id;
-        });
-      setTimeout(() => {
-        removeExpiredReservation(reservationId);
-      }, RESERVATION_EXPIRATION_TIME * 60 * 1000);
-    } catch (error) {
-      throw error;
-    }
+        return newReservationRef.id;
+      });
+
+    setTimeout(() => {
+      removeExpiredReservation(reservationId);
+    }, RESERVATION_EXPIRATION_TIME * 60 * 1000);
   }
 );
