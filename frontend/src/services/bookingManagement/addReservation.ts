@@ -1,7 +1,6 @@
 import firebase from "firebase";
 import { BookingRequest } from "utils";
 
-// Returns client secret which is used for payment
 const addReservation = async (booking: BookingRequest) => {
   const call = firebase.functions().httpsCallable("addReservation");
   try {
