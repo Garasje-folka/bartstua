@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { BookingDay } from "../components/bookingDay/bookingDay";
 import { Container, Row, Col } from "react-bootstrap";
 import { BookingRequest, DateDay } from "utils";
@@ -8,11 +8,18 @@ import addToDateDay from "../services/bookingManagement/helpers/addToDateDay";
 import parseDateDay from "../services/bookingManagement/helpers/parseDateDay";
 import { useSelector } from "react-redux";
 import { currentUserSelector } from "../redux/selectors";
-import { addReservation } from "../services/bookingManagement";
+import {
+  addReservation,
+  confirmReservationPayment,
+} from "../services/bookingManagement";
 import { signInAnonymously } from "../services/userManagement/signInAnonymously";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 
 const Booking: React.FC = () => {
   const currentUser = useSelector(currentUserSelector);
+
+  const stripe = useStripe();
+  const elements = useElements();
 
   const [startDay, setStartDay] = useState<DateDay>(
     createDateDayFromDate(new Date())
@@ -49,8 +56,40 @@ const Booking: React.FC = () => {
     }
   };
 
+  const handleCardConfirmation = async (event: FormEvent) => {
+    event.preventDefault();
+
+    if (!stripe || !elements) return;
+
+    const card = elements.getElement(CardElement);
+    if (!card) return;
+
+    const payment = await stripe.createPaymentMethod({
+      type: "card",
+      card: card,
+    });
+
+    if (!payment.paymentMethod) return;
+
+    try {
+      const result = await confirmReservationPayment(payment.paymentMethod.id);
+
+      if (result.status === "succeeded") {
+        console.log("Payment succeeded!");
+      } else {
+        console.log("Payment failed!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return currentUser?.uid ? (
     <>
+      <form onSubmit={handleCardConfirmation}>
+        <CardElement />
+        <button disabled={!stripe}> Confirm order </button>
+      </form>
       <Button onClick={() => incrementStartDate(false)}> Bakover </Button>
       <Button onClick={() => incrementStartDate(true)}> Forover </Button>
       <Container>
