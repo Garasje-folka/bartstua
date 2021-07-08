@@ -56,8 +56,6 @@ const Booking: React.FC = () => {
     }
   };
 
-
-
   return currentUser?.uid ? (
     <div>
       <Link to="/checkout">Checkout</Link>
@@ -68,7 +66,7 @@ const Booking: React.FC = () => {
       </Container>
     </div>
   ) : (
-    <Button onClick={() => signInAnonymously()}>Logg in som gjest</Button>
+    <Button onClick={() => signInAnonymously()}>Logg inn som gjest</Button>
   );
 };
 

@@ -1,103 +1,64 @@
-import React, {FormEvent, useState} from "react";
+import { FormEvent, useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { confirmReservationPayment } from "../../services/bookingManagement";
-import "./checkout.css"
-
+import { useTranslation } from "react-i18next";
+import { FormContainer, InputField, SubmitButton } from "../../components/form";
+import { CardBody, CardContainer, CardHeader } from "../../components/card";
+import { currentUserSelector } from "../../redux/selectors";
+import { useSelector } from "react-redux";
+import { cardElementOptions, WidthRestriction } from "./checkout.styled";
 
 const Checkout = () => {
-    const [succeeded, setSucceeded] = useState(false);
-    const [error, setError] = useState(null);
-    const [processing, setProcessing] = useState('');
-    const [disabled, setDisabled] = useState(true);
-    const [clientSecret, setClientSecret] = useState('');
-    const stripe = useStripe();
-    const elements = useElements();
+  const [email, setEmail] = useState<string>("");
+  const stripe = useStripe();
+  const elements = useElements();
 
-    const handleCardConfirmation = async (event: FormEvent) => {
-        event.preventDefault();
+  const { t } = useTranslation();
+  const currentUser = useSelector(currentUserSelector);
 
-        if (!stripe || !elements) return;
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
 
-        const card = elements.getElement(CardElement);
-        if (!card) return;
+    if (!stripe || !elements) return;
 
-        const payment = await stripe.createPaymentMethod({
-            type: "card",
-            card: card,
-        });
+    const card = elements.getElement(CardElement);
+    if (!card) return;
 
-        if (!payment.paymentMethod) return;
+    const payment = await stripe.createPaymentMethod({
+      type: "card",
+      card: card,
+    });
 
-        try {
-            const result = await confirmReservationPayment(payment.paymentMethod.id);
+    if (!payment.paymentMethod) return;
 
-            if (result.status === "succeeded") {
-                console.log("Payment succeeded!");
-            } else {
-                console.log("Payment failed!");
+    try {
+      const result = await confirmReservationPayment(payment.paymentMethod.id);
+      console.log(result.status);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const cardStyle = {
-        style: {
-            base: {
-                color: "#32325d",
-                fontFamily: 'Arial, sans-serif',
-                fontSmoothing: "antialiased",
-                fontSize: "16px",
-                "::placeholder": {
-                    color: "#32325d"
-                }
-            },
-            invalid: {
-                color: "#fa755a",
-                iconColor: "#fa755a"
-            }
-        }
-    };
-
-    const handleChange = async (event:any) => {
-        // Listen for changes in the CardElement
-        // and display any errors as the customer types their card details
-        setDisabled(event.empty);
-        setError(event.error ? event.error.message : "");
-    };
-
-    return (
-        <div>
-            <form id="payment-form" onSubmit={handleCardConfirmation}>
-                <CardElement id="card-element" options={cardStyle} onChange={handleChange}/>
-                <button disabled={!stripe} id={"submit"}>
-                    <span id="button-text">
-                      {processing ? (
-                          <div className="spinner" id="spinner"/>
-                      ) : (
-                          "Pay now"
-                      )}
-                    </span>
-                </button>
-                {/* Show any error that happens when processing the payment */}
-                {error && (
-                    <div className="card-error" role="alert">
-                        {error}
-                    </div>
-                )}
-                {/* Show a success message upon completion */}
-                <p className={succeeded ? "result-message" : "result-message hidden"}>
-                    Payment succeeded, see the result in your
-                    <a
-                        href={`https://dashboard.stripe.com/test/payments`}
-                    >
-                        {" "}
-                        Stripe dashboard.
-                    </a> Refresh the page to pay again.
-                </p>
-            </form>
-        </ div>
-    )
-}
+  return (
+    <CardContainer>
+      <CardHeader title="Checkout" />
+      <CardBody>
+        <FormContainer onSubmit={handleSubmit}>
+          <WidthRestriction>
+            {(!currentUser || !currentUser.email) && (
+              <InputField
+                label={t("label_email")}
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            )}
+            <CardElement options={cardElementOptions} />
+            <SubmitButton label="Betal" />
+          </WidthRestriction>
+        </FormContainer>
+      </CardBody>
+    </CardContainer>
+  );
+};
 export { Checkout };
