@@ -7,19 +7,43 @@ import { CardBody, CardContainer, CardHeader } from "../../components/card";
 import { currentUserSelector } from "../../redux/selectors";
 import { useSelector } from "react-redux";
 import { cardElementOptions, WidthRestriction } from "./checkout.styled";
+import { useHistory } from "react-router-dom";
+import { HOME } from "../../router/routeConstants";
+import { Notification, NotificationType } from "../../components/notification";
+import { validate } from "email-validator";
 
 const Checkout = () => {
   const [email, setEmail] = useState<string>("");
+  const [emailError, setEmailError] = useState<string | undefined>(undefined);
+  const [paymentError, setPaymentError] = useState<string | undefined>(
+    undefined
+  );
   const stripe = useStripe();
   const elements = useElements();
 
   const { t } = useTranslation();
   const currentUser = useSelector(currentUserSelector);
+  const history = useHistory();
+
+  const onEmailChanged = (newEmail: string) => {
+    if (!validate(newEmail)) {
+      setEmailError("Ugyldig e-post");
+    } else {
+      setEmailError(undefined);
+    }
+
+    setEmail(newEmail);
+  };
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     if (!stripe || !elements) return;
+
+    if (!validate(email)) {
+      setEmailError("Ugyldig e-post");
+      return;
+    }
 
     const card = elements.getElement(CardElement);
     if (!card) return;
@@ -33,9 +57,14 @@ const Checkout = () => {
 
     try {
       const result = await confirmReservationPayment(payment.paymentMethod.id);
-      console.log(result.status);
+      if (result.status === "succeeded") {
+        // TODO: Redirect to success page
+        history.push(HOME);
+      } else {
+        setPaymentError("Noe gikk galt!");
+      }
     } catch (error) {
-      console.log(error.message);
+      setPaymentError("Noe gikk galt!");
     }
   };
 
@@ -50,15 +79,29 @@ const Checkout = () => {
                 label={t("label_email")}
                 type="email"
                 value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                onChange={(event) => onEmailChanged(event.target.value)}
+                errorSerious={false}
+                errorText={emailError}
               />
             )}
             <CardElement options={cardElementOptions} />
-            <SubmitButton label="Betal" />
+            <SubmitButton
+              label="Betal"
+              disabled={!stripe || !elements || !!emailError}
+            />
+            {paymentError && (
+              <Notification
+                heading="Betaling feilet"
+                type={NotificationType.ERROR}
+              >
+                {paymentError}
+              </Notification>
+            )}
           </WidthRestriction>
         </FormContainer>
       </CardBody>
     </CardContainer>
   );
 };
+
 export { Checkout };
