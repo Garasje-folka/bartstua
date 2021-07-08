@@ -7,7 +7,7 @@ const confirmReservationPayment = async (paymentid: string) => {
     const res = await call(data);
     return res.data;
   } catch (error) {
-    console.log(error);
+    // TODO: Add error handling
     throw error;
   }
 };

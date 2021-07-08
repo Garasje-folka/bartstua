@@ -17,9 +17,6 @@ import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 
 const Booking: React.FC = () => {
   const currentUser = useSelector(currentUserSelector);
-  const [clientSecret, setClientSecret] = useState<string | undefined>(
-    undefined
-  );
 
   const stripe = useStripe();
   const elements = useElements();
