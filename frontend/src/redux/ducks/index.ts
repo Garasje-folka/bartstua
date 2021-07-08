@@ -1,2 +1,3 @@
 import currentUser from "./currentUser";
-export { currentUser };
+import reservations from "./reservations";
+export { currentUser, reservations };
