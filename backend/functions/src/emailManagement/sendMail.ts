@@ -1,5 +1,7 @@
+import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as nodemailer from "nodemailer";
+import {SentMessageInfo} from "nodemailer";
 
 admin.initializeApp();
 
@@ -8,25 +10,24 @@ const transporter = nodemailer.createTransport({
   port: 25,
   auth: {
     user: "apikey",
-    pass: "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",
+    pass: functions.config().sendgrid.key,
   },
 });
 
-export const emailSender = () => {
+// Call emailSender() and change "to" to send email
+export const sendMail = () => {
   const mailOptions = {
     from: "le.william.h@outlook.com",
-    to: "mottakersepost",
+    to: "motakkerEpostHer",
     subject: "Bartstua Ordre",
     // eslint-disable-next-line max-len
     html: "<b>Hei! Betalingen gikk gjennom og her er koden din:</b>",
   };
 
-  return transporter.sendMail(mailOptions, (err:any, info:any) => {
+  return transporter.sendMail(mailOptions, (
+      err: Error | null, info: SentMessageInfo) => {
     if (err) {
       console.log(err);
     }
   });
 };
-
-
-
