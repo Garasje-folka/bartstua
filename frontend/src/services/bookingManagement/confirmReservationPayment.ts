@@ -10,6 +10,7 @@ const confirmReservationPayment = async (
     const res = await call(data);
     return res.data;
   } catch (error) {
+    // TODO: Add error handling
     throw error;
   }
 };

@@ -99,6 +99,10 @@ export const addReservation = functions.https.onCall(
 
         return newReservationRef.id;
       });
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
     setTimeout(() => {
       removeExpiredReservation(reservationId);
     }, RESERVATION_EXPIRATION_TIME * 60 * 1000);

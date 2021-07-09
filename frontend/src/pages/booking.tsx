@@ -8,12 +8,9 @@ import addToDateDay from "../services/bookingManagement/helpers/addToDateDay";
 import parseDateDay from "../services/bookingManagement/helpers/parseDateDay";
 import { useSelector } from "react-redux";
 import { currentUserSelector } from "../redux/selectors";
-import {
-  addReservation,
-  confirmReservationPayment,
-} from "../services/bookingManagement";
+import { addReservation } from "../services/bookingManagement";
 import { signInAnonymously } from "../services/userManagement/signInAnonymously";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { CART } from "../router/routeConstants";
 
 const Booking: React.FC = () => {
