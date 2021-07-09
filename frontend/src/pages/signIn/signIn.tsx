@@ -24,7 +24,7 @@ import {
   StyledFormContainer,
 } from "./signIn.styled";
 import { Heading, Paragraph } from "../../components/text";
-import { SignInButton } from "./signIn.styled";
+import { SignInButton } from "../../components/header/header.styled";
 import { ParagraphText } from "./signIn.styled";
 import { createEmitAndSemanticDiagnosticsBuilderProgram } from "typescript";
 import { EmailIcon, PasswordIcon, SignInIcon, SignUpIcon } from "../../icons";
@@ -123,11 +123,17 @@ const SignIn = () => {
                   ghostText="E-post"
                   icon={EmailIcon}
                   size={InputFieldSize.SMALL}
+                  onChange={handleEmailChange}
+                  errorSerious={!!errorMessage}
+                  errorText={isEmailError ? errorMessage : undefined}
                 />
                 <PasswordField
                   ghostText="Passord"
                   icon={PasswordIcon}
                   size={InputFieldSize.SMALL}
+                  onChange={handlePasswordChange}
+                  errorSerious={!!errorMessage}
+                  errorText={isPasswordError ? errorMessage : undefined}
                 />
                 <a>{t("label_forgot_password")}</a>
                 <SignInButton icon={SignInIcon}>
