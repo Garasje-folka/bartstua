@@ -57,7 +57,7 @@ export const addReservation = functions.https.onCall(
           | FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
           | undefined = undefined;
 
-        let spacesTaken = 0;
+        let spacesTaken: number = 0;
 
         if (event) {
           // Event already exists

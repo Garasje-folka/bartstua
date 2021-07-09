@@ -14,16 +14,20 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Call emailSender() to send mail
-export const sendMail = (sender: string, recipient: string) => {
+export const sendMail = (
+  sender: string,
+  recipient: string,
+  subject: string,
+  html: string
+) => {
   const mailOptions = {
     from: sender,
     to: recipient,
-    subject: "Bartstua Ordre",
-    // eslint-disable-next-line max-len
-    html: "<b>Hei! Takk for din bestilling. Betalingen gikk gjennom!</b>",
+    subject: subject,
+    html: html,
   };
 
+  // TODO: How should errors be handled?
   return transporter.sendMail(
     mailOptions,
     (err: Error | null, info: SentMessageInfo) => {
