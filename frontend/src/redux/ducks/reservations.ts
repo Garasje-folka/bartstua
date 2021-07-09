@@ -10,7 +10,7 @@ interface Action {
 }
 
 export type ReservationsState = {
-  data: BookingData[] | null;
+  data: BookingData[];
   status: {
     loaded: boolean;
     lastUpdated?: string;
@@ -25,7 +25,7 @@ const RESERVATIONS_UPDATE = file + "RESERVATIONS_UPDATE";
 
 // Initial state
 const initialState: ReservationsState = {
-  data: null,
+  data: [],
   status: {
     loaded: false,
   },
@@ -40,7 +40,7 @@ export default function reducer(
     case RESERVATIONS_UPDATE:
       const bookings = action.data?.reservations;
       return {
-        data: bookings ? [...bookings] : null,
+        data: bookings ? [...bookings] : [],
         status: {
           ...state?.status,
           loaded: true,

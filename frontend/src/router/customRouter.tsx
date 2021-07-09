@@ -22,6 +22,7 @@ const CustomRouter: React.FC = () => {
             {routings.map((routing) => {
               let guardFunction: GuardFunction | null = null;
 
+              // TODO: Add Guest user guard?
               switch (routing.guardType) {
                 case GuardType.EMAIL_SIGN_IN_CHECK:
                   guardFunction = emailSignInCheck(

@@ -13,13 +13,12 @@ import {
   confirmReservationPayment,
 } from "../services/bookingManagement";
 import { signInAnonymously } from "../services/userManagement/signInAnonymously";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { CART } from "../router/routeConstants";
 
 const Booking: React.FC = () => {
   const currentUser = useSelector(currentUserSelector);
-  const [clientSecret, setClientSecret] = useState<string | undefined>(
-    undefined
-  );
+  const history = useHistory();
 
   const [startDay, setStartDay] = useState<DateDay>(
     createDateDayFromDate(new Date())
@@ -58,7 +57,7 @@ const Booking: React.FC = () => {
 
   return currentUser?.uid ? (
     <div>
-      <Link to="/checkout">Checkout</Link>
+      <Button onClick={() => history.push(CART)}>Videre</Button>
       <Button onClick={() => incrementStartDate(false)}> Bakover </Button>
       <Button onClick={() => incrementStartDate(true)}> Forover </Button>
       <Container>

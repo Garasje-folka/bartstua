@@ -1,10 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authChanged, currentUserSelector } from "./redux/ducks/currentUser";
-import {
-  reservationsSelector,
-  reservationsUpdated,
-} from "./redux/ducks/reservations";
+import { reservationsUpdated } from "./redux/ducks/reservations";
 
 import { bookingManagement, userManagement } from "./services";
 

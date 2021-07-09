@@ -48,4 +48,10 @@ export const routings: Routing[] = [
     guardType: GuardType.GUEST_SIGN_IN_CHECK,
     expectedGuardValue: true,
   },
+  {
+    component: pages.Cart,
+    path: paths.CART,
+    guardType: GuardType.GUEST_SIGN_IN_CHECK,
+    expectedGuardValue: true,
+  },
 ];

@@ -5,4 +5,5 @@ export * from "./signIn";
 export * from "./register";
 export * from "./verify";
 export * from "./passwordChange";
-export * from "./payment/checkout";
+export * from "./checkout/checkout";
+export * from "./cart";

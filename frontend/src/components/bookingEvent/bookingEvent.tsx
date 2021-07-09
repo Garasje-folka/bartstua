@@ -4,6 +4,7 @@ import { subscribeEvent } from "../../services/bookingManagement";
 import { Heading, HeadingTypes } from "../text";
 import { SessionContainer } from ".";
 import { BookingRequest, DateHour, EventData } from "utils";
+import getHourRange from "../../services/bookingManagement/helpers/getHourRange";
 
 interface BookingEventProps {
   dateHour: DateHour;
@@ -14,19 +15,7 @@ const BookingEvent = (props: BookingEventProps) => {
   const [spaceLeft, setSpaceLeft] = useState<number | undefined>(undefined);
   const { dateHour, onBooking } = props;
 
-  // TODO: Should propably create generalized formatting methods or use an existing library instead
-  const dateToHourRange = () => {
-    const hour = dateHour.hour;
-
-    return (
-      ("0" + hour).slice(-2) + ":00 - " + ("0" + (hour + 1)).slice(-2) + ":00"
-    );
-  };
-
-  const handleEventUpdate = (
-    event: EventData | undefined,
-    hourInDay: number
-  ) => {
+  const handleEventUpdate = (event: EventData | undefined) => {
     if (event) {
       setSpaceLeft(MAX_EVENT_SPACES - event.spacesTaken);
     } else {
@@ -43,7 +32,7 @@ const BookingEvent = (props: BookingEventProps) => {
 
   useEffect(() => {
     const unsubscribe = subscribeEvent(dateHour, (event) =>
-      handleEventUpdate(event, dateHour.hour)
+      handleEventUpdate(event)
     );
 
     return () => {
@@ -55,7 +44,9 @@ const BookingEvent = (props: BookingEventProps) => {
     <>
       {spaceLeft !== undefined && (
         <SessionContainer onClick={handleBooking}>
-          <Heading type={HeadingTypes.HEADING4}>{dateToHourRange()}</Heading>
+          <Heading type={HeadingTypes.HEADING4}>
+            {getHourRange(dateHour.hour)}
+          </Heading>
           {"Ledige plasser: " + spaceLeft}
         </SessionContainer>
       )}
