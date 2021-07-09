@@ -18,8 +18,6 @@ import { removeExpiredReservation } from "./removeExpiredReservations";
 
 export const addReservation = functions.https.onCall(
   async (data: BookingRequest, context) => {
-    functions.logger.info("hei");
-
     // Check data format
     try {
       await bookingRequestSchema.validate(data);
@@ -51,8 +49,6 @@ export const addReservation = functions.https.onCall(
     };
 
     // Transaction that adds the reservation to firestore
-    // TODO: Don't know if this is the correct way to catch the errors
-
     const reservationId = await admin
       .firestore()
       .runTransaction(async (transaction) => {

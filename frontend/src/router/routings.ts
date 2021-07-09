@@ -42,4 +42,10 @@ export const routings: Routing[] = [
     guardType: GuardType.EMAIL_SIGN_IN_CHECK,
     expectedGuardValue: true,
   },
+  {
+    component: pages.Checkout,
+    path: paths.CHECKOUT,
+    guardType: GuardType.EMAIL_SIGN_IN_CHECK,
+    expectedGuardValue: true,
+  },
 ];

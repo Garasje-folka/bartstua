@@ -1,4 +1,5 @@
 export * from "./addReservation";
 export * from "./eventCounters";
 export * from "./removeExpiredReservations";
-export * from "./acceptReservation";
+export * from "./acceptReservations";
+export * from "./getReservations";

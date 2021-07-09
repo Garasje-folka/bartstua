@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
-import { addReservation } from "../../services/bookingManagement";
 import { MAX_EVENT_SPACES } from "../../services/bookingManagement/constants";
 import { subscribeEvent } from "../../services/bookingManagement";
 import { Heading } from "../text";
 import { SessionContainer } from ".";
 import { BookingRequest, DateHour, EventData } from "utils";
-import { useSelector } from "react-redux";
-import { currentUserSelector } from "../../redux/selectors";
-import { signInAnonymously } from "../../services/userManagement/signInAnonymously";
 
 interface BookingEventProps {
   dateHour: DateHour;
@@ -15,7 +11,6 @@ interface BookingEventProps {
 }
 
 const BookingEvent = (props: BookingEventProps) => {
-  const currentUser = useSelector(currentUserSelector);
   const [spaceLeft, setSpaceLeft] = useState<number | undefined>(undefined);
   const { dateHour, onBooking } = props;
 
