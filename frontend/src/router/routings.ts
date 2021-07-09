@@ -45,13 +45,12 @@ export const routings: Routing[] = [
   {
     component: pages.Checkout,
     path: paths.CHECKOUT,
-    guardType: GuardType.GUEST_SIGN_IN_CHECK,
+    guardType: GuardType.HAS_RESERVATIONS_CHECK,
     expectedGuardValue: true,
   },
   {
     component: pages.Cart,
     path: paths.CART,
-    guardType: GuardType.GUEST_SIGN_IN_CHECK,
-    expectedGuardValue: true,
+    guardType: GuardType.NONE,
   },
 ];

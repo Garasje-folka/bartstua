@@ -60,6 +60,6 @@ export const reservationsUpdated = (reservations: BookingData[]): Action => {
 // Selectors
 export const reservationsSelector = (state: State) => state.reservations.data;
 
-export const loadedSelector = (state: State) => {
+export const reservationsLoadedSelector = (state: State) => {
   return state.reservations.status.loaded;
 };

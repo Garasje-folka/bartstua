@@ -9,7 +9,6 @@ const addReservation = async (booking: BookingRequest) => {
   try {
     await call(booking);
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };

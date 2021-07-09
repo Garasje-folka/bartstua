@@ -18,6 +18,7 @@ const Cart = () => {
           <CartItem booking={res} key={index} />
         ))}
         <Button
+          disabled={reservations.length === 0}
           onClick={() => {
             history.push(CHECKOUT);
           }}
