@@ -23,7 +23,7 @@ import {
   OuterFormContainer,
   SignInButtonsContainer,
 } from "../signUp/signUp.styled";
-import { Heading } from "../../components/text";
+import { Heading, Paragraph } from "../../components/text";
 import Feedback from "react-bootstrap/esm/Feedback";
 import { right } from "@popperjs/core";
 import { EmailIcon, PasswordIcon, SignInIcon, SignUpIcon } from "../../icons";
@@ -112,7 +112,7 @@ const Register = () => {
 
   return (
     <>
-      <Background>
+      {/*<Background>
         <LeftContainer>
           <CenterContainer>
             <HeadingContainer>
@@ -136,7 +136,7 @@ const Register = () => {
             <SignUpHeader>
               <SignUpLabel>
                 <Heading type={Heading.types.HEADING1}>
-                  {t("label_bartstua")}
+                  {t("label_register")}
                 </Heading>
               </SignUpLabel>
             </SignUpHeader>
@@ -164,6 +164,63 @@ const Register = () => {
               </StyledFormContainer>
             </OuterFormContainer>
           </SignUpContainer>
+        </RightContainer>
+      </Background> */}
+
+      <Background>
+        <LeftContainer>
+          <SignUpContainer>
+            <SignUpHeader>
+              <SignUpLabel>
+                <Heading type={Heading.types.HEADING1}>
+                  {t("label_register")}
+                </Heading>
+              </SignUpLabel>
+            </SignUpHeader>
+            <OuterFormContainer>
+              <StyledFormContainer onSubmit={() => {}}>
+                <EmailField
+                  ghostText={t("label_email")}
+                  icon={EmailIcon}
+                  size={InputFieldSize.SMALL}
+                />
+                <PasswordField
+                  ghostText={t("label_password")}
+                  icon={PasswordIcon}
+                  size={InputFieldSize.SMALL}
+                />
+                <PasswordField
+                  icon={PasswordIcon}
+                  ghostText={t("label_repeat_password")}
+                  size={InputFieldSize.SMALL}
+                />
+                <SignUpButton
+                  icon={SignUpIcon}
+                  label={t("label_register_user")}
+                />
+              </StyledFormContainer>
+            </OuterFormContainer>
+          </SignUpContainer>
+        </LeftContainer>
+        <RightContainer>
+          <CenterContainer>
+            <HeadingContainer>
+              <Heading type={Heading.types.HEADING1}>
+                {t("label_bartstua")}
+              </Heading>
+              <Paragraph type={Paragraph.types.PARAGRAPH1}>
+                {t("label_bartstua_quote")}
+              </Paragraph>
+            </HeadingContainer>
+            <ActionsContainer>
+              <Paragraph type={Paragraph.types.PARAGRAPH1}>
+                {t("label_have_user")}
+              </Paragraph>
+              <SignInButton icon={SignInIcon}>
+                {t("label_sign_in")}
+              </SignInButton>
+            </ActionsContainer>
+          </CenterContainer>
         </RightContainer>
       </Background>
 

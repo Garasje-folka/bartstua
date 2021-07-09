@@ -14,6 +14,8 @@
   "text_email_not_valid": "E-posten er ikke gyldig",
   "text_password_too_weak": "Passordet er for svakt",
   "text_something_went_wrong": "Noe gikk galt",
-  "label_bartstua": "Bartstua",
-  "label_bartstua_quote": "QUOTE"
+  "label_bartstua": "BARTSTUA",
+  "label_bartstua_quote": "QUOTE",
+  "label_have_user": "Har du en bruker?",
+  "label_not_registered": "Ikke registrert"
 }

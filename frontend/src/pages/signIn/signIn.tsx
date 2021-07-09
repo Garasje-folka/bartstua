@@ -23,7 +23,7 @@ import {
   OuterFormContainer,
   StyledFormContainer,
 } from "./signIn.styled";
-import { Heading } from "../../components/text";
+import { Heading, Paragraph } from "../../components/text";
 import { SignInButton } from "./signIn.styled";
 import { createEmitAndSemanticDiagnosticsBuilderProgram } from "typescript";
 import { EmailIcon, PasswordIcon, SignInIcon, SignUpIcon } from "../../icons";
@@ -93,11 +93,14 @@ const SignIn = () => {
               <Heading type={Heading.types.HEADING1}>
                 {t("label_bartstua")}
               </Heading>
-              <Heading type={Heading.types.HEADING3}>
+              <Paragraph type={Paragraph.types.PARAGRAPH1}>
                 {t("label_bartstua_quote")}
-              </Heading>
+              </Paragraph>
             </HeadingContainer>
             <ActionsContainer>
+              <Paragraph type={Paragraph.types.PARAGRAPH1}>
+                {t("label_not_registered")}
+              </Paragraph>
               <SignInButton icon={SignUpIcon}>
                 {t("label_register_user")}
               </SignInButton>

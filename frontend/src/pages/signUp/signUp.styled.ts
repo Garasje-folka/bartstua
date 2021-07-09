@@ -12,7 +12,7 @@ export const Background = styled.div`
   flex-direction: row;
 `;
 
-export const LeftContainer = styled.div`
+export const RightContainer = styled.div`
   display: block;
   background-color: white;
   width: 670px;
@@ -43,10 +43,12 @@ export const SignInButton = styled(Button)`
   margin-left: 5px;
 `;
 
-export const RightContainer = styled.div`
+export const LeftContainer = styled.div`
   display: flex;
   box-shadow: ${({ theme }) => theme.shadow.REGULAR};
   flex-grow: 1;
+  background-image: url(/sauna2.jpg);
+  background-position: 0vmax;
 `;
 
 export const SignUpContainer = styled.div`

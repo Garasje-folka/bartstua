@@ -3,13 +3,11 @@ import { Button } from "../../components/button";
 import { InputField } from "../../components/form";
 
 export const Background = styled.div`
-  background-color: #5ab9ea;
   width: 100%;
   height: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: row;
-  background-image: url(./sauna.jpeg);
 `;
 
 export const LeftContainer = styled.div`
@@ -31,11 +29,12 @@ export const HeadingContainer = styled.div`
 `;
 
 export const ActionsContainer = styled.div`
-  display: flex;
+  display: inline-flex;
+  align-items: center;
 `;
 
 export const SignInButton = styled(Button)`
-  margin: auto;
+  margin-left: 5px;
 `;
 
 export const RightContainer = styled.div`
@@ -43,6 +42,9 @@ export const RightContainer = styled.div`
   box-shadow: ${({ theme }) => theme.shadow.REGULAR};
   display: flex;
   flex-grow: 1;
+  background-image: url(/sauna.jpg);
+  background-repeat: no-repeat;
+  background-position: 0vmax;
 `;
 
 export const SignInContainer = styled.div`

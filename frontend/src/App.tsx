@@ -17,10 +17,6 @@ const App = () => {
             font: "Roboto",
             weights: [100, "400i"],
           },
-          {
-            font: "Roboto Mono",
-            weights: [100, 700],
-          },
         ]}
         subsets={["cyrillic-ext", "greek"]}
       />
