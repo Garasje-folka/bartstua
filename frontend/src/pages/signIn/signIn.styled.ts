@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { Button } from "../../components/button";
 import { InputField } from "../../components/form";
+import { Paragraph } from "../../components/text";
 
 export const Background = styled.div`
   width: 100%;
@@ -31,6 +32,10 @@ export const HeadingContainer = styled.div`
 export const ActionsContainer = styled.div`
   display: inline-flex;
   align-items: center;
+`;
+
+export const ParagraphText = styled(Paragraph)`
+  margin-right: 100px;
 `;
 
 export const SignInButton = styled(Button)`

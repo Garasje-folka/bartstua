@@ -25,6 +25,7 @@ import {
 } from "./signIn.styled";
 import { Heading, Paragraph } from "../../components/text";
 import { SignInButton } from "./signIn.styled";
+import { ParagraphText } from "./signIn.styled";
 import { createEmitAndSemanticDiagnosticsBuilderProgram } from "typescript";
 import { EmailIcon, PasswordIcon, SignInIcon, SignUpIcon } from "../../icons";
 
@@ -93,9 +94,9 @@ const SignIn = () => {
               <Heading type={Heading.types.HEADING1}>
                 {t("label_bartstua")}
               </Heading>
-              <Paragraph type={Paragraph.types.PARAGRAPH1}>
+              <ParagraphText type={Paragraph.types.PARAGRAPH1}>
                 {t("label_bartstua_quote")}
-              </Paragraph>
+              </ParagraphText>
             </HeadingContainer>
             <ActionsContainer>
               <Paragraph type={Paragraph.types.PARAGRAPH1}>
@@ -128,6 +129,7 @@ const SignIn = () => {
                   icon={PasswordIcon}
                   size={InputFieldSize.SMALL}
                 />
+                <a>{t("label_forgot_password")}</a>
                 <SignInButton icon={SignInIcon}>
                   {t("label_sign_in")}
                 </SignInButton>

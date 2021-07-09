@@ -17,5 +17,6 @@
   "label_bartstua": "BARTSTUA",
   "label_bartstua_quote": "QUOTE",
   "label_have_user": "Har du en bruker?",
-  "label_not_registered": "Ikke registrert?"
+  "label_not_registered": "Ikke registrert?",
+  "label_forgot_password": "Glemt passord"
 }
