@@ -23,9 +23,12 @@ const MainService = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (!currentUser) return;
-
     // Update redux when reservations are updated
+    if (!currentUser) {
+      dispatch(reservationsUpdated([]));
+      return;
+    }
+
     const unsubReservationsUpdated = bookingManagement.onReservationsChanged(
       (reservations) => {
         dispatch(reservationsUpdated(reservations));
