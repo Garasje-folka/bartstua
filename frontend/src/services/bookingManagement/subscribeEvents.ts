@@ -1,41 +1,48 @@
 import { DateDay, EventData } from "../../../../utils/dist";
 import firebase, { firestore } from "../fireConfig";
+import { createError } from "../userManagement/helpers/createError";
 import {
   BOOKING_ENDING_TIME,
   BOOKING_STARTING_TIME,
   EVENTS,
   MAX_EVENT_SPACES,
 } from "./constants";
+import { getEventStartingHour } from "./getEventStartingHour";
 
-const getEventsQueryRef = (date: DateDay) => {
+// TODO: Requery every hour to remove outdated events (haryp2309)
+const getEventsQueryRef = (date: DateDay, startHour: number) => {
   return firestore
     .collection(EVENTS)
     .where("date.year", "==", date.year)
     .where("date.month", "==", date.month)
-    .where("date.day", "==", date.day);
+    .where("date.day", "==", date.day)
+    .where("date.hour", ">=", startHour);
 };
 
 const mapQuerySnapshot = (
   dateDay: DateDay,
   minSpaces: number,
+  startHour: number,
   querySnapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
 ) => {
   const queryEvents = querySnapshot.docs.map((doc) => doc.data() as EventData);
 
   // Sort by time ascending
-  queryEvents.sort((e1, e2) => e2.date.hour - e1.date.hour);
+  queryEvents.sort((e1, e2) => e1.date.hour - e2.date.hour);
+  console.log(queryEvents[0]);
 
   const result: EventData[] = [];
 
-  let hour: number = BOOKING_STARTING_TIME;
+  let hour: number = startHour;
 
   while (hour < BOOKING_ENDING_TIME) {
-    const queryEvent = queryEvents.shift();
-    const queryEventHour = queryEvent
+    let queryEvent = queryEvents.shift();
+
+    const nextEventHour = queryEvent
       ? queryEvent.date.hour
       : BOOKING_ENDING_TIME;
 
-    while (hour < queryEventHour) {
+    while (hour < nextEventHour) {
       result.push({
         spacesTaken: 0,
         date: {
@@ -64,10 +71,22 @@ const subscribeEvents = (
   minSpaces: number,
   callback: (event: EventData[]) => void
 ) => {
-  const unsubscribe = getEventsQueryRef(date).onSnapshot((querySnapshot) => {
-    const events = mapQuerySnapshot(date, minSpaces, querySnapshot);
-    callback(events);
-  });
+  const startHour = getEventStartingHour(date);
+  if (!startHour) {
+    // TODO: Add proper error handling, don't know if we should even throw error...
+    throw createError("No events");
+  }
+  const unsubscribe = getEventsQueryRef(date, startHour).onSnapshot(
+    (querySnapshot) => {
+      const events = mapQuerySnapshot(
+        date,
+        minSpaces,
+        startHour,
+        querySnapshot
+      );
+      callback(events);
+    }
+  );
   return () => {
     unsubscribe();
   };

@@ -40,7 +40,7 @@ const Checkout = () => {
 
     if (!stripe || !elements) return;
 
-    if (!validate(email)) {
+    if (!currentUser?.email && !validate(email)) {
       setEmailError("Ugyldig e-post");
       return;
     }

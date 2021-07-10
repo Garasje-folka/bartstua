@@ -7,6 +7,11 @@ export const OuterContainer = styled.div`
   text-align: center;
 `;
 
-export const CenteredButton = styled(Button)`
+export const NextButton = styled(Button)`
+  display: inline-block;
+  margin-left: 200px;
+`;
+
+export const BackButton = styled(Button)`
   display: inline-block;
 `;

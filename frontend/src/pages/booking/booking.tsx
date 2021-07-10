@@ -2,10 +2,9 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { DatePicker } from "../../components/datePicker";
 import { TimePicker } from "../../components/timePicker";
-import { CART } from "../../router/routeConstants";
-import { MAX_EVENT_SPACES } from "../../services/bookingManagement/constants";
+import { CART, HOME } from "../../router/routeConstants";
 import createDateDayFromDate from "../../services/bookingManagement/helpers/createDateDay";
-import { OuterContainer, CenteredButton } from "./booking.styled";
+import { OuterContainer, NextButton, BackButton } from "./booking.styled";
 
 enum BookingState {
   DATE_PICKING,
@@ -21,14 +20,24 @@ const Booking = () => {
 
   const history = useHistory();
 
-  const onNextPressed = async () => {
+  const onNextPressed = () => {
     switch (bookingState) {
       case BookingState.DATE_PICKING:
         setBookingState(BookingState.TIME_PICKING);
-
         break;
       case BookingState.TIME_PICKING:
         history.push(CART);
+        break;
+    }
+  };
+
+  const onBackPressed = () => {
+    switch (bookingState) {
+      case BookingState.DATE_PICKING:
+        history.push(HOME);
+        break;
+      case BookingState.TIME_PICKING:
+        setBookingState(BookingState.DATE_PICKING);
         break;
     }
   };
@@ -46,10 +55,7 @@ const Booking = () => {
         );
       case BookingState.TIME_PICKING:
         return (
-          <TimePicker
-            dateDay={createDateDayFromDate(date)}
-            minSpaces={spaces}
-          />
+          <TimePicker dateDay={createDateDayFromDate(date)} spaces={spaces} />
         );
     }
   };
@@ -57,7 +63,8 @@ const Booking = () => {
   return (
     <OuterContainer>
       {getStateComponent()}
-      <CenteredButton onClick={onNextPressed}> Videre </CenteredButton>
+      <BackButton onClick={onBackPressed}> Tilbake </BackButton>
+      <NextButton onClick={onNextPressed}> Videre </NextButton>
     </OuterContainer>
   );
 };

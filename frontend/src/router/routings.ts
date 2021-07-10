@@ -1,5 +1,4 @@
 import * as pages from "../pages";
-import { Booking } from "../pages/booking";
 import * as paths from "./routeConstants";
 import { Routing, GuardType } from "./types/routing";
 
@@ -52,11 +51,6 @@ export const routings: Routing[] = [
   {
     component: pages.Cart,
     path: paths.CART,
-    guardType: GuardType.NONE,
-  },
-  {
-    component: Booking,
-    path: "/booking2",
     guardType: GuardType.NONE,
   },
 ];
