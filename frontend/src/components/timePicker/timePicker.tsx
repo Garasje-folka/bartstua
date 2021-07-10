@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { DateDay, EventData } from "../../../../utils/dist";
+import { BOOKING_ENDING_TIME } from "../../../../utils/dist/constants/firestoreConstants";
 import { Heading, HeadingTypes } from "../../components/text";
 import {
   addReservation,
+  getEventStartingHour,
   MAX_EVENT_SPACES,
   subscribeEvents,
 } from "../../services/bookingManagement";
@@ -29,7 +31,7 @@ const TimePicker = (props: TimePickerProps) => {
   };
 
   useEffect(() => {
-    const unsubscribe = subscribeEvents(dateDay, spaces, (newEvents) =>
+    const unsubscribe = subscribeEvents(dateDay, (newEvents) =>
       handleEventsUpdate(newEvents)
     );
 
@@ -37,6 +39,24 @@ const TimePicker = (props: TimePickerProps) => {
       unsubscribe();
     };
   }, [dateDay]);
+
+  // TODO: Rerender every hour to remove outdated events somehow... (haryp2309)
+  const getFilteredEvents = () => {
+    const startingHour = getEventStartingHour(dateDay);
+    if (!startingHour) return [];
+
+    const result: EventData[] = [];
+    events.forEach((e) => {
+      if (
+        e.date.hour >= startingHour &&
+        MAX_EVENT_SPACES - e.spacesTaken >= spaces
+      ) {
+        result.push(e);
+      }
+    });
+
+    return result;
+  };
 
   const reserveEvent = async (selected: EventData) => {
     try {
@@ -52,7 +72,7 @@ const TimePicker = (props: TimePickerProps) => {
   return (
     <OuterContainer>
       <Heading type={HeadingTypes.HEADING4}> Velg time</Heading>
-      {events.map((e) => (
+      {getFilteredEvents().map((e) => (
         <TimeContainer key={e.date.hour}>
           <TimeButton onClick={() => reserveEvent(e)}>
             {getHourRange(e.date.hour)}
