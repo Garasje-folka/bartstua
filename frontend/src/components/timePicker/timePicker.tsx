@@ -10,6 +10,7 @@ import {
   subscribeEvents,
 } from "../../services/bookingManagement";
 import getHourRange from "../../services/bookingManagement/helpers/getHourRange";
+import isEqualDates from "../../services/bookingManagement/helpers/isEqualDates";
 import {
   OuterContainer,
   TimeButton,
@@ -24,7 +25,7 @@ export type TimePickerProps = {
 
 // TODO: Rename??
 type FilteredEvent = EventData & {
-  isReserved?: boolean;
+  spacesReserved?: number;
 };
 
 const TimePicker = (props: TimePickerProps) => {
@@ -54,10 +55,11 @@ const TimePicker = (props: TimePickerProps) => {
     const result: FilteredEvent[] = [];
     events.forEach((e) => {
       if (e.date.hour >= startingHour) {
-        if (isReserved(e)) {
+        const matchingReservation = getMatchingReservation(e);
+        if (matchingReservation) {
           result.push({
             ...e,
-            isReserved: true,
+            spacesReserved: matchingReservation.spaces,
           } as FilteredEvent);
         } else if (MAX_EVENT_SPACES - e.spacesTaken >= spaces) {
           result.push(e);
@@ -68,14 +70,14 @@ const TimePicker = (props: TimePickerProps) => {
     return result;
   };
 
-  const isReserved = (e: EventData) => {
+  const getMatchingReservation = (e: EventData) => {
     for (const res of reservations) {
-      if (JSON.stringify(res.date) === JSON.stringify(e.date)) {
-        return true;
+      if (isEqualDates(res.date, e.date)) {
+        return res;
       }
     }
 
-    return false;
+    return null;
   };
 
   const reserveEvent = async (selected: EventData) => {
@@ -89,17 +91,28 @@ const TimePicker = (props: TimePickerProps) => {
     }
   };
 
+  const getTimeText = (e: FilteredEvent) => {
+    let result = "";
+
+    const spacesLeft = MAX_EVENT_SPACES - e.spacesTaken;
+    result += `Ledige plasser: ${spacesLeft}.`;
+
+    if (e.spacesReserved) {
+      result += ` Du har reservert ${e.spacesReserved} plass(er)`;
+    }
+
+    return result;
+  };
+
   return (
     <OuterContainer>
       <Heading type={HeadingTypes.HEADING4}> Velg time</Heading>
       {getFilteredEvents().map((e) => (
         <TimeContainer key={e.date.hour}>
-          <TimeButton onClick={() => reserveEvent(e)} disabled={e.isReserved}>
-            {getHourRange(e.date.hour)}
+          <TimeButton onClick={() => reserveEvent(e)}>
+            {`${getHourRange(e.date.hour)}`}
           </TimeButton>
-          <TimeText type={HeadingTypes.HEADING4}>
-            {`${MAX_EVENT_SPACES - e.spacesTaken}`}
-          </TimeText>
+          <TimeText type={HeadingTypes.HEADING4}>{getTimeText(e)}</TimeText>
         </TimeContainer>
       ))}
     </OuterContainer>
