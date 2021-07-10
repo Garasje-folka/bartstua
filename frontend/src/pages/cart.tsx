@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Button } from "../components/button";
 import { CardBody, CardContainer, CardHeader } from "../components/card";
-import { CartItem } from "../components/cartItem/cartItem";
+import { CartItem } from "../components/cartItem";
 import { reservationsSelector } from "../redux/ducks/reservations";
 import { CHECKOUT } from "../router/routeConstants";
 
