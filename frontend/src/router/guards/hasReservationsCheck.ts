@@ -1,9 +1,9 @@
 import { BOOKING, HOME } from "../routeConstants";
 import { GuardFunction } from "../types/guardFunction";
-import { BookingData } from "utils";
+import { BookingData, Doc } from "utils";
 
 const hasReservationsCheck: (
-  reservations: BookingData[],
+  reservations: Doc<BookingData>[],
   expectedValue?: boolean
 ) => GuardFunction = (reservations, expectedValue) => () => ({
   accepted:

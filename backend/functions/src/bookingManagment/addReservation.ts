@@ -14,7 +14,7 @@ import {
   EventData,
 } from "./types";
 import isValidEventDate from "./helpers/isValidEventDate";
-import { removeExpiredReservation } from "./removeExpiredReservations";
+import { deleteReservation } from "./deleteReservation";
 
 export const addReservation = functions.https.onCall(
   async (data: BookingRequest, context) => {
@@ -101,7 +101,7 @@ export const addReservation = functions.https.onCall(
       });
 
     setTimeout(() => {
-      removeExpiredReservation(reservationId);
+      deleteReservation(reservationId);
     }, RESERVATION_EXPIRATION_TIME * 60 * 1000);
   }
 );

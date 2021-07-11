@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BookingData } from "../../utils/dist/types";
+import { BookingData, Doc } from "../../utils/dist/types";
 import { authChanged, currentUserSelector } from "./redux/ducks/currentUser";
 import { reservationsUpdated } from "./redux/ducks/reservations";
 
@@ -24,10 +24,11 @@ const MainService = () => {
     };
   }, [dispatch]);
 
+  /*
   // Merging reservations for the same event
   // TODO: Clean up.... Maybe sort by time for convenience
-  const squashReservations = (reservations: BookingData[]) => {
-    const result: BookingData[] = [];
+  const squashReservations = (reservations: Doc<BookingData>[]) => {
+    const result: Doc<BookingData>[] = [];
     while (reservations.length > 0) {
       let squashed = reservations.pop();
       if (!squashed) continue;
@@ -36,8 +37,8 @@ const MainService = () => {
         const reservation = reservations[i];
         if (!reservation) continue;
 
-        if (isEqualDates(squashed.date, reservation.date)) {
-          squashed.spaces += reservation.spaces;
+        if (isEqualDates(squashed.data.date, reservation.data.date)) {
+          squashed.data.spaces += reservation.data.spaces;
           reservations.splice(i, 1);
         }
       }
@@ -46,6 +47,7 @@ const MainService = () => {
 
     return result;
   };
+  */
 
   useEffect(() => {
     // Update redux when reservations are updated
@@ -56,7 +58,7 @@ const MainService = () => {
 
     const unsubReservationsUpdated = bookingManagement.onReservationsChanged(
       (reservations) => {
-        dispatch(reservationsUpdated(squashReservations(reservations)));
+        dispatch(reservationsUpdated(reservations));
       }
     );
 

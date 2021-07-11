@@ -59,7 +59,7 @@ const TimePicker = (props: TimePickerProps) => {
         if (matchingReservation) {
           result.push({
             ...e,
-            spacesReserved: matchingReservation.spaces,
+            spacesReserved: matchingReservation.data.spaces,
           } as FilteredEvent);
         } else if (MAX_EVENT_SPACES - e.spacesTaken >= spaces) {
           result.push(e);
@@ -72,7 +72,7 @@ const TimePicker = (props: TimePickerProps) => {
 
   const getMatchingReservation = (e: EventData) => {
     for (const res of reservations) {
-      if (isEqualDates(res.date, e.date)) {
+      if (isEqualDates(res.data.date, e.date)) {
         return res;
       }
     }
