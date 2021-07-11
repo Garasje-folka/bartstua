@@ -1,20 +1,8 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { getEvent } from "./getEvent";
-import {
-  EVENTS,
-  MAX_EVENT_SPACES,
-  RESERVATIONS,
-  RESERVATION_EXPIRATION_TIME,
-} from "./constants";
-import {
-  BookingRequest,
-  bookingRequestSchema,
-  BookingData,
-  EventData,
-} from "./types";
+import { BookingRequest, bookingRequestSchema, BookingData } from "./types";
 import isValidEventDate from "./helpers/isValidEventDate";
-import { deleteReservation } from "./deleteReservation";
+import { addReservationHelper } from "./addReservationHelper";
 
 export const addReservation = functions.https.onCall(
   async (data: BookingRequest, context) => {
@@ -43,65 +31,13 @@ export const addReservation = functions.https.onCall(
       );
     }
 
-    const booking: BookingData = {
+    const reservation: BookingData = {
       ...data,
       uid: auth.uid,
     };
 
-    // Transaction that adds the reservation to firestore
-    const reservationId = await admin
-      .firestore()
-      .runTransaction(async (transaction) => {
-        const event = await getEvent(booking.date);
-        let eventRef:
-          | FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
-          | undefined = undefined;
-
-        let spacesTaken: number = 0;
-
-        if (event) {
-          // Event already exists
-          eventRef = admin.firestore().collection(EVENTS).doc(event.id);
-          const docSnapshot = await transaction.get(eventRef);
-
-          if (docSnapshot.exists) {
-            const eventData = docSnapshot.data() as EventData;
-            spacesTaken = eventData.spacesTaken;
-          }
-        }
-
-        if (spacesTaken + booking.spaces > MAX_EVENT_SPACES) {
-          throw new functions.https.HttpsError(
-            "failed-precondition",
-            "Not enough space"
-          );
-        }
-
-        const newReservationRef = admin
-          .firestore()
-          .collection(RESERVATIONS)
-          .doc();
-
-        transaction.set(newReservationRef, booking);
-
-        // Increment event spaces counter
-        if (event && eventRef) {
-          transaction.update(eventRef, {
-            spacesTaken: admin.firestore.FieldValue.increment(booking.spaces),
-          });
-        } else {
-          eventRef = admin.firestore().collection(EVENTS).doc();
-          transaction.set(eventRef, {
-            date: booking.date,
-            spacesTaken: booking.spaces,
-          });
-        }
-
-        return newReservationRef.id;
-      });
-
-    setTimeout(() => {
-      deleteReservation(reservationId);
-    }, RESERVATION_EXPIRATION_TIME * 60 * 1000);
+    await admin.firestore().runTransaction(async (transaction) => {
+      await addReservationHelper(transaction, reservation);
+    });
   }
 );
