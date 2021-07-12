@@ -1,6 +1,6 @@
 import { sendMail } from "./sendMail";
-import { BookingData } from "utils";
-import parseDateHour from "../bookingManagment/helpers/parseDateHour";
+import { BookingData } from "utils/dist/bookingManagement/types";
+import { parseDateHour } from "utils/dist/dates/helpers";
 
 const sendBookingConfirmation = async (
   email: string,
