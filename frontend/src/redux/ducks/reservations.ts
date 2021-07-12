@@ -1,4 +1,5 @@
-import { BookingData, Doc, User } from "utils";
+import { BookingData } from "../../../../utils/dist/bookingManagement/types";
+import { Doc } from "../../../../utils/dist/types";
 import { State } from "../types/state";
 
 // Interfaces

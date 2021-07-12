@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { bookingRequestSchema } from "./types";
-import isValidEventDate from "./helpers/isValidEventDate";
+import { bookingRequestSchema } from "utils/dist/bookingManagement/types";
+import { isValidEventDate } from "utils/dist/bookingManagement/helpers";
 import { addReservationHelper } from "./addReservationHelper";
 
 // TODO: Add data type checking

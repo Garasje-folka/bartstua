@@ -1,6 +1,6 @@
 import { auth } from "../fireConfig";
 import { userManagementErrorCodes, USER_MANAGEMENT } from "./constants";
-import { createError } from "utils/src/helpers";
+import { createError } from "utils/dist/helpers";
 
 const signInErrorCodes = {
   ERROR_INVALID_EMAIL: USER_MANAGEMENT + "/invalid-email",

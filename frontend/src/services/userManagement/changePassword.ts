@@ -1,7 +1,7 @@
 import { auth } from "../fireConfig";
 import { reauthenticate, reauthenticateErrorCodes } from ".";
 import { USER_MANAGEMENT, userManagementErrorCodes } from "./constants";
-import { createError } from "utils/src/helpers";
+import { createError } from "utils/dist/helpers";
 
 const changePasswordErrorCodes = {
   ...reauthenticateErrorCodes,

@@ -1,11 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BookingData, Doc } from "../../utils/dist/types";
 import { authChanged, currentUserSelector } from "./redux/ducks/currentUser";
 import { reservationsUpdated } from "./redux/ducks/reservations";
-
-import { bookingManagement, userManagement } from "./services";
-import isEqualDates from "./services/bookingManagement/helpers/isEqualDates";
+import { onReservationsChanged } from "./services/bookingManagement";
+import { onCurrentUserChanged } from "./services/userManagement";
 
 const MainService = () => {
   const dispatch = useDispatch();
@@ -13,11 +11,9 @@ const MainService = () => {
 
   useEffect(() => {
     // Update redux when current user changes
-    const unsubCurrentUserChanged = userManagement.onCurrentUserChanged(
-      (user) => {
-        dispatch(authChanged(user));
-      }
-    );
+    const unsubCurrentUserChanged = onCurrentUserChanged((user) => {
+      dispatch(authChanged(user));
+    });
 
     return () => {
       unsubCurrentUserChanged();
@@ -56,11 +52,9 @@ const MainService = () => {
       return;
     }
 
-    const unsubReservationsUpdated = bookingManagement.onReservationsChanged(
-      (reservations) => {
-        dispatch(reservationsUpdated(reservations));
-      }
-    );
+    const unsubReservationsUpdated = onReservationsChanged((reservations) => {
+      dispatch(reservationsUpdated(reservations));
+    });
 
     return () => {
       unsubReservationsUpdated();

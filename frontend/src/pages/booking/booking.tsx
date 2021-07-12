@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { createDateDayFromDate } from "utils/src/dates/helpers";
+import { createDateDayFromDate } from "utils/dist/dates/helpers";
 import { DatePicker } from "../../components/datePicker";
 import { TimePicker } from "../../components/timePicker";
 import { CART, HOME } from "../../router/routeConstants";

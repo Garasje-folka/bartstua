@@ -1,6 +1,6 @@
 import * as admin from "firebase-admin";
+import { BOOKINGS } from "utils/dist/bookingManagement/constants";
 import { PAYMENTS, STRIPE_CUSTOMERS } from "../paymentManagement/constants";
-import { BOOKINGS } from "./constants";
 
 // This is probably just going to be a helper method
 // that is used when the booking payment has been accepted

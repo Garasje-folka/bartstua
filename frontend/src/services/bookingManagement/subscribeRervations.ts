@@ -1,9 +1,9 @@
 import { auth, firestore } from "../fireConfig";
-import { BookingData, Doc, firestoreConstants } from "utils";
-import { createError } from "utils/src/helpers";
+import { createError } from "utils/dist/helpers";
 import { userManagementErrorCodes } from "../userManagement/constants";
-
-const { RESERVATIONS } = firestoreConstants;
+import { BookingData } from "utils/dist/bookingManagement/types";
+import { Doc } from "utils/dist/types";
+import { RESERVATIONS } from "utils/dist/bookingManagement/constants";
 
 export const onReservationsChanged = (
   callback: (reservations: Doc<BookingData>[]) => void

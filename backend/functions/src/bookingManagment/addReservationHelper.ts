@@ -3,9 +3,9 @@ import {
   MAX_EVENT_SPACES,
   RESERVATIONS,
   RESERVATION_EXPIRATION_TIME,
-} from "./constants";
+} from "utils/dist/bookingManagement/constants";
 import { getEvent } from "./getEvent";
-import { BookingData, EventData } from "./types";
+import { BookingData, EventData } from "utils/dist/bookingManagement/types";
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
 import { deleteReservation } from "./deleteReservation";

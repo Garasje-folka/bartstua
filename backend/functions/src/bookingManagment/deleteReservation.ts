@@ -1,6 +1,6 @@
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
-import { EVENTS, RESERVATIONS } from "./constants";
+import { EVENTS, RESERVATIONS } from "utils/dist/bookingManagement/constants";
 import { getEvent } from "./getEvent";
 
 export const deleteReservation = async (docid: string, uid?: string) => {

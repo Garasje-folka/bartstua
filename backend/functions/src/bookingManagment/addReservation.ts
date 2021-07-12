@@ -1,8 +1,12 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { BookingRequest, bookingRequestSchema, BookingData } from "./types";
-import isValidEventDate from "./helpers/isValidEventDate";
 import { addReservationHelper } from "./addReservationHelper";
+import {
+  BookingData,
+  BookingRequest,
+  bookingRequestSchema,
+} from "utils/dist/bookingManagement/types";
+import { isValidEventDate } from "utils/dist/bookingManagement/helpers";
 
 export const addReservation = functions.https.onCall(
   async (data: BookingRequest, context) => {

@@ -1,6 +1,8 @@
 import * as admin from "firebase-admin";
-import { EVENTS } from "./constants";
-import { DateHour, Doc, EventData } from "./types";
+import { EVENTS } from "utils/dist/bookingManagement/constants";
+import { EventData } from "utils/dist/bookingManagement/types";
+import { DateHour } from "utils/dist/dates/types";
+import { Doc } from "utils/dist/types";
 
 const getEventQueryRef = (date: DateHour) => {
   return admin

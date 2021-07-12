@@ -3,7 +3,7 @@ import Calendar from "react-calendar";
 
 // Move this to .styled file?
 import "react-calendar/dist/Calendar.css";
-import { MAX_EVENT_SPACES } from "utils/src/bookingManagement/constants";
+import { MAX_EVENT_SPACES } from "utils/dist/bookingManagement/constants";
 import { InputField } from "../../components/form";
 import { LeftAlignedContent } from "../../components/header/header.styled";
 import { Heading, HeadingTypes } from "../../components/text";

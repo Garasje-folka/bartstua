@@ -7,16 +7,16 @@ import {
   getEventStartingHour,
   subscribeEvents,
 } from "../../services/bookingManagement";
-import { MAX_EVENT_SPACES } from "utils/src/bookingManagement/constants";
+import { MAX_EVENT_SPACES } from "utils/dist/bookingManagement/constants";
 import {
   OuterContainer,
   TimeButton,
   TimeContainer,
   TimeText,
 } from "./timePicker.styled";
-import { getHourRange, isEqualDates } from "utils/src/dates/helpers";
-import { DateDay } from "utils/src/dates/types";
-import { EventData } from "utils/dist";
+import { getHourRange, isEqualDates } from "utils/dist/dates/helpers";
+import { DateDay } from "utils/dist/dates/types";
+import { EventData } from "utils/dist/bookingManagement/types";
 
 export type TimePickerProps = {
   dateDay: DateDay;
