@@ -1,42 +1,22 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+import { addReservationToTransaction } from "./helpers";
+import * as yup from "yup";
 import { bookingRequestSchema } from "utils/dist/bookingManagement/types";
-import { isValidEventDate } from "utils/dist/bookingManagement/helpers";
-import { addReservationHelper } from "./addReservationHelper";
+import { checkAuthentication, checkData } from "../helpers";
+import { checkValidEventDate } from "./helpers";
+
+const dataSchema = yup.array().of(bookingRequestSchema);
 
 // TODO: Add data type checking
 export const addReservations = functions.https.onCall(async (data, context) => {
-  // User authentication and validation
-  const auth = context.auth;
-
-  if (!auth || !auth.uid) {
-    throw new functions.https.HttpsError(
-      "unauthenticated",
-      "User is not authenticated"
-    );
-  }
+  const auth = checkAuthentication(context.auth);
+  checkData(data, dataSchema);
 
   admin.firestore().runTransaction(async (transaction) => {
-    for (const reservation of data.reservations) {
-      // Check data format
-      try {
-        await bookingRequestSchema.validate(reservation);
-      } catch (error) {
-        throw new functions.https.HttpsError(
-          "invalid-argument",
-          "Not the expected data format"
-        );
-      }
-
-      // Date validation
-      if (!isValidEventDate(reservation.date)) {
-        throw new functions.https.HttpsError(
-          "invalid-argument",
-          "Invalid date"
-        );
-      }
-
-      await addReservationHelper(transaction, reservation);
+    for (const request of data.requests) {
+      checkValidEventDate(request);
+      await addReservationToTransaction(transaction, request, auth.uid);
     }
   });
 });
