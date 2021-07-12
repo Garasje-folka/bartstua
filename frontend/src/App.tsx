@@ -6,7 +6,7 @@ import { CustomRouter } from "./router/customRouter";
 import { ThemeProvider } from "styled-components";
 import { themeConfig } from "./app.theme";
 import GoogleFontLoader from "react-google-font-loader";
-import { FontProvider } from "./App-styled";
+import { FontProvider } from "./App.styled";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
