@@ -15,6 +15,7 @@ import {
 } from "./types";
 import isValidEventDate from "./helpers/isValidEventDate";
 import { removeExpiredReservation } from "./removeExpiredReservations";
+import { sendBookingConfirmation } from "../emailManagement";
 
 export const addReservation = functions.https.onCall(
   async (data: BookingRequest, context) => {
@@ -103,5 +104,17 @@ export const addReservation = functions.https.onCall(
     setTimeout(() => {
       removeExpiredReservation(reservationId);
     }, RESERVATION_EXPIRATION_TIME * 60 * 1000);
+    await sendBookingConfirmation("le.william.h@gmail.com", [
+      {
+        date: {
+          year: 2021,
+          month: 11,
+          day: 4,
+          hour: 11,
+        },
+        spaces: 4,
+        uid: "test",
+      },
+    ]);
   }
 );

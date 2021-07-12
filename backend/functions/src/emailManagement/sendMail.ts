@@ -5,35 +5,36 @@ import { SentMessageInfo } from "nodemailer";
 
 admin.initializeApp();
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.sendgrid.net",
-  port: 25,
-  auth: {
-    user: "apikey",
-    pass: functions.config().sendgrid.key,
-  },
-});
-
-export const sendMail = (
+const sendMail = async (
   sender: string,
   recipient: string,
   subject: string,
+  text: string,
   html: string
-) => {
-  const mailOptions = {
-    from: sender,
-    to: recipient,
-    subject: subject,
-    html: html,
-  };
+): Promise<void> => {
+  const transporter = nodemailer.createTransport({
+    host: "smtp.sendgrid.net",
+    port: 25,
+    auth: {
+      user: "apikey",
+      pass: functions.config().sendgrid.key,
+    },
+  });
 
-  // TODO: How should errors be handled?
-  return transporter.sendMail(
-    mailOptions,
+  await transporter.sendMail(
+    {
+      from: sender,
+      to: recipient,
+      subject: subject,
+      text: text,
+      html: html,
+    },
     (err: Error | null, info: SentMessageInfo) => {
-      if (err) {
-        console.log(err);
-      }
+      console.error(err);
+      console.error(info.messageId);
+      console.error(info.envelope);
     }
   );
 };
+
+export { sendMail };
