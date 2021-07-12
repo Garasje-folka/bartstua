@@ -29,10 +29,12 @@ import { right } from "@popperjs/core";
 import { EmailIcon, PasswordIcon, SignInIcon, SignUpIcon } from "../../icons";
 import { InputFieldSize } from "../../components/form/inputField";
 import { SignInButton } from "../../components/header/header.styled";
-
+import { SIGNIN } from "../../router/routeConstants";
+import { useHistory } from "react-router";
 // TODO: Getting a Bad Request console error when creating user, look into it.
 
 const Register = () => {
+  const history = useHistory();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordConf, setPasswordConf] = useState<string>("");
@@ -218,7 +220,7 @@ const Register = () => {
               <Paragraph type={Paragraph.types.PARAGRAPH1}>
                 {t("label_have_user")}
               </Paragraph>
-              <SignInButton icon={SignInIcon}>
+              <SignInButton icon={SignInIcon} onClick={() => history.push(SIGNIN)}>
                 {t("label_sign_in")}
               </SignInButton>
             </ActionsContainer>
