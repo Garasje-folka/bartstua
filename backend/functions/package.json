@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
-    "build": "tsc",
+    "build": "firebase functions:config:get > .runtimeconfig.json && tsc",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",

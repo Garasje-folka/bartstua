@@ -1,6 +1,9 @@
+import { PaymentIntent } from "@stripe/stripe-js";
 import firebase from "firebase";
 
-const confirmReservationPayment = async (paymentid: string) => {
+const confirmReservationPayment = async (
+  paymentid: string
+): Promise<PaymentIntent> => {
   const call = firebase.functions().httpsCallable("confirmReservationPayment");
   try {
     const data = { paymentid: paymentid };

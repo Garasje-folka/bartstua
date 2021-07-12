@@ -33,8 +33,8 @@ service cloud.firestore {
       let a = request.auth;
       return a != null;
     }
-    function isBookedByCurrentUser(bookingId) {
-      return exist(/databases/$(database)/documents/bookings/$(bookingId)) && (get(/databases/$(database)/documents/bookings/$(bookingId)).data.uid == request.auth.uid);
+    function isRequestedByCurrentUser() {
+      return resource.data.uid == request.auth.uid;
     }
     function isEventSpacesAvailable(spaces, eventId) {
       return (spaces <= maximumAvailableSpaces()) && ((!exist(/databases/$(database)/documents/events/$(eventId))) || (((get(/databases/$(database)/documents/events/$(eventId)).data.spacesTaken + spaces) <= maximumAvailableSpaces())));
@@ -52,8 +52,15 @@ service cloud.firestore {
       function is______PathType(data, prev) {
         return is____BookingData(data, prev!=null ? prev : null);
       }
-      allow read: if isBookedByCurrentUser(bookingDoc);
+      allow read: if isRequestedByCurrentUser();
       allow create: if is______PathType(request.resource.data, resource==null ? null : resource.data) && (dataContainsUid(bookingDoc));
+    }
+    match /reservations/{reservationDoc} {
+      function is______PathType(data, prev) {
+        return is____BookingData(data, prev!=null ? prev : null);
+      }
+      allow read: if isRequestedByCurrentUser();
+      allow create: if is______PathType(request.resource.data, resource==null ? null : resource.data) && (dataContainsUid(reservationDoc));
     }
   }
 }
