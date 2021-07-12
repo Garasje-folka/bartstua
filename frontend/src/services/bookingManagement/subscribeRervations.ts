@@ -1,6 +1,6 @@
 import { auth, firestore } from "../fireConfig";
 import { BookingData, Doc, firestoreConstants } from "utils";
-import { createError } from "../userManagement/helpers/createError";
+import { createError } from "utils/src/helpers";
 import { userManagementErrorCodes } from "../userManagement/constants";
 
 const { RESERVATIONS } = firestoreConstants;

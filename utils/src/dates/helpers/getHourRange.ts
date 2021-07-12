@@ -7,4 +7,4 @@ const getHourRange = (startHour: number) => {
   );
 };
 
-export default getHourRange;
+export { getHourRange };

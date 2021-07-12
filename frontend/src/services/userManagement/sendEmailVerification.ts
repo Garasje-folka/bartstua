@@ -1,6 +1,6 @@
 import { auth } from "../fireConfig";
 import { userManagementErrorCodes } from "./constants";
-import { createError } from "./helpers/createError";
+import { createError } from "utils/src/helpers";
 
 const sendEmailVerificationErrorCodes = {
   ERROR_NO_USER: userManagementErrorCodes.ERROR_NO_USER,

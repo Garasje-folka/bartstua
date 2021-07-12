@@ -1,4 +1,4 @@
-import { DateDay } from "utils";
+import { DateDay } from "../types";
 
 const createDateDayFromDate = (date: Date): DateDay => {
   return {
@@ -8,4 +8,4 @@ const createDateDayFromDate = (date: Date): DateDay => {
   };
 };
 
-export default createDateDayFromDate;
+export { createDateDayFromDate };

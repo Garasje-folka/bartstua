@@ -1,4 +1,4 @@
-import { DateHour, dateHourSchema, duplicateDateHour } from "./dateHour";
+import { DateHour, dateHourSchema, duplicateDateHour } from "../../dates/types";
 import * as yup from "yup";
 
 export const eventDataSchema = yup.object({

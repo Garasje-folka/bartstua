@@ -1,8 +1,8 @@
 import { BOOKING_ENDING_TIME, BOOKING_STARTING_TIME } from "../constants";
-import { DateHour } from "utils";
-import isBeforeToday from "./isBeforeToday";
-import { isToday } from "./isToday";
-import isValidDateHour from "./isValidDateHour";
+import { DateHour } from "../../dates/types";
+import { isBeforeToday } from "../../dates/helpers";
+import { isToday } from "../../dates/helpers";
+import { isValidDateHour } from "../../dates/helpers";
 
 const isValidEventDate = (date: DateHour) => {
   if (!isValidDateHour(date)) return false;
@@ -20,4 +20,4 @@ const isValidEventDate = (date: DateHour) => {
   return true;
 };
 
-export default isValidEventDate;
+export { isValidEventDate };

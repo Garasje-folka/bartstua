@@ -1,4 +1,4 @@
-import { DateDay } from "utils";
+import { DateDay } from "../types";
 
 const isAfterToday = (dateDay: DateDay) => {
   const currentDate = new Date();
@@ -12,4 +12,4 @@ const isAfterToday = (dateDay: DateDay) => {
   return currentDate.getDate() < dateDay.day;
 };
 
-export default isAfterToday;
+export { isAfterToday };

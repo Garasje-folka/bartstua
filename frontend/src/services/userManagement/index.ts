@@ -21,3 +21,4 @@ export {
   changePassword,
   changePasswordErrorCodes,
 };
+export * as types from "./types";

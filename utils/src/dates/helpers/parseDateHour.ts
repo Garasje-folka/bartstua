@@ -1,5 +1,5 @@
-import { DateHour } from "utils";
-import parseDateDay from "./parseDateDay";
+import { DateHour } from "../types";
+import { parseDateDay } from "./parseDateDay";
 
 const parseDateHour = (
   date: DateHour,
@@ -15,4 +15,4 @@ const parseDateHour = (
   return parsed.trim();
 };
 
-export default parseDateHour;
+export { parseDateHour };

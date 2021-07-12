@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { DateDay, EventData } from "../../../../utils/dist";
 import { Heading, HeadingTypes } from "../../components/text";
 import { reservationsSelector } from "../../redux/ducks/reservations";
 import {
   addReservation,
   getEventStartingHour,
-  MAX_EVENT_SPACES,
   subscribeEvents,
 } from "../../services/bookingManagement";
-import getHourRange from "../../services/bookingManagement/helpers/getHourRange";
-import isEqualDates from "../../services/bookingManagement/helpers/isEqualDates";
+import { MAX_EVENT_SPACES } from "utils/src/bookingManagement/constants";
 import {
   OuterContainer,
   TimeButton,
   TimeContainer,
   TimeText,
 } from "./timePicker.styled";
+import { getHourRange, isEqualDates } from "utils/src/dates/helpers";
+import { DateDay } from "utils/src/dates/types";
+import { EventData } from "utils/dist";
 
 export type TimePickerProps = {
   dateDay: DateDay;

@@ -1,7 +1,10 @@
-import { BOOKING_STARTING_TIME, BOOKING_ENDING_TIME } from "./constants";
-import isAfterToday from "./helpers/isAfterToday";
-import { isToday } from "./helpers/isToday";
-import { DateDay } from "utils";
+import {
+  BOOKING_STARTING_TIME,
+  BOOKING_ENDING_TIME,
+} from "utils/src/bookingManagement/constants";
+import { isAfterToday } from "utils/src/dates/helpers";
+import { isToday } from "utils/src/dates/helpers";
+import { DateDay } from "utils/src/dates/types";
 
 // Returns the first valid event hour for the given DateDay
 // Returns undefined if there is no valid starting hour for the given DateDay

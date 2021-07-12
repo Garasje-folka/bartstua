@@ -1,5 +1,7 @@
-import { DateHour, EventData, Doc } from "utils";
-import { EVENTS } from "./constants";
+import { DateHour } from "utils/src/dates/types";
+import { EventData } from "utils/src/bookingManagement/types";
+import { Doc } from "utils/src/types";
+import { EVENTS } from "utils/src/bookingManagement/constants";
 import firebase, { firestore } from "../fireConfig";
 
 // TODO: Add error handling

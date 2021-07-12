@@ -1,9 +1,10 @@
-import { BookingData, Doc } from "../../../../utils/dist";
+import { Doc } from "utils/src/types";
+import { BookingData } from "utils/src/bookingManagement/types";
 import { cancelReservation } from "../../services/bookingManagement";
-import createDateFromDateDay from "../../services/bookingManagement/helpers/createDateFromDateDay";
-import getDayName from "../../services/bookingManagement/helpers/getDayName";
-import getHourRange from "../../services/bookingManagement/helpers/getHourRange";
-import parseDateDay from "../../services/bookingManagement/helpers/parseDateDay";
+import { createDateFromDateDay } from "utils/src/dates/helpers";
+import { getDayName } from "utils/src/dates/helpers";
+import { getHourRange } from "utils/src/dates/helpers";
+import { parseDateDay } from "utils/src/dates/helpers";
 import { Button } from "../button";
 import { CardBody, CardContainer } from "../card";
 import { Heading, HeadingTypes } from "../text";
