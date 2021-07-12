@@ -1,16 +1,17 @@
-import { BookingData, User } from "utils";
+import { BookingData } from "../../../../utils/dist/bookingManagement/types";
+import { Doc } from "../../../../utils/dist/types";
 import { State } from "../types/state";
 
 // Interfaces
 interface Action {
   type: string;
   data?: {
-    reservations: BookingData[];
+    reservations: Doc<BookingData>[];
   };
 }
 
 export type ReservationsState = {
-  data: BookingData[];
+  data: Doc<BookingData>[];
   status: {
     loaded: boolean;
     lastUpdated?: string;
@@ -53,7 +54,9 @@ export default function reducer(
 }
 
 // Action Creator
-export const reservationsUpdated = (reservations: BookingData[]): Action => {
+export const reservationsUpdated = (
+  reservations: Doc<BookingData>[]
+): Action => {
   return { type: RESERVATIONS_UPDATE, data: { reservations } };
 };
 

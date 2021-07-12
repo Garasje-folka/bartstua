@@ -1,5 +1,5 @@
+import { User } from "../../services/userManagement/types";
 import { HOME, SIGNIN, VERIFY } from "../routeConstants";
-import { User } from "utils";
 import { GuardFunction } from "../types/guardFunction";
 
 const verifiedEmailCheck: (

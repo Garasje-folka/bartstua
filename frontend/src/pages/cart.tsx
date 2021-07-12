@@ -15,7 +15,7 @@ const Cart = () => {
       <CardHeader title="Betalingsoversikt" />
       <CardBody>
         {reservations.map((res, index) => (
-          <CartItem booking={res} key={index} />
+          <CartItem bookingDoc={res} key={index} />
         ))}
         <Button
           disabled={reservations.length === 0}

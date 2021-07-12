@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { DateDay, EventData } from "../../../../utils/dist";
 import { Heading, HeadingTypes } from "../../components/text";
 import { reservationsSelector } from "../../redux/ducks/reservations";
 import {
   addReservation,
   getEventStartingHour,
-  MAX_EVENT_SPACES,
   subscribeEvents,
 } from "../../services/bookingManagement";
-import getHourRange from "../../services/bookingManagement/helpers/getHourRange";
-import isEqualDates from "../../services/bookingManagement/helpers/isEqualDates";
+import { MAX_EVENT_SPACES } from "utils/dist/bookingManagement/constants";
 import {
   OuterContainer,
   TimeButton,
   TimeContainer,
   TimeText,
 } from "./timePicker.styled";
+import { getHourRange, isEqualDates } from "utils/dist/dates/helpers";
+import { DateDay } from "utils/dist/dates/types";
+import { EventData } from "utils/dist/bookingManagement/types";
 
 export type TimePickerProps = {
   dateDay: DateDay;
@@ -59,7 +59,7 @@ const TimePicker = (props: TimePickerProps) => {
         if (matchingReservation) {
           result.push({
             ...e,
-            spacesReserved: matchingReservation.spaces,
+            spacesReserved: matchingReservation.data.spaces,
           } as FilteredEvent);
         } else if (MAX_EVENT_SPACES - e.spacesTaken >= spaces) {
           result.push(e);
@@ -72,7 +72,7 @@ const TimePicker = (props: TimePickerProps) => {
 
   const getMatchingReservation = (e: EventData) => {
     for (const res of reservations) {
-      if (isEqualDates(res.date, e.date)) {
+      if (isEqualDates(res.data.date, e.date)) {
         return res;
       }
     }

@@ -1,10 +1,11 @@
-import { DateDay, EventData } from "../../../../utils/dist";
+import { DateDay } from "utils/dist/dates/types";
+import { EventData } from "utils/dist/bookingManagement/types";
 import firebase, { firestore } from "../fireConfig";
 import {
   BOOKING_ENDING_TIME,
   BOOKING_STARTING_TIME,
   EVENTS,
-} from "./constants";
+} from "utils/dist/bookingManagement/constants";
 
 const getEventsQueryRef = (date: DateDay) => {
   return firestore

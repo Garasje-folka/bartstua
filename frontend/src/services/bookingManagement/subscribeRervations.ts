@@ -1,12 +1,12 @@
 import { auth, firestore } from "../fireConfig";
-import { BookingData, firestoreConstants } from "utils";
-import { createError } from "../userManagement/helpers/createError";
+import { createError } from "utils/dist/helpers";
 import { userManagementErrorCodes } from "../userManagement/constants";
-
-const { RESERVATIONS } = firestoreConstants;
+import { BookingData } from "utils/dist/bookingManagement/types";
+import { Doc } from "utils/dist/types";
+import { RESERVATIONS } from "utils/dist/bookingManagement/constants";
 
 export const onReservationsChanged = (
-  callback: (reservations: BookingData[]) => void
+  callback: (reservations: Doc<BookingData>[]) => void
 ): (() => void) => {
   if (!auth.currentUser) {
     throw createError(userManagementErrorCodes.ERROR_NO_USER);
@@ -16,9 +16,13 @@ export const onReservationsChanged = (
     .where("uid", "==", auth.currentUser.uid);
 
   const unsubscribe = reservationsRef.onSnapshot((querySnapshot) => {
-    const reservations = querySnapshot.docs.map(
-      (doc) => doc.data() as BookingData
-    );
+    const reservations = querySnapshot.docs.map((doc) => {
+      const data = doc.data() as BookingData;
+      return {
+        data: data,
+        id: doc.id,
+      } as Doc<BookingData>;
+    });
     callback(reservations);
   });
   return () => {

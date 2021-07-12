@@ -3,10 +3,10 @@ import Calendar from "react-calendar";
 
 // Move this to .styled file?
 import "react-calendar/dist/Calendar.css";
+import { MAX_EVENT_SPACES } from "utils/dist/bookingManagement/constants";
 import { InputField } from "../../components/form";
 import { LeftAlignedContent } from "../../components/header/header.styled";
 import { Heading, HeadingTypes } from "../../components/text";
-import { MAX_EVENT_SPACES } from "../../services/bookingManagement/constants";
 import { DatePickerContainer, OuterContainer } from "./datePicker.styled";
 
 export type DatePickerProps = {

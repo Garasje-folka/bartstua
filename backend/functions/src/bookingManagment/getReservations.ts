@@ -1,5 +1,5 @@
 import * as admin from "firebase-admin";
-import { RESERVATIONS } from "./constants";
+import { RESERVATIONS } from "utils/dist/bookingManagement/constants";
 
 export const getReservations = async (uid: string) => {
   return admin
