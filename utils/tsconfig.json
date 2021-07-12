@@ -18,5 +18,5 @@
     "outDir": "dist",
     "declaration": true
   },
-  "include": ["src/*", "src/bookingManagement/helpers"]
+  "include": ["src/*"]
 }

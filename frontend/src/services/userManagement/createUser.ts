@@ -1,6 +1,6 @@
 import { auth } from "../fireConfig";
 import { USER_MANAGEMENT, userManagementErrorCodes } from "./constants";
-import { createError } from "./helpers/createError";
+import { createError } from "utils/dist/helpers";
 // TODO: Add stronger password validation
 
 const createUserErrorCodes = {

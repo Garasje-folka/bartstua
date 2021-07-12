@@ -1,12 +1,16 @@
-import { Button } from "../button";
+import { Button, ButtonProps } from "../button";
 
-interface SubmitButtonProps {
+type SubmitButtonProps = ButtonProps & {
   label: string;
-}
+};
 
 const SubmitButton = (props: SubmitButtonProps) => {
-  const { label } = props;
-  return <Button type="submit">{label}</Button>;
+  const { label, ...rest } = props;
+  return (
+    <Button {...rest} type="submit">
+      {label}
+    </Button>
+  );
 };
 
 export default SubmitButton;

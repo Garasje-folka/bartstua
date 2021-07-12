@@ -27,7 +27,7 @@ export const confirmReservationPayment = functions.https.onCall(
       );
     }
 
-    let totalSpaces: number = 0;
+    let totalSpaces = 0;
     reservations.forEach((doc) => {
       totalSpaces += doc.get("spaces");
     });
