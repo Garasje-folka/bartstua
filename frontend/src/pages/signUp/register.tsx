@@ -183,21 +183,23 @@ const Register = () => {
                   ghostText={t("label_email")}
                   icon={EmailIcon}
                   size={InputFieldSize.SMALL}
+                  onChange={(event) => setEmail(event.target.value)}
                 />
                 <PasswordField
                   ghostText={t("label_password")}
                   icon={PasswordIcon}
                   size={InputFieldSize.SMALL}
+                  onChange={(event) => setPassword(event.target.value)}
                 />
                 <PasswordField
                   icon={PasswordIcon}
                   ghostText={t("label_repeat_password")}
                   size={InputFieldSize.SMALL}
+                  onChange={(event) => setPasswordConf(event.target.value)}
                 />
-                <SignUpButton
-                  icon={SignUpIcon}
-                  label={t("label_register_user")}
-                />
+                <SignUpButton icon={SignUpIcon} onClick={handleSubmit}>
+                  {t("label_register_user")}
+                </SignUpButton>
               </StyledFormContainer>
             </OuterFormContainer>
           </SignUpContainer>

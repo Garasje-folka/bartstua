@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Button } from "../../components/button";
-import { InputField, SubmitButton } from "../../components/form";
+import { InputField } from "../../components/form";
 import { Paragraph } from "../../components/text";
 
 export const Background = styled.div`
@@ -38,7 +38,7 @@ export const ParagraphText = styled(Paragraph)`
   margin-right: 100px;
 `;
 
-export const SignInButton = styled(SubmitButton)`
+export const SignInButton = styled(Button)`
   margin-left: 5px;
 `;
 
@@ -89,3 +89,5 @@ export const OuterFormContainer = styled.div`
 export const StyledFormContainer = styled.div`
   margin: auto;
 `;
+
+export const SignUpButton = styled(Button)``;
