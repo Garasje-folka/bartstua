@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 import { Button } from "../../components/button";
 import { FormContainer, InputField, SubmitButton } from "../../components/form";
-import saunaImg from "../../media/sauna.jpeg";
 
 export const Background = styled.div`
   width: 100%;
@@ -90,7 +89,7 @@ export const OuterFormContainer = styled.div`
   display: flex;
 `;
 
-export const SignUpButton = styled(SubmitButton)``;
+export const SignUpButton = styled(Button)``;
 
 export const SignInBottom = styled.div`
   padding-right: ${({ theme }) => theme.alignment.padding.EXTRA_EXTRA_LARGE};

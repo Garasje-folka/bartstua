@@ -6,7 +6,7 @@
   "label_email": "E-post",
   "label_register": "Registrer",
   "label_password": "Passord",
-  "label_repeat_password": "Passord på nyt",
+  "label_repeat_password": "Passord på nytt",
   "label_confirm_password": "Bekreft passord",
   "label_register_user": "Registrer deg",
   "text_passwords_not_matching": "Passordet stemmer ikke med bekreftelses passordet",

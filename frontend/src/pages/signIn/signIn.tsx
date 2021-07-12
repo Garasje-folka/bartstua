@@ -22,9 +22,10 @@ import {
   SignInBottom,
   OuterFormContainer,
   StyledFormContainer,
+  SignInButton,
+  SignUpButton,
 } from "./signIn.styled";
 import { Heading, Paragraph } from "../../components/text";
-import { SignInButton } from "../../components/header/header.styled";
 import { ParagraphText } from "./signIn.styled";
 import { createEmitAndSemanticDiagnosticsBuilderProgram } from "typescript";
 import { EmailIcon, PasswordIcon, SignInIcon, SignUpIcon } from "../../icons";
@@ -102,9 +103,9 @@ const SignIn = () => {
               <Paragraph type={Paragraph.types.PARAGRAPH1}>
                 {t("label_not_registered")}
               </Paragraph>
-              <SignInButton icon={SignUpIcon}>
+              <SignUpButton icon={SignUpIcon}>
                 {t("label_register_user")}
-              </SignInButton>
+              </SignUpButton>
             </ActionsContainer>
           </CenterContainer>
         </LeftContainer>
@@ -136,7 +137,7 @@ const SignIn = () => {
                   errorText={isPasswordError ? errorMessage : undefined}
                 />
                 <a>{t("label_forgot_password")}</a>
-                <SignInButton icon={SignInIcon}>
+                <SignInButton icon={SignInIcon} onClick={handleSubmit}>
                   {t("label_sign_in")}
                 </SignInButton>
               </StyledFormContainer>
