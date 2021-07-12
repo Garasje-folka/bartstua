@@ -8,7 +8,6 @@ import { checkValidEventDate } from "./helpers";
 
 const dataSchema = yup.array().of(bookingRequestSchema);
 
-// TODO: Add data type checking
 export const addReservations = functions.https.onCall(async (data, context) => {
   const auth = checkAuthentication(context.auth);
   checkData(data, dataSchema);
