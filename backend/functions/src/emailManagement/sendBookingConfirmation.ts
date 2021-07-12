@@ -2,6 +2,8 @@ import { sendMail } from "./sendMail";
 import { BookingData } from "utils/dist/bookingManagement/types";
 import { parseDateHour } from "utils/dist/dates/helpers";
 
+// TODO: Maybe move this to bookingManagement?
+
 const sendBookingConfirmation = async (
   email: string,
   bookings: BookingData[]
@@ -22,6 +24,7 @@ const sendBookingConfirmation = async (
     bookingMessage +
     "<p>Med vennlig hilsen</p><p>Bartstua</p>";
 
+  // TODO: Use bartstua noreply email
   await sendMail(
     "le.william.h@outlook.com",
     email,
