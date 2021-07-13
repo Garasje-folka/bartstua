@@ -1,21 +1,10 @@
-import { DateHour, dateHourSchema } from "../../dates/types";
 import * as yup from "yup";
-import { MAX_EVENT_SPACES } from "../constants";
+import { reservationDataSchema, ReservationData } from "./reservationData";
 
-export const bookingRequestSchema = yup.object({
-  date: dateHourSchema,
-  spaces: yup.number().min(1).max(MAX_EVENT_SPACES).required(),
-});
-
-export const bookingDataSchema = bookingRequestSchema.shape({
+export const bookingDataSchema = reservationDataSchema.shape({
   uid: yup.string().required(),
 });
 
-export type BookingRequest = {
-  date: DateHour;
-  spaces: number;
-};
-
-export type BookingData = BookingRequest & {
+export type BookingData = ReservationData & {
   uid: string;
 };

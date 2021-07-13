@@ -12,7 +12,7 @@ type EventData = {
   date: DateHour,
 }
 
-type BookingRequest = {
+type ReservationData = {
   date: DateHour,
   spaces: int,
 }
@@ -44,7 +44,7 @@ match /events/{eventDoc} is EventData{
   allow read: true;
 }
 
-match /users/{userDoc}/reservations/{reservationDoc} is BookingRequest {
+match /users/{userDoc}/reservations/{reservationDoc} is ReservationData {
   allow read: userDoc == request.auth.uid;
 }
 

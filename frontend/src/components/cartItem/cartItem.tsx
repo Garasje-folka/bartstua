@@ -1,5 +1,5 @@
 import { Doc } from "utils/dist/types";
-import { BookingRequest } from "utils/dist/bookingManagement/types";
+import { ReservationData } from "utils/dist/bookingManagement/types";
 import { cancelReservation } from "../../services/bookingManagement";
 import { createDateFromDateDay } from "utils/dist/dates/helpers";
 import { getDayName } from "utils/dist/dates/helpers";
@@ -11,11 +11,11 @@ import { Heading, HeadingTypes } from "../text";
 import { VeriticalAlignedTextContainer } from "./cartItem.styled";
 
 export type CartItemProps = {
-  bookingDoc: Doc<BookingRequest>;
+  reservationDoc: Doc<ReservationData>;
 };
 
 const CartItem = (props: CartItemProps) => {
-  const { bookingDoc } = props;
+  const { reservationDoc: bookingDoc } = props;
 
   const getFormattedDate = () => {
     const dayName = getDayName(createDateFromDateDay(bookingDoc.data.date));

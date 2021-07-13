@@ -5,7 +5,7 @@ import {
 } from "utils/dist/bookingManagement/constants";
 import {
   BookingData,
-  BookingRequest,
+  ReservationData,
 } from "utils/dist/bookingManagement/types";
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
@@ -15,7 +15,7 @@ import { USERS } from "utils/dist/userManagement/constants";
 
 export const addReservationToTransaction = async (
   transaction: FirebaseFirestore.Transaction,
-  request: BookingRequest,
+  request: ReservationData,
   uid: string
 ) => {
   let spacesTaken: number = 0;

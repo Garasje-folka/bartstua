@@ -18,7 +18,7 @@ service cloud.firestore {
       && data['spacesTaken'] is int
       && is____DateHour(data['date'], prev!=null && 'date' in prev ? prev['date'] : null);
     }
-    function is____BookingRequest(data, prev) {
+    function is____ReservationData(data, prev) {
       return data.keys().hasAll(['date', 'spaces'])
       && data.size() >= 2 && data.size() <= 2
       && data.keys().hasOnly(['date', 'spaces'])
@@ -54,7 +54,7 @@ service cloud.firestore {
     }
     match /users/{userDoc}/reservations/{reservationDoc} {
       function is______PathType(data, prev) {
-        return is____BookingRequest(data, prev!=null ? prev : null);
+        return is____ReservationData(data, prev!=null ? prev : null);
       }
       allow read: if userDoc == request.auth.uid;
     }
