@@ -74,7 +74,14 @@ const InputFieldCommonStyle = css``;
 
 export const EmailField = styled(InputField)``;
 
-export const PasswordField = styled(InputField)``;
+export const PasswordField = styled(InputField)`
+  -webkit-text-security: disc;
+  text-security: disc;
+`;
+
+export const ForgotPasswordLink = styled.a`
+  text-decoration: underline;
+`;
 
 export const SignInBottom = styled.div`
   padding-right: ${({ theme }) => theme.alignment.padding.EXTRA_EXTRA_LARGE};

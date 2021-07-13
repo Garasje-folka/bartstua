@@ -73,7 +73,10 @@ export const EmailField = styled(InputField)`
   position: relative;
 `;
 
-export const PasswordField = styled(InputField)``;
+export const PasswordField = styled(InputField)`
+  -webkit-text-security: disc;
+  text-security: disc;
+`;
 
 export const IconInputContainer = styled.div`
   display: flex;
