@@ -4,7 +4,6 @@ import { Heading, HeadingTypes } from "../../components/text";
 import { reservationsSelector } from "../../redux/ducks/reservations";
 import {
   addReservation,
-  getEventStartingHour,
   subscribeEvents,
 } from "../../services/bookingManagement";
 import { MAX_EVENT_SPACES } from "utils/dist/bookingManagement/constants";
@@ -17,6 +16,7 @@ import {
 import { getHourRange, isEqualDates } from "utils/dist/dates/helpers";
 import { DateDay } from "utils/dist/dates/types";
 import { EventData } from "utils/dist/bookingManagement/types";
+import { getEventStartingHour } from "../../services/bookingManagement/helpers";
 
 export type TimePickerProps = {
   dateDay: DateDay;
