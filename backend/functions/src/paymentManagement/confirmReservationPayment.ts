@@ -4,20 +4,19 @@ import {
   cancelPaymentIntent,
   confirmPaymentIntent,
   createPaymentIntent,
-} from "./stripeUtility";
-import Stripe from "stripe";
+} from "./helpers";
+import { Stripe } from "stripe";
+import * as yup from "yup";
+import { checkAuthentication, checkData } from "../helpers";
+
+const dataSchema = yup.object({
+  paymentid: yup.string().required(),
+});
 
 export const confirmReservationPayment = functions.https.onCall(
   async (data, context) => {
-    // User authentication and validation
-    const auth = context.auth;
-
-    if (!auth || !auth.uid) {
-      throw new functions.https.HttpsError(
-        "unauthenticated",
-        "User is not authenticated"
-      );
-    }
+    checkData(data, dataSchema);
+    const auth = checkAuthentication(context.auth);
 
     const reservations = await getReservations(auth.uid);
     if (reservations.empty) {

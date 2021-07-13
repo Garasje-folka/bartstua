@@ -1,17 +1,16 @@
 import * as functions from "firebase-functions";
-import { deleteReservation } from "./deleteReservation";
+import { deleteReservation } from "./helpers";
+import * as yup from "yup";
+import { checkAuthentication, checkData } from "../helpers";
 
-// TODO: Typecheck data
+const dataSchema = yup.object({
+  docid: yup.string().required(),
+});
+
 export const cancelReservation = functions.https.onCall(
   async (data, context) => {
-    const auth = context.auth;
-
-    if (!auth || !auth.uid) {
-      throw new functions.https.HttpsError(
-        "unauthenticated",
-        "User is not authenticated"
-      );
-    }
+    checkData(data, dataSchema);
+    const auth = checkAuthentication(context.auth);
 
     await deleteReservation(data.docid, auth.uid);
   }
