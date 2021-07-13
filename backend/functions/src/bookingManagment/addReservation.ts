@@ -2,15 +2,15 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { addReservationToTransaction } from "./helpers";
 import {
-  BookingRequest,
-  bookingRequestSchema,
+  ReservationData,
+  reservationDataSchema,
 } from "utils/dist/bookingManagement/types";
 import { checkValidEventDate } from "./helpers";
 import { checkAuthentication, checkData } from "../helpers";
 
 export const addReservation = functions.https.onCall(
-  async (data: BookingRequest, context) => {
-    checkData(data, bookingRequestSchema);
+  async (data: ReservationData, context) => {
+    checkData(data, reservationDataSchema);
     checkValidEventDate(data.date);
 
     const auth = checkAuthentication(context.auth);

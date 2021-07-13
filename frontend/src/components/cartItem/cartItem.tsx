@@ -1,25 +1,25 @@
 import { Doc } from "utils/dist/types";
-import { BookingData } from "utils/dist/bookingManagement/types";
+import { ReservationData } from "utils/dist/bookingManagement/types";
 import { cancelReservation } from "../../services/bookingManagement";
 import { createDateFromDateDay } from "utils/dist/dates/helpers";
 import { getDayName } from "utils/dist/dates/helpers";
 import { getHourRange } from "utils/dist/dates/helpers";
-import { parseDateDay } from "utils/dist/dates/helpers";
+import { dateDayToISO } from "utils/dist/dates/helpers";
 import { Button } from "../button";
 import { CardBody, CardContainer } from "../card";
 import { Heading, HeadingTypes } from "../text";
 import { VeriticalAlignedTextContainer } from "./cartItem.styled";
 
 export type CartItemProps = {
-  bookingDoc: Doc<BookingData>;
+  reservationDoc: Doc<ReservationData>;
 };
 
 const CartItem = (props: CartItemProps) => {
-  const { bookingDoc } = props;
+  const { reservationDoc: bookingDoc } = props;
 
   const getFormattedDate = () => {
     const dayName = getDayName(createDateFromDateDay(bookingDoc.data.date));
-    const parsedDate = parseDateDay(bookingDoc.data.date, true, true, true);
+    const parsedDate = dateDayToISO(bookingDoc.data.date, true, true, true);
     return `${dayName} ${parsedDate}`;
   };
 

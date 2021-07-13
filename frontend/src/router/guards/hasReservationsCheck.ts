@@ -1,10 +1,10 @@
-import { BookingData } from "utils/dist/bookingManagement/types";
+import { ReservationData } from "utils/dist/bookingManagement/types";
 import { Doc } from "utils/dist/types";
 import { BOOKING, HOME } from "../routeConstants";
 import { GuardFunction } from "../types/guardFunction";
 
 const hasReservationsCheck: (
-  reservations: Doc<BookingData>[],
+  reservations: Doc<ReservationData>[],
   expectedValue?: boolean
 ) => GuardFunction = (reservations, expectedValue) => () => ({
   accepted:

@@ -35,6 +35,7 @@ const mapQuerySnapshot = (
       ? queryEvent.date.hour
       : BOOKING_ENDING_TIME;
 
+    // Fill missing hours with empty events
     while (hour < nextEventHour) {
       result.push({
         spacesTaken: 0,
