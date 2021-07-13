@@ -2,6 +2,7 @@ import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
 import { RESERVATIONS } from "utils/dist/bookingManagement/constants";
 import { getEventRef } from "./getEventRef";
+import { getUserReservationsRef } from "./getUserReservationsRef";
 
 export const deleteReservation = async (docid: string, uid?: string) => {
   await admin.firestore().runTransaction(async (transaction) => {
@@ -12,8 +13,9 @@ export const deleteReservation = async (docid: string, uid?: string) => {
     const reservationSnapshot = await transaction.get(reservationRef);
 
     if (reservationSnapshot.exists) {
+      const reservationUid = reservationSnapshot.get("uid");
       if (uid) {
-        if (reservationSnapshot.get("uid") !== uid) {
+        if (reservationUid !== uid) {
           throw new functions.https.HttpsError(
             "permission-denied",
             "Not owner of reservation"
@@ -32,7 +34,13 @@ export const deleteReservation = async (docid: string, uid?: string) => {
           spacesTaken: admin.firestore.FieldValue.increment(-spaces),
         });
       }
+
       transaction.delete(reservationRef);
+
+      const userReservationRef = getUserReservationsRef(reservationUid).doc(
+        reservationRef.id
+      );
+      transaction.delete(userReservationRef);
     }
   });
 };

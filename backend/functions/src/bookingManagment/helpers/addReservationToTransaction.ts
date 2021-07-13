@@ -11,6 +11,7 @@ import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
 import { deleteReservation } from "./deleteReservation";
 import { getEventRef } from "./getEventRef";
+import { USERS } from "utils/dist/userManagement/constants";
 
 export const addReservationToTransaction = async (
   transaction: FirebaseFirestore.Transaction,
@@ -38,9 +39,17 @@ export const addReservationToTransaction = async (
     );
   }
 
-  const newReservationRef = admin.firestore().collection(RESERVATIONS).doc();
+  const reservationRef = admin.firestore().collection(RESERVATIONS).doc();
+  const userReservationRef = admin
+    .firestore()
+    .collection(USERS)
+    .doc(uid)
+    .collection(RESERVATIONS)
+    .doc(reservationRef.id);
 
-  transaction.set(newReservationRef, reservation);
+  // TODO: Should await be used here?
+  transaction.set(reservationRef, reservation);
+  transaction.set(userReservationRef, request);
 
   // Increment event spaces counter
   if (eventSnapshot.exists) {
@@ -55,6 +64,6 @@ export const addReservationToTransaction = async (
   }
 
   setTimeout(() => {
-    deleteReservation(newReservationRef.id);
+    deleteReservation(reservationRef.id);
   }, RESERVATION_EXPIRATION_TIME * 60 * 1000);
 };
