@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { Button } from "../../components/button";
 import { FormContainer, InputField, SubmitButton } from "../../components/form";
+import background from "./media/sauna2.jpg";
 
 export const Background = styled.div`
   width: 100%;
@@ -45,7 +46,7 @@ export const LeftContainer = styled.div`
   display: flex;
   box-shadow: ${({ theme }) => theme.shadow.REGULAR};
   flex-grow: 1;
-  background-image: url(/sauna2.jpg);
+  background-image: url(${background});
   background-position: 0vmax;
 `;
 
