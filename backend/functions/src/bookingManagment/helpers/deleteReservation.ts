@@ -1,19 +1,19 @@
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
-import { EVENTS, RESERVATIONS } from "utils/dist/bookingManagement/constants";
-import { getEvent } from "./getEvent";
+import { RESERVATIONS } from "utils/dist/bookingManagement/constants";
+import { getEventRef } from "./getEventRef";
 
 export const deleteReservation = async (docid: string, uid?: string) => {
   await admin.firestore().runTransaction(async (transaction) => {
-    const docRef = admin.firestore().collection(RESERVATIONS).doc(docid);
-    const docSnapshot = await transaction.get(docRef);
+    const reservationRef = admin
+      .firestore()
+      .collection(RESERVATIONS)
+      .doc(docid);
+    const reservationSnapshot = await transaction.get(reservationRef);
 
-    if (docSnapshot.exists) {
-      const date = docSnapshot.get("date");
-      const event = await getEvent(date);
-
+    if (reservationSnapshot.exists) {
       if (uid) {
-        if (docSnapshot.get("uid") !== uid) {
+        if (reservationSnapshot.get("uid") !== uid) {
           throw new functions.https.HttpsError(
             "permission-denied",
             "Not owner of reservation"
@@ -21,16 +21,18 @@ export const deleteReservation = async (docid: string, uid?: string) => {
         }
       }
 
-      if (event) {
-        const spaces = docSnapshot.get("spaces");
-        const eventRef = admin.firestore().collection(EVENTS).doc(event.id);
+      const date = reservationSnapshot.get("date");
+      const eventRef = getEventRef(date);
+      const eventSnapshot = await transaction.get(eventRef);
+
+      if (eventSnapshot.exists) {
+        const spaces = reservationSnapshot.get("spaces");
 
         transaction.update(eventRef, {
           spacesTaken: admin.firestore.FieldValue.increment(-spaces),
         });
-
-        transaction.delete(docRef);
       }
+      transaction.delete(reservationRef);
     }
   });
 };

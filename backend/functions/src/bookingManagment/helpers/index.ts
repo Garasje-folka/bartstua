@@ -4,3 +4,4 @@ export * from "./deleteReservation";
 export * from "./getEvent";
 export * from "./getReservations";
 export * from "./checkValidEventDate";
+export * from "./getEventRef";

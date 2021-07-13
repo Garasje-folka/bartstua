@@ -4,7 +4,7 @@ import { cancelReservation } from "../../services/bookingManagement";
 import { createDateFromDateDay } from "utils/dist/dates/helpers";
 import { getDayName } from "utils/dist/dates/helpers";
 import { getHourRange } from "utils/dist/dates/helpers";
-import { parseDateDay } from "utils/dist/dates/helpers";
+import { dateDayToISO } from "utils/dist/dates/helpers";
 import { Button } from "../button";
 import { CardBody, CardContainer } from "../card";
 import { Heading, HeadingTypes } from "../text";
@@ -19,7 +19,7 @@ const CartItem = (props: CartItemProps) => {
 
   const getFormattedDate = () => {
     const dayName = getDayName(createDateFromDateDay(bookingDoc.data.date));
-    const parsedDate = parseDateDay(bookingDoc.data.date, true, true, true);
+    const parsedDate = dateDayToISO(bookingDoc.data.date, true, true, true);
     return `${dayName} ${parsedDate}`;
   };
 

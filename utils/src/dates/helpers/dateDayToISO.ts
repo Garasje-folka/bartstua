@@ -1,6 +1,6 @@
 import { DateDay, DateHour } from "../types";
 
-const parseDateDay = (
+const dateDayToISO = (
   date: DateDay | DateHour,
   inlcudeYear: boolean,
   includeMonth: boolean,
@@ -16,4 +16,4 @@ const parseDateDay = (
 
   return parsed;
 };
-export { parseDateDay };
+export { dateDayToISO };

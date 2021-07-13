@@ -1,29 +1,22 @@
 import {
-  EVENTS,
   MAX_EVENT_SPACES,
   RESERVATIONS,
   RESERVATION_EXPIRATION_TIME,
 } from "utils/dist/bookingManagement/constants";
-import { getEvent } from "./getEvent";
 import {
   BookingData,
   BookingRequest,
-  EventData,
 } from "utils/dist/bookingManagement/types";
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
 import { deleteReservation } from "./deleteReservation";
+import { getEventRef } from "./getEventRef";
 
 export const addReservationToTransaction = async (
   transaction: FirebaseFirestore.Transaction,
   request: BookingRequest,
   uid: string
 ) => {
-  const event = await getEvent(request.date);
-  let eventRef:
-    | FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
-    | undefined = undefined;
-
   let spacesTaken: number = 0;
 
   const reservation: BookingData = {
@@ -31,15 +24,11 @@ export const addReservationToTransaction = async (
     uid: uid,
   };
 
-  if (event) {
-    // Event already exists
-    eventRef = admin.firestore().collection(EVENTS).doc(event.id);
-    const docSnapshot = await transaction.get(eventRef);
+  const eventRef = getEventRef(request.date);
+  const eventSnapshot = await transaction.get(eventRef);
 
-    if (docSnapshot.exists) {
-      const eventData = docSnapshot.data() as EventData;
-      spacesTaken = eventData.spacesTaken;
-    }
+  if (eventSnapshot.exists) {
+    spacesTaken = eventSnapshot.get("spacesTaken");
   }
 
   if (spacesTaken + reservation.spaces > MAX_EVENT_SPACES) {
@@ -54,12 +43,11 @@ export const addReservationToTransaction = async (
   transaction.set(newReservationRef, reservation);
 
   // Increment event spaces counter
-  if (event && eventRef) {
+  if (eventSnapshot.exists) {
     transaction.update(eventRef, {
       spacesTaken: admin.firestore.FieldValue.increment(reservation.spaces),
     });
   } else {
-    eventRef = admin.firestore().collection(EVENTS).doc();
     transaction.set(eventRef, {
       date: reservation.date,
       spacesTaken: reservation.spaces,
