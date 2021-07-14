@@ -66,7 +66,9 @@ const Header = () => {
     <StyledNavbar bg="light" expand="lg">
       <LeftAlignedContent>
         <Navbar.Brand onClick={() => history.push(HOME)}>Bartstua</Navbar.Brand>
-        {isMobileScreen ? (
+      </LeftAlignedContent>
+      <RightAlignedContent>
+      {isMobileScreen ? (
           <DropDownNavigation items={items} />
         ) : (
           <Nav className="mr-auto">
@@ -77,8 +79,6 @@ const Header = () => {
             ))}
           </Nav>
         )}
-      </LeftAlignedContent>
-      <RightAlignedContent>
         {currentUser && currentUser.email ? (
           signOutButton
         ) : (
