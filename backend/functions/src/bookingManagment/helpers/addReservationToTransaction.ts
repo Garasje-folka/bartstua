@@ -1,7 +1,6 @@
 import {
   MAX_EVENT_SPACES,
   RESERVATIONS,
-  RESERVATION_EXPIRATION_TIME,
 } from "utils/dist/bookingManagement/constants";
 import {
   ReservationData,
@@ -10,7 +9,6 @@ import {
 import { createTimestamp } from "utils/dist/bookingManagement/helpers";
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
-import { deleteReservation } from "./deleteReservation";
 import { getEventRef } from "./getEventRef";
 import { USERS } from "utils/dist/userManagement/constants";
 
@@ -67,8 +65,4 @@ export const addReservationToTransaction = async (
       spacesTaken: reservation.spaces,
     });
   }
-
-  setTimeout(() => {
-    deleteReservation(reservationRef.id);
-  }, RESERVATION_EXPIRATION_TIME * 60 * 1000);
 };

@@ -6,10 +6,14 @@ import { isExpiredReservation } from "utils/dist/bookingManagement/helpers";
 import { deleteReservation } from "./helpers";
 import { ReservationData } from "utils/dist/bookingManagement/types";
 
+// TODO: Get expired reservations with queries instead
+// TODO: Run as transaction? Locks up whole collection so idk,
+//       but might be a small chance for concurreny issues with
+//       acceptReservations
+
 export const deleteExpiredReservations = functions.pubsub
   .schedule(`every ${RESERVATION_CLEARING_INTERVAL} minutes`)
   .onRun(async (context) => {
-    // TODO: Get expired reservations with queries instead
     const reservations = await admin.firestore().collection(RESERVATIONS).get();
     for (const reservation of reservations.docs) {
       const { uid, ...reservationData } = reservation.data();

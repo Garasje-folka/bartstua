@@ -6,7 +6,7 @@ import { isBeforeToday, isToday } from "../../dates/helpers";
 const isExpiredReservation = (reservation: ReservationData) => {
   const thresholdTimestamp = createTimestamp(-RESERVATION_EXPIRATION_TIME);
 
-  if (reservation.timestamp >= thresholdTimestamp) return true;
+  if (reservation.timestamp <= thresholdTimestamp) return true;
 
   if (isBeforeToday(reservation.date)) return true;
   if (isToday(reservation.date)) {

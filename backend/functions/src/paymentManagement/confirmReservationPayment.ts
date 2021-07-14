@@ -10,6 +10,8 @@ import { Stripe } from "stripe";
 import * as yup from "yup";
 import { checkAuthentication, checkData } from "../helpers";
 import { getUserReservationsRef } from "../bookingManagment/helpers";
+import { isExpiredReservation } from "utils/dist/bookingManagement/helpers";
+import { ReservationData } from "utils/dist/bookingManagement/types";
 
 const dataSchema = yup.object({
   paymentid: yup.string().required(),
@@ -24,7 +26,14 @@ export const confirmReservationPayment = functions.https.onCall(
       const reservations = await transaction.get(
         getUserReservationsRef(auth.uid)
       );
-      if (reservations.empty) {
+
+      // Filter out expired reservations
+      const validReservations = reservations.docs.filter((res) => {
+        const { uid, ...resData } = res.data();
+        return !isExpiredReservation(resData as ReservationData);
+      });
+
+      if (validReservations.length === 0) {
         throw new functions.https.HttpsError(
           "failed-precondition",
           "No reservations registered"
@@ -32,7 +41,7 @@ export const confirmReservationPayment = functions.https.onCall(
       }
 
       let totalSpaces = 0;
-      reservations.forEach((doc) => {
+      validReservations.forEach((doc) => {
         totalSpaces += doc.get("spaces");
       });
 
@@ -51,7 +60,7 @@ export const confirmReservationPayment = functions.https.onCall(
       }
 
       if (paymentResult.status === "succeeded") {
-        await acceptReservations(transaction, auth.uid, reservations);
+        await acceptReservations(transaction, auth.uid, validReservations);
       }
 
       return paymentResult;
