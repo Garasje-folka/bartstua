@@ -1,6 +1,6 @@
 import { sendMail } from "./sendMail";
 import { BookingData } from "utils/dist/bookingManagement/types";
-import { parseDateHour } from "utils/dist/dates/helpers";
+import { dateHourToISO } from "utils/dist/dates/helpers";
 
 // TODO: Maybe move this to bookingManagement?
 
@@ -13,7 +13,7 @@ const sendBookingConfirmation = async (
   for (const booking of bookings) {
     bookingMessage +=
       "<p>Dato: " +
-      parseDateHour(booking.date, true, true, true, true) +
+      dateHourToISO(booking.date, true, true, true, true) +
       " Plass: " +
       booking.spaces +
       "</p>";
