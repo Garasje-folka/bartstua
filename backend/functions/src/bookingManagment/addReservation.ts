@@ -15,7 +15,7 @@ export const addReservation = functions.https.onCall(
 
     const auth = checkAuthentication(context.auth);
 
-    await admin.firestore().runTransaction(async (transaction) => {
+    admin.firestore().runTransaction(async (transaction) => {
       await addReservationToTransaction(transaction, data, auth.uid);
     });
   }
