@@ -20,12 +20,12 @@ const Button: React.FC<ButtonProps> = (props) => {
       type={type}
       disabled={disabled}
     >
-      {children}
       {Icon && (
         <IconWrapper>
           <Icon />
         </IconWrapper>
       )}
+      {children}
     </StyledButton>
   );
 };

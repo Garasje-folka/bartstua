@@ -7,7 +7,7 @@ import { getHourRange } from "utils/dist/dates/helpers";
 import { dateDayToISO } from "utils/dist/dates/helpers";
 import { Button } from "../button";
 import { CardBody, CardContainer } from "../card";
-import { Heading, HeadingTypes } from "../text";
+import { Heading } from "../text";
 import { VeriticalAlignedTextContainer } from "./cartItem.styled";
 
 export type CartItemProps = {
@@ -34,16 +34,16 @@ const CartItem = (props: CartItemProps) => {
     <CardContainer>
       <CardBody>
         <VeriticalAlignedTextContainer>
-          <Heading type={HeadingTypes.HEADING4}>
+          <Heading type={Heading.types.HEADING4}>
             {`Dag: ${getFormattedDate()} `}
           </Heading>
-          <Heading type={HeadingTypes.HEADING4}>
+          <Heading type={Heading.types.HEADING4}>
             {`Tidspunkt: ${getHourRange(bookingDoc.data.date.hour)}`}
           </Heading>
-          <Heading type={HeadingTypes.HEADING4}>
+          <Heading type={Heading.types.HEADING4}>
             {`Antall plasser: ${bookingDoc.data.spaces}`}
           </Heading>
-          <Heading type={HeadingTypes.HEADING4}>
+          <Heading type={Heading.types.HEADING4}>
             {`Pris: ${bookingDoc.data.spaces * 100} kr`}
           </Heading>
           <Button onClick={handleReservationDelete}>Slett</Button>

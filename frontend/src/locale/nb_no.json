@@ -6,11 +6,17 @@
   "label_email": "E-post",
   "label_register": "Registrer",
   "label_password": "Passord",
+  "label_repeat_password": "Passord på nytt",
   "label_confirm_password": "Bekreft passord",
   "label_register_user": "Registrer deg",
   "text_passwords_not_matching": "Passordet stemmer ikke med bekreftelses passordet",
   "text_email_already_used": "E-posten er allerede i bruk",
   "text_email_not_valid": "E-posten er ikke gyldig",
   "text_password_too_weak": "Passordet er for svakt",
-  "text_something_went_wrong": "Noe gikk galt"
+  "text_something_went_wrong": "Noe gikk galt",
+  "label_bartstua": "BARTSTUA",
+  "label_bartstua_quote": "QUOTE",
+  "label_have_user": "Har du en bruker?",
+  "label_not_registered": "Ikke registrert?",
+  "label_forgot_password": "Glemt passord"
 }
