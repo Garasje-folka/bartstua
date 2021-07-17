@@ -19,11 +19,12 @@ service cloud.firestore {
       && is____DateHour(data['date'], prev!=null && 'date' in prev ? prev['date'] : null);
     }
     function is____ReservationData(data, prev) {
-      return data.keys().hasAll(['date', 'spaces'])
-      && data.size() >= 2 && data.size() <= 2
-      && data.keys().hasOnly(['date', 'spaces'])
+      return data.keys().hasAll(['date', 'spaces', 'timestamp'])
+      && data.size() >= 3 && data.size() <= 3
+      && data.keys().hasOnly(['date', 'spaces', 'timestamp'])
       && is____DateHour(data['date'], prev!=null && 'date' in prev ? prev['date'] : null)
-      && data['spaces'] is int;
+      && data['spaces'] is int
+      && data['timestamp'] is int;
     }
     function is____BookingData(data, prev) {
       return data.keys().hasAll(['date', 'spaces', 'uid'])

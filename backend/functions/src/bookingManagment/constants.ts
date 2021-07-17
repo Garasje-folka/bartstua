@@ -1,0 +1,1 @@
+export const RESERVATION_CLEARING_INTERVAL = 5;

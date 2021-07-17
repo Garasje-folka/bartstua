@@ -1,28 +1,29 @@
 import {
   MAX_EVENT_SPACES,
   RESERVATIONS,
-  RESERVATION_EXPIRATION_TIME,
 } from "utils/dist/bookingManagement/constants";
 import {
-  BookingData,
   ReservationData,
+  ReservationRequest,
 } from "utils/dist/bookingManagement/types";
+import { createTimestamp } from "utils/dist/bookingManagement/helpers";
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
-import { deleteReservation } from "./deleteReservation";
 import { getEventRef } from "./getEventRef";
 import { USERS } from "utils/dist/userManagement/constants";
 
 export const addReservationToTransaction = async (
   transaction: FirebaseFirestore.Transaction,
-  request: ReservationData,
+  request: ReservationRequest,
   uid: string
 ) => {
   let spacesTaken: number = 0;
 
-  const reservation: BookingData = {
+  const timestamp = createTimestamp(0);
+
+  const reservation: ReservationData = {
     ...request,
-    uid: uid,
+    timestamp: timestamp,
   };
 
   const eventRef = getEventRef(request.date);
@@ -47,9 +48,11 @@ export const addReservationToTransaction = async (
     .collection(RESERVATIONS)
     .doc(reservationRef.id);
 
-  // TODO: Should await be used here?
-  transaction.set(reservationRef, reservation);
-  transaction.set(userReservationRef, request);
+  transaction.set(reservationRef, {
+    ...reservation,
+    uid: uid,
+  });
+  transaction.set(userReservationRef, reservation);
 
   // Increment event spaces counter
   if (eventSnapshot.exists) {
@@ -62,8 +65,4 @@ export const addReservationToTransaction = async (
       spacesTaken: reservation.spaces,
     });
   }
-
-  setTimeout(() => {
-    deleteReservation(reservationRef.id);
-  }, RESERVATION_EXPIRATION_TIME * 60 * 1000);
 };

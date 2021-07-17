@@ -65,6 +65,7 @@ const Checkout = () => {
       }
     } catch (error) {
       setPaymentError("Noe gikk galt!");
+      console.log(error.message);
     }
   };
 

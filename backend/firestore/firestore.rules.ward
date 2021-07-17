@@ -15,6 +15,7 @@ type EventData = {
 type ReservationData = {
   date: DateHour,
   spaces: int,
+  timestamp: int,
 }
 
 type BookingData = {

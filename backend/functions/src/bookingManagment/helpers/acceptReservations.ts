@@ -6,7 +6,7 @@ import { PAYMENTS } from "../../paymentManagement/constants";
 export const acceptReservations = async (
   transaction: FirebaseFirestore.Transaction,
   uid: string,
-  userReservations: FirebaseFirestore.QuerySnapshot<FirebaseFirestore.DocumentData>
+  userReservations: FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>[]
 ) => {
   const bookingIds: Array<string> = [];
   userReservations.forEach((doc) => {
@@ -22,8 +22,10 @@ export const acceptReservations = async (
     // Create booking document
     const newBookingRef = admin.firestore().collection(BOOKINGS).doc();
     bookingIds.push(newBookingRef.id);
+
+    const { timestamp, ...data } = doc.data();
     const bookingData = {
-      ...doc.data(),
+      ...data,
       uid: uid,
     };
     transaction.set(newBookingRef, bookingData);
