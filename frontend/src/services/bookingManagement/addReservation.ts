@@ -1,7 +1,7 @@
 import firebase from "firebase";
-import { BookingRequest } from "utils";
+import { ReservationData } from "utils/dist/bookingManagement/types";
 
-const addReservation = async (booking: BookingRequest) => {
+const addReservation = async (booking: ReservationData) => {
   const call = firebase.functions().httpsCallable("addReservation");
   try {
     await call(booking);

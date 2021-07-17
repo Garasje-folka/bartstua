@@ -1,4 +1,4 @@
-import { User } from "utils";
+import { User } from "../../services/userManagement/types";
 import { State } from "../types/state";
 
 // Interfaces
@@ -62,6 +62,6 @@ export const currentUserSelector = (state: State) => {
   return state.currentUser.data;
 };
 
-export const loadedSelector = (state: State) => {
+export const currentUserLoadedSelector = (state: State) => {
   return state.currentUser.status.loaded;
 };

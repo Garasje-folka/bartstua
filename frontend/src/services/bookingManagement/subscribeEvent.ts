@@ -1,22 +1,22 @@
-import { DateHour, EventData, Doc } from "utils";
-import { EVENTS } from "./constants";
+import { DateHour } from "utils/dist/dates/types";
+import { EventData } from "utils/dist/bookingManagement/types";
+import { Doc } from "utils/dist/types";
+import { EVENTS } from "utils/dist/bookingManagement/constants";
 import firebase, { firestore } from "../fireConfig";
+import { getEventId } from "utils/dist/bookingManagement/helpers";
 
-// TODO: Add error handling
-
-const getEventQueryRef = (date: DateHour) => {
-  return firestore.collection(EVENTS).where("date", "==", date).limit(1);
+const getEventRef = (date: DateHour) => {
+  return firestore.collection(EVENTS).doc(getEventId(date));
 };
 
-const querySnapshotToEventDoc = (
-  querySnapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
+const snapshotToEventDoc = (
+  snapshot: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>
 ) => {
-  if (querySnapshot.empty) return undefined;
+  if (!snapshot.exists) return undefined;
 
-  const doc = querySnapshot.docs[0];
   return {
-    id: doc.id,
-    data: doc.data() as EventData,
+    id: snapshot.id,
+    data: snapshot.data() as EventData,
   } as Doc<EventData>;
 };
 
@@ -24,8 +24,8 @@ const subscribeEvent = (
   date: DateHour,
   callback: (event: EventData | undefined) => void
 ) => {
-  const unsubscribe = getEventQueryRef(date).onSnapshot((querySnapshot) => {
-    const event = querySnapshotToEventDoc(querySnapshot);
+  const unsubscribe = getEventRef(date).onSnapshot((snapshot) => {
+    const event = snapshotToEventDoc(snapshot);
     callback(event?.data);
   });
   return () => {

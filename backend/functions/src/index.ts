@@ -2,6 +2,8 @@
 
 export * from "./bookingManagment";
 export * from "./paymentManagement";
+export * from "./config";
+export * from "./emailManagement";
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //

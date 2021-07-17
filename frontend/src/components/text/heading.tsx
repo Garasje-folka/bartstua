@@ -1,6 +1,6 @@
 interface HeadingProps {
   type: string;
-  children: string;
+  children: string | string[];
 }
 
 const HeadingTypes = {
