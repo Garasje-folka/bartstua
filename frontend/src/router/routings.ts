@@ -53,4 +53,9 @@ export const routings: Routing[] = [
     path: paths.CART,
     guardType: GuardType.NONE,
   },
+  {
+    component: pages.ForgotPassword,
+    path: paths.FORGOT_PASSWORD,
+    guardType: GuardType.NONE,
+  },
 ];
