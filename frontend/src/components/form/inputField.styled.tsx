@@ -1,5 +1,6 @@
 import { Form } from "react-bootstrap";
 import styled, { css } from "styled-components";
+import { IconType } from "../../icons";
 import { InputFieldSize } from "./inputField";
 
 interface ErrorProps {
@@ -11,7 +12,7 @@ export const Error = styled.div<ErrorProps>`
     serious ? theme.form.colors.ERROR : theme.form.colors.WARNING};
 `;
 
-const getMaxWidth = (size: InputFieldSize) => {
+const getMaxWidth = (size?: InputFieldSize) => {
   switch (size) {
     case InputFieldSize.SMALL:
       return "250px";
@@ -21,18 +22,33 @@ const getMaxWidth = (size: InputFieldSize) => {
   }
 };
 
-export const StyledFormGroup = styled(Form.Group)`
-  margin-bottom: ${({ theme }) => theme.alignment.margin.REGULAR};
-  margin-top: ${({ theme }) => theme.alignment.margin.REGULAR};
-  max-width: ${(props: { size: InputFieldSize }) => getMaxWidth(props.size)};
-`;
+export const StyledFormGroup = styled(Form.Group)``;
 
 interface StyledFormControlProps {
   $isError: boolean;
   $serious: boolean;
 }
 
+const fieldRadius = css`
+  border-radius: ${({ theme }) => theme.radius.ROUND};
+`;
+
+const fieldHeight = css`
+  height: 40px;
+`;
+
 export const StyledFormControl = styled(Form.Control)<StyledFormControlProps>`
+  border-color: transparent;
+  box-shadow: ${({ theme }) => theme.shadow.REGULAR};
+  background-color: transparent;
+  padding-left: 25px;
+  ${fieldRadius}
+  ${fieldHeight}
+
+  &:focus {
+    background-color: transparent;
+  }
+
   ${({ $isError, $serious, theme }) =>
     $isError &&
     css`
@@ -40,10 +56,47 @@ export const StyledFormControl = styled(Form.Control)<StyledFormControlProps>`
         ? theme.form.colors.ERROR
         : theme.form.colors.WARNING};
 
-      &: focus {
+      &:focus {
         border-color: ${$serious
           ? theme.form.colors.ERROR
           : theme.form.colors.WARNING};
       }
-    `}
+    `};
+`;
+
+interface WrapperProps {
+  $largeSpacing: boolean;
+  $size?: InputFieldSize;
+}
+
+export const Wrapper = styled.div<WrapperProps>`
+  background-color: white;
+  ${fieldRadius}
+  position: relative;
+  ${fieldHeight}
+
+  margin-bottom: ${({ theme, $largeSpacing }) =>
+    $largeSpacing
+      ? theme.alignment.margin.LARGE
+      : theme.alignment.margin.REGULAR};
+  margin-top: ${({ theme, $largeSpacing }) =>
+    $largeSpacing
+      ? theme.alignment.margin.LARGE
+      : theme.alignment.margin.REGULAR};
+  max-width: ${({ $size }) => getMaxWidth($size)};
+`;
+
+export const IconWrapper = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  ${fieldHeight}
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+  pointer-events: none;
+`;
+
+export const styleIcon = (icon: IconType) => styled(icon)`
+  color: ${({ theme }) => theme.form.colors.GREYED_OUT};
 `;

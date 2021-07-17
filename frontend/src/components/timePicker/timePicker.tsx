@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Heading, HeadingTypes } from "../../components/text";
+import { Heading } from "../../components/text";
 import { reservationsSelector } from "../../redux/ducks/reservations";
 import {
   addReservation,
@@ -106,13 +106,13 @@ const TimePicker = (props: TimePickerProps) => {
 
   return (
     <OuterContainer>
-      <Heading type={HeadingTypes.HEADING4}> Velg time</Heading>
+      <Heading type={Heading.types.HEADING4}> Velg time</Heading>
       {getFilteredEvents().map((e) => (
         <TimeContainer key={e.date.hour}>
           <TimeButton onClick={() => reserveEvent(e)}>
             {`${getHourRange(e.date.hour)}`}
           </TimeButton>
-          <TimeText type={HeadingTypes.HEADING4}>{getTimeText(e)}</TimeText>
+          <TimeText type={Heading.types.HEADING4}>{getTimeText(e)}</TimeText>
         </TimeContainer>
       ))}
     </OuterContainer>

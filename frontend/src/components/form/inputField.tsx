@@ -1,5 +1,14 @@
 import { Form } from "react-bootstrap";
-import { Error, StyledFormGroup, StyledFormControl } from "./inputField.styled";
+import { EnumDeclaration, EnumType } from "typescript";
+import { IconType } from "../../icons";
+import {
+  Error,
+  StyledFormGroup,
+  StyledFormControl,
+  Wrapper,
+  IconWrapper,
+  styleIcon,
+} from "./inputField.styled";
 
 declare type FormControlElement =
   | HTMLInputElement
@@ -10,6 +19,7 @@ enum InputFieldSize {
   REGULAR = "REGULAR",
   SMALL = "SMALL",
 }
+
 interface InputFieldProps {
   label?: string;
   description?: string;
@@ -19,9 +29,17 @@ interface InputFieldProps {
   errorText?: string;
   errorSerious?: boolean;
   size?: InputFieldSize;
+  ghostText?: string;
+  largeSpacing?: boolean;
+  icon?: IconType;
+  className?: string;
 }
 
-const InputField: React.FC<InputFieldProps> = (props) => {
+type InputFieldType = React.FC<InputFieldProps> & {
+  //sizes: { [key: string]: InputFieldSize };
+};
+
+const InputField: InputFieldType = (props) => {
   const {
     type,
     value,
@@ -31,25 +49,40 @@ const InputField: React.FC<InputFieldProps> = (props) => {
     errorText,
     errorSerious,
     size,
+    ghostText,
+    largeSpacing,
+    icon,
+    className,
   } = props;
 
+  const Icon = icon ? styleIcon(icon) : undefined;
+
   return (
-    <StyledFormGroup size={size}>
-      {label ? <Form.Label>{label}</Form.Label> : undefined}
-      {description ? <Form.Text>{"\n" + description}</Form.Text> : undefined}
-      <StyledFormControl
-        type={type}
-        value={value}
-        onChange={onChange}
-        $isError={!!errorText}
-        $serious={errorSerious}
-      />
-      <Error serious={errorSerious}>{errorText}</Error>
-    </StyledFormGroup>
+    <Wrapper
+      className={className}
+      $size={size}
+      $largeSpacing={largeSpacing || false}
+    >
+      <StyledFormGroup>
+        <IconWrapper>{Icon && <Icon />}</IconWrapper>
+        {label ? <Form.Label>{label}</Form.Label> : undefined}
+        {description ? <Form.Text>{"\n" + description}</Form.Text> : undefined}
+        <StyledFormControl
+          type={type}
+          value={value}
+          onChange={onChange}
+          $isError={!!errorText}
+          $serious={errorSerious}
+          placeholder={ghostText}
+        />
+        <Error serious={errorSerious}>{errorText}</Error>
+      </StyledFormGroup>
+    </Wrapper>
   );
 };
 
 InputField.defaultProps = {
   size: InputFieldSize.REGULAR,
 };
+
 export { InputField, InputFieldSize };
