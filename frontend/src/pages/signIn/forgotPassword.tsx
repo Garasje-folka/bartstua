@@ -59,7 +59,45 @@ const ForgotPassword = () => {
       });
   };
 
-  return <></>;
+  return (
+    <>
+      <CardContainer>
+        <CardHeader title="Endre passord" />
+        <CardBody>
+          <FormContainer onSubmit={handleSubmit}>
+            <InputField
+              label="Nåværende passord"
+              type="password"
+              value={currentPassword}
+              onChange={(event) => setCurrentPassword(event.target.value)}
+            />
+            <InputField
+              label="Nytt passord"
+              type="password"
+              value={newPassword}
+              onChange={(event) => setNewPassword(event.target.value)}
+            />
+            <InputField
+              label="Bekreft nytt passord"
+              type="password"
+              value={newPasswordConf}
+              onChange={(event) => setNewPasswordConf(event.target.value)}
+            />
+            <SubmitButton label="Endre passord" />
+          </FormContainer>
+
+          {errorMessage && (
+            <Notification
+              heading="Passordbytte feilet"
+              type={NotificationType.ERROR}
+            >
+              {errorMessage}
+            </Notification>
+          )}
+        </CardBody>
+      </CardContainer>
+    </>
+  );
 };
 
 export { ForgotPassword };
