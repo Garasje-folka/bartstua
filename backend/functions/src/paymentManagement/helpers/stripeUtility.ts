@@ -4,16 +4,14 @@ const stripe = new Stripe(functions.config().stripe.secret, {
   apiVersion: "2020-08-27",
 });
 
-export const createPaymentIntent = async (
-  amount: number,
-  paymentMethod: string
-) => {
+export const createPaymentIntent = async (amount: number, uid: string) => {
   const paymentIntent = await stripe.paymentIntents.create({
     currency: "nok",
     payment_method_types: ["card"],
     amount: amount,
-    confirmation_method: "manual",
-    payment_method: paymentMethod,
+    metadata: {
+      uid: uid,
+    },
   });
   return paymentIntent;
 };
