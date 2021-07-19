@@ -92,15 +92,19 @@ const ForgotPassword = () => {
               <NewPasswordField
                 ghostText="Nytt passord"
                 size={InputFieldSize.SMALL}
+                onChange={(event) => setNewPassword(event.target.value)}
               ></NewPasswordField>
               <Paragraph type={Paragraph.types.PARAGRAPH1}>
                 {t("label_confirm_password")}
               </Paragraph>
               <NewPasswordField
-                ghostText="Bekreft ny passord"
+                ghostText="Bekreft passord"
                 size={InputFieldSize.SMALL}
+                onChange={(event) => setNewPasswordConf(event.target.value)}
               ></NewPasswordField>
-              <ResetButton>{t("label_reset_button")}</ResetButton>
+              <ResetButton onClick={handleSubmit}>
+                {t("label_reset_button")}
+              </ResetButton>
             </PasswordContainer>
             <InfoContainer>
               <InfoBox>{t("label_write_password")}</InfoBox>

@@ -6,7 +6,6 @@ export const themeConfig = {
   },
   radius: {
     ROUND: "5px",
-    VERY_ROUND: "100px",
   },
   alignment: {
     margin: {
