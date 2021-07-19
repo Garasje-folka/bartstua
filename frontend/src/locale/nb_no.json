@@ -21,5 +21,6 @@
   "label_forgot_password": "Glemt passord",
   "label_new_password": "Nytt passord",
   "label_reset_button": "Nullstill",
-  "label_write_password": "Skriv inn ditt nye passord!"
+  "label_write_password": "Skriv inn ditt nye passord!",
+  "label_email_reset_password": "Skriv inn e-postadresse for å nullstille passordet ditt. Du vil da få utgitt en link."
 }

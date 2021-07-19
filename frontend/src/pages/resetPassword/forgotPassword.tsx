@@ -101,7 +101,7 @@ const ForgotPassword = () => {
                 ghostText="Bekreft passord"
                 size={InputFieldSize.SMALL}
                 onChange={(event) => setNewPasswordConf(event.target.value)}
-              ></NewPasswordField>
+              />
               <ResetButton onClick={handleSubmit}>
                 {t("label_reset_button")}
               </ResetButton>

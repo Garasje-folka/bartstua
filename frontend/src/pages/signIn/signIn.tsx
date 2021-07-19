@@ -3,7 +3,11 @@ import { useHistory } from "react-router";
 import { FormContainer, InputField, SubmitButton } from "../../components/form";
 import { userManagement } from "../../services";
 import { CardContainer, CardHeader, CardBody } from "../../components/card";
-import { FORGOT_PASSWORD, HOME } from "../../router/routeConstants";
+import {
+  EMAIL_RESET_PASSWORD,
+  FORGOT_PASSWORD,
+  HOME,
+} from "../../router/routeConstants";
 import { useTranslation } from "react-i18next";
 import { InputFieldSize } from "../../components/form/inputField";
 import { Button } from "../../components/button";
@@ -142,7 +146,7 @@ const SignIn = () => {
                 />
                 <ForgotPasswordLink
                   onClick={() => {
-                    history.push(FORGOT_PASSWORD);
+                    history.push(EMAIL_RESET_PASSWORD);
                   }}
                 >
                   {t("label_forgot_password")}
