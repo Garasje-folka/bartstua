@@ -7,6 +7,21 @@ import {
 import { CardBody, CardContainer, CardHeader } from "../../components/card";
 import { FormContainer, InputField, SubmitButton } from "../../components/form";
 import { Notification, NotificationType } from "../../components/notification";
+import {
+  Background,
+  ContentCentral,
+  ContentContainer,
+  ContentHeader,
+  InfoBox,
+  InfoContainer,
+  NewPasswordField,
+  PasswordContainer,
+  ResetButton,
+} from "./forgotPassword.styled";
+import { Heading, Paragraph } from "../../components/text";
+import { useTranslation } from "react-i18next";
+import { InputFieldSize } from "../../components/form/inputField";
+import { InformationEvent } from "http";
 
 const ForgotPassword = () => {
   const [currentPassword, setCurrentPassword] = useState<string>("");
@@ -16,6 +31,7 @@ const ForgotPassword = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const history = useHistory();
+  const { t } = useTranslation();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -61,41 +77,37 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <CardContainer>
-        <CardHeader title="Endre passord" />
-        <CardBody>
-          <FormContainer onSubmit={handleSubmit}>
-            <InputField
-              label="Nåværende passord"
-              type="password"
-              value={currentPassword}
-              onChange={(event) => setCurrentPassword(event.target.value)}
-            />
-            <InputField
-              label="Nytt passord"
-              type="password"
-              value={newPassword}
-              onChange={(event) => setNewPassword(event.target.value)}
-            />
-            <InputField
-              label="Bekreft nytt passord"
-              type="password"
-              value={newPasswordConf}
-              onChange={(event) => setNewPasswordConf(event.target.value)}
-            />
-            <SubmitButton label="Endre passord" />
-          </FormContainer>
-
-          {errorMessage && (
-            <Notification
-              heading="Passordbytte feilet"
-              type={NotificationType.ERROR}
-            >
-              {errorMessage}
-            </Notification>
-          )}
-        </CardBody>
-      </CardContainer>
+      <Background>
+        <ContentContainer>
+          <ContentHeader>
+            <Heading type={Heading.types.HEADING2}>
+              {t("label_forgot_password")}
+            </Heading>
+          </ContentHeader>
+          <ContentCentral>
+            <PasswordContainer>
+              <Paragraph type={Paragraph.types.PARAGRAPH1}>
+                {t("label_new_password")}
+              </Paragraph>
+              <NewPasswordField
+                ghostText="Nytt passord"
+                size={InputFieldSize.SMALL}
+              ></NewPasswordField>
+              <Paragraph type={Paragraph.types.PARAGRAPH1}>
+                {t("label_confirm_password")}
+              </Paragraph>
+              <NewPasswordField
+                ghostText="Bekreft ny passord"
+                size={InputFieldSize.SMALL}
+              ></NewPasswordField>
+              <ResetButton>{t("label_reset_button")}</ResetButton>
+            </PasswordContainer>
+            <InfoContainer>
+              <InfoBox>{t("label_write_password")}</InfoBox>
+            </InfoContainer>
+          </ContentCentral>
+        </ContentContainer>
+      </Background>
     </>
   );
 };
