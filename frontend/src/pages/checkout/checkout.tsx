@@ -1,6 +1,5 @@
 import { FormEvent, useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
-import { confirmReservationPayment } from "../../services/bookingManagement";
 import { useTranslation } from "react-i18next";
 import { FormContainer, InputField, SubmitButton } from "../../components/form";
 import { CardBody, CardContainer, CardHeader } from "../../components/card";
@@ -14,6 +13,7 @@ import { validate } from "email-validator";
 import { useEffect } from "react";
 import { PaymentIntent } from "@stripe/stripe-js";
 import { createBookingPaymentIntent } from "../../services/bookingManagement/createBookingPaymentIntent";
+import { refreshReservationTimestamps } from "../../services/bookingManagement";
 
 const Checkout = () => {
   const [email, setEmail] = useState<string>("");
@@ -32,7 +32,8 @@ const Checkout = () => {
   const history = useHistory();
 
   useEffect(() => {
-    createBookingPaymentIntent()
+    refreshReservationTimestamps()
+      .then(() => createBookingPaymentIntent())
       .then((res) => {
         setPaymentIntent(res);
       })
@@ -64,9 +65,10 @@ const Checkout = () => {
     const card = elements.getElement(CardElement);
     if (!card) return; // TODO: Throw error?
 
-    // TODO: Assert that no reservations have expired, maybe refresh reservations timestamp
+    // TODO: Assert that no reservations have expired?
 
     try {
+      await refreshReservationTimestamps();
       const result = await stripe.confirmCardPayment(
         paymentIntent.client_secret,
         {

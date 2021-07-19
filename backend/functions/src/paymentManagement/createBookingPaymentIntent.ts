@@ -1,14 +1,11 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { checkAuthentication } from "../helpers";
-import {
-  getUserReservationsRef,
-  refreshReservationsTimestamp,
-} from "./helpers";
+import { getUserReservationsRef } from "../bookingManagment/helpers";
 import { isExpiredReservation } from "utils/dist/bookingManagement/helpers";
 import { ReservationData } from "utils/dist/bookingManagement/types";
 import { createPaymentIntent } from "../paymentManagement/helpers";
-import { USERS } from "../../../../utils/dist/userManagement/constants";
+import { USERS } from "utils/dist/userManagement/constants";
 import { PAYMENTS } from "../paymentManagement/constants";
 
 export const createBookingPaymentIntent = functions.https.onCall(
@@ -34,8 +31,6 @@ export const createBookingPaymentIntent = functions.https.onCall(
             "No reservations registered"
           );
         }
-
-        refreshReservationsTimestamp(transaction, validReservations);
 
         let totalSpaces = 0;
         validReservations.forEach((doc) => {
