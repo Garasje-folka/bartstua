@@ -24,6 +24,7 @@ import {
   SIGNIN,
   REGISTER,
 } from "../../router/routeConstants";
+import Logonobg from "../../assets/logo-nobg.png";
 
 const Header = () => {
   const history = useHistory();
@@ -67,15 +68,17 @@ const Header = () => {
     <StyledNavbar bg="light" expand="lg">
       
       <LeftAlignedContent>
-        <Navbar.Brand onClick={() => history.push(HOME)}> <img src={"assets/logo-nobg.png"}
-          width="300"></img>
-          Bartstua</Navbar.Brand>
+       
+        <Navbar.Brand onClick={() => history.push(HOME)}> <img src={Logonobg}
+          height="55"></img>
+        </Navbar.Brand>
+      
       </LeftAlignedContent>
       
       <RightAlignedContent>
       
       {isMobileScreen ? (
-          <DropDownNavigation items={items} />
+          <DropDownNavigation items={items}/>
         ) : (
           <Nav className="mr-auto">
             {items.map((item) => (
