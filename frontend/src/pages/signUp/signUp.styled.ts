@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Button } from "../../components/button";
-import { FormContainer, InputField, SubmitButton } from "../../components/form";
+import { FormContainer, InputField } from "../../components/form";
 import background from "./media/sauna2.jpg";
 
 export const Background = styled.div`
@@ -67,8 +67,6 @@ export const SignUpHeader = styled.div`
 export const SignUpLabel = styled.div`
   margin: auto;
 `;
-
-const InputFieldCommonStyle = css``;
 
 export const EmailField = styled(InputField)`
   position: relative;

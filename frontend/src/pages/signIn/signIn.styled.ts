@@ -71,8 +71,6 @@ export const SignInLabel = styled.div`
   margin: auto;
 `;
 
-const InputFieldCommonStyle = css``;
-
 export const EmailField = styled(InputField)``;
 
 export const PasswordField = styled(InputField)`
