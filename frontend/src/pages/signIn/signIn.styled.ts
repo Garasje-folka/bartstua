@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import { Button } from "../../components/button";
 import { InputField } from "../../components/form";
 import { Paragraph } from "../../components/text";
+import background from "./media/sauna.jpg";
 
 export const Background = styled.div`
   width: 100%;
@@ -47,7 +48,7 @@ export const RightContainer = styled.div`
   box-shadow: ${({ theme }) => theme.shadow.REGULAR};
   display: flex;
   flex-grow: 1;
-  background-image: url(/sauna.jpg);
+  background-image: url(${background});
   background-repeat: no-repeat;
   background-position: 0vmax;
 `;
@@ -74,7 +75,14 @@ const InputFieldCommonStyle = css``;
 
 export const EmailField = styled(InputField)``;
 
-export const PasswordField = styled(InputField)``;
+export const PasswordField = styled(InputField)`
+  -webkit-text-security: disc;
+  text-security: disc;
+`;
+
+export const ForgotPasswordLink = styled.a`
+  text-decoration: underline;
+`;
 
 export const SignInBottom = styled.div`
   padding-right: ${({ theme }) => theme.alignment.padding.EXTRA_EXTRA_LARGE};

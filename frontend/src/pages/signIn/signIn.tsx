@@ -24,12 +24,13 @@ import {
   StyledFormContainer,
   SignInButton,
   SignUpButton,
+  ForgotPasswordLink,
 } from "./signIn.styled";
 import { Heading, Paragraph } from "../../components/text";
 import { ParagraphText } from "./signIn.styled";
 import { createEmitAndSemanticDiagnosticsBuilderProgram } from "typescript";
 import { EmailIcon, PasswordIcon, SignInIcon, SignUpIcon } from "../../icons";
-import { REGISTER } from "../../router/routeConstants";
+import { REGISTER, PASSWORD_CHANGE } from "../../router/routeConstants";
 // TODO: Getting a bad request error when trying to log in with a valid email, but wrong password.
 
 const SignIn = () => {
@@ -103,7 +104,10 @@ const SignIn = () => {
               <Paragraph type={Paragraph.types.PARAGRAPH1}>
                 {t("label_not_registered")}
               </Paragraph>
-              <SignUpButton icon={SignUpIcon} onClick={() => history.push(REGISTER)}>
+              <SignUpButton
+                icon={SignUpIcon}
+                onClick={() => history.push(REGISTER)}
+              >
                 {t("label_register_user")}
               </SignUpButton>
             </ActionsContainer>
@@ -136,7 +140,13 @@ const SignIn = () => {
                   errorSerious={!!errorMessage}
                   errorText={isPasswordError ? errorMessage : undefined}
                 />
-                <a>{t("label_forgot_password")}</a>
+                <ForgotPasswordLink
+                  onClick={() => {
+                    /* TODO: Add forget password routing */
+                  }}
+                >
+                  {t("label_forgot_password")}
+                </ForgotPasswordLink>
                 <SignInButton icon={SignInIcon} onClick={handleSubmit}>
                   {t("label_sign_in")}
                 </SignInButton>

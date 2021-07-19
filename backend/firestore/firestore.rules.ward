@@ -12,6 +12,12 @@ type EventData = {
   date: DateHour,
 }
 
+type ReservationData = {
+  date: DateHour,
+  spaces: int,
+  timestamp: int,
+}
+
 type BookingData = {
   date: DateHour,
   spaces: int,
@@ -27,36 +33,20 @@ function isAuthenticated() {
   return a!=null; 
 }
 
-function isBookedByCurrentUser(bookingId) { 
-  return exist(/databases/$(database)/documents/bookings/$(bookingId))
-  && (get(/databases/$(database)/documents/bookings/$(bookingId)).data.uid == request.auth.uid)
-}
-
-function isEventSpacesAvailable(spaces, eventId) {
-  return (spaces <= maximumAvailableSpaces())
-  && (
-    (!exist(/databases/$(database)/documents/events/$(eventId)))
-    || 
-    (
-      ((get(/databases/$(database)/documents/events/$(eventId)).data.spacesTaken + spaces) <= maximumAvailableSpaces())
-    )
-  )
+function isRequestedByCurrentUser() { 
+  return resource.data.uid == request.auth.uid
 }
 
 function dataContainsUid(bookingId) { 
   return request.resource.data.uid == request.auth.uid
 }
 
-//match /{document=**} {
-//    allow read, write: if true;
-//}
 match /events/{eventDoc} is EventData{
   allow read: true;
 }
-match /bookings/{bookingDoc} is BookingData {
-  allow read: isBookedByCurrentUser(bookingDoc);
-  allow create: dataContainsUid(bookingDoc) 
-  //&& isEventSpacesAvailable(request.data.spaces, bookingDoc);
+
+match /users/{userDoc}/reservations/{reservationDoc} is ReservationData {
+  allow read: userDoc == request.auth.uid;
 }
 
 

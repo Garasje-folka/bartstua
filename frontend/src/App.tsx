@@ -14,19 +14,17 @@ const stripePromise = loadStripe(
   "pk_test_51J8ooNCgA1stADyYs9YFrQfaFn30XOHqSC3JHYMqF71Zypq8qak2f8xkv83qEdueDGsHzlWCUlqqAsEFZRfajQDZ00llM6Ed5w"
 );
 
+const fonts = [
+  {
+    font: "Roboto",
+    weights: [100, "400i"],
+  },
+];
+
 const App = () => {
   return (
     <Elements stripe={stripePromise}>
-      <GoogleFontLoader
-        fonts={[
-          {
-            font: "Roboto",
-            weights: [100, "400i"],
-          },
-        ]}
-        subsets={["cyrillic-ext", "greek"]}
-      />
-
+      <GoogleFontLoader fonts={fonts} subsets={["cyrillic-ext", "greek"]} />
       <Provider store={store}>
         <ThemeProvider theme={themeConfig}>
           <MainService />

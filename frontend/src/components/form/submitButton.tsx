@@ -1,16 +1,13 @@
-import { Button } from "../button";
-import { IconType } from "../../icons";
-import { IconWrapper } from "../button/button.styled";
+import { Button, ButtonProps } from "../button";
 
-interface SubmitButtonProps {
+type SubmitButtonProps = ButtonProps & {
   label: string;
-  icon?: IconType;
-}
+};
 
 const SubmitButton = (props: SubmitButtonProps) => {
-  const { label, icon } = props;
+  const { label, ...rest } = props;
   return (
-    <Button type="submit" icon={icon}>
+    <Button {...rest} type="submit">
       {label}
     </Button>
   );
