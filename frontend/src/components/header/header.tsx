@@ -10,6 +10,7 @@ import {
   SignInButton,
   Nav,
   NavLink,
+  RegisterButton,
 } from "./header.styled";
 import { Button } from "../button";
 import { useMobileScreen } from "../../hooks/useMobileScreen";
@@ -59,15 +60,20 @@ const Header = () => {
   );
 
   const registerButton: React.ReactNode = (
-    <Button onClick={() => history.push(REGISTER)}>Registrer</Button>
+    <RegisterButton onClick={() => history.push(REGISTER)}>Registrer</RegisterButton>
   );
 
   return (
     <StyledNavbar bg="light" expand="lg">
+      
       <LeftAlignedContent>
-        <Navbar.Brand onClick={() => history.push(HOME)}>Bartstua</Navbar.Brand>
+        <Navbar.Brand onClick={() => history.push(HOME)}> <img src={"assets/logo-nobg.png"}
+          width="300"></img>
+          Bartstua</Navbar.Brand>
       </LeftAlignedContent>
+      
       <RightAlignedContent>
+      
       {isMobileScreen ? (
           <DropDownNavigation items={items} />
         ) : (
@@ -79,6 +85,7 @@ const Header = () => {
             ))}
           </Nav>
         )}
+        
         {currentUser && currentUser.email ? (
           signOutButton
         ) : (
