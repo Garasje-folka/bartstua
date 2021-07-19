@@ -8,3 +8,4 @@ export const PASSWORD_CHANGE = "/password-change";
 export const CHECKOUT = "/checkout";
 export const CART = "/cart";
 export const FORGOT_PASSWORD = "/forgot-password";
+export const EMAIL_RESET_PASSWORD = "/email-reset-password";
