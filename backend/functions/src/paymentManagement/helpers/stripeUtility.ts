@@ -23,3 +23,11 @@ export const cancelPaymentIntent = async (id: string) => {
 export const confirmPaymentIntent = async (id: string) => {
   return await stripe.paymentIntents.confirm(id);
 };
+
+export const constructEvent = (
+  payload: string | Buffer,
+  header: string | string[] | Buffer,
+  secret: string
+) => {
+  return stripe.webhooks.constructEvent(payload, header, secret);
+};

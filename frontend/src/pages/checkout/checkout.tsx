@@ -82,7 +82,6 @@ const Checkout = () => {
       if (action && action.type === "redirect_to_url") {
         if (action.redirect_to_url?.url) {
           window.location.href = action.redirect_to_url.url;
-          console.log("test");
         }
       }
 
@@ -94,7 +93,6 @@ const Checkout = () => {
       }
     } catch (error) {
       setPaymentError("Noe gikk galt!");
-      console.log(error.message);
     }
   };
 
