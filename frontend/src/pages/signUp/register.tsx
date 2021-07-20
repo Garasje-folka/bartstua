@@ -19,11 +19,11 @@ import {
   StyledFormContainer,
   OuterFormContainer,
   ParagraphContainer,
+  SignInButton,
 } from "../signUp/signUp.styled";
 import { Heading, Paragraph } from "../../components/text";
 import { EmailIcon, PasswordIcon, SignInIcon, SignUpIcon } from "../../icons";
 import { InputFieldSize } from "../../components/form/inputField";
-import { SignInButton } from "../../components/header/header.styled";
 import { SIGNIN } from "../../router/routeConstants";
 import { useHistory } from "react-router";
 

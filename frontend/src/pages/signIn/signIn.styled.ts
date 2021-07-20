@@ -40,7 +40,14 @@ export const ParagraphText = styled(Paragraph)`
 `;
 
 export const SignInButton = styled(Button)`
-  margin-left: 5px;
+  background-color: #296b79;
+  height: 35px;
+  border-radius: 10px;
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 1px solid #cfe3ea;
+  box-shadow: ${({ theme }) => theme.shadow.REGULAR};
 `;
 
 export const RightContainer = styled.div`
@@ -99,7 +106,16 @@ export const StyledFormContainer = styled.div`
   margin: auto;
 `;
 
-export const SignUpButton = styled(Button)``;
+export const SignUpButton = styled(Button)`
+  background-color: #296b79;
+  height: 35px;
+  border-radius: 10px;
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 1px solid #cfe3ea;
+  box-shadow: ${({ theme }) => theme.shadow.REGULAR};
+`;
 
 export const ParagraphContainer = styled.div`
   margin-right: 10px;

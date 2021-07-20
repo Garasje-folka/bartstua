@@ -39,7 +39,14 @@ export const SignInButtonsContainer = styled.div`
 `;
 
 export const SignInButton = styled(Button)`
-  margin-left: 5px;
+  background-color: #296b79;
+  height: 35px;
+  border-radius: 10px;
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 1px solid #cfe3ea;
+  box-shadow: ${({ theme }) => theme.shadow.REGULAR};
 `;
 
 export const LeftContainer = styled.div`
@@ -93,6 +100,14 @@ export const OuterFormContainer = styled.div`
 
 export const SignUpButton = styled(Button)`
   margin-top: 50px;
+  background-color: #296b79;
+  height: 35px;
+  border-radius: 10px;
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 1px solid #cfe3ea;
+  box-shadow: ${({ theme }) => theme.shadow.REGULAR};
 `;
 
 export const SignInBottom = styled.div`
