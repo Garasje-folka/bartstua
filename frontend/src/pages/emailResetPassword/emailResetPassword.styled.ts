@@ -79,3 +79,7 @@ export const ResetButton = styled(Button)`
   padding-top: 0px;
   padding-bottom: 0px;
 `;
+
+export const NewPasswordField = styled(InputField)`
+  background-color: #f6f6f6;
+`;
