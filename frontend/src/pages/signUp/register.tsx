@@ -123,6 +123,7 @@ const Register = () => {
                 icon={EmailIcon}
                 size={InputFieldSize.SMALL}
                 onChange={(event) => setEmail(event.target.value)}
+                type="email"
                 errorSerious={serious}
                 errorText={errorEmail}
               />
@@ -131,6 +132,7 @@ const Register = () => {
                 icon={PasswordIcon}
                 size={InputFieldSize.SMALL}
                 onChange={(event) => setPassword(event.target.value)}
+                type="password"
                 errorSerious={serious}
                 errorText={errorPassword1}
               />
@@ -140,6 +142,7 @@ const Register = () => {
                 size={InputFieldSize.SMALL}
                 onChange={(event) => setPasswordConf(event.target.value)}
                 errorSerious={serious}
+                type="password"
                 errorText={errorPassword2}
               />
               <SignUpButton icon={SignUpIcon} onClick={handleSubmit}>

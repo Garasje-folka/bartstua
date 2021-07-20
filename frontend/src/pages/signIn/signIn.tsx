@@ -120,6 +120,7 @@ const SignIn = () => {
                 icon={EmailIcon}
                 size={InputFieldSize.SMALL}
                 onChange={handleEmailChange}
+                type="email"
                 errorSerious={!!errorMessage}
                 errorText={isEmailError ? errorMessage : undefined}
               />
@@ -128,6 +129,7 @@ const SignIn = () => {
                 icon={PasswordIcon}
                 size={InputFieldSize.SMALL}
                 onChange={handlePasswordChange}
+                type="password"
                 errorSerious={!!errorMessage}
                 errorText={isPasswordError ? errorMessage : undefined}
               />
