@@ -1,7 +1,7 @@
 import { useState, FormEvent } from "react";
 import { useHistory } from "react-router";
 import { userManagement } from "../../services";
-import { HOME } from "../../router/routeConstants";
+import { RESET_PASSWORD, HOME } from "../../router/routeConstants";
 import { useTranslation } from "react-i18next";
 import { InputFieldSize } from "../../components/form/inputField";
 import {
@@ -138,7 +138,7 @@ const SignIn = () => {
               />
               <ForgotPasswordLink
                 onClick={() => {
-                  /* TODO: Add forget password routing */
+                  history.push(RESET_PASSWORD);
                 }}
               >
                 {t("label_forgot_password")}

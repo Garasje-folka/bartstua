@@ -88,8 +88,10 @@ export const PasswordField = styled(InputField)`
   margin-bottom: 30px;
 `;
 
-export const ForgotPasswordLink = styled.a`
+export const ForgotPasswordLink = styled.button`
   text-decoration: underline;
+  background: none;
+  border: none;
 `;
 
 export const SignInBottom = styled.div`
