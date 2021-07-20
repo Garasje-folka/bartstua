@@ -1,5 +1,4 @@
 import { Form } from "react-bootstrap";
-import { EnumDeclaration, EnumType } from "typescript";
 import { IconType } from "../../icons";
 import {
   Error,
