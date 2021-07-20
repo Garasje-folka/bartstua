@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Button } from "../../components/button";
 import { InputField } from "../../components/form";
 import { Paragraph } from "../../components/text";
@@ -40,7 +40,14 @@ export const ParagraphText = styled(Paragraph)`
 `;
 
 export const SignInButton = styled(Button)`
-  margin-left: 5px;
+  background-color: #296b79;
+  height: 35px;
+  border-radius: 10px;
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 1px solid #cfe3ea;
+  box-shadow: ${({ theme }) => theme.shadow.REGULAR};
 `;
 
 export const RightContainer = styled.div`
@@ -71,17 +78,20 @@ export const SignInLabel = styled.div`
   margin: auto;
 `;
 
-const InputFieldCommonStyle = css``;
-
-export const EmailField = styled(InputField)``;
+export const EmailField = styled(InputField)`
+  margin-bottom: 30px;
+`;
 
 export const PasswordField = styled(InputField)`
   -webkit-text-security: disc;
   text-security: disc;
+  margin-bottom: 30px;
 `;
 
-export const ForgotPasswordLink = styled.a`
+export const ForgotPasswordLink = styled.button`
   text-decoration: underline;
+  background: none;
+  border: none;
 `;
 
 export const SignInBottom = styled.div`
@@ -98,4 +108,18 @@ export const StyledFormContainer = styled.div`
   margin: auto;
 `;
 
-export const SignUpButton = styled(Button)``;
+export const SignUpButton = styled(Button)`
+  background-color: #296b79;
+  height: 35px;
+  border-radius: 10px;
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 1px solid #cfe3ea;
+  box-shadow: ${({ theme }) => theme.shadow.REGULAR};
+`;
+
+export const ParagraphContainer = styled.div`
+  margin-right: 10px;
+  margin-top: 10px;
+`;

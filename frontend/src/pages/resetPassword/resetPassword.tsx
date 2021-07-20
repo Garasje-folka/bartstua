@@ -21,7 +21,7 @@ import {
   ResetButton,
 } from "./resetPassword.styled";
 
-const EmailResetPassword = () => {
+const ResetPassword = () => {
   const [email, setEmail] = useState<string>("");
   const [emailError, setEmailError] = useState<string | undefined>(undefined);
   const { t } = useTranslation();
@@ -97,4 +97,4 @@ const EmailResetPassword = () => {
   );
 };
 
-export { EmailResetPassword };
+export { ResetPassword };

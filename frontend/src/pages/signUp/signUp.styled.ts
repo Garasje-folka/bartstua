@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Button } from "../../components/button";
-import { FormContainer, InputField, SubmitButton } from "../../components/form";
+import { FormContainer, InputField } from "../../components/form";
 import background from "./media/sauna2.jpg";
 
 export const Background = styled.div`
@@ -39,7 +39,14 @@ export const SignInButtonsContainer = styled.div`
 `;
 
 export const SignInButton = styled(Button)`
-  margin-left: 5px;
+  background-color: #296b79;
+  height: 35px;
+  border-radius: 10px;
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 1px solid #cfe3ea;
+  box-shadow: ${({ theme }) => theme.shadow.REGULAR};
 `;
 
 export const LeftContainer = styled.div`
@@ -68,15 +75,13 @@ export const SignUpLabel = styled.div`
   margin: auto;
 `;
 
-const InputFieldCommonStyle = css``;
-
 export const EmailField = styled(InputField)`
   position: relative;
+  margin-bottom: 30px;
 `;
 
 export const PasswordField = styled(InputField)`
-  -webkit-text-security: disc;
-  text-security: disc;
+  margin-bottom: 30px;
 `;
 
 export const IconInputContainer = styled.div`
@@ -93,7 +98,17 @@ export const OuterFormContainer = styled.div`
   display: flex;
 `;
 
-export const SignUpButton = styled(Button)``;
+export const SignUpButton = styled(Button)`
+  margin-top: 50px;
+  background-color: #296b79;
+  height: 35px;
+  border-radius: 10px;
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 1px solid #cfe3ea;
+  box-shadow: ${({ theme }) => theme.shadow.REGULAR};
+`;
 
 export const SignInBottom = styled.div`
   padding-right: ${({ theme }) => theme.alignment.padding.EXTRA_EXTRA_LARGE};
@@ -104,4 +119,9 @@ export const EmailIcon = styled.div``;
 
 export const ImageContainer = styled.div`
   width: 670px;
+`;
+
+export const ParagraphContainer = styled.div`
+  margin-right: 10px;
+  margin-top: 15px;
 `;
