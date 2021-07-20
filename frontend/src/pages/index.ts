@@ -7,4 +7,4 @@ export * from "./verify";
 export * from "./passwordChange";
 export * from "./checkout";
 export * from "./cart";
-export * from "./emailResetPassword";
+export * from "./resetPassword";

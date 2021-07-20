@@ -1,5 +1,5 @@
 import { createError } from "utils/dist/helpers";
-import { auth } from "../fireConfig";
+import firebase, { auth } from "../fireConfig";
 import { USER_MANAGEMENT, userManagementErrorCodes } from "./constants";
 
 export const sendPasswordResetEmailErrors = {
@@ -11,12 +11,17 @@ export const sendPasswordResetEmailErrors = {
   ERROR_UNKNOWN: userManagementErrorCodes.ERROR_UNKNOWN,
 };
 
-const sendPasswordResetEmail = async (email: string, continueUrl: string) => {
+const sendPasswordResetEmail = async (email: string, continueUrl?: string) => {
   try {
-    await auth.sendPasswordResetEmail(email, {
-      url: continueUrl,
-    });
+    let action: firebase.auth.ActionCodeSettings | undefined;
+    if (continueUrl) {
+      action = {
+        url: continueUrl,
+      };
+    }
+    await auth.sendPasswordResetEmail(email, action);
   } catch (error) {
+    console.log(error);
     switch (error.code) {
       case "auth/invalid-email":
         throw createError(sendPasswordResetEmailErrors.ERROR_INVALID_EMAIL);

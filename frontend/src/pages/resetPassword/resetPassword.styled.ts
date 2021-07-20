@@ -1,8 +1,7 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import background from "./media/backgroundImage.png";
 import { InputField } from "../../components/form";
 import { Button } from "../../components/button";
-import { Theme } from "../../app.theme";
 
 export const Background = styled.div`
   background-image: url(${background});
@@ -75,11 +74,7 @@ export const ResetButton = styled(Button)`
   padding-right: 15px;
   border: 1px solid #cfe3ea;
   box-shadow: ${({ theme }) => theme.shadow.REGULAR};
-  margin-top: 10px;
+  margin-top: 30px;
   padding-top: 0px;
   padding-bottom: 0px;
-`;
-
-export const NewPasswordField = styled(InputField)`
-  background-color: #f6f6f6;
 `;
