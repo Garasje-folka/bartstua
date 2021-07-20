@@ -71,11 +71,14 @@ export const SignInLabel = styled.div`
   margin: auto;
 `;
 
-export const EmailField = styled(InputField)``;
+export const EmailField = styled(InputField)`
+  margin-bottom: 30px;
+`;
 
 export const PasswordField = styled(InputField)`
   -webkit-text-security: disc;
   text-security: disc;
+  margin-bottom: 30px;
 `;
 
 export const ForgotPasswordLink = styled.a`
@@ -97,3 +100,8 @@ export const StyledFormContainer = styled.div`
 `;
 
 export const SignUpButton = styled(Button)``;
+
+export const ParagraphContainer = styled.div`
+  margin-right: 10px;
+  margin-top: 10px;
+`;

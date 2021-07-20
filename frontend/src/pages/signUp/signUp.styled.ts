@@ -105,3 +105,8 @@ export const EmailIcon = styled.div``;
 export const ImageContainer = styled.div`
   width: 670px;
 `;
+
+export const ParagraphContainer = styled.div`
+  margin-right: 10px;
+  margin-top: 15px;
+`;

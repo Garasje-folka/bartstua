@@ -21,6 +21,7 @@ import {
   SignInButton,
   SignUpButton,
   ForgotPasswordLink,
+  ParagraphContainer,
 } from "./signIn.styled";
 import { Heading, Paragraph } from "../../components/text";
 import { ParagraphText } from "./signIn.styled";
@@ -92,9 +93,11 @@ const SignIn = () => {
             </ParagraphText>
           </HeadingContainer>
           <ActionsContainer>
-            <Paragraph type={Paragraph.types.PARAGRAPH1}>
-              {t("label_not_registered")}
-            </Paragraph>
+            <ParagraphContainer>
+              <Paragraph type={Paragraph.types.PARAGRAPH1}>
+                {t("label_not_registered")}
+              </Paragraph>
+            </ParagraphContainer>
             <SignUpButton
               icon={SignUpIcon}
               onClick={() => history.push(REGISTER)}

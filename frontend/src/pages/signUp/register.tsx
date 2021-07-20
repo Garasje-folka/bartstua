@@ -18,6 +18,7 @@ import {
   SignUpButton,
   StyledFormContainer,
   OuterFormContainer,
+  ParagraphContainer,
 } from "../signUp/signUp.styled";
 import { Heading, Paragraph } from "../../components/text";
 import { EmailIcon, PasswordIcon, SignInIcon, SignUpIcon } from "../../icons";
@@ -163,9 +164,11 @@ const Register = () => {
             </Paragraph>
           </HeadingContainer>
           <ActionsContainer>
-            <Paragraph type={Paragraph.types.PARAGRAPH1}>
-              {t("label_have_user")}
-            </Paragraph>
+            <ParagraphContainer>
+              <Paragraph type={Paragraph.types.PARAGRAPH1}>
+                {t("label_have_user")}
+              </Paragraph>
+            </ParagraphContainer>
             <SignInButton
               icon={SignInIcon}
               onClick={() => history.push(SIGNIN)}
