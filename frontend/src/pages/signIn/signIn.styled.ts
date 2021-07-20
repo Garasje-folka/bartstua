@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Button } from "../../components/button";
 import { InputField } from "../../components/form";
 import { Paragraph } from "../../components/text";
