@@ -15,7 +15,6 @@ import { Button } from "../button";
 import { useMobileScreen } from "../../hooks/useMobileScreen";
 import { DropDownNavigation } from "./dropDownNavigation";
 import { NavigationItems } from "./types/navigationItems";
-import { SignOutIcon } from "../../icons";
 import {
   ABOUT,
   BOOKING,
@@ -23,6 +22,7 @@ import {
   SIGNIN,
   REGISTER,
 } from "../../router/routeConstants";
+import { IconType } from "../../icons/iconGenerator";
 
 const Header = () => {
   const history = useHistory();
@@ -49,7 +49,7 @@ const Header = () => {
   ];
 
   const signOutButton: React.ReactNode = (
-    <Button icon={SignOutIcon} onClick={handleSignOut}>
+    <Button icon={IconType.SignOutIcon} onClick={handleSignOut}>
       Logg ut
     </Button>
   );
