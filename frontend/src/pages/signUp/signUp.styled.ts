@@ -70,11 +70,11 @@ export const SignUpLabel = styled.div`
 
 export const EmailField = styled(InputField)`
   position: relative;
+  margin-bottom: 30px;
 `;
 
 export const PasswordField = styled(InputField)`
-  -webkit-text-security: disc;
-  text-security: disc;
+  margin-bottom: 30px;
 `;
 
 export const IconInputContainer = styled.div`
@@ -91,7 +91,9 @@ export const OuterFormContainer = styled.div`
   display: flex;
 `;
 
-export const SignUpButton = styled(Button)``;
+export const SignUpButton = styled(Button)`
+  margin-top: 50px;
+`;
 
 export const SignInBottom = styled.div`
   padding-right: ${({ theme }) => theme.alignment.padding.EXTRA_EXTRA_LARGE};
