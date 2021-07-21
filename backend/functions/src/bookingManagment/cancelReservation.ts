@@ -9,7 +9,7 @@ const dataSchema = yup.object({
 
 export const cancelReservation = functions.https.onCall(
   async (data, context) => {
-    checkData(data, dataSchema);
+    await checkData(data, dataSchema);
     const auth = checkAuthentication(context.auth);
 
     await deleteReservation(data.docid, auth.uid);

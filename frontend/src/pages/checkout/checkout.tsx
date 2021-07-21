@@ -33,9 +33,13 @@ const Checkout = () => {
 
   useEffect(() => {
     refreshReservationTimestamps()
-      .then(() => createBookingPaymentIntent())
+      .then(() => {
+        // TODO: Add support for guest users
+        if (!currentUser?.email) return null;
+        return createBookingPaymentIntent(currentUser.email);
+      })
       .then((res) => {
-        setPaymentIntent(res);
+        if (res) setPaymentIntent(res);
       })
       .catch((error) => {
         console.log(error);
@@ -55,9 +59,10 @@ const Checkout = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    if (!stripe || !elements || !paymentIntent?.client_secret) return;
+    if (!stripe || !elements || !currentUser || !paymentIntent?.client_secret)
+      return;
 
-    if (!currentUser?.email && !validate(email)) {
+    if (!currentUser.email && !validate(email)) {
       setEmailError("Ugyldig e-post");
       return;
     }

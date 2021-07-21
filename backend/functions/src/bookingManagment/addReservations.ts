@@ -10,7 +10,7 @@ const dataSchema = yup.array().of(reservationRequestSchema);
 
 export const addReservations = functions.https.onCall(async (data, context) => {
   const auth = checkAuthentication(context.auth);
-  checkData(data, dataSchema);
+  await checkData(data, dataSchema);
 
   admin.firestore().runTransaction(async (transaction) => {
     for (const request of data.requests) {

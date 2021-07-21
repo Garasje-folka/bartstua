@@ -10,7 +10,7 @@ import { checkAuthentication, checkData } from "../helpers";
 
 export const addReservation = functions.https.onCall(
   async (data: ReservationRequest, context) => {
-    checkData(data, reservationRequestSchema);
+    await checkData(data, reservationRequestSchema);
     checkValidEventDate(data.date);
 
     const auth = checkAuthentication(context.auth);

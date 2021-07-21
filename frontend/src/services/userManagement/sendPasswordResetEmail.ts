@@ -21,7 +21,6 @@ const sendPasswordResetEmail = async (email: string, continueUrl?: string) => {
     }
     await auth.sendPasswordResetEmail(email, action);
   } catch (error) {
-    console.log(error);
     switch (error.code) {
       case "auth/invalid-email":
         throw createError(sendPasswordResetEmailErrors.ERROR_INVALID_EMAIL);

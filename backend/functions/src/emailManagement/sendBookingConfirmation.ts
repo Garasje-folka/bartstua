@@ -20,7 +20,7 @@ const sendBookingConfirmation = async (
   }
 
   const message =
-    "<h1>Bekreftelses ordre</h1><p>Hei! Takk for din reservasjon. Reservasjonene dine er:</p>" +
+    "<h1>Bekreftelses ordre</h1><p>Hei! Takk for din bestilling. Timene dine er:</p>" +
     bookingMessage +
     "<p>Med vennlig hilsen</p><p>Bartstua</p>";
 

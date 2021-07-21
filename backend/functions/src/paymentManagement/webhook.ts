@@ -27,7 +27,11 @@ export const webhook = functions.https.onRequest((req, res) => {
       case "payment_intent.succeeded":
         const paymentIntent: Stripe.PaymentIntent = event.data
           .object as Stripe.PaymentIntent;
-        onPaymentSucceeded(paymentIntent.metadata.uid, paymentIntent.id);
+        onPaymentSucceeded(
+          paymentIntent.metadata.uid,
+          paymentIntent.metadata.email,
+          paymentIntent.id
+        );
         break;
 
       default:
