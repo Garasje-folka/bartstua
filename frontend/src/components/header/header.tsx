@@ -10,6 +10,7 @@ import {
   SignInButton,
   Nav,
   NavLink,
+  RegisterButton,
 } from "./header.styled";
 import { Button } from "../button";
 import { useMobileScreen } from "../../hooks/useMobileScreen";
@@ -23,6 +24,7 @@ import {
   SIGNIN,
   REGISTER,
 } from "../../router/routeConstants";
+import Logonobg from "../../assets/logo-nobg.png";
 
 const Header = () => {
   const history = useHistory();
@@ -59,15 +61,24 @@ const Header = () => {
   );
 
   const registerButton: React.ReactNode = (
-    <Button onClick={() => history.push(REGISTER)}>Registrer</Button>
+    <RegisterButton onClick={() => history.push(REGISTER)}>Registrer</RegisterButton>
   );
 
   return (
     <StyledNavbar bg="light" expand="lg">
+      
       <LeftAlignedContent>
-        <Navbar.Brand onClick={() => history.push(HOME)}>Bartstua</Navbar.Brand>
-        {isMobileScreen ? (
-          <DropDownNavigation items={items} />
+       
+        <Navbar.Brand onClick={() => history.push(HOME)}> <img src={Logonobg}
+          height="55"></img>
+        </Navbar.Brand>
+      
+      </LeftAlignedContent>
+      
+      <RightAlignedContent>
+      
+      {isMobileScreen ? (
+          <DropDownNavigation items={items}/>
         ) : (
           <Nav className="mr-auto">
             {items.map((item) => (
@@ -77,8 +88,7 @@ const Header = () => {
             ))}
           </Nav>
         )}
-      </LeftAlignedContent>
-      <RightAlignedContent>
+        
         {currentUser && currentUser.email ? (
           signOutButton
         ) : (
