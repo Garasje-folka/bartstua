@@ -1,6 +1,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { checkAuthentication } from "../helpers";
+import * as yup from "yup";
+import { checkAuthentication, checkData } from "../helpers";
 import { getUserReservationsRef } from "../bookingManagment/helpers";
 import { isExpiredReservation } from "utils/dist/bookingManagement/helpers";
 import { ReservationData } from "utils/dist/bookingManagement/types";
@@ -8,8 +9,13 @@ import { createPaymentIntent } from "../paymentManagement/helpers";
 import { USERS } from "utils/dist/userManagement/constants";
 import { PAYMENTS } from "../paymentManagement/constants";
 
+const dataSchema = yup.object({
+  email: yup.string().required(),
+});
+
 export const createBookingPaymentIntent = functions.https.onCall(
   async (data, context) => {
+    await checkData(data, dataSchema);
     const auth = checkAuthentication(context.auth);
 
     const [validReservations, totalSpaces] = await admin
@@ -41,7 +47,11 @@ export const createBookingPaymentIntent = functions.https.onCall(
       });
 
     const amount = totalSpaces * 100 * 100;
-    const paymentIntent = await createPaymentIntent(amount, auth.uid);
+    const paymentIntent = await createPaymentIntent(
+      amount,
+      auth.uid,
+      data.email
+    );
 
     await admin
       .firestore()

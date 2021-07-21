@@ -7,73 +7,93 @@ import {
   ReservationData,
 } from "utils/dist/bookingManagement/types";
 import { Doc } from "utils/dist/types";
+import { sendBookingConfirmation } from "../../emailManagement";
 
 export const onPaymentSucceeded = async (
   uid: string,
+  email: string,
   paymentIntentId: string
 ) => {
-  await admin.firestore().runTransaction(async (transaction) => {
-    const paymentRef = admin
-      .firestore()
-      .collection(USERS)
-      .doc(uid)
-      .collection(PAYMENTS)
-      .doc(paymentIntentId);
-    const paymentSnapshot = await transaction.get(paymentRef);
-
-    const paymentStatus = paymentSnapshot.get("status");
-    if (paymentStatus === "succeeded") {
-      console.warn(`Duplicate processing on payment: ${paymentIntentId}`);
-      return;
-    }
-
-    const bookingIds = paymentSnapshot.get("bookings");
-
-    const bookingDocs: Doc<BookingData>[] = [];
-
-    for (const id of bookingIds) {
-      const reservationRef = admin.firestore().collection(RESERVATIONS).doc(id);
-
-      const reservationSnapshot = await transaction.get(reservationRef);
-
-      if (!reservationSnapshot.exists) {
-        // This means that a reservations has been payed for, but deleted from the database.
-        // No idea how we should handle this, hopefully the situation can be avoided altogether.
-        console.error(
-          `User (${uid}) has payed for an expired reservation (${id})`
-        );
-      } else {
-        const reservationData = reservationSnapshot.data() as ReservationData;
-        const { timestamp, ...bookingData } = reservationData;
-        const bookingDoc = {
-          data: bookingData as BookingData,
-          id: id,
-        };
-        bookingDocs.push(bookingDoc);
-      }
-    }
-
-    for (const doc of bookingDocs) {
-      const userReservationRef = admin
+  const bookingDocs = await admin
+    .firestore()
+    .runTransaction(async (transaction) => {
+      const paymentRef = admin
         .firestore()
         .collection(USERS)
         .doc(uid)
-        .collection(RESERVATIONS)
-        .doc(doc.id);
-      const reservationRef = admin
-        .firestore()
-        .collection(RESERVATIONS)
-        .doc(doc.id);
+        .collection(PAYMENTS)
+        .doc(paymentIntentId);
+      const paymentSnapshot = await transaction.get(paymentRef);
 
-      transaction.delete(userReservationRef);
-      transaction.delete(reservationRef);
+      const paymentStatus = paymentSnapshot.get("status");
+      if (paymentStatus === "succeeded") {
+        console.warn(`Duplicate processing on payment: ${paymentIntentId}`);
+        return;
+      }
 
-      const bookingRef = admin.firestore().collection(BOOKINGS).doc(doc.id);
-      transaction.set(bookingRef, doc.data);
-    }
+      const bookingIds = paymentSnapshot.get("bookings");
 
-    transaction.update(paymentRef, {
-      status: "succeeded",
+      const bookingDocs: Doc<BookingData>[] = [];
+
+      for (const id of bookingIds) {
+        const reservationRef = admin
+          .firestore()
+          .collection(RESERVATIONS)
+          .doc(id);
+
+        const reservationSnapshot = await transaction.get(reservationRef);
+
+        if (!reservationSnapshot.exists) {
+          // This means that a reservations has been payed for, but deleted from the database.
+          // No idea how we should handle this, hopefully the situation can be avoided altogether.
+          console.error(
+            `User (${uid}) has payed for an expired reservation (${id})`
+          );
+        } else {
+          const reservationData = reservationSnapshot.data() as ReservationData;
+          const { timestamp, ...bookingData } = reservationData;
+          const bookingDoc = {
+            data: bookingData as BookingData,
+            id: id,
+          };
+          bookingDocs.push(bookingDoc);
+        }
+      }
+
+      for (const doc of bookingDocs) {
+        const userReservationRef = admin
+          .firestore()
+          .collection(USERS)
+          .doc(uid)
+          .collection(RESERVATIONS)
+          .doc(doc.id);
+        const reservationRef = admin
+          .firestore()
+          .collection(RESERVATIONS)
+          .doc(doc.id);
+
+        transaction.delete(userReservationRef);
+        transaction.delete(reservationRef);
+
+        const bookingRef = admin.firestore().collection(BOOKINGS).doc(doc.id);
+        transaction.set(bookingRef, doc.data);
+      }
+
+      transaction.update(paymentRef, {
+        status: "succeeded",
+      });
+
+      return bookingDocs;
     });
-  });
+
+  if (bookingDocs) {
+    sendBookingConfirmation(
+      email,
+      bookingDocs.map((doc) => {
+        return doc.data as BookingData;
+      })
+    );
+  } else {
+    // TODO: Throw error?
+  }
 };
