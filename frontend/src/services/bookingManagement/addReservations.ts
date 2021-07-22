@@ -1,12 +1,12 @@
 import firebase from "firebase";
-import { BookingRequest } from "utils/dist/bookingManagement/types";
+import { ReservationRequest } from "utils/dist/bookingManagement/types";
 
-const addReservations = async (bookings: BookingRequest[]) => {
+const addReservations = async (reservations: ReservationRequest[]) => {
   const call = firebase.functions().httpsCallable("addReservations");
 
   // TODO: Rename maybe?
   const data = {
-    reservations: bookings,
+    reservations: reservations,
   };
 
   try {

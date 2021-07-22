@@ -9,5 +9,5 @@ export * from "./isBeforeToday";
 export * from "./isEqualDates";
 export * from "./isToday";
 export * from "./isValidDateHour";
-export * from "./parseDateDay";
-export * from "./parseDateHour";
+export * from "./dateDayToISO";
+export * from "./dateHourToISO";

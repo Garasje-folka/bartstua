@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Heading, HeadingTypes } from "../../components/text";
+import { Heading } from "../../components/text";
 import { reservationsSelector } from "../../redux/ducks/reservations";
 import {
   addReservation,
-  getEventStartingHour,
   subscribeEvents,
 } from "../../services/bookingManagement";
 import { MAX_EVENT_SPACES } from "utils/dist/bookingManagement/constants";
@@ -17,6 +16,7 @@ import {
 import { getHourRange, isEqualDates } from "utils/dist/dates/helpers";
 import { DateDay } from "utils/dist/dates/types";
 import { EventData } from "utils/dist/bookingManagement/types";
+import { getEventStartingHour } from "../../services/bookingManagement/helpers";
 
 export type TimePickerProps = {
   dateDay: DateDay;
@@ -106,13 +106,13 @@ const TimePicker = (props: TimePickerProps) => {
 
   return (
     <OuterContainer>
-      <Heading type={HeadingTypes.HEADING4}> Velg time</Heading>
+      <Heading type={Heading.types.HEADING4}> Velg time</Heading>
       {getFilteredEvents().map((e) => (
         <TimeContainer key={e.date.hour}>
           <TimeButton onClick={() => reserveEvent(e)}>
             {`${getHourRange(e.date.hour)}`}
           </TimeButton>
-          <TimeText type={HeadingTypes.HEADING4}>{getTimeText(e)}</TimeText>
+          <TimeText type={Heading.types.HEADING4}>{getTimeText(e)}</TimeText>
         </TimeContainer>
       ))}
     </OuterContainer>

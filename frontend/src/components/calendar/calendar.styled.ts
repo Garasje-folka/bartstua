@@ -24,7 +24,7 @@ const navigationContainer = css`
   display: flex;
   justify-content: center;
   padding-bottom: ${({ theme }: { theme: Theme }) =>
-    theme.alignment.padding.SMALL};
+    theme.alignment.padding.REGULAR};
 `;
 
 const navigationButtonStyle = css`

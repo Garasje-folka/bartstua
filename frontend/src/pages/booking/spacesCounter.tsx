@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MAX_EVENT_SPACES } from "utils/dist/bookingManagement/constants";
 import { Button, ButtonStyle } from "../../components/button";
 import { Switch } from "../../components/switch/switch";
-import { IconType } from "../../icons/iconGenerator";
+import { IconType } from "../../icons";
 import {
   Wrapper,
   Header,

@@ -13,7 +13,10 @@ import { SpacesCounter } from "./spacesCounter";
 import { SaunaChooser } from "./saunaChooser";
 import { EventsChooser } from "./eventsChooser";
 import { createDateDayFromDate } from "utils/dist/dates/helpers";
-import { BookingRequest, EventData } from "utils/dist/bookingManagement/types";
+import {
+  ReservationRequest,
+  EventData,
+} from "utils/dist/bookingManagement/types";
 import { Button } from "../../components/button";
 import { addReservations } from "../../services/bookingManagement";
 
@@ -32,17 +35,17 @@ const Booking = () => {
   }, [spaces, date]);
 
   const addToCart = async () => {
-    const bookings = selectedEvents.map((e) => {
-      const bookingRequest = {
+    const reservations = selectedEvents.map((e) => {
+      const reservationRequest = {
         date: e.date,
         spaces: spaces,
-      } as BookingRequest;
+      } as ReservationRequest;
 
-      return bookingRequest;
+      return reservationRequest;
     });
 
     try {
-      await addReservations(bookings);
+      await addReservations(reservations);
     } catch (error) {
       console.log(error);
     }

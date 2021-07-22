@@ -10,7 +10,16 @@ const HeadingTypes = {
   HEADING4: "HEADING4",
 };
 
-const Heading: React.FC<HeadingProps> = (props) => {
+interface HeadingComponent extends React.FC<HeadingProps> {
+  types: {
+    HEADING1: string;
+    HEADING2: string;
+    HEADING3: string;
+    HEADING4: string;
+  };
+}
+
+const Heading: HeadingComponent = (props) => {
   const { children, type } = props;
 
   return (
@@ -23,4 +32,6 @@ const Heading: React.FC<HeadingProps> = (props) => {
   );
 };
 
-export { Heading, HeadingTypes };
+Heading.types = HeadingTypes;
+
+export { Heading };

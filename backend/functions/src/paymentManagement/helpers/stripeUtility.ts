@@ -6,14 +6,17 @@ const stripe = new Stripe(functions.config().stripe.secret, {
 
 export const createPaymentIntent = async (
   amount: number,
-  paymentMethod: string
+  uid: string,
+  email: string
 ) => {
   const paymentIntent = await stripe.paymentIntents.create({
     currency: "nok",
     payment_method_types: ["card"],
     amount: amount,
-    confirmation_method: "manual",
-    payment_method: paymentMethod,
+    metadata: {
+      uid: uid,
+      email: email,
+    },
   });
   return paymentIntent;
 };
@@ -24,4 +27,12 @@ export const cancelPaymentIntent = async (id: string) => {
 
 export const confirmPaymentIntent = async (id: string) => {
   return await stripe.paymentIntents.confirm(id);
+};
+
+export const constructEvent = (
+  payload: string | Buffer,
+  header: string | string[] | Buffer,
+  secret: string
+) => {
+  return stripe.webhooks.constructEvent(payload, header, secret);
 };

@@ -44,4 +44,5 @@ export const IconWrapper = styled.div<IconWrapperProps>`
   margin-top: auto;
   margin-bottom: auto;
   display: flex;
+  margin-right: 10px;
 `;

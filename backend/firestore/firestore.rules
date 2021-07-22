@@ -18,6 +18,14 @@ service cloud.firestore {
       && data['spacesTaken'] is int
       && is____DateHour(data['date'], prev!=null && 'date' in prev ? prev['date'] : null);
     }
+    function is____ReservationData(data, prev) {
+      return data.keys().hasAll(['date', 'spaces', 'timestamp'])
+      && data.size() >= 3 && data.size() <= 3
+      && data.keys().hasOnly(['date', 'spaces', 'timestamp'])
+      && is____DateHour(data['date'], prev!=null && 'date' in prev ? prev['date'] : null)
+      && data['spaces'] is int
+      && data['timestamp'] is int;
+    }
     function is____BookingData(data, prev) {
       return data.keys().hasAll(['date', 'spaces', 'uid'])
       && data.size() >= 3 && data.size() <= 3
@@ -36,9 +44,6 @@ service cloud.firestore {
     function isRequestedByCurrentUser() {
       return resource.data.uid == request.auth.uid;
     }
-    function isEventSpacesAvailable(spaces, eventId) {
-      return (spaces <= maximumAvailableSpaces()) && ((!exist(/databases/$(database)/documents/events/$(eventId))) || (((get(/databases/$(database)/documents/events/$(eventId)).data.spacesTaken + spaces) <= maximumAvailableSpaces())));
-    }
     function dataContainsUid(bookingId) {
       return request.resource.data.uid == request.auth.uid;
     }
@@ -48,19 +53,11 @@ service cloud.firestore {
       }
       allow read: if true;
     }
-    match /bookings/{bookingDoc} {
+    match /users/{userDoc}/reservations/{reservationDoc} {
       function is______PathType(data, prev) {
-        return is____BookingData(data, prev!=null ? prev : null);
+        return is____ReservationData(data, prev!=null ? prev : null);
       }
-      allow read: if isRequestedByCurrentUser();
-      allow create: if is______PathType(request.resource.data, resource==null ? null : resource.data) && (dataContainsUid(bookingDoc));
-    }
-    match /reservations/{reservationDoc} {
-      function is______PathType(data, prev) {
-        return is____BookingData(data, prev!=null ? prev : null);
-      }
-      allow read: if isRequestedByCurrentUser();
-      allow create: if is______PathType(request.resource.data, resource==null ? null : resource.data) && (dataContainsUid(reservationDoc));
+      allow read: if userDoc == request.auth.uid;
     }
   }
 }

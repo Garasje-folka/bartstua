@@ -8,4 +8,6 @@ export const checkAuthentication = (auth: CallableContext["auth"]) => {
       "User is not authenticated"
     );
   }
+
+  return auth;
 };

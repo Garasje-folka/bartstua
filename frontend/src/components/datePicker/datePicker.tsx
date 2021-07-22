@@ -6,7 +6,7 @@ import "react-calendar/dist/Calendar.css";
 import { MAX_EVENT_SPACES } from "utils/dist/bookingManagement/constants";
 import { InputField } from "../../components/form";
 import { LeftAlignedContent } from "../../components/header/header.styled";
-import { Heading, HeadingTypes } from "../../components/text";
+import { Heading } from "../../components/text";
 import { DatePickerContainer, OuterContainer } from "./datePicker.styled";
 
 export type DatePickerProps = {
@@ -27,7 +27,7 @@ const DatePicker = (props: DatePickerProps) => {
 
   return (
     <OuterContainer>
-      <Heading type={HeadingTypes.HEADING4}> Velg dato</Heading>
+      <Heading type={Heading.types.HEADING4}> Velg dato</Heading>
       <DatePickerContainer>
         <LeftAlignedContent>
           <InputField

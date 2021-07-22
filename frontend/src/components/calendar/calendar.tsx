@@ -1,4 +1,4 @@
-import { Icon, IconType } from "../../icons/iconGenerator";
+import { Icon, IconType } from "../../icons";
 import { DateLabel, StyledCalendar, Wrapper } from "./calendar.styled";
 
 type CalendarProps = {

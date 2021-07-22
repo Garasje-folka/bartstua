@@ -15,10 +15,12 @@ export const themeConfig = {
     margin: {
       REGULAR: "10px",
       LARGE: "30px",
+      EXTRA_LARGE: "60px",
     },
     padding: {
-      SMALL: "10px",
-      REGULAR: "30px",
+      REGULAR: "10px",
+      LARGE: "30px",
+      EXTRA_EXTRA_LARGE: "250px",
     },
   },
   page: {
@@ -32,6 +34,7 @@ export const themeConfig = {
     colors: {
       ERROR: "#ff0f0f",
       WARNING: "#ffac14",
+      GREYED_OUT: "#6D757D",
     },
   },
   text: {

@@ -4,35 +4,46 @@ import {
   FaSignInAlt,
   FaAngleLeft,
   FaAngleRight,
+  FaEnvelope,
+  FaKey,
+  FaLockOpen,
+  FaUser,
 } from "react-icons/fa";
 import { AnyStyledComponent } from "styled-components";
 import { generateStyledIcon } from "./icon.styled";
 
 export enum IconType {
-  SignOutIcon = "SignOutIcon",
-  LeftArrow = "LeftArrow",
-  RightArrow = "RightArrow",
-  PlusSign = "PlusSign",
-  MinusSign = "MinusSign",
+  SignOutIcon,
+  LeftArrow,
+  RightArrow,
+  PlusSign,
+  MinusSign,
+  EmailIcon,
+  PasswordIcon,
+  SignInIcon,
+  SignUpIcon,
 }
 
 const getIcon = (iconType: IconType) => {
   switch (iconType) {
-    case IconType.LeftArrow: {
+    case IconType.LeftArrow:
       return FaAngleLeft;
-    }
-    case IconType.RightArrow: {
+    case IconType.RightArrow:
       return FaAngleRight;
-    }
-    case IconType.SignOutIcon: {
+    case IconType.SignOutIcon:
       return FaSignInAlt;
-    }
-    case IconType.PlusSign: {
+    case IconType.PlusSign:
       return FaPlus;
-    }
-    case IconType.MinusSign: {
+    case IconType.MinusSign:
       return FaMinus;
-    }
+    case IconType.EmailIcon:
+      return FaEnvelope;
+    case IconType.PasswordIcon:
+      return FaKey;
+    case IconType.SignInIcon:
+      return FaLockOpen;
+    case IconType.SignUpIcon:
+      return FaUser;
   }
 };
 

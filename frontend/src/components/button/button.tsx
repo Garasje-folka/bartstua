@@ -1,4 +1,4 @@
-import { Icon, IconType } from "../../icons/iconGenerator";
+import { Icon, IconType } from "../../icons";
 import { IconWrapper, StyledButton } from "./button.styled";
 
 export interface ButtonProps {

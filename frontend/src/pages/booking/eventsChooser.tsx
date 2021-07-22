@@ -3,10 +3,8 @@ import { MAX_EVENT_SPACES } from "utils/dist/bookingManagement/constants";
 import { EventData } from "utils/dist/bookingManagement/types";
 import { isEqualDates } from "utils/dist/dates/helpers";
 import { DateDay } from "utils/dist/dates/types";
-import {
-  getEventStartingHour,
-  subscribeEvents,
-} from "../../services/bookingManagement";
+import { subscribeEvents } from "../../services/bookingManagement";
+import { getEventStartingHour } from "../../services/bookingManagement/helpers";
 import { EventButton } from "./eventButton";
 import { Content, Wrapper } from "./eventsChooser.styled";
 
