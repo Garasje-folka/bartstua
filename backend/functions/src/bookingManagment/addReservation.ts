@@ -1,6 +1,9 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { addReservationToTransaction } from "./helpers";
+import {
+  addReservationToTransaction,
+  checkReservationRequest,
+} from "./helpers";
 import {
   ReservationRequest,
   reservationRequestSchema,
@@ -16,7 +19,13 @@ export const addReservation = functions.https.onCall(
     const auth = checkAuthentication(context.auth);
 
     admin.firestore().runTransaction(async (transaction) => {
-      await addReservationToTransaction(transaction, data, auth.uid);
+      const eventExists = await checkReservationRequest(data, transaction);
+      await addReservationToTransaction(
+        transaction,
+        data,
+        auth.uid,
+        eventExists
+      );
     });
   }
 );

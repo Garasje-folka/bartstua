@@ -35,7 +35,7 @@ const Booking = () => {
   }, [spaces, date]);
 
   const addToCart = async () => {
-    const reservations = selectedEvents.map((e) => {
+    const requests = selectedEvents.map((e) => {
       const reservationRequest = {
         date: e.date,
         spaces: spaces,
@@ -45,7 +45,7 @@ const Booking = () => {
     });
 
     try {
-      await addReservations(reservations);
+      await addReservations(requests);
     } catch (error) {
       console.log(error);
     }

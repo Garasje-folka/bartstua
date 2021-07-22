@@ -70,7 +70,6 @@ const Header = () => {
     <StyledNavbar bg="light" expand="lg">
       <LeftAlignedContent>
         <Navbar.Brand onClick={() => history.push(HOME)}>
-          {" "}
           <img src={Logonobg} height="55"></img>
         </Navbar.Brand>
       </LeftAlignedContent>

@@ -1,24 +1,19 @@
-import {
-  MAX_EVENT_SPACES,
-  RESERVATIONS,
-} from "utils/dist/bookingManagement/constants";
+import { RESERVATIONS } from "utils/dist/bookingManagement/constants";
 import {
   ReservationData,
   ReservationRequest,
 } from "utils/dist/bookingManagement/types";
 import { createTimestamp } from "utils/dist/bookingManagement/helpers";
 import * as admin from "firebase-admin";
-import * as functions from "firebase-functions";
 import { getEventRef } from "./getEventRef";
 import { USERS } from "utils/dist/userManagement/constants";
 
-export const addReservationToTransaction = async (
+export const addReservationToTransaction = (
   transaction: FirebaseFirestore.Transaction,
   request: ReservationRequest,
-  uid: string
+  uid: string,
+  eventExists: boolean
 ) => {
-  let spacesTaken: number = 0;
-
   const timestamp = createTimestamp(0);
 
   const reservation: ReservationData = {
@@ -27,18 +22,6 @@ export const addReservationToTransaction = async (
   };
 
   const eventRef = getEventRef(request.date);
-  const eventSnapshot = await transaction.get(eventRef);
-
-  if (eventSnapshot.exists) {
-    spacesTaken = eventSnapshot.get("spacesTaken");
-  }
-
-  if (spacesTaken + reservation.spaces > MAX_EVENT_SPACES) {
-    throw new functions.https.HttpsError(
-      "failed-precondition",
-      "Not enough space"
-    );
-  }
 
   const reservationRef = admin.firestore().collection(RESERVATIONS).doc();
   const userReservationRef = admin
@@ -55,14 +38,14 @@ export const addReservationToTransaction = async (
   transaction.set(userReservationRef, reservation);
 
   // Increment event spaces counter
-  if (eventSnapshot.exists) {
+  if (eventExists) {
     transaction.update(eventRef, {
-      spacesTaken: admin.firestore.FieldValue.increment(reservation.spaces),
+      spacesTaken: admin.firestore.FieldValue.increment(request.spaces),
     });
   } else {
     transaction.set(eventRef, {
       date: reservation.date,
-      spacesTaken: reservation.spaces,
+      spacesTaken: request.spaces,
     });
   }
 };
