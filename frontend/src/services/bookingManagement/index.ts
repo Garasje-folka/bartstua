@@ -5,3 +5,4 @@ export * from "./subscribeEvent";
 export * from "./subscribeRervations";
 export * from "./subscribeEvents";
 export * from "./cancelReservation";
+export * from "./addReservations";

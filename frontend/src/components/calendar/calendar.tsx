@@ -1,14 +1,22 @@
 import { Icon, IconType } from "../../icons/iconGenerator";
 import { DateLabel, StyledCalendar, Wrapper } from "./calendar.styled";
 
-type Props = {
-  dummyProp?: string; // TODO: Remove dummyProp
+type CalendarProps = {
+  date: Date;
+  setDate: React.Dispatch<React.SetStateAction<Date>>;
+  minDate?: Date;
 };
 
-const Calendar: React.FC<Props> = (props: Props) => {
+const Calendar = (props: CalendarProps) => {
+  const { date, setDate, minDate } = props;
+
   return (
     <Wrapper>
       <StyledCalendar
+        value={date}
+        onChange={setDate}
+        minDate={minDate}
+        locale="no-NO"
         formatDay={(locale, date) => date.getDate().toString()}
         nextLabel={
           <Icon icon={IconType.RightArrow} height="0.5em" width="0.5em" />
@@ -23,4 +31,4 @@ const Calendar: React.FC<Props> = (props: Props) => {
 };
 
 export { Calendar };
-export type { Props as CalendarProps };
+export type { CalendarProps };

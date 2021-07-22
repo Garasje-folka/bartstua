@@ -2,19 +2,16 @@ import { useState } from "react";
 import { SliderSpan, SwitchLabel } from "./switch.styled";
 
 type Props = {
-  initialValue?: boolean;
+  value: boolean;
+  onToggle: () => void;
 };
 
 const Switch: React.FC<Props> = (props: Props) => {
-  const { initialValue = false } = props;
-  const [state, setState] = useState(initialValue);
+  const { value, onToggle } = props;
+
   return (
     <SwitchLabel>
-      <input
-        type="checkbox"
-        onClick={() => setState((prev) => !prev)}
-        checked={state}
-      />
+      <input type="checkbox" onChange={onToggle} checked={value} />
       <SliderSpan />
     </SwitchLabel>
   );

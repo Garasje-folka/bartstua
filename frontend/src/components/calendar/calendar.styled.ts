@@ -130,4 +130,10 @@ export const StyledCalendar = styled(Calendar)`
   .react-calendar__navigation {
     ${topBar}
   }
+
+  /* Temporary */
+  .react-calendar__tile--active {
+    background: #006edc;
+    color: white;
+  }
 `;
