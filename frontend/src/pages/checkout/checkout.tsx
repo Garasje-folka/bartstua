@@ -12,7 +12,7 @@ import { Notification, NotificationType } from "../../components/notification";
 import { validate } from "email-validator";
 import { useEffect } from "react";
 import { PaymentIntent } from "@stripe/stripe-js";
-import { createBookingPaymentIntent } from "../../services/bookingManagement/createBookingPaymentIntent";
+import { createBookingPaymentIntent } from "../../services/paymentManagement";
 import { refreshReservationTimestamps } from "../../services/bookingManagement";
 
 const Checkout = () => {

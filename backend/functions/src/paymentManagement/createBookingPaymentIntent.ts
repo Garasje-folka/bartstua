@@ -8,6 +8,7 @@ import { ReservationData } from "utils/dist/bookingManagement/types";
 import { createPaymentIntent } from "../paymentManagement/helpers";
 import { USERS } from "utils/dist/userManagement/constants";
 import { PAYMENTS } from "../paymentManagement/constants";
+import { CREATE_BOOKING_PAYMENT_INTENT_ERRORS } from "utils/dist/paymentManagement";
 
 const dataSchema = yup.object({
   email: yup.string().required(),
@@ -34,7 +35,7 @@ export const createBookingPaymentIntent = functions.https.onCall(
         if (validReservations.length === 0) {
           throw new functions.https.HttpsError(
             "failed-precondition",
-            "No reservations registered"
+            CREATE_BOOKING_PAYMENT_INTENT_ERRORS.NO_RESERVATIONS
           );
         }
 

@@ -3,6 +3,7 @@ import * as functions from "firebase-functions";
 import { RESERVATIONS } from "utils/dist/bookingManagement/constants";
 import { getEventRef } from "./getEventRef";
 import { getUserReservationsRef } from "./getUserReservationsRef";
+import { CANCEL_RESERVATION_ERRORS } from "utils/dist/bookingManagement/errors";
 
 export const deleteReservation = async (docid: string, uid?: string) => {
   await admin.firestore().runTransaction(async (transaction) => {
@@ -18,7 +19,7 @@ export const deleteReservation = async (docid: string, uid?: string) => {
         if (reservationUid !== uid) {
           throw new functions.https.HttpsError(
             "permission-denied",
-            "Not owner of reservation"
+            CANCEL_RESERVATION_ERRORS.NOT_OWNER
           );
         }
       }
