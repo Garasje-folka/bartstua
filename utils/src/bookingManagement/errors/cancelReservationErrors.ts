@@ -1,6 +1,6 @@
+import { SHARED_ERRORS } from "../../errors";
+
 export const CANCEL_RESERVATION_ERRORS = {
-  USER_UNAUTHENTICATED: "user-unauthenticated",
-  UNEXPECTED_DATA_FORMAT: "unexpected-data-format",
+  ...SHARED_ERRORS,
   NOT_OWNER: "not-owner",
-  UNKNOWN: "unknown",
 };
