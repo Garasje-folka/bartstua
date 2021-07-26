@@ -35,16 +35,26 @@ const CartItem = (props: CartItemProps) => {
       <CardBody>
         <VeriticalAlignedTextContainer>
           <Heading type={Heading.types.HEADING4}>
-            {`Dag: ${getFormattedDate()} `}
+            {`Dag: ${getFormattedDate()} ` /* TODO: (haryp2309) locale */}
           </Heading>
           <Heading type={Heading.types.HEADING4}>
-            {`Tidspunkt: ${getHourRange(bookingDoc.data.date.hour)}`}
+            {
+              `Tidspunkt: ${getHourRange(
+                bookingDoc.data.date.hour
+              )}` /* TODO: (haryp2309) locale */
+            }
           </Heading>
           <Heading type={Heading.types.HEADING4}>
-            {`Antall plasser: ${bookingDoc.data.spaces}`}
+            {
+              `Antall plasser: ${bookingDoc.data.spaces}` /* TODO: (haryp2309) locale */
+            }
           </Heading>
           <Heading type={Heading.types.HEADING4}>
-            {`Pris: ${bookingDoc.data.spaces * 100} kr`}
+            {
+              `Pris: ${
+                bookingDoc.data.spaces * 100
+              } kr` /* TODO: (haryp2309) locale */
+            }
           </Heading>
           <Button onClick={handleReservationDelete}>Slett</Button>
         </VeriticalAlignedTextContainer>

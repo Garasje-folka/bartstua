@@ -2,11 +2,16 @@ import { useState } from "react";
 import { MAX_EVENT_SPACES } from "utils/dist/bookingManagement/constants";
 import { EventData } from "utils/dist/bookingManagement/types";
 import { Button } from "../../components/button";
+import {
+  PlacesContainer,
+  StyledButton,
+  TimeContainer,
+} from "./eventButton.styled";
 
 type Props = {
   eventData: EventData;
   disabled?: boolean;
-  selected?: boolean;
+  selected: boolean;
   onClickCallback: (event: EventData, selected: boolean) => void;
 };
 
@@ -17,17 +22,15 @@ const EventButton: React.FC<Props> = (props: Props) => {
     onClickCallback(eventData, !selected);
   };
 
-  // TODO: Only temporary, needs styling
-  const getText = () => {
-    return `${eventData.date.hour}:00  ${
-      MAX_EVENT_SPACES - eventData.spacesTaken
-    } plasser (valgt: ${selected})`;
-  };
-
   return (
-    <Button onClick={onClick} disabled={disabled}>
-      {getText()}
-    </Button>
+    <StyledButton selected={selected} onClick={onClick} disabled={disabled}>
+      <TimeContainer>{`${eventData.date.hour}:00`}</TimeContainer>
+      <PlacesContainer>{
+        `${
+          MAX_EVENT_SPACES - eventData.spacesTaken
+        } plasser` /* TODO: (haryp2309) localise */
+      }</PlacesContainer>
+    </StyledButton>
   );
 };
 

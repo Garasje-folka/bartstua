@@ -62,7 +62,7 @@ const Booking = () => {
         <CalendarCard size={CardSizes.SMALL}>
           <Calendar date={date} setDate={setDate} minDate={new Date()} />
         </CalendarCard>
-        <CalendarCard>
+        <CalendarCard size={CardSizes.BIG}>
           <EventsChooser
             dateDay={createDateDayFromDate(date)}
             spaces={spaces}

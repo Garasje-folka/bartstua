@@ -67,11 +67,7 @@ const EventsChooser = (props: Props) => {
     });
   };
 
-  return (
-    <Wrapper>
-      <Content>{mapEvents()}</Content>
-    </Wrapper>
-  );
+  return <Wrapper>{mapEvents()}</Wrapper>;
 };
 
 export { EventsChooser };
