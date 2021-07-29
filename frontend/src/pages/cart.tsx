@@ -2,10 +2,11 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Button } from "../components/button";
 import { CardBody, CardContainer, CardHeader } from "../components/card";
-import { CartItem } from "../components/cartItem";
+//import { CartItem } from "../components/cartItem";
 import { reservationsSelector } from "../redux/ducks/reservations";
 import { CHECKOUT } from "../router/routeConstants";
 
+/*
 const Cart = () => {
   const reservations = useSelector(reservationsSelector);
   const history = useHistory();
@@ -30,4 +31,6 @@ const Cart = () => {
   );
 };
 
+*/
+const Cart = () => <></>;
 export { Cart };

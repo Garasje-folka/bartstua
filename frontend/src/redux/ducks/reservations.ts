@@ -1,4 +1,4 @@
-import { ReservationData } from "utils/dist/bookingManagement/types";
+import { Reservation } from "utils/dist/bookingManagement/types";
 import { Doc } from "utils/dist/types";
 import { State } from "../types/state";
 
@@ -6,12 +6,12 @@ import { State } from "../types/state";
 interface Action {
   type: string;
   data?: {
-    reservations: Doc<ReservationData>[];
+    reservations: Doc<Reservation>[];
   };
 }
 
 export type ReservationsState = {
-  data: Doc<ReservationData>[];
+  data: Doc<Reservation>[];
   status: {
     loaded: boolean;
     lastUpdated?: string;
@@ -39,9 +39,9 @@ export default function reducer(
 ): ReservationsState {
   switch (action.type) {
     case RESERVATIONS_UPDATE:
-      const bookings = action.data?.reservations;
+      const reservations = action.data?.reservations;
       return {
-        data: bookings ? [...bookings] : [],
+        data: reservations ? [...reservations] : [],
         status: {
           ...state?.status,
           loaded: true,
@@ -55,7 +55,7 @@ export default function reducer(
 
 // Action Creator
 export const reservationsUpdated = (
-  reservations: Doc<ReservationData>[]
+  reservations: Doc<Reservation>[]
 ): Action => {
   return { type: RESERVATIONS_UPDATE, data: { reservations } };
 };

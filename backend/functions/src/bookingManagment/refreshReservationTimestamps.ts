@@ -9,6 +9,7 @@ import {
 } from "utils/dist/bookingManagement/helpers";
 import { ReservationData } from "utils/dist/bookingManagement/types";
 
+/*
 export const refreshReservationTimestamps = functions.https.onCall(
   async (data, context) => {
     const auth = checkAuthentication(context.auth);
@@ -39,3 +40,4 @@ export const refreshReservationTimestamps = functions.https.onCall(
     });
   }
 );
+*/

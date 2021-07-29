@@ -1,4 +1,10 @@
-import { DateHour, dateHourSchema, duplicateDateHour } from "../../dates/types";
+import {
+  DateHour,
+  dateHourSchema,
+  DateTime,
+  dateTimeSchema,
+  duplicateDateHour,
+} from "../../dates/types";
 import * as yup from "yup";
 
 export const eventDataSchema = yup.object({
@@ -9,6 +15,16 @@ export const eventDataSchema = yup.object({
 export type EventData = {
   spacesTaken: number;
   date: DateHour;
+};
+
+export type BookingEvent = {
+  taken: boolean;
+  time: DateTime;
+};
+
+export type DropInEvent = {
+  spacesTaken: number;
+  time: DateTime;
 };
 
 export const initialEventData = (dateHour: DateHour): EventData => {
