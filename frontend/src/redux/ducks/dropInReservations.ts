@@ -1,4 +1,7 @@
-import { Reservation } from "utils/dist/bookingManagement/types";
+import {
+  DropInReservationData,
+  Reservation,
+} from "utils/dist/bookingManagement/types";
 import { Doc } from "utils/dist/types";
 import { State } from "../types/state";
 
@@ -6,12 +9,12 @@ import { State } from "../types/state";
 interface Action {
   type: string;
   data?: {
-    reservations: Doc<Reservation>[];
+    reservations: Doc<DropInReservationData>[];
   };
 }
 
-export type ReservationsState = {
-  data: Doc<Reservation>[];
+export type DropInReservationsState = {
+  data: Doc<DropInReservationData>[];
   status: {
     loaded: boolean;
     lastUpdated?: string;
@@ -19,13 +22,13 @@ export type ReservationsState = {
 };
 
 // Constants
-const file = "ducks/reservationsState/";
+const file = "ducks/dropInReservationsState/";
 
 // Actions
-const RESERVATIONS_UPDATE = file + "RESERVATIONS_UPDATE";
+const RESERVATIONS_UPDATE = file + "DROP_IN_RESERVATIONS_UPDATE";
 
 // Initial state
-const initialState: ReservationsState = {
+const initialState: DropInReservationsState = {
   data: [],
   status: {
     loaded: false,
@@ -34,9 +37,9 @@ const initialState: ReservationsState = {
 
 // Reducer
 export default function reducer(
-  state: ReservationsState = initialState,
+  state: DropInReservationsState = initialState,
   action: Action
-): ReservationsState {
+): DropInReservationsState {
   switch (action.type) {
     case RESERVATIONS_UPDATE:
       const reservations = action.data?.reservations;
@@ -54,15 +57,16 @@ export default function reducer(
 }
 
 // Action Creator
-export const reservationsUpdated = (
-  reservations: Doc<Reservation>[]
+export const dropInReservationsUpdated = (
+  reservations: Doc<DropInReservationData>[]
 ): Action => {
   return { type: RESERVATIONS_UPDATE, data: { reservations } };
 };
 
 // Selectors
-export const reservationsSelector = (state: State) => state.reservations.data;
+export const dropInReservationsSelector = (state: State) =>
+  state.reservations.data;
 
-export const reservationsLoadedSelector = (state: State) => {
+export const dropInReservationsLoadedSelector = (state: State) => {
   return state.reservations.status.loaded;
 };

@@ -1,30 +1,40 @@
 import { DateDay } from "utils/dist/dates/types";
-import { EventData } from "utils/dist/bookingManagement/types";
+import {
+  BookingType,
+  DropInEvent,
+  EventData,
+  EventLocation,
+} from "utils/dist/bookingManagement/types";
 import firebase, { firestore } from "../fireConfig";
 import {
   BOOKING_ENDING_TIME,
   BOOKING_STARTING_TIME,
   EVENTS,
 } from "utils/dist/bookingManagement/constants";
+import { getEventCollectionName } from "utils/dist/bookingManagement/helpers";
 
-const getEventsQueryRef = (date: DateDay) => {
+const getEventsQueryRef = (date: DateDay, location: EventLocation) => {
   return firestore
     .collection(EVENTS)
-    .where("date.year", "==", date.year)
-    .where("date.month", "==", date.month)
-    .where("date.day", "==", date.day);
+    .doc(location)
+    .collection(getEventCollectionName(BookingType.dropIn))
+    .where("time.year", "==", date.year)
+    .where("time.month", "==", date.month)
+    .where("time.day", "==", date.day);
 };
 
 const mapQuerySnapshot = (
   dateDay: DateDay,
   querySnapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
 ) => {
-  const queryEvents = querySnapshot.docs.map((doc) => doc.data() as EventData);
+  const queryEvents = querySnapshot.docs.map(
+    (doc) => doc.data() as DropInEvent
+  );
 
   // Sort by time ascending
-  queryEvents.sort((e1, e2) => e1.date.hour - e2.date.hour);
+  queryEvents.sort((e1, e2) => e1.time.hour - e2.time.hour);
 
-  const result: EventData[] = [];
+  const result: DropInEvent[] = [];
 
   let hour: number = BOOKING_STARTING_TIME;
 
@@ -32,16 +42,17 @@ const mapQuerySnapshot = (
     let queryEvent = queryEvents.shift();
 
     const nextEventHour = queryEvent
-      ? queryEvent.date.hour
+      ? queryEvent.time.hour
       : BOOKING_ENDING_TIME;
 
     // Fill missing hours with empty events
     while (hour < nextEventHour) {
       result.push({
         spacesTaken: 0,
-        date: {
+        time: {
           ...dateDay,
           hour: hour,
+          minute: 0,
         },
       });
 
@@ -58,17 +69,20 @@ const mapQuerySnapshot = (
   return result;
 };
 
-const subscribeEvents = (
+const subscribeDropInEvents = (
   date: DateDay,
-  callback: (event: EventData[]) => void
+  location: EventLocation,
+  callback: (event: DropInEvent[]) => void
 ) => {
-  const unsubscribe = getEventsQueryRef(date).onSnapshot((querySnapshot) => {
-    const events = mapQuerySnapshot(date, querySnapshot);
-    callback(events);
-  });
+  const unsubscribe = getEventsQueryRef(date, location).onSnapshot(
+    (querySnapshot) => {
+      const events = mapQuerySnapshot(date, querySnapshot);
+      callback(events);
+    }
+  );
   return () => {
     unsubscribe();
   };
 };
 
-export { subscribeEvents };
+export { subscribeDropInEvents as subscribeEvents };

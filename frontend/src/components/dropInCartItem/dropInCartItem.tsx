@@ -1,10 +1,7 @@
 import { Doc } from "utils/dist/types";
 import {
-  BookingReservationData,
   BookingType,
-  Reservation,
-  ReservationData,
-  ReservationStatus,
+  DropInReservationData,
 } from "utils/dist/bookingManagement/types";
 import { cancelReservation } from "../../services/bookingManagement";
 import { createDateFromDateDay } from "utils/dist/dates/helpers";
@@ -14,33 +11,24 @@ import { dateDayToISO } from "utils/dist/dates/helpers";
 import { Button } from "../button";
 import { CardBody, CardContainer } from "../card";
 import { Heading } from "../text";
-import { VeriticalAlignedTextContainer } from "./cartItem.styled";
-import { bookingManagement } from "../../services";
+import { VeriticalAlignedTextContainer } from "./dropInCartItem.styled";
 
 export type CartItemProps = {
-  reservationDoc: Doc<Reservation>;
+  dropInReservationDoc: Doc<DropInReservationData>;
 };
 
-/*
-const CartItem = (props: CartItemProps) => {
-  const { reservationDoc } = props;
+const DropInCartItem = (props: CartItemProps) => {
+  const { dropInReservationDoc: doc } = props;
 
   const getFormattedDate = () => {
-    const dayName = getDayName(
-      createDateFromDateDay(reservationDoc.data.data.time)
-    );
-    const parsedDate = dateDayToISO(
-      reservationDoc.data.data.time,
-      true,
-      true,
-      true
-    );
+    const dayName = getDayName(createDateFromDateDay(doc.data.time));
+    const parsedDate = dateDayToISO(doc.data.time, true, true, true);
     return `${dayName} ${parsedDate}`;
   };
 
   const handleReservationDelete = async () => {
     try {
-      await cancelReservation(reservationDoc.id);
+      await cancelReservation(doc.id, BookingType.dropIn);
     } catch (error) {
       console.log(error);
     }
@@ -53,13 +41,13 @@ const CartItem = (props: CartItemProps) => {
             {`Dag: ${getFormattedDate()} `}
           </Heading>
           <Heading type={Heading.types.HEADING4}>
-            {`Tidspunkt: ${getHourRange(bookingDoc.data.data.time.hour)}`}
+            {`Tidspunkt: ${getHourRange(doc.data.time.hour)}`}
           </Heading>
           <Heading type={Heading.types.HEADING4}>
-            {`Antall plasser: ${bookingDoc.data.data.spaces}`}
+            {`Antall plasser: ${doc.data.spaces}`}
           </Heading>
           <Heading type={Heading.types.HEADING4}>
-            {`Pris: ${bookingDoc.data.data.spaces * 100} kr`}
+            {`Pris: ${doc.data.spaces * 100} kr`}
           </Heading>
           <Button onClick={handleReservationDelete}>Slett</Button>
         </VeriticalAlignedTextContainer>
@@ -68,5 +56,4 @@ const CartItem = (props: CartItemProps) => {
   );
 };
 
-export { CartItem };
-*/
+export { DropInCartItem };

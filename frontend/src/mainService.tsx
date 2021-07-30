@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authChanged, currentUserSelector } from "./redux/ducks/currentUser";
-import { reservationsUpdated } from "./redux/ducks/reservations";
-import { onReservationsChanged } from "./services/bookingManagement";
+import { dropInReservationsUpdated } from "./redux/ducks/dropInReservations";
+import { onDropInReservationsChanged } from "./services/bookingManagement";
 import { onCurrentUserChanged } from "./services/userManagement";
 
 const MainService = () => {
@@ -20,41 +20,18 @@ const MainService = () => {
     };
   }, [dispatch]);
 
-  /*
-  // Merging reservations for the same event
-  // TODO: Clean up.... Maybe sort by time for convenience
-  const squashReservations = (reservations: Doc<BookingData>[]) => {
-    const result: Doc<BookingData>[] = [];
-    while (reservations.length > 0) {
-      let squashed = reservations.pop();
-      if (!squashed) continue;
-
-      for (let i = reservations.length - 1; i >= 0; i--) {
-        const reservation = reservations[i];
-        if (!reservation) continue;
-
-        if (isEqualDates(squashed.data.date, reservation.data.date)) {
-          squashed.data.spaces += reservation.data.spaces;
-          reservations.splice(i, 1);
-        }
-      }
-      result.push(squashed);
-    }
-
-    return result;
-  };
-  */
-
   useEffect(() => {
     // Update redux when reservations are updated
     if (!currentUser) {
-      dispatch(reservationsUpdated([]));
+      dispatch(dropInReservationsUpdated([]));
       return;
     }
 
-    const unsubReservationsUpdated = onReservationsChanged((reservations) => {
-      dispatch(reservationsUpdated(reservations));
-    });
+    const unsubReservationsUpdated = onDropInReservationsChanged(
+      (reservations) => {
+        dispatch(dropInReservationsUpdated(reservations));
+      }
+    );
 
     return () => {
       unsubReservationsUpdated();

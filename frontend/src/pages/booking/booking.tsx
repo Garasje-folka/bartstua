@@ -14,16 +14,17 @@ import { SaunaChooser } from "./saunaChooser";
 import { EventsChooser } from "./eventsChooser";
 import { createDateDayFromDate } from "utils/dist/dates/helpers";
 import {
-  ReservationRequest,
-  EventData,
+  DropInEvent,
+  DropInReservationRequest,
+  EventLocation,
 } from "utils/dist/bookingManagement/types";
 import { Button } from "../../components/button";
-import { addReservations } from "../../services/bookingManagement";
+import { addDropInReservations } from "../../services/bookingManagement";
 
 const Booking = () => {
   const [date, setDate] = useState<Date>(new Date());
   const [spaces, setSpaces] = useState<number>(1);
-  const [selectedEvents, setSelectedEvents] = useState<EventData[]>([]);
+  const [selectedEvents, setSelectedEvents] = useState<DropInEvent[]>([]);
   const { switchBackground } = useBackground();
 
   useEffect(() => {
@@ -37,15 +38,16 @@ const Booking = () => {
   const addToCart = async () => {
     const requests = selectedEvents.map((e) => {
       const reservationRequest = {
-        date: e.date,
+        time: e.time,
         spaces: spaces,
-      } as ReservationRequest;
+        location: EventLocation.loation1,
+      } as DropInReservationRequest;
 
       return reservationRequest;
     });
 
     try {
-      await addReservations(requests);
+      await addDropInReservations(requests);
     } catch (error) {
       console.log(error);
     }

@@ -1,9 +1,8 @@
 export const BOOKINGS = "bookings";
 export const EVENTS = "events";
 export const RESERVATIONS = "reservations";
-export const LOCATIONS = "locations";
 export const BOOKING_RESERVATIONS = "bookingReservations";
-export const DROP_IN_RESERVATIONS = "dropInReservation";
+export const DROP_IN_RESERVATIONS = "dropInReservations";
 export const BOOKING_EVENTS = "bookingEvents";
 export const DROP_IN_EVENTS = "dropInEvents";
 export const MAX_DROP_IN_SPACES = 10;

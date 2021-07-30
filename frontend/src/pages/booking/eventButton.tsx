@@ -1,26 +1,25 @@
-import { useState } from "react";
-import { MAX_EVENT_SPACES } from "utils/dist/bookingManagement/constants";
-import { EventData } from "utils/dist/bookingManagement/types";
+import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
+import { DropInEvent } from "utils/dist/bookingManagement/types";
 import { Button } from "../../components/button";
 
 type Props = {
-  eventData: EventData;
+  event: DropInEvent;
   disabled?: boolean;
   selected?: boolean;
-  onClickCallback: (event: EventData, selected: boolean) => void;
+  onClickCallback: (event: DropInEvent, selected: boolean) => void;
 };
 
 const EventButton: React.FC<Props> = (props: Props) => {
-  const { eventData, disabled, selected, onClickCallback } = props;
+  const { event, disabled, selected, onClickCallback } = props;
 
   const onClick = () => {
-    onClickCallback(eventData, !selected);
+    onClickCallback(event, !selected);
   };
 
   // TODO: Only temporary, needs styling
   const getText = () => {
-    return `${eventData.date.hour}:00  ${
-      MAX_EVENT_SPACES - eventData.spacesTaken
+    return `${event.time.hour}:00  ${
+      MAX_DROP_IN_SPACES - event.spacesTaken
     } plasser (valgt: ${selected})`;
   };
 

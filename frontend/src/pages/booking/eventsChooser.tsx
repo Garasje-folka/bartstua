@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
-import { MAX_EVENT_SPACES } from "utils/dist/bookingManagement/constants";
-import { EventData } from "utils/dist/bookingManagement/types";
+import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
+import {
+  DropInEvent,
+  EventData,
+  EventLocation,
+} from "utils/dist/bookingManagement/types";
 import { isEqualDates } from "utils/dist/dates/helpers";
 import { DateDay } from "utils/dist/dates/types";
 import { subscribeEvents } from "../../services/bookingManagement";
@@ -11,17 +15,19 @@ import { Content, Wrapper } from "./eventsChooser.styled";
 type Props = {
   dateDay: DateDay;
   spaces: number;
-  selectedEvents: EventData[];
-  setSelectedEvents: React.Dispatch<React.SetStateAction<EventData[]>>;
+  selectedEvents: DropInEvent[];
+  setSelectedEvents: React.Dispatch<React.SetStateAction<DropInEvent[]>>;
 };
 
 const EventsChooser = (props: Props) => {
   const { dateDay, spaces, selectedEvents, setSelectedEvents } = props;
-  const [events, setEvents] = useState<EventData[]>([]);
+  const [events, setEvents] = useState<DropInEvent[]>([]);
 
   useEffect(() => {
-    const unsubscribe = subscribeEvents(dateDay, (newEvents) =>
-      setEvents(newEvents)
+    const unsubscribe = subscribeEvents(
+      dateDay,
+      EventLocation.loation1,
+      (newEvents) => setEvents(newEvents)
     );
 
     return () => {
@@ -29,17 +35,17 @@ const EventsChooser = (props: Props) => {
     };
   }, [dateDay]);
 
-  const onClickCallback = (event: EventData, selected: boolean) => {
+  const onClickCallback = (event: DropInEvent, selected: boolean) => {
     setSelectedEvents((prevVal) => {
       if (selected) return [...prevVal, event];
 
-      return prevVal.filter((e) => !isEqualDates(e.date, event.date));
+      return prevVal.filter((e) => !isEqualDates(e.time, event.time));
     });
   };
 
-  const selectedEventsContains = (event: EventData) => {
+  const selectedEventsContains = (event: DropInEvent) => {
     for (const e of selectedEvents) {
-      if (isEqualDates(e.date, event.date)) return true;
+      if (isEqualDates(e.time, event.time)) return true;
     }
 
     return false;
@@ -50,14 +56,14 @@ const EventsChooser = (props: Props) => {
     if (!startingHour) return [];
 
     return events.map((e) => {
-      if (e.date.hour >= startingHour) {
-        const disabled = MAX_EVENT_SPACES - e.spacesTaken < spaces;
+      if (e.time.hour >= startingHour) {
+        const disabled = MAX_DROP_IN_SPACES - e.spacesTaken < spaces;
         const selected = selectedEventsContains(e);
 
         return (
           <EventButton
-            key={JSON.stringify(e.date)}
-            eventData={e}
+            key={JSON.stringify(e.time)}
+            event={e}
             disabled={disabled}
             selected={selected}
             onClickCallback={onClickCallback}

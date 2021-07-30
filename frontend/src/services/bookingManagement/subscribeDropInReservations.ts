@@ -1,13 +1,16 @@
 import { auth, firestore } from "../fireConfig";
 import { createError } from "utils/dist/helpers";
 import { userManagementErrorCodes } from "../userManagement/constants";
-import { ReservationData } from "utils/dist/bookingManagement/types";
+import {
+  BookingType,
+  DropInReservationData,
+} from "utils/dist/bookingManagement/types";
 import { Doc } from "utils/dist/types";
 import { USERS } from "utils/dist/userManagement/constants";
-import { RESERVATIONS } from "utils/dist/bookingManagement/constants";
+import { getReservationCollectionName } from "utils/dist/bookingManagement/helpers";
 
-export const onReservationsChanged = (
-  callback: (reservations: Doc<ReservationData>[]) => void
+export const onDropInReservationsChanged = (
+  callback: (reservations: Doc<DropInReservationData>[]) => void
 ): (() => void) => {
   const currentUser = auth.currentUser;
   if (!currentUser) {
@@ -16,15 +19,15 @@ export const onReservationsChanged = (
   const reservationsRef = firestore
     .collection(USERS)
     .doc(currentUser.uid)
-    .collection(RESERVATIONS);
+    .collection(getReservationCollectionName(BookingType.dropIn));
 
   const unsubscribe = reservationsRef.onSnapshot((querySnapshot) => {
     const reservations = querySnapshot.docs.map((doc) => {
-      const data = doc.data() as ReservationData;
+      const data = doc.data() as DropInReservationData;
       return {
         data: data,
         id: doc.id,
-      } as Doc<ReservationData>;
+      } as Doc<DropInReservationData>;
     });
     callback(reservations);
   });

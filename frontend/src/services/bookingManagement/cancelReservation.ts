@@ -1,11 +1,13 @@
 import firebase from "firebase";
 import { CANCEL_RESERVATION_ERRORS } from "utils/dist/bookingManagement/errors";
+import { BookingType } from "utils/dist/bookingManagement/types";
 import { createError } from "utils/dist/helpers";
 
-const cancelReservation = async (docid: string) => {
+const cancelReservation = async (docid: string, type: BookingType) => {
   const call = firebase.functions().httpsCallable("cancelReservation");
   const data = {
     docid: docid,
+    type: type,
   };
   try {
     await call(data);

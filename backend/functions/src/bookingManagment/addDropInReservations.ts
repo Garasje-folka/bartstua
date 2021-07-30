@@ -3,8 +3,8 @@ import * as admin from "firebase-admin";
 import * as yup from "yup";
 import {
   BookingType,
-  DropInReservationData,
   dropInReservationDataSchema,
+  DropInReservationRequest,
   ReservationStatus,
 } from "utils/dist/bookingManagement/types";
 import { checkData } from "../helpers";
@@ -18,7 +18,6 @@ import {
   MAX_DROP_IN_SPACES,
   RESERVATIONS,
 } from "utils/dist/bookingManagement/constants";
-import { USERS } from "utils/dist/userManagement/constants";
 
 const dataSchema = yup.object({
   requests: yup.array().of(dropInReservationDataSchema).required(),
@@ -41,7 +40,7 @@ export const addDropInReservations = functions.https.onCall(
       );
     }
 
-    const requests = data.requests as DropInReservationData[];
+    const requests = data.requests as DropInReservationRequest[];
 
     // Information that has to be passed from the reading part of the transaction
     // to the writing part of the transaction
@@ -93,7 +92,7 @@ export const addDropInReservations = functions.https.onCall(
 
         const eventRef = getEventRef(
           request.location,
-          BookingType.booking,
+          BookingType.dropIn,
           request.time
         );
 
