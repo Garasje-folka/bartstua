@@ -10,11 +10,13 @@ import {
 import { checkData } from "../helpers";
 import {
   createTimestamp,
-  getReservationCollectionName,
   isValidEventTime,
 } from "utils/dist/bookingManagement/helpers";
-import { getEventRef, getUserReservationsRef } from "./helpers";
-import { RESERVATIONS } from "utils/dist/bookingManagement/constants";
+import {
+  getEventRef,
+  getReservationsRef,
+  getUserReservationsRef,
+} from "./helpers";
 
 const dataSchema = yup.object({
   requests: yup.array().of(bookingReservationRequestSchema).required(),
@@ -94,15 +96,10 @@ export const addBookingReservations = functions.https.onCall(
         );
 
         const timestamp = createTimestamp(0);
-        const reservationRef = admin
-          .firestore()
-          .collection(RESERVATIONS)
-          .doc(request.location)
-          .collection(getReservationCollectionName(BookingType.booking))
-          .doc();
+        const reservationRef = getReservationsRef(BookingType.dropIn).doc();
 
         transaction.set(reservationRef, {
-          time: request.time,
+          ...request,
           uid: auth.uid,
           timestamp: timestamp,
           status: ReservationStatus.active,

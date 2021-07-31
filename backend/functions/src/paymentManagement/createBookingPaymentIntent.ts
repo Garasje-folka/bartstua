@@ -4,12 +4,16 @@ import * as yup from "yup";
 import { checkAuthentication, checkData } from "../helpers";
 import { getUserReservationsRef } from "../bookingManagment/helpers";
 import { isExpiredReservation } from "utils/dist/bookingManagement/helpers";
-import { ReservationData } from "utils/dist/bookingManagement/types";
+import {
+  BookingReservationData,
+  BookingType,
+  DropInReservationData,
+} from "utils/dist/bookingManagement/types";
 import { createPaymentIntent } from "../paymentManagement/helpers";
 import { USERS } from "utils/dist/userManagement/constants";
 import { PAYMENTS } from "../paymentManagement/constants";
-import { CREATE_BOOKING_PAYMENT_INTENT_ERRORS } from "utils/dist/paymentManagement";
 
+// TODO: Validate email properly
 const dataSchema = yup.object({
   email: yup.string().required(),
 });
@@ -19,41 +23,77 @@ export const createBookingPaymentIntent = functions.https.onCall(
     await checkData(data, dataSchema);
     const auth = checkAuthentication(context.auth);
 
-    const [validReservations, totalSpaces] = await admin
-      .firestore()
-      .runTransaction(async (transaction) => {
-        const reservations = await transaction.get(
-          getUserReservationsRef(auth.uid)
-        );
+    const [
+      validBookingReservations,
+      validDropInReservations,
+      totalDropInSpaces,
+    ] = await admin.firestore().runTransaction(async (transaction) => {
+      const bookingReservations = await transaction.get(
+        getUserReservationsRef(auth.uid, BookingType.booking)
+      );
 
-        // Filter out expired reservations
-        const validReservations = reservations.docs.filter((res) => {
-          const { uid, ...resData } = res.data();
-          return !isExpiredReservation(resData as ReservationData);
-        });
+      const dropInReservations = await transaction.get(
+        getUserReservationsRef(auth.uid, BookingType.dropIn)
+      );
 
-        if (validReservations.length === 0) {
-          throw new functions.https.HttpsError(
-            "failed-precondition",
-            CREATE_BOOKING_PAYMENT_INTENT_ERRORS.NO_RESERVATIONS
-          );
+      // Filter out expired reservations
+      const validBookingReservations = bookingReservations.docs.filter(
+        (res) => {
+          const data = res.data() as BookingReservationData;
+          return !isExpiredReservation(data.time, data.timestamp);
         }
+      );
 
-        let totalSpaces = 0;
-        validReservations.forEach((doc) => {
-          totalSpaces += doc.get("spaces");
-        });
-
-        return [validReservations, totalSpaces];
+      const validDropInReservations = dropInReservations.docs.filter((res) => {
+        const data = res.data() as DropInReservationData;
+        return !isExpiredReservation(data.time, data.timestamp);
       });
 
-    const amount = totalSpaces * 100 * 100;
+      if (
+        validBookingReservations.length === 0 &&
+        validDropInReservations.length === 0
+      ) {
+        throw new functions.https.HttpsError(
+          "failed-precondition",
+          "no-reservations"
+        );
+      }
+
+      let totalDropInSpaces = 0;
+      validDropInReservations.forEach((doc) => {
+        totalDropInSpaces += doc.get("spaces");
+      });
+
+      return [
+        validBookingReservations,
+        validDropInReservations,
+        totalDropInSpaces,
+      ];
+    });
+
+    const bookingAmount = validBookingReservations.length * 100 * 100;
+    const dropInAmount = totalDropInSpaces * 100 * 100;
     const paymentIntent = await createPaymentIntent(
-      amount,
+      bookingAmount + dropInAmount,
       auth.uid,
       data.email
     );
 
+    const bookingPaymentData = validBookingReservations.map((res) => {
+      return {
+        type: BookingType.booking,
+        id: res.id,
+      };
+    });
+
+    const dropInPaymentData = validDropInReservations.map((res) => {
+      return {
+        type: BookingType.dropIn,
+        id: res.id,
+      };
+    });
+
+    // Should this be done inside a transaction?
     await admin
       .firestore()
       .collection(USERS)
@@ -61,7 +101,7 @@ export const createBookingPaymentIntent = functions.https.onCall(
       .collection(PAYMENTS)
       .doc(paymentIntent.id)
       .set({
-        bookings: validReservations.map((res) => res.id),
+        reservations: [...bookingPaymentData, ...dropInPaymentData],
         status: "pending",
       });
 

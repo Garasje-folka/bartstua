@@ -32,18 +32,9 @@ const Checkout = () => {
   const history = useHistory();
 
   useEffect(() => {
-    refreshReservationTimestamps()
-      .then(() => {
-        // TODO: Add support for guest users
-        if (!currentUser?.email) return null;
-        return createBookingPaymentIntent(currentUser.email);
-      })
-      .then((res) => {
-        if (res) setPaymentIntent(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // TODO: Add support for guest users
+    if (!currentUser?.email) return;
+    createBookingPaymentIntent(currentUser.email);
   }, []);
 
   const onEmailChanged = (newEmail: string) => {

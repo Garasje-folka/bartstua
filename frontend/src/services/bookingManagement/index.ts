@@ -1,6 +1,6 @@
 export * from "./addReservation";
 export * from "./subscribeDropInReservations";
-export * from "./subscribeEvents";
+export * from "./subscribeDropInEvents";
 export * from "./cancelReservation";
 export * from "./addReservations";
 export * from "./refreshReservationTimestamps";

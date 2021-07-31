@@ -7,13 +7,15 @@ import {
   ReservationStatus,
 } from "utils/dist/bookingManagement/types";
 import { checkData } from "../helpers";
-import { getEventRef, getUserReservationsRef } from "./helpers";
+import {
+  getEventRef,
+  getReservationsRef,
+  getUserReservationsRef,
+} from "./helpers";
 import {
   createTimestamp,
-  getReservationCollectionName,
   isValidEventTime,
 } from "utils/dist/bookingManagement/helpers";
-import { RESERVATIONS } from "utils/dist/bookingManagement/constants";
 
 export const addBookingReservation = functions.https.onCall(
   async (data, context) => {
@@ -58,15 +60,10 @@ export const addBookingReservation = functions.https.onCall(
       }
 
       const timestamp = createTimestamp(0);
-      const reservationRef = admin
-        .firestore()
-        .collection(RESERVATIONS)
-        .doc(request.location)
-        .collection(getReservationCollectionName(BookingType.booking))
-        .doc();
+      const reservationRef = getReservationsRef(BookingType.booking).doc();
 
       transaction.set(reservationRef, {
-        time: request.time,
+        ...request,
         uid: auth.uid,
         timestamp: timestamp,
         status: ReservationStatus.active,

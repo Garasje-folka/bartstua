@@ -12,10 +12,7 @@ export const deleteBookingReservation = (
   docid: string,
   data: BookingReservationData
 ) => {
-  const reservationRef = getReservationsRef(
-    data.location,
-    BookingType.booking
-  ).doc(docid);
+  const reservationRef = getReservationsRef(BookingType.booking).doc(docid);
   transaction.delete(reservationRef);
 
   const userReservationRef = getUserReservationsRef(
