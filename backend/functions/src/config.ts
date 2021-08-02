@@ -13,5 +13,5 @@ if (process.env.FUNCTIONS_EMULATOR) {
     const SCHEDULED_FUNCTION_TOPIC =
       "firebase-schedule-clearExpiredReservations";
     pubsub.topic(SCHEDULED_FUNCTION_TOPIC).publishJSON({});
-  }, 1 * 60 * 1000);
+  }, RESERVATION_CLEARING_INTERVAL * 60 * 1000);
 }

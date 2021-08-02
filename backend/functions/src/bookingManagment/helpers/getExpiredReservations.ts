@@ -11,7 +11,7 @@ export const getExpiredReservations = async (
   transaction: FirebaseFirestore.Transaction,
   type: BookingType
 ) => {
-  const thresholdTimestamp = createTimestamp(-1);
+  const thresholdTimestamp = createTimestamp(-RESERVATION_EXPIRATION_TIME);
   const queryRef = admin
     .firestore()
     .collection(getReservationCollectionName(type))
