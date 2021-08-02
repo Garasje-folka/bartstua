@@ -2,7 +2,6 @@ import { DateDay } from "utils/dist/dates/types";
 import {
   BookingType,
   DropInEvent,
-  EventData,
   EventLocation,
 } from "utils/dist/bookingManagement/types";
 import firebase, { firestore } from "../fireConfig";

@@ -15,12 +15,14 @@ import { hasReservationsCheck } from "./guards/hasReservationsCheck";
 const CustomRouter: React.FC = () => {
   const currentUser = useSelector(currentUserSelector);
   const userLoaded = useSelector(currentUserLoadedSelector);
-  const reservations = useSelector(dropInReservationsSelector);
-  const reservationsLoaded = useSelector(dropInReservationsLoadedSelector);
+  const dropInReservations = useSelector(dropInReservationsSelector);
+  const dropInReservationsLoaded = useSelector(
+    dropInReservationsLoadedSelector
+  );
 
   return (
     <>
-      {userLoaded && reservationsLoaded && (
+      {userLoaded && dropInReservationsLoaded && (
         <Router>
           <Header />
           <Switch>
@@ -40,14 +42,12 @@ const CustomRouter: React.FC = () => {
                     routing.expectedGuardValue
                   );
                   break;
-                /*
                 case GuardType.HAS_RESERVATIONS_CHECK:
                   guardFunction = hasReservationsCheck(
-                    reservations,
+                    dropInReservations,
                     routing.expectedGuardValue
                   );
                   break;
-                  */
               }
 
               return (

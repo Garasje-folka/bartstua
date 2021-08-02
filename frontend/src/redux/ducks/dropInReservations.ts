@@ -1,7 +1,4 @@
-import {
-  DropInReservationData,
-  Reservation,
-} from "utils/dist/bookingManagement/types";
+import { DropInReservationData } from "utils/dist/bookingManagement/types";
 import { Doc } from "utils/dist/types";
 import { State } from "../types/state";
 

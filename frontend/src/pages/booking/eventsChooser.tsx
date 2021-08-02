@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
-import {
-  DropInEvent,
-  EventData,
-  EventLocation,
-} from "utils/dist/bookingManagement/types";
+import { DropInEvent, EventLocation } from "utils/dist/bookingManagement/types";
 import { isEqualDates } from "utils/dist/dates/helpers";
 import { DateDay } from "utils/dist/dates/types";
 import { subscribeEvents } from "../../services/bookingManagement";

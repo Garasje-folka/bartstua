@@ -1,6 +1,4 @@
-export const BOOKINGS = "bookings";
 export const EVENTS = "events";
-export const RESERVATIONS = "reservations";
 export const BOOKING_RESERVATIONS = "bookingReservations";
 export const DROP_IN_RESERVATIONS = "dropInReservations";
 export const BOOKING_EVENTS = "bookingEvents";
