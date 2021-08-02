@@ -14,7 +14,9 @@ export const deleteDropInReservation = (
   data: DropInReservationData
 ) => {
   const reservationRef = getReservationsRef(BookingType.dropIn).doc(docid);
-  transaction.delete(reservationRef);
+  transaction.update(reservationRef, {
+    status: "expired",
+  });
 
   const userReservationRef = getUserReservationsRef(
     uid,
