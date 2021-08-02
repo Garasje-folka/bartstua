@@ -34,7 +34,9 @@ const Checkout = () => {
   useEffect(() => {
     // TODO: Add support for guest users
     if (!currentUser?.email) return;
-    createBookingPaymentIntent(currentUser.email);
+    createBookingPaymentIntent(currentUser.email).then((res) => {
+      setPaymentIntent(res);
+    });
   }, []);
 
   const onEmailChanged = (newEmail: string) => {
@@ -64,7 +66,7 @@ const Checkout = () => {
     // TODO: Assert that no reservations have expired?
 
     try {
-      await refreshReservationTimestamps();
+      //await refreshReservationTimestamps();
       const result = await stripe.confirmCardPayment(
         paymentIntent.client_secret,
         {
