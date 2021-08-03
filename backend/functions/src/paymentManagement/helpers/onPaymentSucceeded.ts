@@ -1,99 +1,80 @@
 import * as admin from "firebase-admin";
 import { USERS } from "utils/dist/userManagement/constants";
 import { PAYMENTS } from "../constants";
-import { BOOKINGS, RESERVATIONS } from "utils/dist/bookingManagement/constants";
 import {
-  BookingData,
-  ReservationData,
+  BookingReservationData,
+  BookingType,
+  DropInReservationData,
 } from "utils/dist/bookingManagement/types";
-import { Doc } from "utils/dist/types";
 import { sendBookingConfirmation } from "../../emailManagement";
+import {
+  getReservationsRef,
+  getUserReservationsRef,
+} from "../../bookingManagment/helpers";
 
 export const onPaymentSucceeded = async (
   uid: string,
   email: string,
   paymentIntentId: string
 ) => {
-  const bookingDocs = await admin
-    .firestore()
-    .runTransaction(async (transaction) => {
-      const paymentRef = admin
-        .firestore()
-        .collection(USERS)
-        .doc(uid)
-        .collection(PAYMENTS)
-        .doc(paymentIntentId);
-      const paymentSnapshot = await transaction.get(paymentRef);
-
-      const paymentStatus = paymentSnapshot.get("status");
-      if (paymentStatus === "succeeded") {
-        console.warn(`Duplicate processing on payment: ${paymentIntentId}`);
-        return;
-      }
-
-      const bookingIds = paymentSnapshot.get("bookings");
-
-      const bookingDocs: Doc<BookingData>[] = [];
-
-      for (const id of bookingIds) {
-        const reservationRef = admin
-          .firestore()
-          .collection(RESERVATIONS)
-          .doc(id);
-
-        const reservationSnapshot = await transaction.get(reservationRef);
-
-        if (!reservationSnapshot.exists) {
-          // This means that a reservations has been payed for, but deleted from the database.
-          // No idea how we should handle this, hopefully the situation can be avoided altogether.
-          console.error(
-            `User (${uid}) has payed for an expired reservation (${id})`
-          );
-        } else {
-          const reservationData = reservationSnapshot.data() as ReservationData;
-          const { timestamp, ...bookingData } = reservationData;
-          const bookingDoc = {
-            data: bookingData as BookingData,
-            id: id,
-          };
-          bookingDocs.push(bookingDoc);
-        }
-      }
-
-      for (const doc of bookingDocs) {
-        const userReservationRef = admin
+  try {
+    const [bookings, dropIns] = await admin
+      .firestore()
+      .runTransaction(async (transaction) => {
+        const paymentRef = admin
           .firestore()
           .collection(USERS)
           .doc(uid)
-          .collection(RESERVATIONS)
-          .doc(doc.id);
-        const reservationRef = admin
-          .firestore()
-          .collection(RESERVATIONS)
-          .doc(doc.id);
+          .collection(PAYMENTS)
+          .doc(paymentIntentId);
 
-        transaction.delete(userReservationRef);
-        transaction.delete(reservationRef);
+        // TODO: Checking for duplicate might not be necessary
+        const paymentSnapshot = await transaction.get(paymentRef);
 
-        const bookingRef = admin.firestore().collection(BOOKINGS).doc(doc.id);
-        transaction.set(bookingRef, doc.data);
-      }
+        const paymentStatus = paymentSnapshot.get("status");
+        if (paymentStatus === "succeeded") {
+          console.warn(`Duplicate processing on payment: ${paymentIntentId}`);
+          throw "Duplicate processing on payment";
+        }
 
-      transaction.update(paymentRef, {
-        status: "succeeded",
+        const reservationsInfo = paymentSnapshot.get("reservations");
+
+        const bookings: BookingReservationData[] = [];
+        const dropIns: DropInReservationData[] = [];
+
+        for (const res of reservationsInfo) {
+          const userReservationRef = getUserReservationsRef(uid, res.type).doc(
+            res.id
+          );
+          const snapshot = await transaction.get(userReservationRef);
+          if (res.type === BookingType.booking) {
+            const data = snapshot.data() as BookingReservationData;
+            bookings.push(data);
+          } else if (res.type === BookingType.dropIn) {
+            const data = snapshot.data() as DropInReservationData;
+            dropIns.push(data);
+          }
+        }
+
+        for (const res of reservationsInfo) {
+          const reservationRef = getReservationsRef(res.type).doc(res.id);
+          const userReservationRef = getUserReservationsRef(uid, res.type).doc(
+            res.id
+          );
+
+          transaction.delete(userReservationRef);
+          transaction.update(reservationRef, {
+            status: "payed",
+          });
+        }
+
+        transaction.update(paymentRef, {
+          status: "succeeded",
+        });
+
+        return [bookings, dropIns];
       });
 
-      return bookingDocs;
-    });
-
-  if (bookingDocs) {
-    sendBookingConfirmation(
-      email,
-      bookingDocs.map((doc) => {
-        return doc.data as BookingData;
-      })
-    );
-  } else {
-    // TODO: Throw error?
-  }
+    sendBookingConfirmation(email, bookings, dropIns);
+  } catch (error) {}
 };

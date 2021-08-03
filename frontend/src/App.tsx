@@ -9,28 +9,33 @@ import GoogleFontLoader from "react-google-font-loader";
 import { FontProvider } from "./App.styled";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import { BackgroundProvider } from "./components/backgroundProvider/backgroundProvider";
 
 const stripePromise = loadStripe(
   "pk_test_51J8ooNCgA1stADyYs9YFrQfaFn30XOHqSC3JHYMqF71Zypq8qak2f8xkv83qEdueDGsHzlWCUlqqAsEFZRfajQDZ00llM6Ed5w"
 );
-
-const fonts = [
+const fontConfig = [
   {
     font: "Roboto",
-    weights: [100, "400i"],
+    weights: [100, 200, 300, 400, 500, 600, 700],
   },
 ];
 
 const App = () => {
   return (
     <Elements stripe={stripePromise}>
-      <GoogleFontLoader fonts={fonts} subsets={["cyrillic-ext", "greek"]} />
+      <GoogleFontLoader
+        fonts={fontConfig}
+        subsets={["cyrillic-ext", "greek"]}
+      />
       <Provider store={store}>
         <ThemeProvider theme={themeConfig}>
-          <MainService />
-          <FontProvider>
-            <CustomRouter />
-          </FontProvider>
+          <BackgroundProvider>
+            <MainService />
+            <FontProvider>
+              <CustomRouter />
+            </FontProvider>
+          </BackgroundProvider>
         </ThemeProvider>
       </Provider>
     </Elements>

@@ -11,3 +11,5 @@ export * from "./isToday";
 export * from "./isValidDateHour";
 export * from "./dateDayToISO";
 export * from "./dateHourToISO";
+export * from "./dateTimeToISO";
+export * from "./isValidDateTime";

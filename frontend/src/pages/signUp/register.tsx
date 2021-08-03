@@ -22,10 +22,10 @@ import {
   SignInButton,
 } from "../signUp/signUp.styled";
 import { Heading, Paragraph } from "../../components/text";
-import { EmailIcon, PasswordIcon, SignInIcon, SignUpIcon } from "../../icons";
 import { InputFieldSize } from "../../components/form/inputField";
 import { SIGNIN } from "../../router/routeConstants";
 import { useHistory } from "react-router";
+import { IconType } from "../../icons";
 
 const Register = () => {
   const history = useHistory();
@@ -121,7 +121,7 @@ const Register = () => {
             <StyledFormContainer onSubmit={() => {}}>
               <EmailField
                 ghostText={t("label_email")}
-                icon={EmailIcon}
+                icon={IconType.EmailIcon}
                 size={InputFieldSize.SMALL}
                 onChange={(event) => setEmail(event.target.value)}
                 type="email"
@@ -130,7 +130,7 @@ const Register = () => {
               />
               <PasswordField
                 ghostText={t("label_password")}
-                icon={PasswordIcon}
+                icon={IconType.PasswordIcon}
                 size={InputFieldSize.SMALL}
                 onChange={(event) => setPassword(event.target.value)}
                 type="password"
@@ -138,7 +138,7 @@ const Register = () => {
                 errorText={errorPassword1}
               />
               <PasswordField
-                icon={PasswordIcon}
+                icon={IconType.PasswordIcon}
                 ghostText={t("label_repeat_password")}
                 size={InputFieldSize.SMALL}
                 onChange={(event) => setPasswordConf(event.target.value)}
@@ -146,7 +146,7 @@ const Register = () => {
                 type="password"
                 errorText={errorPassword2}
               />
-              <SignUpButton icon={SignUpIcon} onClick={handleSubmit}>
+              <SignUpButton icon={IconType.SignUpIcon} onClick={handleSubmit}>
                 {t("label_register_user")}
               </SignUpButton>
             </StyledFormContainer>
@@ -170,7 +170,7 @@ const Register = () => {
               </Paragraph>
             </ParagraphContainer>
             <SignInButton
-              icon={SignInIcon}
+              icon={IconType.SignInIcon}
               onClick={() => history.push(SIGNIN)}
             >
               {t("label_sign_in")}

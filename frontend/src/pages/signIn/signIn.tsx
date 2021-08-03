@@ -25,7 +25,7 @@ import {
 } from "./signIn.styled";
 import { Heading, Paragraph } from "../../components/text";
 import { ParagraphText } from "./signIn.styled";
-import { EmailIcon, PasswordIcon, SignInIcon, SignUpIcon } from "../../icons";
+import { IconType } from "../../icons";
 import { REGISTER } from "../../router/routeConstants";
 
 const SignIn = () => {
@@ -99,7 +99,7 @@ const SignIn = () => {
               </Paragraph>
             </ParagraphContainer>
             <SignUpButton
-              icon={SignUpIcon}
+              icon={IconType.SignUpIcon}
               onClick={() => history.push(REGISTER)}
             >
               {t("label_register_user")}
@@ -120,7 +120,7 @@ const SignIn = () => {
             <StyledFormContainer>
               <EmailField
                 ghostText="E-post"
-                icon={EmailIcon}
+                icon={IconType.EmailIcon}
                 size={InputFieldSize.SMALL}
                 onChange={handleEmailChange}
                 type="email"
@@ -129,7 +129,7 @@ const SignIn = () => {
               />
               <PasswordField
                 ghostText="Passord"
-                icon={PasswordIcon}
+                icon={IconType.PasswordIcon}
                 size={InputFieldSize.SMALL}
                 onChange={handlePasswordChange}
                 type="password"
@@ -143,7 +143,7 @@ const SignIn = () => {
               >
                 {t("label_forgot_password")}
               </ForgotPasswordLink>
-              <SignInButton icon={SignInIcon} onClick={handleSubmit}>
+              <SignInButton icon={IconType.SignInIcon} onClick={handleSubmit}>
                 {t("label_sign_in")}
               </SignInButton>
             </StyledFormContainer>

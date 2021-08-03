@@ -1,7 +1,11 @@
-export const BOOKINGS = "bookings";
 export const EVENTS = "events";
-export const RESERVATIONS = "reservations";
-export const MAX_EVENT_SPACES = 10;
-export const BOOKING_STARTING_TIME = 6;
-export const BOOKING_ENDING_TIME = 22;
+export const BOOKING_RESERVATIONS = "bookingReservations";
+export const DROP_IN_RESERVATIONS = "dropInReservations";
+export const BOOKING_EVENTS = "bookingEvents";
+export const DROP_IN_EVENTS = "dropInEvents";
+export const MAX_DROP_IN_SPACES = 10;
+export const BOOKING_STARTING_TIME = 8;
+export const BOOKING_ENDING_TIME = 20;
 export const RESERVATION_EXPIRATION_TIME = 10; // Number of minutes
+export const BOOKING_PRICE = 999;
+export const DROP_IN_PRICE = 179;

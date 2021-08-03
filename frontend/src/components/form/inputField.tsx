@@ -6,7 +6,7 @@ import {
   StyledFormControl,
   Wrapper,
   IconWrapper,
-  styleIcon,
+  StyledIcon,
 } from "./inputField.styled";
 
 declare type FormControlElement =
@@ -54,8 +54,6 @@ const InputField: InputFieldType = (props) => {
     className,
   } = props;
 
-  const Icon = icon ? styleIcon(icon) : undefined;
-
   return (
     <Wrapper
       className={className}
@@ -63,7 +61,11 @@ const InputField: InputFieldType = (props) => {
       $largeSpacing={largeSpacing || false}
     >
       <StyledFormGroup>
-        <IconWrapper>{Icon && <Icon />}</IconWrapper>
+        {icon && (
+          <IconWrapper>
+            <StyledIcon icon={icon} />
+          </IconWrapper>
+        )}
         {label ? <Form.Label>{label}</Form.Label> : undefined}
         {description ? <Form.Text>{"\n" + description}</Form.Text> : undefined}
         <StyledFormControl

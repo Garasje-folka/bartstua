@@ -1,8 +1,8 @@
-import { DateHour } from "../../dates/types";
-import { dateHourToISO } from "../../dates/helpers";
+import { DateTime } from "../../dates/types";
+import { dateTimeToISO } from "../../dates/helpers";
 
-const getEventId = (date: DateHour) => {
-  return dateHourToISO(date, true, true, true, true);
+const getEventId = (time: DateTime) => {
+  return dateTimeToISO(time, true, true, true, true);
 };
 
 export { getEventId };

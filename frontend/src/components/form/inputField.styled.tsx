@@ -1,6 +1,6 @@
 import { Form } from "react-bootstrap";
 import styled, { css } from "styled-components";
-import { IconType } from "../../icons";
+import { Icon } from "../../icons";
 import { InputFieldSize } from "./inputField";
 
 interface ErrorProps {
@@ -97,6 +97,6 @@ export const IconWrapper = styled.div`
   pointer-events: none;
 `;
 
-export const styleIcon = (icon: IconType) => styled(icon)`
+export const StyledIcon = styled(Icon)`
   color: ${({ theme }) => theme.form.colors.GREYED_OUT};
 `;

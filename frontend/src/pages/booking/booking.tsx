@@ -1,71 +1,88 @@
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Calendar } from "../../components/calendar/calendar";
+import { backgroundTypes, useBackground } from "../../hooks/useBackground";
+import {
+  CalendarCard,
+  Card,
+  CardColors,
+  CardSizes,
+  CenterContentProvider,
+  ContentContainer,
+} from "./booking.styled";
+import { SpacesCounter } from "./spacesCounter";
+import { SaunaChooser } from "./saunaChooser";
+import { EventsChooser } from "./eventsChooser";
 import { createDateDayFromDate } from "utils/dist/dates/helpers";
-import { DatePicker } from "../../components/datePicker";
-import { TimePicker } from "../../components/timePicker";
-import { CART, HOME } from "../../router/routeConstants";
-import { OuterContainer, NextButton, BackButton } from "./booking.styled";
-
-enum BookingState {
-  DATE_PICKING,
-  TIME_PICKING,
-}
+import {
+  DropInEvent,
+  DropInReservationRequest,
+  EventLocation,
+} from "utils/dist/bookingManagement/types";
+import { Button } from "../../components/button";
+import { addDropInReservations } from "../../services/bookingManagement";
 
 const Booking = () => {
   const [date, setDate] = useState<Date>(new Date());
   const [spaces, setSpaces] = useState<number>(1);
-  const [bookingState, setBookingState] = useState<BookingState>(
-    BookingState.DATE_PICKING
-  );
+  const [selectedEvents, setSelectedEvents] = useState<DropInEvent[]>([]);
+  const { switchBackground } = useBackground();
 
-  const history = useHistory();
+  useEffect(() => {
+    switchBackground(backgroundTypes.BOOKING_WALLPAPER);
+  }, [switchBackground]);
 
-  const onNextPressed = () => {
-    switch (bookingState) {
-      case BookingState.DATE_PICKING:
-        setBookingState(BookingState.TIME_PICKING);
-        break;
-      case BookingState.TIME_PICKING:
-        history.push(CART);
-        break;
+  useEffect(() => {
+    setSelectedEvents([]);
+  }, [spaces, date]);
+
+  const addToCart = async () => {
+    const requests = selectedEvents.map((e) => {
+      const reservationRequest = {
+        time: e.time,
+        spaces: spaces,
+        location: EventLocation.loation1,
+      } as DropInReservationRequest;
+
+      return reservationRequest;
+    });
+
+    try {
+      await addDropInReservations(requests);
+    } catch (error) {
+      console.log(error);
     }
-  };
 
-  const onBackPressed = () => {
-    switch (bookingState) {
-      case BookingState.DATE_PICKING:
-        history.push(HOME);
-        break;
-      case BookingState.TIME_PICKING:
-        setBookingState(BookingState.DATE_PICKING);
-        break;
-    }
-  };
-
-  const getStateComponent = () => {
-    switch (bookingState) {
-      case BookingState.DATE_PICKING:
-        return (
-          <DatePicker
-            date={date}
-            setDate={setDate}
-            spaces={spaces}
-            setSpaces={setSpaces}
-          />
-        );
-      case BookingState.TIME_PICKING:
-        return (
-          <TimePicker dateDay={createDateDayFromDate(date)} spaces={spaces} />
-        );
-    }
+    setSelectedEvents([]);
   };
 
   return (
-    <OuterContainer>
-      {getStateComponent()}
-      <BackButton onClick={onBackPressed}> Tilbake </BackButton>
-      <NextButton onClick={onNextPressed}> Videre </NextButton>
-    </OuterContainer>
+    <CenterContentProvider>
+      <ContentContainer>
+        <Card size={CardSizes.BIG} color={CardColors.PRIMARY}>
+          <SaunaChooser />
+        </Card>
+        <CalendarCard size={CardSizes.SMALL}>
+          <Calendar date={date} setDate={setDate} minDate={new Date()} />
+        </CalendarCard>
+        <CalendarCard>
+          <EventsChooser
+            dateDay={createDateDayFromDate(date)}
+            spaces={spaces}
+            selectedEvents={selectedEvents}
+            setSelectedEvents={setSelectedEvents}
+          ></EventsChooser>
+        </CalendarCard>
+        <CalendarCard
+          size={CardSizes.EXTRA_SMALL}
+          color={CardColors.PRIMARY_LIGHT}
+        >
+          <SpacesCounter spaces={spaces} setSpaces={setSpaces} />
+        </CalendarCard>
+        <Button onClick={addToCart} disabled={selectedEvents.length === 0}>
+          Legg til i handlekurv
+        </Button>
+      </ContentContainer>
+    </CenterContentProvider>
   );
 };
 

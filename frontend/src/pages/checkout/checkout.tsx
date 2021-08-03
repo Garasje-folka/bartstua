@@ -12,7 +12,7 @@ import { Notification, NotificationType } from "../../components/notification";
 import { validate } from "email-validator";
 import { useEffect } from "react";
 import { PaymentIntent } from "@stripe/stripe-js";
-import { createBookingPaymentIntent } from "../../services/bookingManagement/createBookingPaymentIntent";
+import { createBookingPaymentIntent } from "../../services/paymentManagement";
 import { refreshReservationTimestamps } from "../../services/bookingManagement";
 
 const Checkout = () => {
@@ -32,18 +32,13 @@ const Checkout = () => {
   const history = useHistory();
 
   useEffect(() => {
+    // TODO: Add support for guest users
     refreshReservationTimestamps()
       .then(() => {
-        // TODO: Add support for guest users
-        if (!currentUser?.email) return null;
+        if (!currentUser?.email) return;
         return createBookingPaymentIntent(currentUser.email);
       })
-      .then((res) => {
-        if (res) setPaymentIntent(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      .then((res) => setPaymentIntent(res));
   }, []);
 
   const onEmailChanged = (newEmail: string) => {
@@ -73,7 +68,7 @@ const Checkout = () => {
     // TODO: Assert that no reservations have expired?
 
     try {
-      await refreshReservationTimestamps();
+      //await refreshReservationTimestamps();
       const result = await stripe.confirmCardPayment(
         paymentIntent.client_secret,
         {

@@ -3,24 +3,26 @@ import { Header } from "../components/header";
 import { useSelector } from "react-redux";
 import { currentUserSelector } from "../redux/selectors";
 import { currentUserLoadedSelector } from "../redux/ducks/currentUser";
-import { reservationsLoadedSelector } from "../redux/ducks/reservations";
+import { dropInReservationsLoadedSelector } from "../redux/ducks/dropInReservations";
 import { routings } from "./routings";
 import { emailSignInCheck, verifiedEmailCheck } from "./guards";
 import { GuardFunction } from "./types/guardFunction";
 import { GuardedRoute } from "./guardedRoute";
 import { GuardType } from "./types/routing";
-import { reservationsSelector } from "../redux/ducks/reservations";
+import { dropInReservationsSelector } from "../redux/ducks/dropInReservations";
 import { hasReservationsCheck } from "./guards/hasReservationsCheck";
 
 const CustomRouter: React.FC = () => {
   const currentUser = useSelector(currentUserSelector);
   const userLoaded = useSelector(currentUserLoadedSelector);
-  const reservations = useSelector(reservationsSelector);
-  const reservationsLoaded = useSelector(reservationsLoadedSelector);
+  const dropInReservations = useSelector(dropInReservationsSelector);
+  const dropInReservationsLoaded = useSelector(
+    dropInReservationsLoadedSelector
+  );
 
   return (
     <>
-      {userLoaded && reservationsLoaded && (
+      {userLoaded && dropInReservationsLoaded && (
         <Router>
           <Header />
           <Switch>
@@ -42,7 +44,7 @@ const CustomRouter: React.FC = () => {
                   break;
                 case GuardType.HAS_RESERVATIONS_CHECK:
                   guardFunction = hasReservationsCheck(
-                    reservations,
+                    dropInReservations,
                     routing.expectedGuardValue
                   );
                   break;

@@ -1,11 +1,15 @@
 export const themeConfig = {
   colorPalette: {
     primary: {
-      default: "#0a58ca",
+      default: "#296B79",
+      light: "#CFE3EA",
+    },
+    secondary: {
+      default: "#ED5F50",
     },
   },
   radius: {
-    ROUND: "5px",
+    ROUND: "10px",
   },
   alignment: {
     margin: {
@@ -24,7 +28,7 @@ export const themeConfig = {
     minHeight: "0px",
   },
   shadow: {
-    REGULAR: "0px 4px 17px 0px rgba(0,0,0,0.10)",
+    REGULAR: "0px 4px 22px rgba(0, 0, 0, 0.25)",
   },
   form: {
     colors: {
@@ -33,6 +37,25 @@ export const themeConfig = {
       GREYED_OUT: "#6D757D",
     },
   },
+  text: {
+    weight: {
+      THIN: "300",
+      REGULAR: "400",
+      BOLD: "600",
+    },
+    color: {
+      PRIMARY: "black",
+      INVERTED: "white",
+    },
+    size: {
+      CARD_HEADER: "1.8rem",
+      CARD_HIGHLIGHTED: "1.2rem",
+    },
+    lineHeight: {
+      REGULAR: "1rem",
+      LARGE: "2rem",
+    },
+  },
 };
 
-export const Theme = typeof themeConfig;
+export type Theme = typeof themeConfig;

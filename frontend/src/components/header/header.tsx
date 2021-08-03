@@ -16,7 +16,6 @@ import { Button } from "../button";
 import { useMobileScreen } from "../../hooks/useMobileScreen";
 import { DropDownNavigation } from "./dropDownNavigation";
 import { NavigationItems } from "./types/navigationItems";
-import { SignOutIcon } from "../../icons";
 import {
   ABOUT,
   BOOKING,
@@ -24,6 +23,7 @@ import {
   SIGNIN,
   REGISTER,
 } from "../../router/routeConstants";
+import { IconType } from "../../icons";
 import Logonobg from "../../assets/logo-nobg.png";
 
 const Header = () => {
@@ -51,7 +51,7 @@ const Header = () => {
   ];
 
   const signOutButton: React.ReactNode = (
-    <Button icon={SignOutIcon} onClick={handleSignOut}>
+    <Button icon={IconType.SignOutIcon} onClick={handleSignOut}>
       Logg ut
     </Button>
   );
@@ -61,24 +61,22 @@ const Header = () => {
   );
 
   const registerButton: React.ReactNode = (
-    <RegisterButton onClick={() => history.push(REGISTER)}>Registrer</RegisterButton>
+    <RegisterButton onClick={() => history.push(REGISTER)}>
+      Registrer
+    </RegisterButton>
   );
 
   return (
     <StyledNavbar bg="light" expand="lg">
-      
       <LeftAlignedContent>
-       
-        <Navbar.Brand onClick={() => history.push(HOME)}> <img src={Logonobg}
-          height="55"></img>
+        <Navbar.Brand onClick={() => history.push(HOME)}>
+          <img src={Logonobg} height="55"></img>
         </Navbar.Brand>
-      
       </LeftAlignedContent>
-      
+
       <RightAlignedContent>
-      
-      {isMobileScreen ? (
-          <DropDownNavigation items={items}/>
+        {isMobileScreen ? (
+          <DropDownNavigation items={items} />
         ) : (
           <Nav className="mr-auto">
             {items.map((item) => (
@@ -88,7 +86,7 @@ const Header = () => {
             ))}
           </Nav>
         )}
-        
+
         {currentUser && currentUser.email ? (
           signOutButton
         ) : (
@@ -98,9 +96,6 @@ const Header = () => {
           </>
         )}
       </RightAlignedContent>
-      {/* <h1>
-          {currentUser?.email} + {currentUser?.emailVerified ? "ja" : "nei"}
-        </h1> */}
     </StyledNavbar>
   );
 };

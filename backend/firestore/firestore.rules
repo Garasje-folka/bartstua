@@ -2,62 +2,17 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    function is____DateHour(data, prev) {
-      return data.keys().hasAll(['hour', 'year', 'month', 'day'])
-      && data.size() >= 4 && data.size() <= 4
-      && data.keys().hasOnly(['hour', 'year', 'month', 'day'])
-      && data['hour'] is int
-      && data['year'] is int
-      && data['month'] is int
-      && data['day'] is int;
+    match /users/{userDoc}/dropInReservations/{reservationDoc} {
+      allow read: if userDoc == request.auth.uid;
     }
-    function is____EventData(data, prev) {
-      return data.keys().hasAll(['spacesTaken', 'date'])
-      && data.size() >= 2 && data.size() <= 2
-      && data.keys().hasOnly(['spacesTaken', 'date'])
-      && data['spacesTaken'] is int
-      && is____DateHour(data['date'], prev!=null && 'date' in prev ? prev['date'] : null);
+    match /users/{userDoc}/bookingReservations/{reservationDoc} {
+      allow read: if userDoc == request.auth.uid;
     }
-    function is____ReservationData(data, prev) {
-      return data.keys().hasAll(['date', 'spaces', 'timestamp'])
-      && data.size() >= 3 && data.size() <= 3
-      && data.keys().hasOnly(['date', 'spaces', 'timestamp'])
-      && is____DateHour(data['date'], prev!=null && 'date' in prev ? prev['date'] : null)
-      && data['spaces'] is int
-      && data['timestamp'] is int;
-    }
-    function is____BookingData(data, prev) {
-      return data.keys().hasAll(['date', 'spaces', 'uid'])
-      && data.size() >= 3 && data.size() <= 3
-      && data.keys().hasOnly(['date', 'spaces', 'uid'])
-      && is____DateHour(data['date'], prev!=null && 'date' in prev ? prev['date'] : null)
-      && data['spaces'] is int
-      && data['uid'] is string;
-    }
-    function maximumAvailableSpaces() {
-      return 10;
-    }
-    function isAuthenticated() {
-      let a = request.auth;
-      return a != null;
-    }
-    function isRequestedByCurrentUser() {
-      return resource.data.uid == request.auth.uid;
-    }
-    function dataContainsUid(bookingId) {
-      return request.resource.data.uid == request.auth.uid;
-    }
-    match /events/{eventDoc} {
-      function is______PathType(data, prev) {
-        return is____EventData(data, prev!=null ? prev : null);
-      }
+    match /events/{locationDoc}/dropInEvents/{eventDoc} {
       allow read: if true;
     }
-    match /users/{userDoc}/reservations/{reservationDoc} {
-      function is______PathType(data, prev) {
-        return is____ReservationData(data, prev!=null ? prev : null);
-      }
-      allow read: if userDoc == request.auth.uid;
+    match /events/{locationDoc}/bookingEvents/{eventDoc} {
+      allow read: if true;
     }
   }
 }

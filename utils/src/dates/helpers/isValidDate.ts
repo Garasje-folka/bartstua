@@ -2,7 +2,8 @@ const isValidDate = (
   year: number,
   month: number,
   day: number,
-  hour?: number
+  hour?: number,
+  minute?: number
 ) => {
   if (!Number.isInteger(year) || year < 0) return false;
 
@@ -11,6 +12,9 @@ const isValidDate = (
   if (!Number.isInteger(day) || day < 1 || day > 31) return false;
 
   if (hour && (!Number.isInteger(hour) || hour < 0 || hour > 23)) return false;
+
+  if (minute && (!Number.isInteger(minute) || minute < 0 || minute > 59))
+    return false;
 
   if (month === 2) {
     if (isLeapYear(year)) return day <= 29;
