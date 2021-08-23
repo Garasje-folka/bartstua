@@ -40,14 +40,19 @@ export default function reducer(
   switch (action.type) {
     case RESERVATIONS_UPDATE:
       const reservations = action.data?.reservations;
-      return {
-        data: reservations ? [...reservations] : [],
-        status: {
-          ...state?.status,
-          loaded: true,
-          lastUpdated: new Date().toJSON(),
-        },
-      };
+
+      return reservations
+        ? {
+            data: [...reservations],
+            status: {
+              ...state?.status,
+              loaded: true,
+              lastUpdated: new Date().toJSON(),
+            },
+          }
+        : {
+            ...state,
+          };
     default:
       return state;
   }

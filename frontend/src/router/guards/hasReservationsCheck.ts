@@ -7,10 +7,10 @@ import { GuardFunction } from "../types/guardFunction";
 const hasReservationsCheck: (
   dropInReservations: Doc<DropInReservationData>[],
   expectedValue?: boolean
-) => GuardFunction = (reservations, expectedValue) => () => ({
+) => GuardFunction = (dropInReservations, expectedValue) => () => ({
   accepted:
-    (expectedValue && reservations.length > 0) ||
-    (!expectedValue && reservations.length === 0),
+    (expectedValue && dropInReservations.length > 0) ||
+    (!expectedValue && dropInReservations.length === 0),
   redirectPath: expectedValue ? BOOKING : HOME,
 });
 

@@ -12,7 +12,10 @@ import { Notification, NotificationType } from "../../components/notification";
 import { validate } from "email-validator";
 import { useEffect } from "react";
 import { PaymentIntent } from "@stripe/stripe-js";
-import { createBookingPaymentIntent } from "../../services/paymentManagement";
+import {
+  confirmBookingPaymentIntent,
+  createBookingPaymentIntent,
+} from "../../services/paymentManagement";
 import { refreshReservationTimestamps } from "../../services/bookingManagement";
 
 const Checkout = () => {
@@ -35,6 +38,7 @@ const Checkout = () => {
     // TODO: Add support for guest users
     refreshReservationTimestamps()
       .then(() => {
+        // TODO: Attach email at confirmation if guest user
         if (!currentUser?.email) return;
         return createBookingPaymentIntent(currentUser.email);
       })
@@ -69,22 +73,24 @@ const Checkout = () => {
 
     try {
       //await refreshReservationTimestamps();
-      const result = await stripe.confirmCardPayment(
-        paymentIntent.client_secret,
-        {
-          payment_method: {
-            card: card,
-          },
-        }
+      const paymentMethod = await stripe.createPaymentMethod({
+        type: "card",
+        card: card,
+      });
+
+      let resultIntent = await confirmBookingPaymentIntent(
+        paymentIntent.id,
+        paymentMethod.paymentMethod?.id
       );
 
-      const resultIntent = result.paymentIntent;
-      const action = resultIntent?.next_action;
-
-      if (action && action.type === "redirect_to_url") {
-        if (action.redirect_to_url?.url) {
-          window.location.href = action.redirect_to_url.url;
-        }
+      if (
+        resultIntent.status === "requires_action" &&
+        resultIntent.client_secret
+      ) {
+        // 3D secure payment
+        await stripe.handleCardAction(resultIntent.client_secret);
+        // Confirm payment on server side again
+        resultIntent = await confirmBookingPaymentIntent(paymentIntent.id);
       }
 
       if (resultIntent?.status === "succeeded") {
