@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { SliderSpan, SwitchLabel } from "./switch.styled";
 
 type Props = {

@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Button } from "../../components/button";
 import { FormContainer, InputField } from "../../components/form";
 import background from "./media/sauna2.jpg";
