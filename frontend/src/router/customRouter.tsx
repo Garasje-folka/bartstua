@@ -11,7 +11,6 @@ import { GuardedRoute } from "./guardedRoute";
 import { GuardType } from "./types/routing";
 import { dropInReservationsSelector } from "../redux/ducks/dropInReservations";
 import { hasReservationsCheck } from "./guards/hasReservationsCheck";
-import { useEffect } from "react";
 
 const CustomRouter: React.FC = () => {
   const currentUser = useSelector(currentUserSelector);

@@ -9,10 +9,18 @@ const confirmBookingPaymentIntent = async (
     .functions()
     .httpsCallable("confirmBookingPaymentIntent");
   try {
-    const data = {
-      paymentIntentId: paymentIntentId,
-      paymentMethodId: paymentMethodId,
-    };
+    let data;
+    if (paymentMethodId) {
+      data = {
+        paymentIntentId: paymentIntentId,
+        paymentMethodId: paymentMethodId,
+      };
+    } else {
+      data = {
+        paymentIntentId: paymentIntentId,
+      };
+    }
+
     const result = await call(data);
     return result.data;
   } catch (error) {

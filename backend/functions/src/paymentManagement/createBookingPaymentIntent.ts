@@ -2,7 +2,7 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as yup from "yup";
 import { checkAuthentication, checkData } from "../helpers";
-import { getUserReservationsRef } from "../bookingManagment/helpers";
+import { getUserReservationsRef } from "../bookingManagement/helpers";
 import { isExpiredReservation } from "utils/dist/bookingManagement/helpers";
 import {
   BookingReservationData,
@@ -17,6 +17,16 @@ import { PAYMENTS } from "../paymentManagement/constants";
 const dataSchema = yup.object({
   email: yup.string().required(),
 });
+
+export type PaymentReservation = {
+  id: string;
+  type: BookingType;
+};
+
+export type UserBookingPayment = {
+  reservations: PaymentReservation[];
+  status: string;
+};
 
 export const createBookingPaymentIntent = functions.https.onCall(
   async (data, context) => {
