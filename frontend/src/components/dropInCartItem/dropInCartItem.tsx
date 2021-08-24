@@ -11,7 +11,10 @@ import { dateDayToISO } from "utils/dist/dates/helpers";
 import { Button } from "../button";
 import { CardBody, CardContainer } from "../card";
 import { Heading } from "../text";
-import { VeriticalAlignedTextContainer } from "./dropInCartItem.styled";
+import {
+  BackgroundReservation,
+  VeriticalAlignedTextContainer,
+} from "./dropInCartItem.styled";
 
 export type CartItemProps = {
   dropInReservationDoc: Doc<DropInReservationData>;
@@ -34,7 +37,7 @@ const DropInCartItem = (props: CartItemProps) => {
     }
   };
   return (
-    <CardContainer>
+    <BackgroundReservation>
       <CardBody>
         <VeriticalAlignedTextContainer>
           <Heading type={Heading.types.HEADING4}>
@@ -52,7 +55,7 @@ const DropInCartItem = (props: CartItemProps) => {
           <Button onClick={handleReservationDelete}>Slett</Button>
         </VeriticalAlignedTextContainer>
       </CardBody>
-    </CardContainer>
+    </BackgroundReservation>
   );
 };
 
