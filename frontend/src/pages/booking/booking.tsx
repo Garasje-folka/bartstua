@@ -20,6 +20,7 @@ import {
 } from "utils/dist/bookingManagement/types";
 import { Button } from "../../components/button";
 import { addDropInReservations } from "../../services/bookingManagement";
+import { BookingTypeChooser } from "./bookingTypeChooser";
 
 const Booking = () => {
   const [date, setDate] = useState<Date>(new Date());
@@ -64,20 +65,20 @@ const Booking = () => {
         <CalendarCard size={CardSizes.SMALL}>
           <Calendar date={date} setDate={setDate} minDate={new Date()} />
         </CalendarCard>
-        <CalendarCard>
+        <Card>
           <EventsChooser
             dateDay={createDateDayFromDate(date)}
             spaces={spaces}
             selectedEvents={selectedEvents}
             setSelectedEvents={setSelectedEvents}
-          ></EventsChooser>
-        </CalendarCard>
-        <CalendarCard
-          size={CardSizes.EXTRA_SMALL}
-          color={CardColors.PRIMARY_LIGHT}
-        >
+          />
+        </Card>
+        <Card size={CardSizes.EXTRA_SMALL}>
+          <BookingTypeChooser />
+        </Card>
+        {/* <Card size={CardSizes.EXTRA_SMALL} color={CardColors.PRIMARY_LIGHT}>
           <SpacesCounter spaces={spaces} setSpaces={setSpaces} />
-        </CalendarCard>
+        </Card> */}
         <Button onClick={addToCart} disabled={selectedEvents.length === 0}>
           Legg til i handlekurv
         </Button>
