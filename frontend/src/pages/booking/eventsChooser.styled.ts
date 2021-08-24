@@ -1,6 +1,5 @@
 import { Theme } from "../../app.theme";
 import styled from "styled-components";
-import { Button } from "../../components/button";
 
 export const Wrapper = styled.div`
   height: 100%;

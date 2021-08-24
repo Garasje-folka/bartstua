@@ -66,6 +66,7 @@ const EventsChooser = (props: Props) => {
           />
         );
       }
+      return null;
     });
   };
 
