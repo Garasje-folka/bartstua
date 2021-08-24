@@ -11,7 +11,8 @@
     "emulators": "cd backend && firebase emulators:start",
     "start:backend": "concurrently -m 1 --kill-others \"yarn workspace firestore compile-rules\" \"yarn workspace functions install\" \"yarn workspace functions build\" \"cd backend && firebase emulators:start\"",
     "start:shared": "yarn workspace utils build-watch",
-    "start": "concurrently -m 4 --kill-others \"yarn start:shared\" \"yarn start:backend\" \"yarn start:frontend\" \"stripe listen --forward-to localhost:5001/bartstua/us-central1/webhook --events payment_intent.succeeded\""
+    "start": "concurrently -m 4 --kill-others \"yarn start:shared\" \"yarn start:backend\" \"yarn start:frontend\" \"stripe listen --forward-to localhost:5001/bartstua/us-central1/webhook --events payment_intent.succeeded\"",
+    "build:frontend": "yarn workspace frontend build"
   },
   "dependencies": {
     "concurrently": "^6.2.0",
