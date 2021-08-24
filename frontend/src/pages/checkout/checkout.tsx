@@ -39,7 +39,7 @@ const Checkout = () => {
         return createBookingPaymentIntent(currentUser.email);
       })
       .then((res) => setPaymentIntent(res));
-  }, []);
+  }, [currentUser?.email]);
 
   const onEmailChanged = (newEmail: string) => {
     if (!validate(newEmail)) {
