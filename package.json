@@ -13,7 +13,7 @@
     "start:shared": "yarn workspace utils build-watch",
     "start": "concurrently -m 4 --kill-others \"yarn start:shared\" \"yarn start:backend\" \"yarn start:frontend\" \"stripe listen --forward-to localhost:5001/bartstua/us-central1/webhook --events payment_intent.succeeded\"",
     "build:frontend": "yarn workspace frontend build",
-    "build:shared": "yarn workspace shared build"
+    "build:shared": "yarn workspace utils build"
   },
   "dependencies": {
     "concurrently": "^6.2.0",
