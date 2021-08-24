@@ -10,7 +10,6 @@ import { FontProvider } from "./App.styled";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { BackgroundProvider } from "./components/backgroundProvider/backgroundProvider";
-import { useEffect } from "react";
 
 const stripePromise = loadStripe(
   "pk_test_51J8ooNCgA1stADyYs9YFrQfaFn30XOHqSC3JHYMqF71Zypq8qak2f8xkv83qEdueDGsHzlWCUlqqAsEFZRfajQDZ00llM6Ed5w"
