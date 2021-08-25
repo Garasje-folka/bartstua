@@ -11,6 +11,10 @@ export const themeConfig = {
       default: "#505050",
       light: "#cccccc",
     },
+    blended: {
+      default: "#ffffff",
+      dark: "#f9f9f9",
+    },
   },
   radius: {
     ROUND: "10px",

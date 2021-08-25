@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IconType } from "../../icons";
@@ -10,10 +11,17 @@ import {
   TextDescription,
   TextHeader,
   TextWrapper,
+  CounterWrapper,
+  animationTimeMs,
 } from "./bookingTypeChooser.styled";
+import { SpacesCounter } from "./spacesCounter";
 
 export type BookingTypeChooserProps = {
   className?: string;
+  spaces: number;
+  setSpaces: React.Dispatch<React.SetStateAction<number>>;
+  wholeSauna: boolean;
+  setWholeSauna: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const BookingTypes = {
@@ -26,11 +34,29 @@ type BookingType = typeof BookingTypes[keyof typeof BookingTypes];
 export const BookingTypeChooser: React.FC<BookingTypeChooserProps> = (
   props: BookingTypeChooserProps
 ) => {
-  const { className } = props;
+  const { className, setSpaces, spaces, setWholeSauna } = props;
   const { t } = useTranslation();
 
   const [selectedBookingType, setSelectedBookingType] =
     useState<BookingType | null>();
+  const [showingDropInStage, setShowingDropInStage] = useState<boolean>(false);
+
+  const startDropInAnimation = selectedBookingType === BookingTypes.DROP_IN;
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowingDropInStage(startDropInAnimation);
+      setSpaces(1);
+    }, animationTimeMs);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [startDropInAnimation, setShowingDropInStage, setSpaces]);
+
+  useEffect(() => {
+    setWholeSauna(selectedBookingType === BookingTypes.FULL_SAUNA);
+  }, [selectedBookingType, setWholeSauna]);
 
   const Option = ({
     title,
@@ -50,31 +76,48 @@ export const BookingTypeChooser: React.FC<BookingTypeChooserProps> = (
       onClick={() => setSelectedBookingType(bookingType)}
     >
       <OptionIcon icon={icon} />
-      <TextWrapper>
+      <TextWrapper highlighted={selectedBookingType === bookingType}>
         <TextHeader>{title}</TextHeader>
-        <TextDescription>{description}</TextDescription>
+        <TextDescription isDropIn={showingDropInStage}>
+          {description}
+        </TextDescription>
       </TextWrapper>
-      <Divider />
-      <Price>{price}</Price>
+      <Divider isDropIn={showingDropInStage} />
+      <Price isDropIn={showingDropInStage}>{price}</Price>
     </OptionWrapper>
   );
 
   return (
-    <BookingTypeChooserWrapper className={className}>
-      <Option
-        title={t("label_book_full_sauna")}
-        description={t("text_description_book_full_sauna")}
-        icon={IconType.GroupIcon}
-        price="899 kr"
-        bookingType={BookingTypes.FULL_SAUNA}
-      />
-      <Option
-        title={t("label_book_drop_in")}
-        description={t("text_description_book_drop_in")}
-        icon={IconType.GroupIcon}
-        price="Fra 199 kr"
-        bookingType={BookingTypes.DROP_IN}
-      />
-    </BookingTypeChooserWrapper>
+    <>
+      <BookingTypeChooserWrapper
+        className={className}
+        isDropIn={showingDropInStage}
+        startDropInAnimation={startDropInAnimation}
+      >
+        <Option
+          title={t(
+            showingDropInStage
+              ? "label_book_full_sauna_short_form"
+              : "label_book_full_sauna"
+          )}
+          description={t("text_description_book_full_sauna")}
+          icon={IconType.GroupIcon}
+          price="899 kr"
+          bookingType={BookingTypes.FULL_SAUNA}
+        />
+        <Option
+          title={t("label_book_drop_in")}
+          description={t("text_description_book_drop_in")}
+          icon={IconType.SinglePersonIcon}
+          price="Fra 199 kr"
+          bookingType={BookingTypes.DROP_IN}
+        />
+      </BookingTypeChooserWrapper>
+      {showingDropInStage && (
+        <CounterWrapper>
+          <SpacesCounter setSpaces={setSpaces} spaces={spaces} />
+        </CounterWrapper>
+      )}
+    </>
   );
 };

@@ -25,6 +25,7 @@ export enum IconType {
   SignInIcon,
   SignUpIcon,
   GroupIcon,
+  SinglePersonIcon,
 }
 
 const getIcon = (iconType: IconType) => {
@@ -49,6 +50,8 @@ const getIcon = (iconType: IconType) => {
       return FaUser;
     case IconType.GroupIcon:
       return FaUsers;
+    case IconType.SinglePersonIcon:
+      return FaUser;
   }
 };
 
