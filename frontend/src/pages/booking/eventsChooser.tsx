@@ -6,7 +6,7 @@ import { DateDay } from "utils/dist/dates/types";
 import { subscribeEvents } from "../../services/bookingManagement";
 import { getEventStartingHour } from "../../services/bookingManagement/helpers";
 import { EventButton } from "./eventButton";
-import { Content, Wrapper } from "./eventsChooser.styled";
+import { Wrapper } from "./eventsChooser.styled";
 
 type Props = {
   dateDay: DateDay;
@@ -70,11 +70,7 @@ const EventsChooser = (props: Props) => {
     });
   };
 
-  return (
-    <Wrapper>
-      <Content>{mapEvents()}</Content>
-    </Wrapper>
-  );
+  return <Wrapper>{mapEvents()}</Wrapper>;
 };
 
 export { EventsChooser };

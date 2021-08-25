@@ -76,40 +76,36 @@ const Booking = () => {
   };
 
   return (
-    <>
-      <CenterContentProvider>
-        <ContentContainer>
-          <Card size={CardSizes.BIG} color={CardColors.PRIMARY}>
-            <SaunaChooser />
-          </Card>
-          <CalendarCard size={CardSizes.SMALL}>
-            <Calendar date={date} setDate={setDate} minDate={new Date()} />
-          </CalendarCard>
-          <Card>
-            <EventsChooser
-              dateDay={createDateDayFromDate(date)}
-              spaces={spaces}
-              selectedEvents={selectedEvents}
-              setSelectedEvents={setSelectedEvents}
-            />
-          </Card>
-          <Card size={CardSizes.EXTRA_SMALL}>
-            <BookingTypeChooser
-              setSpaces={setSpaces}
-              spaces={spaces}
-              setWholeSauna={setWholeSauna}
-              wholeSauna={wholeSauna}
-            />
-          </Card>
+    <CenterContentProvider>
+      <ContentContainer>
+        <Card size={CardSizes.BIG} color={CardColors.PRIMARY}>
+          <SaunaChooser />
+        </Card>
+        <CalendarCard size={CardSizes.SMALL}>
+          <Calendar date={date} setDate={setDate} minDate={new Date()} />
+        </CalendarCard>
+        <Card size={CardSizes.SMALL}>
+          <EventsChooser
+            dateDay={createDateDayFromDate(date)}
+            spaces={spaces}
+            selectedEvents={selectedEvents}
+            setSelectedEvents={setSelectedEvents}
+          />
+        </Card>
+        <Card size={CardSizes.EXTRA_SMALL}>
+          <BookingTypeChooser
+            setSpaces={setSpaces}
+            spaces={spaces}
+            setWholeSauna={setWholeSauna}
+            wholeSauna={wholeSauna}
+          />
+        </Card>
 
-          <Button onClick={addToCart} disabled={selectedEvents.length === 0}>
-            Legg til i handlekurv
-          </Button>
-        </ContentContainer>
-      </CenterContentProvider>
-      <div style={{ height: "100px", width: "100%" }} />{" "}
-      {/* TODO: (haryp2309) Remove this line */}
-    </>
+        <Button onClick={addToCart} disabled={selectedEvents.length === 0}>
+          Legg til i handlekurv
+        </Button>
+      </ContentContainer>
+    </CenterContentProvider>
   );
 };
 
