@@ -1,11 +1,12 @@
 export const themeConfig = {
   colorPalette: {
     primary: {
-      default: "#296B79",
-      light: "#CFE3EA",
+      default: "#783940",
+      light: "#fdf1f1",
     },
     secondary: {
-      default: "#ED5F50",
+      default: "#EA953D",
+      light: "#EECD98",
     },
     contrasted: {
       default: "#505050",
@@ -59,6 +60,7 @@ export const themeConfig = {
       BOLD: "600",
     },
     color: {
+      COLORED: "#ad1111",
       PRIMARY: "#111111",
       PRIMARY_LIGHT: "#a0a0a0",
       INVERTED: "white",
