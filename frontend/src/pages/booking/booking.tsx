@@ -22,6 +22,7 @@ import { Button } from "../../components/button";
 import { addDropInReservations } from "../../services/bookingManagement";
 import { BookingTypeChooser } from "./bookingTypeChooser";
 import { addBookingReservations } from "../../services/bookingManagement/addBookingReservations";
+import { BottomBar } from "./bottomBar";
 
 const Booking = () => {
   const [date, setDate] = useState<Date>(new Date());
@@ -101,9 +102,10 @@ const Booking = () => {
           />
         </Card>
 
-        <Button onClick={addToCart} disabled={selectedEvents.length === 0}>
-          Legg til i handlekurv
-        </Button>
+        <BottomBar
+          onClickAddToCart={addToCart}
+          selectedEvents={selectedEvents}
+        ></BottomBar>
       </ContentContainer>
     </CenterContentProvider>
   );
