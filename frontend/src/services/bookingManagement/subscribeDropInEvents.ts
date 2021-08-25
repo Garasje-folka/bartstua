@@ -14,7 +14,7 @@ import { getEventCollectionName } from "utils/dist/bookingManagement/helpers";
 
 const getEventsQueryRef = (date: DateDay, location: EventLocation) => {
   return firestore
-    .collection(EVENTS)
+    .collection("locations")
     .doc(location)
     .collection(getEventCollectionName(BookingType.dropIn))
     .where("time.year", "==", date.year)

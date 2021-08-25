@@ -18,6 +18,7 @@ import {
   getUserReservationsRef,
 } from "./helpers";
 import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
+import { isEqualTimes } from "utils/dist/dates/helpers";
 
 const dataSchema = yup.object({
   requests: yup.array().of(dropInReservationDataSchema).required(),
@@ -42,9 +43,17 @@ export const addDropInReservations = functions.https.onCall(
 
     const requests = data.requests as DropInReservationRequest[];
 
-    // Information that has to be passed from the reading part of the transaction
-    // to the writing part of the transaction
-    const eventExistsMap = new Map<string, boolean>();
+    // Check for multiple requests for the same event
+    for (let i = 0; i < requests.length - 1; i++) {
+      for (let j = i + 1; j < requests.length; j++) {
+        if (isEqualTimes(requests[i].time, requests[j].time)) {
+          throw new functions.https.HttpsError(
+            "invalid-argument",
+            "duplicate-requests"
+          );
+        }
+      }
+    }
 
     await admin.firestore().runTransaction(async (transaction) => {
       for (const request of requests) {
@@ -55,41 +64,32 @@ export const addDropInReservations = functions.https.onCall(
           );
         }
 
-        const eventTimeString = JSON.stringify(request.time);
+        const eventRef = getEventRef(
+          request.location,
+          BookingType.dropIn,
+          request.time
+        );
+        const eventSnapshot = await transaction.get(eventRef);
 
-        if (eventExistsMap.has(eventTimeString)) {
-          // Having this restriction because it makes the implementaion much easier
+        let spacesTaken = 0;
+        if (eventSnapshot.exists) {
+          spacesTaken = eventSnapshot.get("spacesTaken");
+        } else {
           throw new functions.https.HttpsError(
             "invalid-argument",
-            "duplicate-requests"
+            "invalid-time"
           );
-        } else {
-          const eventRef = getEventRef(
-            request.location,
-            BookingType.dropIn,
-            request.time
+        }
+
+        if (spacesTaken + request.spaces > MAX_DROP_IN_SPACES) {
+          throw new functions.https.HttpsError(
+            "failed-precondition",
+            "not-enough-space"
           );
-          const eventSnapshot = await transaction.get(eventRef);
-
-          let spacesTaken = 0;
-          if (eventSnapshot.exists) {
-            spacesTaken = eventSnapshot.get("spacesTaken");
-          }
-
-          if (spacesTaken + request.spaces > MAX_DROP_IN_SPACES) {
-            throw new functions.https.HttpsError(
-              "failed-precondition",
-              "not-enough-space"
-            );
-          }
-          eventExistsMap.set(eventTimeString, eventSnapshot.exists);
         }
       }
 
       for (const request of requests) {
-        const eventTimeString = JSON.stringify(request.time);
-        const eventExists = !!eventExistsMap.get(eventTimeString);
-
         const eventRef = getEventRef(
           request.location,
           BookingType.dropIn,
@@ -116,16 +116,9 @@ export const addDropInReservations = functions.https.onCall(
           timestamp: timestamp,
         });
 
-        if (eventExists) {
-          transaction.update(eventRef, {
-            spacesTaken: admin.firestore.FieldValue.increment(request.spaces),
-          });
-        } else {
-          transaction.set(eventRef, {
-            time: request.time,
-            spacesTaken: request.spaces,
-          });
-        }
+        transaction.update(eventRef, {
+          spacesTaken: admin.firestore.FieldValue.increment(request.spaces),
+        });
       }
     });
   }

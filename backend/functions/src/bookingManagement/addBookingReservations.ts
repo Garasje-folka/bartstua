@@ -17,6 +17,7 @@ import {
   getReservationsRef,
   getUserReservationsRef,
 } from "./helpers";
+import { isEqualTimes } from "utils/dist/dates/helpers";
 
 const dataSchema = yup.object({
   requests: yup.array().of(bookingReservationRequestSchema).required(),
@@ -41,12 +42,23 @@ export const addBookingReservations = functions.https.onCall(
 
     const requests = data.requests as BookingReservationData[];
 
-    // Information that has to be passed from the reading part of the transaction
-    // to the writing part of the transaction
-    const eventExistsMap = new Map<string, boolean>();
+    // Check for multiple requests for the same event
+    for (let i = 0; i < requests.length - 1; i++) {
+      for (let j = i + 1; j < requests.length; j++) {
+        if (isEqualTimes(requests[i].time, requests[j].time)) {
+          throw new functions.https.HttpsError(
+            "invalid-argument",
+            "duplicate-requests"
+          );
+        }
+      }
+    }
 
     await admin.firestore().runTransaction(async (transaction) => {
       for (const request of requests) {
+        // TODO: Could simplify time validation to just check if the time
+        //       is expired because we also check if corresponding event
+        //       document exists
         if (!isValidEventTime(request.time)) {
           throw new functions.https.HttpsError(
             "invalid-argument",
@@ -54,41 +66,33 @@ export const addBookingReservations = functions.https.onCall(
           );
         }
 
-        const eventTimeString = JSON.stringify(request.time);
+        const eventRef = getEventRef(
+          request.location,
+          BookingType.booking,
+          request.time
+        );
+        const eventSnapshot = await transaction.get(eventRef);
 
-        if (eventExistsMap.has(eventTimeString)) {
-          // Having this restriction because it makes the implementaion much easier
+        let eventTaken = false;
+        if (eventSnapshot.exists) {
+          eventTaken = eventSnapshot.get("taken");
+        } else {
+          // Invalid event if corresponding event document does not exist
           throw new functions.https.HttpsError(
             "invalid-argument",
-            "duplicate-requests"
+            "invalid-time"
           );
-        } else {
-          const eventRef = getEventRef(
-            request.location,
-            BookingType.booking,
-            request.time
+        }
+
+        if (eventTaken) {
+          throw new functions.https.HttpsError(
+            "failed-precondition",
+            "event-taken"
           );
-          const eventSnapshot = await transaction.get(eventRef);
-
-          let eventTaken = false;
-          if (eventSnapshot.exists) {
-            eventTaken = eventSnapshot.get("taken");
-          }
-
-          if (eventTaken) {
-            throw new functions.https.HttpsError(
-              "failed-precondition",
-              "event-taken"
-            );
-          }
-          eventExistsMap.set(eventTimeString, eventSnapshot.exists);
         }
       }
 
       for (const request of requests) {
-        const eventTimeString = JSON.stringify(request.time);
-        const eventExists = !!eventExistsMap.get(eventTimeString);
-
         const eventRef = getEventRef(
           request.location,
           BookingType.booking,
@@ -115,16 +119,9 @@ export const addBookingReservations = functions.https.onCall(
           timestamp: timestamp,
         });
 
-        if (eventExists) {
-          transaction.update(eventRef, {
-            taken: true,
-          });
-        } else {
-          transaction.set(eventRef, {
-            time: request.time,
-            taken: true,
-          });
-        }
+        transaction.update(eventRef, {
+          taken: true,
+        });
       }
     });
   }

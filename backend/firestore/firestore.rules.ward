@@ -8,10 +8,10 @@ match /users/{userDoc}/bookingReservations/{reservationDoc} {
   allow read: userDoc == request.auth.uid
 }
 
-match /events/{locationDoc}/dropInEvents/{eventDoc} {
+match /locations/{locationDoc}/dropInEvents/{eventDoc} {
   allow read: true
 }
 
-match /events/{locationDoc}/bookingEvents/{eventDoc} {
+match /locations/{locationDoc}/bookingEvents/{eventDoc} {
   allow read: true
 }

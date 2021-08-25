@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
 import { DropInEvent, EventLocation } from "utils/dist/bookingManagement/types";
-import { isEqualDates } from "utils/dist/dates/helpers";
+import { isEqualTimes } from "utils/dist/dates/helpers";
 import { DateDay } from "utils/dist/dates/types";
 import { subscribeEvents } from "../../services/bookingManagement";
 import { getEventStartingHour } from "../../services/bookingManagement/helpers";
@@ -35,13 +35,13 @@ const EventsChooser = (props: Props) => {
     setSelectedEvents((prevVal) => {
       if (selected) return [...prevVal, event];
 
-      return prevVal.filter((e) => !isEqualDates(e.time, event.time));
+      return prevVal.filter((e) => !isEqualTimes(e.time, event.time));
     });
   };
 
   const selectedEventsContains = (event: DropInEvent) => {
     for (const e of selectedEvents) {
-      if (isEqualDates(e.time, event.time)) return true;
+      if (isEqualTimes(e.time, event.time)) return true;
     }
 
     return false;

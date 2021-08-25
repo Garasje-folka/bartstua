@@ -6,7 +6,7 @@ export * from "./getDayName";
 export * from "./getHourRange";
 export * from "./isAfterToday";
 export * from "./isBeforeToday";
-export * from "./isEqualDates";
+export * from "./isEqualTimes";
 export * from "./isToday";
 export * from "./isValidDateHour";
 export * from "./dateDayToISO";
