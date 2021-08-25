@@ -96,7 +96,7 @@ export const addBookingReservations = functions.https.onCall(
         );
 
         const timestamp = createTimestamp(0);
-        const reservationRef = getReservationsRef(BookingType.dropIn).doc();
+        const reservationRef = getReservationsRef(BookingType.booking).doc();
 
         transaction.set(reservationRef, {
           ...request,
