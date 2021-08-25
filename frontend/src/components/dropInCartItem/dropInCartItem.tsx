@@ -38,16 +38,22 @@ const DropInCartItem = (props: CartItemProps) => {
       <CardBody>
         <VeriticalAlignedTextContainer>
           <Heading type={Heading.types.HEADING4}>
-            {`Dag: ${getFormattedDate()} `}
+            {`Dag: ${getFormattedDate()} ` /* TODO: (haryp2309) locale */}
           </Heading>
           <Heading type={Heading.types.HEADING4}>
-            {`Tidspunkt: ${getHourRange(doc.data.time.hour)}`}
+            {
+              `Tidspunkt: ${getHourRange(
+                doc.data.time.hour
+              )}` /* TODO: (haryp2309) locale */
+            }
           </Heading>
           <Heading type={Heading.types.HEADING4}>
-            {`Antall plasser: ${doc.data.spaces}`}
+            {
+              `Antall plasser: ${doc.data.spaces}` /* TODO: (haryp2309) locale */
+            }
           </Heading>
           <Heading type={Heading.types.HEADING4}>
-            {`Pris: ${doc.data.spaces * 100} kr`}
+            {`Pris: ${doc.data.spaces * 100} kr` /* TODO: (haryp2309) locale */}
           </Heading>
           <Button onClick={handleReservationDelete}>Slett</Button>
         </VeriticalAlignedTextContainer>
