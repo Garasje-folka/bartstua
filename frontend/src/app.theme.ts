@@ -6,6 +6,7 @@ export const themeConfig = {
     },
     secondary: {
       default: "#EA953D",
+      light: "#EECD98",
     },
   },
   radius: {

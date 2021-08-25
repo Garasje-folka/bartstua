@@ -9,6 +9,8 @@ export const StyledNavbar = styled(Navbar)`
   width: 100%;
   box-shadow: ${({ theme }) => theme.shadow.REGULAR};
   background: rgba(255, 255, 255, 0.76);
+  position: sticky;
+  top: 0;
 `;
 
 const NavbarContent = styled.div`
@@ -23,7 +25,6 @@ const NavbarContent = styled.div`
   color: #000000;
 `;
 
-
 export const RightAlignedContent = styled(NavbarContent)``;
 export const LeftAlignedContent = styled(NavbarContent)`
   flex-grow: 1;
@@ -31,26 +32,23 @@ export const LeftAlignedContent = styled(NavbarContent)`
 
 export const SignInButton = styled(Button)`
   margin-left: ${({ theme }) => theme.alignment.margin.REGULAR};
-  background: #296B79;
+  background: #296b79;
   box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
   border-radius: 100px;
 `;
 
 export const RegisterButton = styled(Button)`
   margin-left: ${({ theme }) => theme.alignment.margin.REGULAR};
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
   border-radius: 100px;
   color: black;
 `;
 
-
-
 export const Nav = styled(BootstrapNav)`
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  
 `;
 
 export const NavLink = styled(BootstrapNav.Link)`

@@ -24,7 +24,14 @@ export const StyledButton = styled(BootstrapButton)<ButtonStyleProps>`
       }
       case ButtonStyle.REGULAR:
       default: {
-        break;
+        return css`
+          border: none;
+          background: ${({ theme }) => theme.colorPalette.primary.default};
+
+          :hover {
+            background: ${({ theme }) => theme.colorPalette.secondary.default};
+          }
+        `;
       }
     }
   }}

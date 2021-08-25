@@ -28,7 +28,7 @@ const Booking = () => {
   const { switchBackground } = useBackground();
 
   useEffect(() => {
-    switchBackground(backgroundTypes.BOOKING_WALLPAPER);
+    switchBackground(backgroundTypes.BOOKING_WALLPAPER_2);
   }, [switchBackground]);
 
   useEffect(() => {
