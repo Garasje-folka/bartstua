@@ -3,8 +3,8 @@ import { Theme } from "../../app.theme";
 import { Button } from "../button";
 
 export const VeriticalAlignedTextContainer = styled.span`
-  display: inline-block;
-  vertical-align: middle;
+  display: block;
+  text-align: left;
 `;
 
 export const BackgroundReservation = styled.div`
@@ -25,8 +25,9 @@ export const StyledImage = styled.img`
 
 export const ContentContainer = styled.div`
   margin: ${({ theme }) => theme.alignment.margin.LARGE};
-  margin-left: 100px;
+  margin-left: 50px;
   display: flex;
+  font-size: 16px;
 `;
 
 export const ButtonContainer = styled.div`

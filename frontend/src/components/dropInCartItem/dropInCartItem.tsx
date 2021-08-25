@@ -45,18 +45,22 @@ const DropInCartItem = (props: CartItemProps) => {
       <StyledImage src="https://thewellsite.blob.core.windows.net/media/ysnbkxwf/the-well-finsk-sauna.jpg" />
       <ContentContainer>
         <VeriticalAlignedTextContainer>
-          <Paragraph type={Paragraph.types.PARAGRAPH1}>
-            {`Dag: ${getFormattedDate()} `}
-          </Paragraph>
-          <Paragraph type={Paragraph.types.PARAGRAPH1}>
-            {`Tidspunkt: ${getHourRange(doc.data.time.hour)}`}
-          </Paragraph>
-          <Paragraph type={Paragraph.types.PARAGRAPH1}>
-            {`Antall plasser: ${doc.data.spaces}`}
-          </Paragraph>
-          <Paragraph type={Paragraph.types.PARAGRAPH1}>
-            {`Pris: ${doc.data.spaces * 100} kr`}
-          </Paragraph>
+          <p>
+            {`Dag: `}
+            <b>{`${getFormattedDate()} `}</b>
+          </p>
+          <p>
+            {`Tidspunkt: `}
+            <b>{`${getHourRange(doc.data.time.hour)}`}</b>
+          </p>
+          <p>
+            {`Antall plasser: `}
+            <b>{`${doc.data.spaces}`}</b>
+          </p>
+          <p>
+            {`Pris: `}
+            <b>{`${doc.data.spaces * 100} kr`}</b>
+          </p>
         </VeriticalAlignedTextContainer>
         <ButtonContainer>
           <DeleteButton onClick={handleReservationDelete}> Slett </DeleteButton>
