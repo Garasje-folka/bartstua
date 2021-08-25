@@ -22,6 +22,7 @@ import {
   HOME,
   SIGNIN,
   REGISTER,
+  CART,
 } from "../../router/routeConstants";
 import { IconType } from "../../icons";
 import Logonobg from "../../assets/logo-nobg.png";
@@ -48,12 +49,14 @@ const Header = () => {
       title: "Om Oss",
       url: ABOUT,
     },
+    {
+      title: "Cart",
+      url: CART,
+    },
   ];
 
   const signOutButton: React.ReactNode = (
-    <Button icon={IconType.SignOutIcon} onClick={handleSignOut}>
-      Logg ut
-    </Button>
+    <Button onClick={handleSignOut}>Logg ut</Button>
   );
 
   const signInButton: React.ReactNode = (
@@ -64,6 +67,10 @@ const Header = () => {
     <RegisterButton onClick={() => history.push(REGISTER)}>
       Registrer
     </RegisterButton>
+  );
+
+  const cartButton: React.ReactNode = (
+    <Button icon={IconType.CartIcon} onClick={() => history.push(CART)} />
   );
 
   return (

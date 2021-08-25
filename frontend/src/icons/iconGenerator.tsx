@@ -8,6 +8,7 @@ import {
   FaKey,
   FaLockOpen,
   FaUser,
+  FaShoppingCart,
 } from "react-icons/fa";
 import { AnyStyledComponent } from "styled-components";
 import { generateStyledIcon } from "./icon.styled";
@@ -22,6 +23,7 @@ export enum IconType {
   PasswordIcon,
   SignInIcon,
   SignUpIcon,
+  CartIcon,
 }
 
 const getIcon = (iconType: IconType) => {
@@ -44,6 +46,8 @@ const getIcon = (iconType: IconType) => {
       return FaLockOpen;
     case IconType.SignUpIcon:
       return FaUser;
+    case IconType.CartIcon:
+      return FaShoppingCart;
   }
 };
 
