@@ -1,8 +1,21 @@
-import { DateHour } from "utils/dist/dates/types";
+import { DateTime } from "utils/dist/dates/types";
 import * as admin from "firebase-admin";
+import {
+  getEventId,
+  getEventCollectionName,
+} from "utils/dist/bookingManagement/helpers";
+import { BookingType, EventLocation } from "utils/dist/bookingManagement/types";
 import { EVENTS } from "utils/dist/bookingManagement/constants";
-import { getEventId } from "utils/dist/bookingManagement/helpers";
 
-export const getEventRef = (date: DateHour) => {
-  return admin.firestore().collection(EVENTS).doc(getEventId(date));
+export const getEventRef = (
+  location: EventLocation,
+  type: BookingType,
+  time: DateTime
+) => {
+  return admin
+    .firestore()
+    .collection(EVENTS)
+    .doc(location)
+    .collection(getEventCollectionName(type))
+    .doc(getEventId(time));
 };

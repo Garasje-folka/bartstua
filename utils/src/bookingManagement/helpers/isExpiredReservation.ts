@@ -1,17 +1,17 @@
 import { RESERVATION_EXPIRATION_TIME } from "../constants";
-import { ReservationData } from "../types";
 import { createTimestamp } from "./createTimestamp";
 import { isBeforeToday, isToday } from "../../dates/helpers";
+import { DateTime } from "../../dates/types";
 
-const isExpiredReservation = (reservation: ReservationData) => {
+const isExpiredReservation = (time: DateTime, timestamp: number) => {
   const thresholdTimestamp = createTimestamp(-RESERVATION_EXPIRATION_TIME);
 
-  if (reservation.timestamp <= thresholdTimestamp) return true;
+  if (timestamp <= thresholdTimestamp) return true;
 
-  if (isBeforeToday(reservation.date)) return true;
-  if (isToday(reservation.date)) {
+  if (isBeforeToday(time)) return true;
+  if (isToday(time)) {
     const currDate = new Date();
-    if (reservation.date.hour < currDate.getHours()) return true;
+    if (time.hour < currDate.getHours()) return true;
   }
 
   return false;

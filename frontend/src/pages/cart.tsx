@@ -2,12 +2,12 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Button } from "../components/button";
 import { CardBody, CardContainer, CardHeader } from "../components/card";
-import { CartItem } from "../components/cartItem";
-import { reservationsSelector } from "../redux/ducks/reservations";
+import { DropInCartItem } from "../components/dropInCartItem";
+import { dropInReservationsSelector } from "../redux/ducks/dropInReservations";
 import { CHECKOUT } from "../router/routeConstants";
 
 const Cart = () => {
-  const reservations = useSelector(reservationsSelector);
+  const reservations = useSelector(dropInReservationsSelector);
   const history = useHistory();
 
   return (
@@ -15,7 +15,7 @@ const Cart = () => {
       <CardHeader title="Betalingsoversikt" />
       <CardBody>
         {reservations.map((res, index) => (
-          <CartItem reservationDoc={res} key={index} />
+          <DropInCartItem dropInReservationDoc={res} key={index} />
         ))}
         <Button
           disabled={reservations.length === 0}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MAX_EVENT_SPACES } from "utils/dist/bookingManagement/constants";
+import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
 import { Button, ButtonStyle } from "../../components/button";
 import { Switch } from "../../components/switch/switch";
 import { IconType } from "../../icons";
@@ -26,7 +26,7 @@ const SpacesCounter: React.FC<Props> = (props: Props) => {
 
   const onMaxSpacesToggled = () => {
     setMaxSpacesSelected((prevVal) => {
-      setSpaces(prevVal ? 1 : MAX_EVENT_SPACES);
+      setSpaces(prevVal ? 1 : MAX_DROP_IN_SPACES);
       return !prevVal;
     });
   };
@@ -45,7 +45,7 @@ const SpacesCounter: React.FC<Props> = (props: Props) => {
         <Button
           onClick={() => updateSpaces(1)}
           buttonStyle={ButtonStyle.TRANSPARENT}
-          disabled={spaces === MAX_EVENT_SPACES || maxSpacesSelected}
+          disabled={spaces === MAX_DROP_IN_SPACES || maxSpacesSelected}
           icon={IconType.PlusSign}
         />
       </PlusMinusContainer>

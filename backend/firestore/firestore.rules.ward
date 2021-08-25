@@ -1,52 +1,17 @@
 rules_version = '2';
 
-type DateHour = {
-  hour: int,
-  year: int,
-  month: int,
-  day: int,
+match /users/{userDoc}/dropInReservations/{reservationDoc} {
+  allow read: userDoc == request.auth.uid
 }
 
-type EventData = {
-  spacesTaken: int,
-  date: DateHour,
+match /users/{userDoc}/bookingReservations/{reservationDoc} {
+  allow read: userDoc == request.auth.uid
 }
 
-type ReservationData = {
-  date: DateHour,
-  spaces: int,
-  timestamp: int,
+match /events/{locationDoc}/dropInEvents/{eventDoc} {
+  allow read: true
 }
 
-type BookingData = {
-  date: DateHour,
-  spaces: int,
-  uid: string,
+match /events/{locationDoc}/bookingEvents/{eventDoc} {
+  allow read: true
 }
-
-function maximumAvailableSpaces() {
-  return 10;
-}
-
-function isAuthenticated() { 
-  let a = request.auth;
-  return a!=null; 
-}
-
-function isRequestedByCurrentUser() { 
-  return resource.data.uid == request.auth.uid
-}
-
-function dataContainsUid(bookingId) { 
-  return request.resource.data.uid == request.auth.uid
-}
-
-match /events/{eventDoc} is EventData{
-  allow read: true;
-}
-
-match /users/{userDoc}/reservations/{reservationDoc} is ReservationData {
-  allow read: userDoc == request.auth.uid;
-}
-
-

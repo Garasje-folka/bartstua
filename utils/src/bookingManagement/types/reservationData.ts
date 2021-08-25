@@ -1,13 +1,18 @@
 import {
-  ReservationRequest,
-  reservationRequestSchema,
+  BookingReservationRequest,
+  DropInReservationRequest,
 } from "./reservationRequest";
-import * as yup from "yup";
 
-export const reservationDataSchema = reservationRequestSchema.shape({
-  timestamp: yup.number().required(),
-});
+export enum ReservationStatus {
+  active = "active",
+  expired = "expired",
+  payed = "payed",
+}
 
-export type ReservationData = ReservationRequest & {
+export type BookingReservationData = BookingReservationRequest & {
+  timestamp: number;
+};
+
+export type DropInReservationData = DropInReservationRequest & {
   timestamp: number;
 };

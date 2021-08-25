@@ -1,21 +1,30 @@
 import { sendMail } from "./sendMail";
-import { BookingData } from "utils/dist/bookingManagement/types";
+import {
+  BookingReservationData,
+  DropInReservationData,
+} from "utils/dist/bookingManagement/types";
 import { dateHourToISO } from "utils/dist/dates/helpers";
-
-// TODO: Maybe move this to bookingManagement?
 
 const sendBookingConfirmation = async (
   email: string,
-  bookings: BookingData[]
+  bookings: BookingReservationData[],
+  dropIns: DropInReservationData[]
 ): Promise<void> => {
   let bookingMessage: string = "";
 
+  if (bookings.length !== 0) bookingMessage += "<p> Booking: </p>";
   for (const booking of bookings) {
     bookingMessage +=
-      "<p>Dato: " +
-      dateHourToISO(booking.date, true, true, true, true) +
-      " Plass: " +
-      booking.spaces +
+      "<p>Tid: " + dateHourToISO(booking.time, true, true, true, true) + "</p>";
+  }
+
+  if (dropIns.length !== 0) bookingMessage += "<p> Drop in: </p>";
+  for (const dropIn of dropIns) {
+    bookingMessage +=
+      "<p>Tid: " +
+      dateHourToISO(dropIn.time, true, true, true, true) +
+      " Plasser: " +
+      dropIn.spaces +
       "</p>";
   }
 

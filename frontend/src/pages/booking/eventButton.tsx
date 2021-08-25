@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { MAX_EVENT_SPACES } from "utils/dist/bookingManagement/constants";
-import { EventData } from "utils/dist/bookingManagement/types";
+import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
+import { DropInEvent } from "utils/dist/bookingManagement/types";
 import { Button } from "../../components/button";
 import {
   PlacesContainer,
@@ -9,25 +8,25 @@ import {
 } from "./eventButton.styled";
 
 type Props = {
-  eventData: EventData;
+  event: DropInEvent;
   disabled?: boolean;
-  selected: boolean;
-  onClickCallback: (event: EventData, selected: boolean) => void;
+  selected?: boolean;
+  onClickCallback: (event: DropInEvent, selected: boolean) => void;
 };
 
 const EventButton: React.FC<Props> = (props: Props) => {
-  const { eventData, disabled, selected, onClickCallback } = props;
+  const { event, disabled, selected, onClickCallback } = props;
 
   const onClick = () => {
-    onClickCallback(eventData, !selected);
+    onClickCallback(event, !selected);
   };
 
   return (
-    <StyledButton selected={selected} onClick={onClick} disabled={disabled}>
-      <TimeContainer>{`${eventData.date.hour}:00`}</TimeContainer>
+    <StyledButton selected={!!selected} onClick={onClick} disabled={disabled}>
+      <TimeContainer>{`${event.time.hour}:00`}</TimeContainer>
       <PlacesContainer>{
         `${
-          MAX_EVENT_SPACES - eventData.spacesTaken
+          MAX_DROP_IN_SPACES - event.spacesTaken
         } plasser` /* TODO: (haryp2309) localise */
       }</PlacesContainer>
     </StyledButton>

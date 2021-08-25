@@ -1,24 +1,11 @@
-import { DateHour, dateHourSchema, duplicateDateHour } from "../../dates/types";
-import * as yup from "yup";
+import { DateTime } from "../../dates/types";
 
-export const eventDataSchema = yup.object({
-  spacesTaken: yup.number().required(),
-  date: dateHourSchema.required(),
-});
+export type BookingEvent = {
+  taken: boolean;
+  time: DateTime;
+};
 
-export type EventData = {
+export type DropInEvent = {
   spacesTaken: number;
-  date: DateHour;
+  time: DateTime;
 };
-
-export const initialEventData = (dateHour: DateHour): EventData => {
-  return {
-    date: dateHour,
-    spacesTaken: 0,
-  };
-};
-
-export const duplicateEventData = (oldEventData: EventData): EventData => ({
-  ...oldEventData,
-  date: duplicateDateHour(oldEventData.date),
-});
