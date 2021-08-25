@@ -1,6 +1,5 @@
 import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
 import { DropInEvent } from "utils/dist/bookingManagement/types";
-import { Button } from "../../components/button";
 import {
   PlacesContainer,
   StyledButton,
