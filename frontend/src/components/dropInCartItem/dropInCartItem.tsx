@@ -10,10 +10,14 @@ import { getHourRange } from "utils/dist/dates/helpers";
 import { dateDayToISO } from "utils/dist/dates/helpers";
 import { Button } from "../button";
 import { CardBody, CardContainer } from "../card";
-import { Heading } from "../text";
+import { Heading, Paragraph } from "../text";
 import {
   BackgroundReservation,
+  ContentContainer,
+  StyledImage,
   VeriticalAlignedTextContainer,
+  ButtonContainer,
+  DeleteButton,
 } from "./dropInCartItem.styled";
 
 export type CartItemProps = {
@@ -38,23 +42,26 @@ const DropInCartItem = (props: CartItemProps) => {
   };
   return (
     <BackgroundReservation>
-      <CardBody>
+      <StyledImage src="https://thewellsite.blob.core.windows.net/media/ysnbkxwf/the-well-finsk-sauna.jpg" />
+      <ContentContainer>
         <VeriticalAlignedTextContainer>
-          <Heading type={Heading.types.HEADING4}>
+          <Paragraph type={Paragraph.types.PARAGRAPH1}>
             {`Dag: ${getFormattedDate()} `}
-          </Heading>
-          <Heading type={Heading.types.HEADING4}>
+          </Paragraph>
+          <Paragraph type={Paragraph.types.PARAGRAPH1}>
             {`Tidspunkt: ${getHourRange(doc.data.time.hour)}`}
-          </Heading>
-          <Heading type={Heading.types.HEADING4}>
+          </Paragraph>
+          <Paragraph type={Paragraph.types.PARAGRAPH1}>
             {`Antall plasser: ${doc.data.spaces}`}
-          </Heading>
-          <Heading type={Heading.types.HEADING4}>
+          </Paragraph>
+          <Paragraph type={Paragraph.types.PARAGRAPH1}>
             {`Pris: ${doc.data.spaces * 100} kr`}
-          </Heading>
-          <Button onClick={handleReservationDelete}>Slett</Button>
+          </Paragraph>
         </VeriticalAlignedTextContainer>
-      </CardBody>
+        <ButtonContainer>
+          <DeleteButton onClick={handleReservationDelete}> Slett </DeleteButton>
+        </ButtonContainer>
+      </ContentContainer>
     </BackgroundReservation>
   );
 };

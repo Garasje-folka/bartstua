@@ -45,14 +45,19 @@ export const CartButton = styled(Button)`
   margin-left: auto;
   margin-top: 10px;
   margin-bottom: 10px;
+  padding: 8px;
+  border-radius: ${({ theme }) => theme.radius.VERY_ROUND};
+  background-color: #ed5f50;
+  border: none;
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
   margin-bottom: 10px;
   margin-right: auto;
-  margin-left: auto;
-  margin-top: 10px;
+  margin-left: 150px;
+  margin-top: 20px;
+  height: 60px;
 `;
 
 export const BottomContainer = styled.div`
@@ -68,6 +73,6 @@ export const TextContainer = styled.div`
   background-color: #296b79;
   color: white;
   border-radius: ${({ theme }) => theme.radius.ROUND};
-  margin-left: 170px;
+  margin-left: 90px;
   padding: 5px;
 `;

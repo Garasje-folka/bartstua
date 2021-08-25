@@ -10,6 +10,7 @@ export const themeConfig = {
   },
   radius: {
     ROUND: "10px",
+    VERY_ROUND: "100px",
   },
   alignment: {
     margin: {
