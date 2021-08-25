@@ -4,7 +4,7 @@ import { Theme } from "../../app.theme";
 import { ButtonStyle } from "./button";
 
 type ButtonStyleProps = {
-  buttonStyle: string;
+  $buttonStyle: string;
 };
 export const StyledButton = styled(BootstrapButton)<ButtonStyleProps>`
   display: flex;
@@ -13,8 +13,8 @@ export const StyledButton = styled(BootstrapButton)<ButtonStyleProps>`
   margin-bottom: ${({ theme }) => theme.alignment.margin.REGULAR};
   margin-top: ${({ theme }) => theme.alignment.margin.REGULAR};
 
-  ${({ buttonStyle }) => {
-    switch (buttonStyle) {
+  ${({ $buttonStyle }) => {
+    switch ($buttonStyle) {
       case ButtonStyle.TRANSPARENT: {
         return css`
           background: none;

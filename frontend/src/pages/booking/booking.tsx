@@ -9,21 +9,24 @@ import {
   CenterContentProvider,
   ContentContainer,
 } from "./booking.styled";
-import { SpacesCounter } from "./spacesCounter";
 import { SaunaChooser } from "./saunaChooser";
 import { EventsChooser } from "./eventsChooser";
 import { createDateDayFromDate } from "utils/dist/dates/helpers";
 import {
+  BookingReservationRequest,
   DropInEvent,
   DropInReservationRequest,
   EventLocation,
 } from "utils/dist/bookingManagement/types";
 import { Button } from "../../components/button";
 import { addDropInReservations } from "../../services/bookingManagement";
+import { BookingTypeChooser } from "./bookingTypeChooser";
+import { addBookingReservations } from "../../services/bookingManagement/addBookingReservations";
 
 const Booking = () => {
   const [date, setDate] = useState<Date>(new Date());
   const [spaces, setSpaces] = useState<number>(1);
+  const [wholeSauna, setWholeSauna] = useState<boolean>(false);
   const [selectedEvents, setSelectedEvents] = useState<DropInEvent[]>([]);
   const { switchBackground } = useBackground();
 
@@ -36,20 +39,37 @@ const Booking = () => {
   }, [spaces, date]);
 
   const addToCart = async () => {
-    const requests = selectedEvents.map((e) => {
-      const reservationRequest = {
-        time: e.time,
-        spaces: spaces,
-        location: EventLocation.loation1,
-      } as DropInReservationRequest;
+    if (wholeSauna) {
+      const requests = selectedEvents.map((e) => {
+        const reservationRequest = {
+          time: e.time,
+          location: EventLocation.loation1,
+        } as BookingReservationRequest;
 
-      return reservationRequest;
-    });
+        return reservationRequest;
+      });
 
-    try {
-      await addDropInReservations(requests);
-    } catch (error) {
-      console.log(error);
+      try {
+        await addBookingReservations(requests);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      const requests = selectedEvents.map((e) => {
+        const reservationRequest = {
+          time: e.time,
+          spaces: spaces,
+          location: EventLocation.loation1,
+        } as DropInReservationRequest;
+
+        return reservationRequest;
+      });
+
+      try {
+        await addDropInReservations(requests);
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     setSelectedEvents([]);
@@ -64,20 +84,23 @@ const Booking = () => {
         <CalendarCard size={CardSizes.SMALL}>
           <Calendar date={date} setDate={setDate} minDate={new Date()} />
         </CalendarCard>
-        <CalendarCard>
+        <Card size={CardSizes.SMALL}>
           <EventsChooser
             dateDay={createDateDayFromDate(date)}
             spaces={spaces}
             selectedEvents={selectedEvents}
             setSelectedEvents={setSelectedEvents}
-          ></EventsChooser>
-        </CalendarCard>
-        <CalendarCard
-          size={CardSizes.EXTRA_SMALL}
-          color={CardColors.PRIMARY_LIGHT}
-        >
-          <SpacesCounter spaces={spaces} setSpaces={setSpaces} />
-        </CalendarCard>
+          />
+        </Card>
+        <Card size={CardSizes.EXTRA_SMALL}>
+          <BookingTypeChooser
+            setSpaces={setSpaces}
+            spaces={spaces}
+            setWholeSauna={setWholeSauna}
+            wholeSauna={wholeSauna}
+          />
+        </Card>
+
         <Button onClick={addToCart} disabled={selectedEvents.length === 0}>
           Legg til i handlekurv
         </Button>

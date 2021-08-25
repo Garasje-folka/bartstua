@@ -1,6 +1,6 @@
 import * as admin from "firebase-admin";
 import { PubSub } from "@google-cloud/pubsub";
-import { RESERVATION_CLEARING_INTERVAL } from "./bookingManagment/constants";
+import { RESERVATION_CLEARING_INTERVAL } from "./bookingManagement/constants";
 
 admin.initializeApp();
 

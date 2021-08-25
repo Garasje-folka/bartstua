@@ -22,6 +22,7 @@ import {
   HOME,
   SIGNIN,
   REGISTER,
+  CHECKOUT,
 } from "../../router/routeConstants";
 import { IconType } from "../../icons";
 import Logonobg from "../../assets/logo-nobg.png";
@@ -48,6 +49,10 @@ const Header = () => {
       title: "Om Oss",
       url: ABOUT,
     },
+    {
+      title: "Betaling",
+      url: CHECKOUT,
+    },
   ];
 
   const signOutButton: React.ReactNode = (
@@ -70,7 +75,7 @@ const Header = () => {
     <StyledNavbar bg="light" expand="lg">
       <LeftAlignedContent>
         <Navbar.Brand onClick={() => history.push(HOME)}>
-          <img src={Logonobg} height="55"></img>
+          <img src={Logonobg} height="55" alt="Logo"></img>
         </Navbar.Brand>
       </LeftAlignedContent>
 

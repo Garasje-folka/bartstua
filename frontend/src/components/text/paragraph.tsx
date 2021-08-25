@@ -1,5 +1,3 @@
-import { FaParagraph } from "react-icons/fa";
-
 interface ParagraphProps {
   type: string;
   children: string;

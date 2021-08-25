@@ -22,5 +22,11 @@
   "label_new_password": "Nytt passord",
   "label_reset_button": "Nullstill",
   "label_write_password": "Skriv inn ditt nye passord!",
-  "label_email_reset_password": "Skriv inn e-postadresse for å nullstille passordet ditt. Du vil da få utgitt en link."
+  "label_email_reset_password": "Skriv inn e-postadresse for å nullstille passordet ditt. Du vil da få utgitt en link.",
+  "text_description_book_full_sauna": "Ta med deg vennegjengen og lei hele badstuen i tre timer. Maks kapasitet er 14 personer og man må fyre opp badstuovnen selv.",
+  "label_book_full_sauna": "Lei hele badstuen",
+  "label_book_full_sauna_short_form": "Lei hele",
+  "text_description_book_drop_in": "Lei en eller flere plasser i badstuen og nyt kombinasjonen av badstu og sjøbad. Hver lørdag fra 08.00 til 20.00.",
+  "label_book_drop_in": "Drop in",
+  "label_how_many_people": "Hvor mange personer?"
 }
