@@ -65,13 +65,14 @@ const dayStyle = css`
   margin-top: 7px;
   margin-bottom: 7px;
   text-align: center;
-  border-radius: 15px;
+  border-radius: 10px;
   font-weight: ${({ theme }) => theme.text.weight.THIN};
 `;
 
 const weekDay = css`
   ${removeExistingStyle}
   text-align: center;
+  opacity: 0.7;
 
   abbr {
     ${removeExistingStyle}
@@ -135,7 +136,7 @@ export const StyledCalendar = styled(Calendar)`
 
   /* Temporary */
   .react-calendar__tile--active {
-    background: #006edc;
+    background: #ae2c24;
     color: white;
   }
 `;
