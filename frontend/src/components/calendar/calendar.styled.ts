@@ -61,9 +61,11 @@ const previousMonthDayStyle = css`
 
 const dayStyle = css`
   ${removeExistingStyle}
+  height: 45px;
   margin-top: 7px;
   margin-bottom: 7px;
   text-align: center;
+  border-radius: 15px;
   font-weight: ${({ theme }) => theme.text.weight.THIN};
 `;
 
