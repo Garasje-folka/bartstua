@@ -1,14 +1,12 @@
-import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
-import { Button, ButtonStyle } from "../../components/button";
-import { Switch } from "../../components/switch/switch";
-import { IconType } from "../../icons";
+import { Wrapper } from "../../components/calendar/calendar.styled";
+import { Icon, IconType } from "../../icons";
 import {
-  Wrapper,
+  ActionArea,
   Header,
   CounterNumber,
-  PlusMinusContainer,
-  AllPlaces,
+  StyledButtonWrapper,
 } from "./spacesCounter.styled";
 
 type Props = {
@@ -18,41 +16,46 @@ type Props = {
 
 const SpacesCounter: React.FC<Props> = (props: Props) => {
   const { spaces, setSpaces } = props;
-  const [maxSpacesSelected, setMaxSpacesSelected] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const updateSpaces = (change: number) => {
     setSpaces((prevSpaces) => prevSpaces + change);
   };
 
-  const onMaxSpacesToggled = () => {
-    setMaxSpacesSelected((prevVal) => {
-      setSpaces(prevVal ? 1 : MAX_DROP_IN_SPACES);
-      return !prevVal;
-    });
-  };
+  const Button = ({
+    disabled,
+    icon,
+    onClick,
+  }: {
+    disabled: boolean;
+    icon: IconType;
+    onClick: () => void;
+  }) => (
+    <StyledButtonWrapper
+      onClick={() => !disabled && onClick()}
+      disabled={disabled}
+    >
+      <Icon icon={icon} />
+    </StyledButtonWrapper>
+  );
 
   return (
     <Wrapper>
-      <Header>Antall plasser:</Header>
-      <CounterNumber>{spaces}</CounterNumber>
-      <PlusMinusContainer>
+      <Header>{t("label_how_many_people")}</Header>
+      <ActionArea>
         <Button
           onClick={() => updateSpaces(-1)}
-          buttonStyle={ButtonStyle.TRANSPARENT}
-          disabled={spaces === 1 || maxSpacesSelected}
+          disabled={spaces === 1}
           icon={IconType.MinusSign}
         />
+
+        <CounterNumber>{spaces}</CounterNumber>
         <Button
-          onClick={() => updateSpaces(1)}
-          buttonStyle={ButtonStyle.TRANSPARENT}
-          disabled={spaces === MAX_DROP_IN_SPACES || maxSpacesSelected}
+          disabled={spaces === MAX_DROP_IN_SPACES}
           icon={IconType.PlusSign}
+          onClick={() => updateSpaces(1)}
         />
-      </PlusMinusContainer>
-      <AllPlaces>
-        Alle plasser:
-        <Switch value={maxSpacesSelected} onToggle={onMaxSpacesToggled} />
-      </AllPlaces>
+      </ActionArea>
     </Wrapper>
   );
 };
