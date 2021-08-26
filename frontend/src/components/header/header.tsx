@@ -11,6 +11,8 @@ import {
   Nav,
   NavLink,
   RegisterButton,
+  CartButton,
+  SignOutButton,
 } from "./header.styled";
 import { Button } from "../button";
 import { useMobileScreen } from "../../hooks/useMobileScreen";
@@ -49,14 +51,10 @@ const Header = () => {
       title: "Om Oss",
       url: ABOUT,
     },
-    {
-      title: "Cart",
-      url: CART,
-    },
   ];
 
   const signOutButton: React.ReactNode = (
-    <Button onClick={handleSignOut}>Logg ut</Button>
+    <SignOutButton onClick={handleSignOut}>Logg ut</SignOutButton>
   );
 
   const signInButton: React.ReactNode = (
@@ -70,7 +68,7 @@ const Header = () => {
   );
 
   const cartButton: React.ReactNode = (
-    <Button icon={IconType.CartIcon} onClick={() => history.push(CART)} />
+    <CartButton icon={IconType.CartIcon} onClick={() => history.push(CART)} />
   );
 
   return (
@@ -95,9 +93,13 @@ const Header = () => {
         )}
 
         {currentUser && currentUser.email ? (
-          signOutButton
+          <>
+            {cartButton}
+            {signOutButton}
+          </>
         ) : (
           <>
+            {cartButton}
             {!isMobileScreen && registerButton}
             {signInButton}
           </>

@@ -49,6 +49,12 @@ export const CartButton = styled(Button)`
   border-radius: ${({ theme }) => theme.radius.VERY_ROUND};
   background-color: #ed5f50;
   border: none;
+  :disabled {
+    background-color: #ed5f50;
+  }
+  :hover {
+    background-color: #d55548;
+  }
 `;
 
 export const ButtonContainer = styled.div`

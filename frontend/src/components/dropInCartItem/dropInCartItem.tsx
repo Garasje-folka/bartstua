@@ -46,8 +46,8 @@ const DropInCartItem = (props: CartItemProps) => {
       <ContentContainer>
         <VeriticalAlignedTextContainer>
           <p>
-            {`Dag: `}
-            <b>{`${getFormattedDate()} `}</b>
+            <strong>{`Dag: `}</strong>
+            {`${getFormattedDate()} `}
           </p>
           <p>
             {`Tidspunkt: `}
