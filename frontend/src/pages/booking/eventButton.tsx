@@ -1,4 +1,3 @@
-import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
 import { DropInEvent } from "utils/dist/bookingManagement/types";
 import {
   PlacesContainer,
@@ -22,12 +21,10 @@ const EventButton: React.FC<Props> = (props: Props) => {
 
   return (
     <StyledButton selected={!!selected} onClick={onClick} disabled={disabled}>
-      <TimeContainer>{`${event.time.hour}:00`}</TimeContainer>
-      <PlacesContainer>{
-        `${
-          MAX_DROP_IN_SPACES - event.spacesTaken
-        } plasser` /* TODO: (haryp2309) localise */
-      }</PlacesContainer>
+      <TimeContainer>{`${event.time.hour}:00 - ${
+        event.time.hour + 1
+      }:00`}</TimeContainer>
+      <PlacesContainer>{/* TODO: (haryp2309) localise */}</PlacesContainer>
     </StyledButton>
   );
 };
