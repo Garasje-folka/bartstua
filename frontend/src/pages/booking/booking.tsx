@@ -86,7 +86,7 @@ const Booking = () => {
             setSelectedEvents={setSelectedEvents}
           />
         </Card>
-        <Card size={CardSizes.EXTRA_SMALL}>
+        <Card size={CardSizes.SMALL}>
           <BookingTypeChooser
             setSpaces={setSpaces}
             spaces={spaces}

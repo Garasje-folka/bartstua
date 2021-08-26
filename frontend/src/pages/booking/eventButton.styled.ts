@@ -6,12 +6,15 @@ type StyledButtonProps = {
 };
 export const TimeContainer = styled.div`
   flex-grow: 1;
-  font-weight: ${({ theme }: { theme: Theme }) => theme.text.weight.BOLD};
+  font-weight: ${({ theme }: { theme: Theme }) => theme.text.weight.REGULAR};
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const PlacesContainer = styled.div`
-  font-weight: ${({ theme }: { theme: Theme }) => theme.text.weight.THIN};
+  font-weight: ${({ theme }) => theme.text.weight.THIN};
   text-align: end;
 `;
 
@@ -23,7 +26,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   border: none;
   color: ${({ theme, selected }) =>
     selected ? theme.text.color.INVERTED : theme.colorPalette.primary.default};
-  border-radius: ${({ theme }: { theme: Theme }) => theme.radius.ROUND};
+  border-radius: ${({ theme }) => theme.radius.ROUND};
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -31,20 +34,27 @@ export const StyledButton = styled.button<StyledButtonProps>`
   padding: 10px;
   box-sizing: border-box;
   font-size: 1.2em;
-  flex: 1;
   min-width: 160px;
-  transition: var(--transition-duration);
+  transition-duration: var(--transition-duration);
   transition-timing-function: ease-in-out;
+  height: 50px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: ${({ theme, selected }) =>
+    selected ? "rgba(0, 0, 0, 0)" : theme.colorPalette.primary.default};
 
-  --transition-duration: 0.2s;
+  --transition-duration: 0.1s;
   ${PlacesContainer}, ${TimeContainer} {
     transition: var(--transition-duration);
   }
-  :hover {
+  /* :hover {
     ${PlacesContainer}, ${TimeContainer} {
-      transform: scale(1.1);
+      transform: scale(1.02);
     }
-    background-color: ${({ theme }) => theme.colorPalette.primary.default};
-    color: ${({ theme }) => theme.text.color.INVERTED};
-  }
+    border-color: ${({ theme }) => theme.colorPalette.secondary.default};
+    color: ${({ theme, selected }) =>
+    selected
+      ? theme.text.color.INVERTED
+      : theme.colorPalette.secondary.default};
+  } */
 `;
