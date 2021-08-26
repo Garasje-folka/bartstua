@@ -11,6 +11,7 @@ export const StyledNavbar = styled(Navbar)`
   background: rgba(255, 255, 255, 0.76);
   position: sticky;
   top: 0;
+  z-index: 1000;
 `;
 
 const NavbarContent = styled.div`
