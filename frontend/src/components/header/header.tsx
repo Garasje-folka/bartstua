@@ -22,6 +22,7 @@ import {
   HOME,
   SIGNIN,
   REGISTER,
+  CHECKOUT,
 } from "../../router/routeConstants";
 import { IconType } from "../../icons";
 import Logonobg from "../../assets/logo-nobg.png";
@@ -47,6 +48,10 @@ const Header = () => {
     {
       title: "Om Oss",
       url: ABOUT,
+    },
+    {
+      title: "Betaling",
+      url: CHECKOUT,
     },
   ];
 

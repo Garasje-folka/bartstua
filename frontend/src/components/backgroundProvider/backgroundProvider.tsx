@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { StyleContainer } from "./backgroundProvider.styled";
+import { ContentWrapper, StyleContainer } from "./backgroundProvider.styled";
+import { StyledWave } from "./backgroundProvider.styled";
 
 type Props = {
   dummyProp?: string; // TODO: Remove dummyProp
@@ -10,6 +11,7 @@ export type Background = {
   url?: string;
   color: string;
   shaded?: boolean;
+  tinted?: boolean;
 };
 
 const TYPES = {
@@ -20,6 +22,11 @@ const TYPES = {
     color: "#fff",
     shaded: true,
     url: "https://assets.simpleview-europe.com/telemark2018/imageresizer/?image=%2Fdmsimgs%2FFlytende_badstuer_h_st_web_825060041.jpg&action=ProductDetailProFullWidth",
+  },
+  BOOKING_WALLPAPER_2: {
+    color: "#EECD98",
+    tinted: true,
+    /* url: WaveUrl, */
   },
 };
 
@@ -44,7 +51,8 @@ const BackgroundProvider: BackgroundProviderComponent = (props: Props) => {
       value={{ currentBackground, switchBackground: setCurrentBackground }}
     >
       <StyleContainer currentBackground={currentBackground}>
-        {children}
+        <StyledWave />
+        <ContentWrapper>{children}</ContentWrapper>
       </StyleContainer>
     </BackgroundContext.Provider>
   );
