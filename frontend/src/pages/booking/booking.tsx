@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Calendar } from "../../components/calendar/calendar";
-import { backgroundTypes, useBackground } from "../../hooks/useBackground";
 import {
   CalendarCard,
   Card,
@@ -28,11 +27,6 @@ const Booking = () => {
   const [spaces, setSpaces] = useState<number>(1);
   const [wholeSauna, setWholeSauna] = useState<boolean>(false);
   const [selectedEvents, setSelectedEvents] = useState<DropInEvent[]>([]);
-  const { switchBackground } = useBackground();
-
-  useEffect(() => {
-    switchBackground(backgroundTypes.BOOKING_WALLPAPER_2);
-  }, [switchBackground]);
 
   useEffect(() => {
     setSelectedEvents([]);

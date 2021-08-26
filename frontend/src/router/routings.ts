@@ -1,3 +1,4 @@
+import { backgroundTypes } from "../hooks/useBackground";
 import * as pages from "../pages";
 import * as paths from "./routeConstants";
 import { Routing, GuardType } from "./types/routing";
@@ -12,6 +13,7 @@ export const routings: Routing[] = [
     component: pages.Booking,
     path: paths.BOOKING,
     guardType: GuardType.NONE,
+    background: backgroundTypes.BOOKING_WALLPAPER_2,
   },
   {
     component: pages.About,
