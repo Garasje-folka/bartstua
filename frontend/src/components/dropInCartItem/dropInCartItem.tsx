@@ -50,16 +50,16 @@ const DropInCartItem = (props: CartItemProps) => {
             {`${getFormattedDate()} `}
           </p>
           <p>
-            {`Tidspunkt: `}
-            <b>{`${getHourRange(doc.data.time.hour)}`}</b>
+            <strong>{`Tidspunkt: `}</strong>
+            {`${getHourRange(doc.data.time.hour)}`}
           </p>
           <p>
-            {`Antall plasser: `}
-            <b>{`${doc.data.spaces}`}</b>
+            <strong>{`Antall plasser: `}</strong>
+            {`${doc.data.spaces}`}
           </p>
           <p>
-            {`Pris: `}
-            <b>{`${doc.data.spaces * 100} kr`}</b>
+            <strong>{`Pris: `}</strong>
+            {`${doc.data.spaces * 199} kr`}
           </p>
         </VeriticalAlignedTextContainer>
         <ButtonContainer>
