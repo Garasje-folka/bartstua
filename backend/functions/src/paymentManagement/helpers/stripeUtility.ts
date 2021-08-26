@@ -17,6 +17,7 @@ export const createPaymentIntent = async (
       uid: uid,
       email: email,
     },
+    confirmation_method: "manual",
   });
   return paymentIntent;
 };
@@ -25,8 +26,17 @@ export const cancelPaymentIntent = async (id: string) => {
   await stripe.paymentIntents.cancel(id);
 };
 
-export const confirmPaymentIntent = async (id: string) => {
-  return await stripe.paymentIntents.confirm(id);
+export const confirmPaymentIntent = async (
+  id: string,
+  paymentMethodId?: string
+) => {
+  if (paymentMethodId) {
+    return await stripe.paymentIntents.confirm(id, {
+      payment_method: paymentMethodId,
+    });
+  } else {
+    return await stripe.paymentIntents.confirm(id);
+  }
 };
 
 export const constructEvent = (

@@ -10,7 +10,7 @@ import { sendBookingConfirmation } from "../../emailManagement";
 import {
   getReservationsRef,
   getUserReservationsRef,
-} from "../../bookingManagment/helpers";
+} from "../../bookingManagement/helpers";
 
 export const onPaymentSucceeded = async (
   uid: string,
@@ -76,5 +76,7 @@ export const onPaymentSucceeded = async (
       });
 
     sendBookingConfirmation(email, bookings, dropIns);
-  } catch (error) {}
+  } catch (error) {
+    // TODO: Handle errors, might not be needed
+  }
 };

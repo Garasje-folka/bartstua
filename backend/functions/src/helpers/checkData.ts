@@ -5,6 +5,7 @@ export const checkData = async (data: any, schema: yup.SchemaOf<any>) => {
     await schema.validate(data);
     return true;
   } catch (error) {
+    console.log(error);
     return false;
   }
 };

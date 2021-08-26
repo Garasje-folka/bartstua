@@ -32,7 +32,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       onClick={onClick}
       type={type}
       disabled={disabled}
-      buttonStyle={buttonStyle}
+      $buttonStyle={buttonStyle}
     >
       {children}
       {icon && (

@@ -1,28 +1,44 @@
 export const themeConfig = {
   colorPalette: {
     primary: {
-      default: "#296B79",
-      light: "#CFE3EA",
+      default: "#783940",
+      light: "#fdf1f1",
     },
     secondary: {
-      default: "#ED5F50",
+      default: "#EA953D",
+      light: "#EECD98",
+    },
+    contrasted: {
+      default: "#505050",
+      light: "#cccccc",
+    },
+    blended: {
+      default: "#ffffff",
+      dark: "#f9f9f9",
     },
   },
   radius: {
     ROUND: "10px",
     VERY_ROUND: "100px",
+    SLIGHTLY_ROUND: "5px",
   },
   alignment: {
     margin: {
-      REGULAR: "10px",
-      LARGE: "30px",
-      EXTRA_LARGE: "60px",
+      REGULAR: "15px", // DEPRECATED, use spacing instead
+      LARGE: "30px", // DEPRECATED, use spacing instead
+      EXTRA_LARGE: "60px", // DEPRECATED, use spacing instead
     },
     padding: {
-      REGULAR: "10px",
-      LARGE: "30px",
-      EXTRA_EXTRA_LARGE: "250px",
+      REGULAR: "15px", // DEPRECATED, use spacing instead
+      LARGE: "30px", // DEPRECATED, use spacing instead
+      EXTRA_EXTRA_LARGE: "250px", // DEPRECATED, use spacing instead
     },
+  },
+  spacing: {
+    REGULAR: "15px",
+    LARGE: "30px",
+    EXTRA_LARGE: "60px",
+    EXTRA_EXTRA_LARGE: "250px",
   },
   page: {
     width: "1200px",
@@ -45,7 +61,9 @@ export const themeConfig = {
       BOLD: "600",
     },
     color: {
-      PRIMARY: "black",
+      COLORED: "#ad1111",
+      PRIMARY: "#111111",
+      PRIMARY_LIGHT: "#a0a0a0",
       INVERTED: "white",
     },
     size: {
@@ -57,6 +75,6 @@ export const themeConfig = {
       LARGE: "2rem",
     },
   },
-};
+} as const;
 
 export type Theme = typeof themeConfig;
