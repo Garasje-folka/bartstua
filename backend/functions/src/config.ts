@@ -84,18 +84,30 @@ const initializeEvents = async () => {
   if (writes > 0) await batch.commit();
 };
 
-initializeEvents().catch((error) => {
-  console.log(error);
-});
-
 if (process.env.FUNCTIONS_EMULATOR) {
-  const pubsub = new PubSub({
-    apiEndpoint: "localhost:8085",
-  });
+  const ref = admin.firestore().collection("debug-dev").doc("isInitialized");
 
-  setInterval(() => {
-    const SCHEDULED_FUNCTION_TOPIC =
-      "firebase-schedule-clearExpiredReservations";
-    pubsub.topic(SCHEDULED_FUNCTION_TOPIC).publishJSON({});
-  }, RESERVATION_CLEARING_INTERVAL * 60 * 1000);
+  const existingDoc = ref.get();
+  existingDoc.then(({ exists }) => {
+    if (!exists) {
+      // First time running cloud functions
+
+      initializeEvents().catch((error) => {
+        console.log(error);
+      });
+      const pubsub = new PubSub({
+        apiEndpoint: "localhost:8085",
+      });
+
+      setInterval(() => {
+        const SCHEDULED_FUNCTION_TOPIC =
+          "firebase-schedule-clearExpiredReservations";
+        pubsub.topic(SCHEDULED_FUNCTION_TOPIC).publishJSON({});
+      }, RESERVATION_CLEARING_INTERVAL * 60 * 1000);
+
+      ref.create({
+        initialized: true,
+      });
+    }
+  });
 }
