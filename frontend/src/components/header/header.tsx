@@ -11,8 +11,9 @@ import {
   Nav,
   NavLink,
   RegisterButton,
+  CartButton,
+  SignOutButton,
 } from "./header.styled";
-import { Button } from "../button";
 import { useMobileScreen } from "../../hooks/useMobileScreen";
 import { DropDownNavigation } from "./dropDownNavigation";
 import { NavigationItems } from "./types/navigationItems";
@@ -22,6 +23,7 @@ import {
   HOME,
   SIGNIN,
   REGISTER,
+  CART,
   CHECKOUT,
 } from "../../router/routeConstants";
 import { IconType } from "../../icons";
@@ -56,9 +58,7 @@ const Header = () => {
   ];
 
   const signOutButton: React.ReactNode = (
-    <Button icon={IconType.SignOutIcon} onClick={handleSignOut}>
-      Logg ut
-    </Button>
+    <SignOutButton onClick={handleSignOut}>Logg ut</SignOutButton>
   );
 
   const signInButton: React.ReactNode = (
@@ -69,6 +69,10 @@ const Header = () => {
     <RegisterButton onClick={() => history.push(REGISTER)}>
       Registrer
     </RegisterButton>
+  );
+
+  const cartButton: React.ReactNode = (
+    <CartButton icon={IconType.CartIcon} onClick={() => history.push(CART)} />
   );
 
   return (
@@ -93,9 +97,13 @@ const Header = () => {
         )}
 
         {currentUser && currentUser.email ? (
-          signOutButton
+          <>
+            {cartButton}
+            {signOutButton}
+          </>
         ) : (
           <>
+            {cartButton}
             {!isMobileScreen && registerButton}
             {signInButton}
           </>

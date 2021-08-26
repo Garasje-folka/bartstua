@@ -13,7 +13,7 @@ export const routings: Routing[] = [
     component: pages.Booking,
     path: paths.BOOKING,
     guardType: GuardType.NONE,
-    background: backgroundTypes.BOOKING_WALLPAPER_2,
+    background: backgroundTypes.WAVE,
   },
   {
     component: pages.About,
@@ -54,6 +54,7 @@ export const routings: Routing[] = [
     component: pages.Cart,
     path: paths.CART,
     guardType: GuardType.NONE,
+    background: backgroundTypes.WAVE,
   },
   {
     component: pages.ResetPassword,

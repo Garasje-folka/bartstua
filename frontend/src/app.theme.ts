@@ -19,6 +19,7 @@ export const themeConfig = {
   },
   radius: {
     ROUND: "10px",
+    VERY_ROUND: "100px",
     SLIGHTLY_ROUND: "5px",
   },
   alignment: {
