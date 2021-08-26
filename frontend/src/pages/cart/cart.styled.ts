@@ -47,13 +47,13 @@ export const CartButton = styled(Button)`
   margin-bottom: 10px;
   padding: 8px;
   border-radius: ${({ theme }) => theme.radius.VERY_ROUND};
-  background-color: #ed5f50;
+  background-color: ${({ theme }) => theme.colorPalette.primary.default};
   border: none;
   :disabled {
-    background-color: #ed5f50;
+    background-color: ${({ theme }) => theme.colorPalette.primary.default};
   }
   :hover {
-    background-color: #d55548;
+    background-color: ${({ theme }) => theme.colorPalette.secondary.default};
   }
 `;
 
@@ -76,7 +76,7 @@ export const BottomContainer = styled.div`
 
 export const TextContainer = styled.div`
   width: 200px;
-  background-color: #296b79;
+  background-color: ${({ theme }) => theme.colorPalette.primary.default};
   color: white;
   border-radius: ${({ theme }) => theme.radius.ROUND};
   margin-left: 90px;

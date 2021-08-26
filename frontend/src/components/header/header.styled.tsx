@@ -33,16 +33,16 @@ export const LeftAlignedContent = styled(NavbarContent)`
 
 export const SignInButton = styled(Button)`
   margin-left: ${({ theme }) => theme.alignment.margin.REGULAR};
-  background: #296b79;
+  background: ${({ theme }) => theme.colorPalette.primary.default};
   box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
   border-radius: 100px;
   border: none;
   :hover {
-    background: rgba(255, 255, 255, 0.76);
-    color: #296b79;
+    background: ${({ theme }) => theme.colorPalette.secondary.default};
+    color: ${({ theme }) => theme.colorPalette.blended.default};
   }
   :focus {
-    background: #296b79;
+    background: ${({ theme }) => theme.colorPalette.secondary.default};
     color: white;
   }
   :active {
@@ -58,12 +58,12 @@ export const RegisterButton = styled(Button)`
   color: black;
   border: none;
   :hover {
-    background: #296b79;
+    background: ${({ theme }) => theme.colorPalette.secondary.default};
     color: white;
   }
   :focus {
-    background: #ffffff;
-    color: black;
+    background: ${({ theme }) => theme.colorPalette.secondary.default};
+    color: white;
   }
 `;
 
@@ -74,7 +74,7 @@ export const CartButton = styled(Button)`
   margin-right: 10px;
   :hover {
     background: rgba(255, 255, 255, 0.76);
-    color: #296b79;
+    color: ${({ theme }) => theme.colorPalette.secondary.default};
   }
   :focus {
     background: rgba(255, 255, 255, 0.76);
@@ -84,15 +84,15 @@ export const CartButton = styled(Button)`
 `;
 
 export const SignOutButton = styled(Button)`
-  background: #296b79;
+  background: ${({ theme }) => theme.colorPalette.primary.default};
   box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
   border-radius: 100px;
   :hover {
-    background: rgba(255, 255, 255, 0.76);
-    color: #296b79;
+    background: ${({ theme }) => theme.colorPalette.secondary.default};
+    color: white;
   }
   :focus {
-    background: #296b79;
+    background: ${({ theme }) => theme.colorPalette.primary.default};
   }
   border: none;
 `;

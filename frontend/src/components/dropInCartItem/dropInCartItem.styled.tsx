@@ -10,7 +10,7 @@ export const VeriticalAlignedTextContainer = styled.span`
 `;
 
 export const BackgroundReservation = styled.div`
-  background-color: #296b79;
+  background-color: ${({ theme }) => theme.colorPalette.primary.default};
   border-radius: ${({ theme }) => theme.radius.ROUND};
   margin: 20px;
   height: 250px;
@@ -39,11 +39,11 @@ export const ButtonContainer = styled.div`
 
 export const DeleteButton = styled(Button)`
   margin-left: 70px;
-  background-color: #296b79;
+  background-color: ${({ theme }) => theme.colorPalette.primary.default};
   border: none;
   margin-top: 70px;
   :hover {
-    background-color: #296b79;
+    background-color: ${({ theme }) => theme.colorPalette.primary.default};
     color: #e5e5e5;
   }
 `;
