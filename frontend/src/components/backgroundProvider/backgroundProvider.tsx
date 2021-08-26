@@ -12,6 +12,7 @@ export type Background = {
   color: string;
   shaded?: boolean;
   tinted?: boolean;
+  waves?: boolean;
 };
 
 const TYPES = {
@@ -25,8 +26,7 @@ const TYPES = {
   },
   BOOKING_WALLPAPER_2: {
     color: "#EECD98",
-    tinted: true,
-    /* url: WaveUrl, */
+    waves: true,
   },
 };
 
@@ -51,7 +51,7 @@ const BackgroundProvider: BackgroundProviderComponent = (props: Props) => {
       value={{ currentBackground, switchBackground: setCurrentBackground }}
     >
       <StyleContainer currentBackground={currentBackground}>
-        <StyledWave />
+        {currentBackground.waves && <StyledWave />}
         <ContentWrapper>{children}</ContentWrapper>
       </StyleContainer>
     </BackgroundContext.Provider>
