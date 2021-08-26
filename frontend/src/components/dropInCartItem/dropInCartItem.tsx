@@ -8,9 +8,6 @@ import { createDateFromDateDay } from "utils/dist/dates/helpers";
 import { getDayName } from "utils/dist/dates/helpers";
 import { getHourRange } from "utils/dist/dates/helpers";
 import { dateDayToISO } from "utils/dist/dates/helpers";
-import { Button } from "../button";
-import { CardBody, CardContainer } from "../card";
-import { Heading, Paragraph } from "../text";
 import {
   BackgroundReservation,
   ContentContainer,

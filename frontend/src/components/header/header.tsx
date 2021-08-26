@@ -14,7 +14,6 @@ import {
   CartButton,
   SignOutButton,
 } from "./header.styled";
-import { Button } from "../button";
 import { useMobileScreen } from "../../hooks/useMobileScreen";
 import { DropDownNavigation } from "./dropDownNavigation";
 import { NavigationItems } from "./types/navigationItems";

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Button } from "../../components/button";
-import { Theme } from "../../app.theme";
 
 export const Background = styled.div`
   display: flex;

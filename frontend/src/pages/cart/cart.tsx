@@ -1,14 +1,9 @@
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Button } from "../../components/button";
-import { CardBody, CardContainer, CardHeader } from "../../components/card";
 import { DropInCartItem } from "../../components/dropInCartItem";
 import { Heading, Paragraph } from "../../components/text";
 import { dropInReservationsSelector } from "../../redux/ducks/dropInReservations";
 import { CHECKOUT } from "../../router/routeConstants";
-import { Header } from "../booking/spacesCounter.styled";
-import { backgroundTypes, useBackground } from "../../hooks/useBackground";
-import { useEffect } from "react";
 import {
   Background,
   MainContainer,
@@ -19,17 +14,10 @@ import {
   BottomContainer,
   TextContainer,
 } from "./cart.styled";
-import { ParagraphContainer } from "../signIn/signIn.styled";
 
 const Cart = () => {
   const reservations = useSelector(dropInReservationsSelector);
   const history = useHistory();
-
-  const { switchBackground } = useBackground();
-
-  useEffect(() => {
-    switchBackground(backgroundTypes.BOOKING_WALLPAPER);
-  }, [switchBackground]);
 
   return (
     <Background>
