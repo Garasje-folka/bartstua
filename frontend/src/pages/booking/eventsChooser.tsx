@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
 import { DropInEvent, EventLocation } from "utils/dist/bookingManagement/types";
 import { isEqualDates } from "utils/dist/dates/helpers";
@@ -6,7 +7,15 @@ import { DateDay } from "utils/dist/dates/types";
 import { subscribeEvents } from "../../services/bookingManagement";
 import { getEventStartingHour } from "../../services/bookingManagement/helpers";
 import { EventButton } from "./eventButton";
-import { Wrapper } from "./eventsChooser.styled";
+import {
+  DeselectedCircle,
+  Content,
+  DescriptionWrapper,
+  SelectedCircle,
+  Description,
+  DescriptionText,
+  Wrapper,
+} from "./eventsChooser.styled";
 
 type Props = {
   dateDay: DateDay;
@@ -18,6 +27,7 @@ type Props = {
 const EventsChooser = (props: Props) => {
   const { dateDay, spaces, selectedEvents, setSelectedEvents } = props;
   const [events, setEvents] = useState<DropInEvent[]>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const unsubscribe = subscribeEvents(
@@ -70,7 +80,21 @@ const EventsChooser = (props: Props) => {
     });
   };
 
-  return <Wrapper>{mapEvents()}</Wrapper>;
+  return (
+    <Wrapper>
+      <DescriptionWrapper>
+        <Description>
+          <DeselectedCircle />
+          <DescriptionText>{t("label_not_choosen_events")}</DescriptionText>
+        </Description>
+        <Description>
+          <SelectedCircle />
+          <DescriptionText>{t("label_choosen_events")}</DescriptionText>
+        </Description>
+      </DescriptionWrapper>
+      <Content>{mapEvents()}</Content>
+    </Wrapper>
+  );
 };
 
 export { EventsChooser };
