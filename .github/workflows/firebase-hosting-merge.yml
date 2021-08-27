@@ -20,3 +20,4 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_BARTSTUA }}"
           channelId: live
           projectId: bartstua
+          entrypoint: frontend
