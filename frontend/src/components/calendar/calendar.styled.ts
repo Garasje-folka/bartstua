@@ -61,9 +61,9 @@ const previousMonthDayStyle = css`
 
 const dayStyle = css`
   ${removeExistingStyle}
-  height: 45px;
-  margin-top: 7px;
-  margin-bottom: 7px;
+  height: 55px;
+  margin-top: 1px;
+  margin-bottom: 1px;
   text-align: center;
   border-radius: 10px;
   font-weight: ${({ theme }) => theme.text.weight.THIN};
@@ -86,6 +86,12 @@ const arrows = css`
   font-size: 1.6em;
   font-weight: bold;
 `;
+
+const active = css`
+  background: ${({theme}) => theme.colorPalette.primary.default};
+  color: ${({theme}) => theme.colorPalette.contrasted.default};
+`;
+
 
 export const StyledCalendar = styled(Calendar)`
   ${calendarStyle}
@@ -136,7 +142,6 @@ export const StyledCalendar = styled(Calendar)`
 
   /* Temporary */
   .react-calendar__tile--active {
-    background: #ae2c24;
-    color: white;
+    ${active}
   }
 `;
