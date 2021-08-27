@@ -12,6 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: yarn
+      - run: yarn build:shared
       - run: yarn build:frontend
       - run: mkdir ./build
       - run: cp -r frontend/build/ ./build
