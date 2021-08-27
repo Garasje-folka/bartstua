@@ -1,3 +1,5 @@
+import { Background } from "../../components/backgroundProvider/backgroundProvider";
+
 enum GuardType {
   VERIFICATION_CHECK,
   EMAIL_SIGN_IN_CHECK,
@@ -10,6 +12,7 @@ interface Routing {
   component: React.ComponentType<any>;
   guardType: GuardType;
   expectedGuardValue?: boolean;
+  background?: Background;
 }
 
 export type { Routing };

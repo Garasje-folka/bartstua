@@ -8,6 +8,7 @@ import {
   FaKey,
   FaLockOpen,
   FaUser,
+  FaShoppingCart,
   FaUsers,
 } from "react-icons/fa";
 
@@ -24,6 +25,7 @@ export enum IconType {
   PasswordIcon,
   SignInIcon,
   SignUpIcon,
+  CartIcon,
   GroupIcon,
   SinglePersonIcon,
 }
@@ -48,6 +50,8 @@ const getIcon = (iconType: IconType) => {
       return FaLockOpen;
     case IconType.SignUpIcon:
       return FaUser;
+    case IconType.CartIcon:
+      return FaShoppingCart;
     case IconType.GroupIcon:
       return FaUsers;
     case IconType.SinglePersonIcon:

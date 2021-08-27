@@ -34,30 +34,34 @@ type CardProps = {
   color?: CardColors;
 };
 
+const opacity = "e2";
+
 export const Card = styled.div<CardProps>`
+  backdrop-filter: blur(10px);
+
   ${({ color }) => {
     switch (color) {
       case CardColors.PRIMARY: {
         return css`
           background-color: ${({ theme }) =>
-            theme.colorPalette.primary.default};
+            `${theme.colorPalette.primary.default}${opacity}`};
         `;
       }
       case CardColors.PRIMARY_LIGHT: {
         return css`
           background-color: ${({ theme }: { theme: Theme }) =>
-            theme.colorPalette.primary.light};
+            `${theme.colorPalette.primary.light}${opacity}`};
         `;
       }
       default: {
         return css`
-          background-color: white;
+          background-color: ${"#ffffff" + opacity};
         `;
       }
     }
   }}
   border-radius: ${({ theme }) => theme.radius.ROUND};
-  padding: ${({ theme }) => theme.alignment.padding.REGULAR};
+  padding: ${({ theme }) => theme.alignment.padding.LARGE};
   box-sizing: border-box;
   box-shadow: ${({ theme }) => theme.shadow.REGULAR};
   overflow: hidden;
