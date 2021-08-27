@@ -22,5 +22,6 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_BARTSTUA }}"
           channelId: live
           projectId: bartstua
+          entrypoint: /frontend
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
