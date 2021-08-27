@@ -47,7 +47,7 @@ export const routings: Routing[] = [
   {
     component: pages.Checkout,
     path: paths.CHECKOUT,
-    guardType: GuardType.HAS_RESERVATIONS_CHECK,
+    guardType: GuardType.NONE,
     expectedGuardValue: true,
   },
   {

@@ -2,7 +2,7 @@ export const themeConfig = {
   colorPalette: {
     primary: {
       default: "#783940",
-      light: "#fdf1f1",
+      light: "#f7e9e9",
     },
     secondary: {
       default: "#EA953D",
@@ -16,6 +16,9 @@ export const themeConfig = {
       default: "#ffffff",
       dark: "#f9f9f9",
     },
+    disabled: {
+      default: "#e6e6e6",
+    },
   },
   radius: {
     ROUND: "10px",
@@ -24,6 +27,7 @@ export const themeConfig = {
   },
   alignment: {
     margin: {
+      SMALL: "5px",
       REGULAR: "15px", // DEPRECATED, use spacing instead
       LARGE: "30px", // DEPRECATED, use spacing instead
       EXTRA_LARGE: "60px", // DEPRECATED, use spacing instead
@@ -65,10 +69,12 @@ export const themeConfig = {
       PRIMARY: "#111111",
       PRIMARY_LIGHT: "#a0a0a0",
       INVERTED: "white",
+      DISABLED: "#939090",
     },
     size: {
       CARD_HEADER: "1.8rem",
       CARD_HIGHLIGHTED: "1.2rem",
+      GENERIC_SMALL: "0.7rem",
     },
     lineHeight: {
       REGULAR: "1rem",
