@@ -1,12 +1,12 @@
 import { useTranslation } from "react-i18next";
 import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
-import { Wrapper } from "../../components/calendar/calendar.styled";
 import { Icon, IconType } from "../../icons";
 import {
   ActionArea,
   Header,
   CounterNumber,
   StyledButtonWrapper,
+  SpacesCounterWrapper,
 } from "./spacesCounter.styled";
 
 type Props = {
@@ -40,7 +40,7 @@ const SpacesCounter: React.FC<Props> = (props: Props) => {
   );
 
   return (
-    <Wrapper>
+    <SpacesCounterWrapper>
       <Header>{t("label_how_many_people")}</Header>
       <ActionArea>
         <Button
@@ -56,7 +56,7 @@ const SpacesCounter: React.FC<Props> = (props: Props) => {
           onClick={() => updateSpaces(1)}
         />
       </ActionArea>
-    </Wrapper>
+    </SpacesCounterWrapper>
   );
 };
 

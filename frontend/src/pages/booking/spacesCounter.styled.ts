@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Theme } from "../../app.theme";
 
-export const Wrapper = styled.div``;
+export const SpacesCounterWrapper = styled.div``;
 
 export const ActionArea = styled.div`
   --transition-style: all ease-in-out 200ms;
