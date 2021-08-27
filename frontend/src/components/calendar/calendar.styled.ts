@@ -89,7 +89,7 @@ const arrows = css`
 
 const active = css`
   background: ${({theme}) => theme.colorPalette.primary.default};
-  color: ${({theme}) => theme.colorPalette.contrasted.default};
+  color: ${({theme}) => theme.colorPalette.blended.default};
 `;
 
 
