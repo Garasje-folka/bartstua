@@ -51,7 +51,6 @@ export const BasicCard = styled.div<CardProps>`
       }
       case CardSizes.FILL_PAGE: {
         return css`
-          flex-basis: ${({ theme }) => theme.page.width};
           max-width: ${({ theme }) => theme.page.width};
           min-height: ${({ theme }) => theme.page.minHeight};
           margin-top: 20px;
