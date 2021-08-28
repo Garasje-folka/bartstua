@@ -72,4 +72,5 @@ export const OuterContainer = styled.div`
   display: flex;
   justify-content: center;
   min-height: ${({ theme }) => theme.page.contentHeight};
+  align-items: flex-start;
 `;
