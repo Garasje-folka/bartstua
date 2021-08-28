@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import { useSelector } from "react-redux";
 import { currentUserSelector } from "../redux/selectors";
 import { sendEmailVerification } from "../services/userManagement";
-import { CardContainer, CardHeader, CardBody } from "../components/card";
+import { Card, CardHeader, CardBody, CardSizes } from "../components/card";
 import { Notification, NotificationType } from "../components/notification";
 
 const Verify = () => {
@@ -33,7 +33,7 @@ const Verify = () => {
   };
 
   return (
-    <CardContainer>
+    <Card size={CardSizes.FILL_PAGE}>
       <CardHeader title="Du må verifisere e-posten din" />
       <CardBody>
         <Button onClick={sendVerification}>
@@ -43,7 +43,7 @@ const Verify = () => {
           {notificationMessage}
         </Notification>
       </CardBody>
-    </CardContainer>
+    </Card>
   );
 };
 

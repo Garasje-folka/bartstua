@@ -1,16 +1,35 @@
-import { InnerContainer, OuterContainer } from "./cardContainer.styled";
+import { BasicCard, OuterContainer } from "./cardContainer.styled";
 
-interface CardContainerProps {
-  children?: React.ReactNode;
+export enum CardSizes {
+  EXTRA_SMALL = "EXTRA_SMALL",
+  SMALL = "SMALL",
+  BIG = "BIG",
+  UNSET = "UNSET",
+  FILL_PAGE = "FILL_PAGE",
 }
 
-const CardContainer: React.FC<CardContainerProps> = (props) => {
-  const { children } = props;
-  return (
+export enum CardColors {
+  PRIMARY = "PRIMARY",
+  PRIMARY_LIGHT = "PRIMARY_LIGHT",
+  DEFAULT = "DEFAULT",
+}
+
+type CardContainerProps = {
+  children?: React.ReactNode;
+  size?: CardSizes;
+  color?: CardColors;
+  className?: string;
+};
+
+const Card: React.FC<CardContainerProps> = (props) => {
+  const { children, size } = props;
+  return size === CardSizes.FILL_PAGE ? (
     <OuterContainer>
-      <InnerContainer>{children}</InnerContainer>
+      <BasicCard {...props}>{children}</BasicCard>
     </OuterContainer>
+  ) : (
+    <BasicCard {...props}>{children}</BasicCard>
   );
 };
 
-export { CardContainer };
+export { Card };

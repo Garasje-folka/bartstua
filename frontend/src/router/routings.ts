@@ -49,6 +49,7 @@ export const routings: Routing[] = [
     path: paths.CHECKOUT,
     guardType: GuardType.NONE,
     expectedGuardValue: true,
+    background: backgroundTypes.WAVE,
   },
   {
     component: pages.Cart,

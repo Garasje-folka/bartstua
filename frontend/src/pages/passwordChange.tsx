@@ -6,7 +6,7 @@ import {
   changePasswordErrorCodes,
 } from "../services/userManagement";
 import { Notification, NotificationType } from "../components/notification";
-import { CardBody, CardContainer, CardHeader } from "../components/card";
+import { CardBody, Card, CardHeader, CardSizes } from "../components/card";
 
 const PasswordChange = () => {
   const [currentPassword, setCurrentPassword] = useState<string>("");
@@ -62,7 +62,7 @@ const PasswordChange = () => {
 
   return (
     <>
-      <CardContainer>
+      <Card size={CardSizes.FILL_PAGE}>
         <CardHeader title="Endre passord" />
         <CardBody>
           <FormContainer onSubmit={handleSubmit}>
@@ -96,7 +96,7 @@ const PasswordChange = () => {
             </Notification>
           )}
         </CardBody>
-      </CardContainer>
+      </Card>
     </>
   );
 };
