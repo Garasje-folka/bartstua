@@ -71,4 +71,5 @@ export const BasicCard = styled.div<CardProps>`
 export const OuterContainer = styled.div`
   display: flex;
   justify-content: center;
+  min-height: ${({ theme }) => theme.page.contentHeight};
 `;
