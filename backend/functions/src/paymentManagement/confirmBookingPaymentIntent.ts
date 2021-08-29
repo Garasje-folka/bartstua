@@ -3,12 +3,12 @@ import * as admin from "firebase-admin";
 import { confirmPaymentIntent, onPaymentSucceeded } from "./helpers";
 import {
   refreshReservationTimestampsHelper,
-  getUserReservationsRef,
+  getUserReservationsQuery,
 } from "../bookingManagement/helpers";
 import * as yup from "yup";
 import { checkData } from "../helpers";
 import { BookingType } from "utils/dist/bookingManagement/types";
-import { USERS } from "../../../../utils/dist/userManagement/constants";
+import { USERS } from "utils/dist/userManagement/constants";
 import { PAYMENTS } from "./constants";
 import { PaymentReservation } from "./createBookingPaymentIntent";
 
@@ -39,7 +39,6 @@ export const confirmBookingPaymentIntent = functions.https.onCall(
 
     await refreshReservationTimestampsHelper(auth.uid);
 
-    // TODO: Check if any reservations have expired, throw error if so
     await admin.firestore().runTransaction(async (transaction) => {
       const paymentRef = admin
         .firestore()
@@ -49,17 +48,16 @@ export const confirmBookingPaymentIntent = functions.https.onCall(
         .doc(paymentIntentId);
 
       const payment = await transaction.get(paymentRef);
-      // TODO: Make type safe
       const paymentReservations = payment.get(
         "reservations"
       ) as PaymentReservation[];
 
       const bookingReservations = await transaction.get(
-        getUserReservationsRef(auth.uid, BookingType.booking)
+        getUserReservationsQuery(auth.uid, BookingType.fullSauna)
       );
 
       const dropInReservations = await transaction.get(
-        getUserReservationsRef(auth.uid, BookingType.dropIn)
+        getUserReservationsQuery(auth.uid, BookingType.dropIn)
       );
 
       for (const paymentRes of paymentReservations) {

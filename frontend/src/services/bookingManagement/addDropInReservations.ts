@@ -17,8 +17,8 @@ const addDropInReservations = async (requests: DropInReservationRequest[]) => {
         throw createError(ADD_RESERVATIONS_ERRORS.USER_UNAUTHENTICATED);
       case ADD_RESERVATIONS_ERRORS.DUPLICATE_REQUESTS:
         throw createError(ADD_RESERVATIONS_ERRORS.DUPLICATE_REQUESTS);
-      case ADD_RESERVATIONS_ERRORS.INVALID_DATE:
-        throw createError(ADD_RESERVATIONS_ERRORS.INVALID_DATE);
+      case "invalid-time":
+        throw createError("invalid-time");
       case ADD_RESERVATIONS_ERRORS.NOT_ENOUGH_SPACE:
         throw createError(ADD_RESERVATIONS_ERRORS.NOT_ENOUGH_SPACE);
       case ADD_RESERVATIONS_ERRORS.UNEXPECTED_DATA_FORMAT:

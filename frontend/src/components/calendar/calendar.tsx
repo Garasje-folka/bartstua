@@ -103,13 +103,16 @@ const Calendar = (props: CalendarProps) => {
       </TopBar>
       <CalendarWrapper>
         {[1, 2, 3, 4, 5, 6, 0].map((weekDayNumber) => (
-          <DayName>{t(`short_form_week_days.${weekDayNumber}`)}</DayName>
+          <DayName key={weekDayNumber}>
+            {t(`short_form_week_days.${weekDayNumber}`)}
+          </DayName>
         ))}
         {generateDate(currentMonth, currentYear).map((currentDate) => {
           const disabled = currentDate < minDate;
           const isSelectedDate = isSameDate(selectedDate, currentDate);
           return (
             <DayWrapper
+              key={JSON.stringify(currentDate)}
               thisMonth={currentDate.getMonth() === currentMonth}
               isSelectedDate={isSelectedDate}
               onClick={() => !disabled && setDate(currentDate)}

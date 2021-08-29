@@ -2,10 +2,10 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as yup from "yup";
 import { checkAuthentication, checkData } from "../helpers";
-import { getUserReservationsRef } from "../bookingManagement/helpers";
+import { getUserReservationsQuery } from "../bookingManagement/helpers";
 import { isExpiredReservation } from "utils/dist/bookingManagement/helpers";
 import {
-  BookingReservationData,
+  FullSaunaReservationData,
   BookingType,
   DropInReservationData,
 } from "utils/dist/bookingManagement/types";
@@ -34,22 +34,22 @@ export const createBookingPaymentIntent = functions.https.onCall(
     const auth = checkAuthentication(context.auth);
 
     const [
-      validBookingReservations,
+      validFullSaunaReservations,
       validDropInReservations,
       totalDropInSpaces,
     ] = await admin.firestore().runTransaction(async (transaction) => {
-      const bookingReservations = await transaction.get(
-        getUserReservationsRef(auth.uid, BookingType.booking)
+      const fullSaunaReservations = await transaction.get(
+        getUserReservationsQuery(auth.uid, BookingType.fullSauna)
       );
 
       const dropInReservations = await transaction.get(
-        getUserReservationsRef(auth.uid, BookingType.dropIn)
+        getUserReservationsQuery(auth.uid, BookingType.dropIn)
       );
 
       // Filter out expired reservations
-      const validBookingReservations = bookingReservations.docs.filter(
+      const validFullSaunaReservations = fullSaunaReservations.docs.filter(
         (res) => {
-          const data = res.data() as BookingReservationData;
+          const data = res.data() as FullSaunaReservationData;
           return !isExpiredReservation(data.time, data.timestamp);
         }
       );
@@ -60,7 +60,7 @@ export const createBookingPaymentIntent = functions.https.onCall(
       });
 
       if (
-        validBookingReservations.length === 0 &&
+        validFullSaunaReservations.length === 0 &&
         validDropInReservations.length === 0
       ) {
         throw new functions.https.HttpsError(
@@ -75,23 +75,23 @@ export const createBookingPaymentIntent = functions.https.onCall(
       });
 
       return [
-        validBookingReservations,
+        validFullSaunaReservations,
         validDropInReservations,
         totalDropInSpaces,
       ];
     });
 
-    const bookingAmount = validBookingReservations.length * 100 * 100;
+    const fullSaunaAmount = validFullSaunaReservations.length * 100 * 100;
     const dropInAmount = totalDropInSpaces * 100 * 100;
     const paymentIntent = await createPaymentIntent(
-      bookingAmount + dropInAmount,
+      fullSaunaAmount + dropInAmount,
       auth.uid,
       data.email
     );
 
-    const bookingPaymentData = validBookingReservations.map((res) => {
+    const bookingPaymentData = validFullSaunaReservations.map((res) => {
       return {
-        type: BookingType.booking,
+        type: BookingType.fullSauna,
         id: res.id,
       };
     });

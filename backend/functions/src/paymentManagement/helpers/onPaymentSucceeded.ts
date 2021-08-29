@@ -2,15 +2,12 @@ import * as admin from "firebase-admin";
 import { USERS } from "utils/dist/userManagement/constants";
 import { PAYMENTS } from "../constants";
 import {
-  BookingReservationData,
+  FullSaunaReservationData,
   BookingType,
   DropInReservationData,
 } from "utils/dist/bookingManagement/types";
 import { sendBookingConfirmation } from "../../emailManagement";
-import {
-  getReservationsRef,
-  getUserReservationsRef,
-} from "../../bookingManagement/helpers";
+import { getReservationsRef } from "../../bookingManagement/helpers";
 
 export const onPaymentSucceeded = async (
   uid: string,
@@ -39,16 +36,15 @@ export const onPaymentSucceeded = async (
 
         const reservationsInfo = paymentSnapshot.get("reservations");
 
-        const bookings: BookingReservationData[] = [];
+        const bookings: FullSaunaReservationData[] = [];
         const dropIns: DropInReservationData[] = [];
 
+        // Retrieve reservation data to send with the booking confirmation
         for (const res of reservationsInfo) {
-          const userReservationRef = getUserReservationsRef(uid, res.type).doc(
-            res.id
-          );
-          const snapshot = await transaction.get(userReservationRef);
-          if (res.type === BookingType.booking) {
-            const data = snapshot.data() as BookingReservationData;
+          const reservationRef = getReservationsRef(res.type).doc(res.id);
+          const snapshot = await transaction.get(reservationRef);
+          if (res.type === BookingType.fullSauna) {
+            const data = snapshot.data() as FullSaunaReservationData;
             bookings.push(data);
           } else if (res.type === BookingType.dropIn) {
             const data = snapshot.data() as DropInReservationData;
@@ -58,11 +54,7 @@ export const onPaymentSucceeded = async (
 
         for (const res of reservationsInfo) {
           const reservationRef = getReservationsRef(res.type).doc(res.id);
-          const userReservationRef = getUserReservationsRef(uid, res.type).doc(
-            res.id
-          );
 
-          transaction.delete(userReservationRef);
           transaction.update(reservationRef, {
             status: "payed",
           });

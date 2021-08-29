@@ -1,6 +1,6 @@
 import { DateTime } from "../../dates/types";
 
-export type BookingEvent = {
+export type FullSaunaEvent = {
   taken: boolean;
   time: DateTime;
 };

@@ -3,57 +3,45 @@ import {
   createTimestamp,
   isExpiredReservation,
 } from "utils/dist/bookingManagement/helpers";
-import { getUserReservationsRef } from "./getUserReservationsRef";
 import { BookingType } from "utils/dist/bookingManagement/types";
-import { getReservationsRef } from "./getReservationRef";
+import { getUserReservationsQuery } from "./getUserReservationsQuery";
 
 export const refreshReservationTimestampsHelper = async (uid: string) => {
   const currTimestamp = createTimestamp(0);
 
   await admin.firestore().runTransaction(async (transaction) => {
-    // Booking reservations
-    const userBookingReservationsRef = getUserReservationsRef(
+    // Full reservations
+    const userBookingReservatationsQuery = getUserReservationsQuery(
       uid,
-      BookingType.booking
-    );
-    const userBookingReservationCollection = await transaction.get(
-      userBookingReservationsRef
+      BookingType.fullSauna
     );
 
-    for (const userRes of userBookingReservationCollection.docs) {
-      const data = userRes.data();
+    const userFullSaunaReservations = await transaction.get(
+      userBookingReservatationsQuery
+    );
+
+    for (const res of userFullSaunaReservations.docs) {
+      const data = res.data();
       if (!isExpiredReservation(data.time, data.timestamp)) {
-        transaction.update(userRes.ref, {
-          timestamp: currTimestamp,
-        });
-
-        const resRef = getReservationsRef(BookingType.booking).doc(userRes.id);
-
-        transaction.update(resRef, {
+        transaction.update(res.ref, {
           timestamp: currTimestamp,
         });
       }
     }
 
-    // Drop in reservations
-    const userDropInReservationsRef = getUserReservationsRef(
+    // Drop-in reservations
+    const userDropInReservationsQuery = getUserReservationsQuery(
       uid,
       BookingType.dropIn
     );
-    const userDropInReservationCollection = await transaction.get(
-      userDropInReservationsRef
+    const userDropInReservations = await transaction.get(
+      userDropInReservationsQuery
     );
 
-    for (const userRes of userDropInReservationCollection.docs) {
-      const data = userRes.data();
+    for (const res of userDropInReservations.docs) {
+      const data = res.data();
       if (!isExpiredReservation(data.time, data.timestamp)) {
-        transaction.update(userRes.ref, {
-          timestamp: currTimestamp,
-        });
-
-        const resRef = getReservationsRef(BookingType.dropIn).doc(userRes.id);
-
-        transaction.update(resRef, {
+        transaction.update(res.ref, {
           timestamp: currTimestamp,
         });
       }

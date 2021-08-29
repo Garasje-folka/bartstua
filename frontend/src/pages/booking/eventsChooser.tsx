@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
 import { DropInEvent, EventLocation } from "utils/dist/bookingManagement/types";
-import { isEqualDates } from "utils/dist/dates/helpers";
+import { isEqualTimes } from "utils/dist/dates/helpers";
 import { DateDay } from "utils/dist/dates/types";
-import { subscribeEvents } from "../../services/bookingManagement";
+import { subscribeDropInEvents } from "../../services/bookingManagement";
 import { getEventStartingHour } from "../../services/bookingManagement/helpers";
+import { subscribeFullSaunaEvents } from "../../services/bookingManagement/subscribeFullSaunaEvents";
 import { EventButton } from "./eventButton";
 import {
   DeselectedCircle,
@@ -22,14 +23,25 @@ type Props = {
   spaces: number;
   selectedEvents: DropInEvent[];
   setSelectedEvents: React.Dispatch<React.SetStateAction<DropInEvent[]>>;
+  isBookingFullSauna: boolean;
 };
 
 const EventsChooser = (props: Props) => {
-  const { dateDay, spaces, selectedEvents, setSelectedEvents } = props;
+  const {
+    dateDay,
+    spaces,
+    selectedEvents,
+    setSelectedEvents,
+    isBookingFullSauna,
+  } = props;
   const [events, setEvents] = useState<DropInEvent[]>([]);
   const { t } = useTranslation();
 
   useEffect(() => {
+    const subscribeEvents = isBookingFullSauna
+      ? subscribeFullSaunaEvents
+      : subscribeDropInEvents;
+
     const unsubscribe = subscribeEvents(
       dateDay,
       EventLocation.loation1,
@@ -39,19 +51,19 @@ const EventsChooser = (props: Props) => {
     return () => {
       unsubscribe();
     };
-  }, [dateDay]);
+  }, [dateDay, isBookingFullSauna]);
 
   const onClickCallback = (event: DropInEvent, selected: boolean) => {
     setSelectedEvents((prevVal) => {
       if (selected) return [...prevVal, event];
 
-      return prevVal.filter((e) => !isEqualDates(e.time, event.time));
+      return prevVal.filter((e) => !isEqualTimes(e.time, event.time));
     });
   };
 
   const selectedEventsContains = (event: DropInEvent) => {
     for (const e of selectedEvents) {
-      if (isEqualDates(e.time, event.time)) return true;
+      if (isEqualTimes(e.time, event.time)) return true;
     }
 
     return false;

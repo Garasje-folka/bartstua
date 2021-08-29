@@ -1,5 +1,6 @@
 import { Doc } from "utils/dist/types";
 import {
+  FullSaunaReservationData,
   BookingType,
   DropInReservationData,
 } from "utils/dist/bookingManagement/types";
@@ -18,11 +19,19 @@ import {
 } from "./dropInCartItem.styled";
 
 export type CartItemProps = {
-  dropInReservationDoc: Doc<DropInReservationData>;
+  reservationDoc: Doc<DropInReservationData> | Doc<FullSaunaReservationData>;
+  isBookingFullSauna: boolean;
+};
+
+const isDropInChecker = (
+  reservationDoc: Doc<DropInReservationData> | Doc<FullSaunaReservationData>,
+  isBookingFullSauna: boolean
+): reservationDoc is Doc<DropInReservationData> => {
+  return !isBookingFullSauna;
 };
 
 const DropInCartItem = (props: CartItemProps) => {
-  const { dropInReservationDoc: doc } = props;
+  const { reservationDoc: doc, isBookingFullSauna } = props;
 
   const getFormattedDate = () => {
     const dayName = getDayName(createDateFromDateDay(doc.data.time));
@@ -32,7 +41,10 @@ const DropInCartItem = (props: CartItemProps) => {
 
   const handleReservationDelete = async () => {
     try {
-      await cancelReservation(doc.id, BookingType.dropIn);
+      await cancelReservation(
+        doc.id,
+        isBookingFullSauna ? BookingType.fullSauna : BookingType.dropIn
+      );
     } catch (error) {
       console.log(error);
     }
@@ -50,13 +62,23 @@ const DropInCartItem = (props: CartItemProps) => {
             <strong>{`Tidspunkt: `}</strong>
             {`${getHourRange(doc.data.time.hour)}`}
           </p>
-          <p>
-            <strong>{`Antall plasser: `}</strong>
-            {`${doc.data.spaces}`}
-          </p>
+          {isDropInChecker(doc, isBookingFullSauna) ? (
+            <p>
+              <strong>{`Antall plasser: `}</strong>
+              {`${doc.data.spaces}`}
+            </p>
+          ) : (
+            <p>
+              <strong>Hele badstuen</strong>
+            </p>
+          )}
           <p>
             <strong>{`Pris: `}</strong>
-            {`${doc.data.spaces * 199} kr`}
+            {`${
+              isDropInChecker(doc, isBookingFullSauna)
+                ? doc.data.spaces * 199
+                : 899
+            } kr`}
           </p>
         </VeriticalAlignedTextContainer>
         <ButtonContainer>

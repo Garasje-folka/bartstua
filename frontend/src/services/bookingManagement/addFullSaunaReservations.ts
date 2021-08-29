@@ -1,12 +1,12 @@
 import firebase from "firebase";
-import { BookingReservationRequest } from "utils/dist/bookingManagement/types";
+import { FullSaunaReservationRequest } from "utils/dist/bookingManagement/types";
 import { ADD_RESERVATIONS_ERRORS } from "utils/dist/bookingManagement/errors";
 import { createError } from "utils/dist/helpers";
 
-const addBookingReservations = async (
-  requests: BookingReservationRequest[]
+const addFullSaunaReservations = async (
+  requests: FullSaunaReservationRequest[]
 ) => {
-  const call = firebase.functions().httpsCallable("addBookingReservations");
+  const call = firebase.functions().httpsCallable("addFullSaunaReservations");
   const data = {
     requests,
   };
@@ -31,4 +31,4 @@ const addBookingReservations = async (
   }
 };
 
-export { addBookingReservations };
+export { addFullSaunaReservations };

@@ -7,12 +7,12 @@ import {
 import { firestore } from "../fireConfig";
 import { getEventCollectionName } from "utils/dist/bookingManagement/helpers";
 
-export const subscribeDropInEvents = (
+export const subscribeFullSaunaEvents = (
   date: DateDay,
   location: EventLocation,
   callback: (event: DropInEvent[]) => void
 ) => {
-  const eventCollectionName = getEventCollectionName(BookingType.dropIn);
+  const eventCollectionName = getEventCollectionName(BookingType.fullSauna);
 
   const eventsQueryRef = firestore
     .collection("locations")
