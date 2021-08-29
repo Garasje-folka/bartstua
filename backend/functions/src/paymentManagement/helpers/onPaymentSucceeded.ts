@@ -7,10 +7,7 @@ import {
   DropInReservationData,
 } from "utils/dist/bookingManagement/types";
 import { sendBookingConfirmation } from "../../emailManagement";
-import {
-  getReservationsRef,
-  getUserReservationsRef,
-} from "../../bookingManagement/helpers";
+import { getReservationsRef } from "../../bookingManagement/helpers";
 
 export const onPaymentSucceeded = async (
   uid: string,
@@ -42,11 +39,10 @@ export const onPaymentSucceeded = async (
         const bookings: BookingReservationData[] = [];
         const dropIns: DropInReservationData[] = [];
 
+        // Retrieve reservation data to send with the booking confirmation
         for (const res of reservationsInfo) {
-          const userReservationRef = getUserReservationsRef(uid, res.type).doc(
-            res.id
-          );
-          const snapshot = await transaction.get(userReservationRef);
+          const reservationRef = getReservationsRef(res.type).doc(res.id);
+          const snapshot = await transaction.get(reservationRef);
           if (res.type === BookingType.booking) {
             const data = snapshot.data() as BookingReservationData;
             bookings.push(data);
@@ -58,11 +54,7 @@ export const onPaymentSucceeded = async (
 
         for (const res of reservationsInfo) {
           const reservationRef = getReservationsRef(res.type).doc(res.id);
-          const userReservationRef = getUserReservationsRef(uid, res.type).doc(
-            res.id
-          );
 
-          transaction.delete(userReservationRef);
           transaction.update(reservationRef, {
             status: "payed",
           });

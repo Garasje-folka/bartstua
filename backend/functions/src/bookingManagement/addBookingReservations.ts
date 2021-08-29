@@ -12,11 +12,7 @@ import {
   createTimestamp,
   isValidEventTime,
 } from "utils/dist/bookingManagement/helpers";
-import {
-  getEventRef,
-  getReservationsRef,
-  getUserReservationsRef,
-} from "./helpers";
+import { getEventRef, getReservationsRef } from "./helpers";
 import { isEqualTimes } from "utils/dist/dates/helpers";
 
 const dataSchema = yup.object({
@@ -107,16 +103,6 @@ export const addBookingReservations = functions.https.onCall(
           uid: auth.uid,
           timestamp: timestamp,
           status: ReservationStatus.active,
-        });
-
-        const userReservationRef = getUserReservationsRef(
-          auth.uid,
-          BookingType.booking
-        ).doc(reservationRef.id);
-
-        transaction.set(userReservationRef, {
-          ...request,
-          timestamp: timestamp,
         });
 
         transaction.update(eventRef, {

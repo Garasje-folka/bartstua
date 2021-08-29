@@ -8,7 +8,6 @@ service cloud.firestore {
     match /bookingReservations/{reservationDoc} {
       allow read: if resource.data.uid == request.auth.uid;
     }
-    
     match /locations/{locationDoc}/dropInEvents/{eventDoc} {
       allow read: if true;
     }

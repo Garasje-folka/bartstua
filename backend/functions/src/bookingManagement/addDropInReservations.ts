@@ -12,11 +12,7 @@ import {
   createTimestamp,
   isValidEventTime,
 } from "utils/dist/bookingManagement/helpers";
-import {
-  getEventRef,
-  getReservationsRef,
-  getUserReservationsRef,
-} from "./helpers";
+import { getEventRef, getReservationsRef } from "./helpers";
 import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
 import { isEqualTimes } from "utils/dist/dates/helpers";
 
@@ -104,16 +100,6 @@ export const addDropInReservations = functions.https.onCall(
           uid: auth.uid,
           timestamp: timestamp,
           status: ReservationStatus.active,
-        });
-
-        const userReservationRef = getUserReservationsRef(
-          auth.uid,
-          BookingType.dropIn
-        ).doc(reservationRef.id);
-
-        transaction.set(userReservationRef, {
-          ...request,
-          timestamp: timestamp,
         });
 
         transaction.update(eventRef, {

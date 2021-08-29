@@ -2,7 +2,7 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as yup from "yup";
 import { checkAuthentication, checkData } from "../helpers";
-import { getUserReservationsRef } from "../bookingManagement/helpers";
+import { getUserReservationsQuery } from "../bookingManagement/helpers";
 import { isExpiredReservation } from "utils/dist/bookingManagement/helpers";
 import {
   BookingReservationData,
@@ -39,11 +39,11 @@ export const createBookingPaymentIntent = functions.https.onCall(
       totalDropInSpaces,
     ] = await admin.firestore().runTransaction(async (transaction) => {
       const bookingReservations = await transaction.get(
-        getUserReservationsRef(auth.uid, BookingType.booking)
+        getUserReservationsQuery(auth.uid, BookingType.booking)
       );
 
       const dropInReservations = await transaction.get(
-        getUserReservationsRef(auth.uid, BookingType.dropIn)
+        getUserReservationsQuery(auth.uid, BookingType.dropIn)
       );
 
       // Filter out expired reservations

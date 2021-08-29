@@ -27,7 +27,6 @@ export const clearExpiredReservations = functions.pubsub
         const { uid, ...data } = res.data();
         deleteBookingReservation(
           transaction,
-          uid,
           res.id,
           data as BookingReservationData
         );
@@ -45,7 +44,6 @@ export const clearExpiredReservations = functions.pubsub
         const { uid, ...data } = res.data();
         deleteDropInReservation(
           transaction,
-          uid,
           res.id,
           data as DropInReservationData
         );

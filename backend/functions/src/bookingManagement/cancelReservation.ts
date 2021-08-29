@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { deleteDropInReservation, getUserReservationsRef } from "./helpers";
+import { deleteDropInReservation, getReservationsRef } from "./helpers";
 import * as yup from "yup";
 import { checkData } from "../helpers";
 import {
@@ -35,11 +35,9 @@ export const cancelReservation = functions.https.onCall(
     const type = data.type as BookingType;
 
     admin.firestore().runTransaction(async (transaction) => {
-      const userReservationRef = getUserReservationsRef(auth.uid, type).doc(
-        data.docid
-      );
+      const reservationRef = getReservationsRef(type).doc(data.docid);
 
-      const reservationSnapshot = await transaction.get(userReservationRef);
+      const reservationSnapshot = await transaction.get(reservationRef);
       if (!reservationSnapshot.exists) {
         throw new functions.https.HttpsError(
           "invalid-argument",
@@ -50,21 +48,11 @@ export const cancelReservation = functions.https.onCall(
       if (type == BookingType.booking) {
         const reservationData =
           reservationSnapshot.data() as BookingReservationData;
-        deleteBookingReservation(
-          transaction,
-          auth.uid,
-          data.docid,
-          reservationData
-        );
+        deleteBookingReservation(transaction, data.docid, reservationData);
       } else if (type == BookingType.dropIn) {
         const reservationData =
           reservationSnapshot.data() as DropInReservationData;
-        deleteDropInReservation(
-          transaction,
-          auth.uid,
-          data.docid,
-          reservationData
-        );
+        deleteDropInReservation(transaction, data.docid, reservationData);
       }
     });
   }
