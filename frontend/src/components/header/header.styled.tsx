@@ -11,6 +11,7 @@ export const StyledNavbar = styled(Navbar)`
   background: rgba(255, 255, 255, 0.76);
   position: sticky;
   top: 0;
+  z-index: 1000;
 `;
 
 const NavbarContent = styled.div`
@@ -32,9 +33,21 @@ export const LeftAlignedContent = styled(NavbarContent)`
 
 export const SignInButton = styled(Button)`
   margin-left: ${({ theme }) => theme.alignment.margin.REGULAR};
-  background: #296b79;
+  background: ${({ theme }) => theme.colorPalette.primary.default};
   box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
   border-radius: 100px;
+  border: none;
+  :hover {
+    background: ${({ theme }) => theme.colorPalette.secondary.default};
+    color: ${({ theme }) => theme.colorPalette.blended.default};
+  }
+  :focus {
+    background: ${({ theme }) => theme.colorPalette.secondary.default};
+    color: white;
+  }
+  :active {
+    box-shadow: none !important;
+  }
 `;
 
 export const RegisterButton = styled(Button)`
@@ -43,6 +56,45 @@ export const RegisterButton = styled(Button)`
   box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
   border-radius: 100px;
   color: black;
+  border: none;
+  :hover {
+    background: ${({ theme }) => theme.colorPalette.secondary.default};
+    color: white;
+  }
+  :focus {
+    background: ${({ theme }) => theme.colorPalette.secondary.default};
+    color: white;
+  }
+`;
+
+export const CartButton = styled(Button)`
+  background: rgba(255, 255, 255, 0.76);
+  color: black;
+  border: none;
+  margin-right: 10px;
+  :hover {
+    background: rgba(255, 255, 255, 0.76);
+    color: ${({ theme }) => theme.colorPalette.secondary.default};
+  }
+  :focus {
+    background: rgba(255, 255, 255, 0.76);
+    color: black;
+    border: none;
+  }
+`;
+
+export const SignOutButton = styled(Button)`
+  background: ${({ theme }) => theme.colorPalette.primary.default};
+  box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
+  border-radius: 100px;
+  :hover {
+    background: ${({ theme }) => theme.colorPalette.secondary.default};
+    color: white;
+  }
+  :focus {
+    background: ${({ theme }) => theme.colorPalette.primary.default};
+  }
+  border: none;
 `;
 
 export const Nav = styled(BootstrapNav)`

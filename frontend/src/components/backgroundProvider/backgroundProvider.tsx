@@ -12,21 +12,16 @@ export type Background = {
   color: string;
   shaded?: boolean;
   tinted?: boolean;
+  waves?: boolean;
 };
 
 const TYPES = {
   DEFAULT: {
     color: "#fff",
   },
-  BOOKING_WALLPAPER: {
-    color: "#fff",
-    shaded: true,
-    url: "https://assets.simpleview-europe.com/telemark2018/imageresizer/?image=%2Fdmsimgs%2FFlytende_badstuer_h_st_web_825060041.jpg&action=ProductDetailProFullWidth",
-  },
-  BOOKING_WALLPAPER_2: {
+  WAVE: {
     color: "#EECD98",
-    tinted: true,
-    /* url: WaveUrl, */
+    waves: true,
   },
 };
 
@@ -51,7 +46,7 @@ const BackgroundProvider: BackgroundProviderComponent = (props: Props) => {
       value={{ currentBackground, switchBackground: setCurrentBackground }}
     >
       <StyleContainer currentBackground={currentBackground}>
-        <StyledWave />
+        {currentBackground.waves && <StyledWave />}
         <ContentWrapper>{children}</ContentWrapper>
       </StyleContainer>
     </BackgroundContext.Provider>

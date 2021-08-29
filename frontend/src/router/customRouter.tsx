@@ -57,6 +57,7 @@ const CustomRouter: React.FC = () => {
                   path={routing.path}
                   component={routing.component}
                   guardFunction={guardFunction}
+                  background={routing.background}
                 />
               );
             })}

@@ -89,4 +89,8 @@ export const Card = styled.div<CardProps>`
   }}
 `;
 
-export const CalendarCard = styled(Card)``;
+export const CalendarCard = styled(Card)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
