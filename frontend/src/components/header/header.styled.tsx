@@ -12,6 +12,7 @@ export const StyledNavbar = styled(Navbar)`
   position: sticky;
   top: 0;
   z-index: 1000;
+  height: ${({ theme }) => theme.page.headerHeight};
 `;
 
 const NavbarContent = styled.div`

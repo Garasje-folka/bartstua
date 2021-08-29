@@ -1,3 +1,5 @@
+const headerHeight = "80px";
+
 export const themeConfig = {
   colorPalette: {
     primary: {
@@ -47,6 +49,8 @@ export const themeConfig = {
   page: {
     width: "1200px",
     minHeight: "0px",
+    headerHeight,
+    contentHeight: `calc(100vh - ${headerHeight})`,
   },
   shadow: {
     REGULAR: "0px 4px 22px rgba(0, 0, 0, 0.25)",

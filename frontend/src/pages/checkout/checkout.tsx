@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { useTranslation } from "react-i18next";
 import { FormContainer, InputField, SubmitButton } from "../../components/form";
-import { CardBody, CardContainer, CardHeader } from "../../components/card";
+import { CardBody, Card, CardHeader, CardSizes } from "../../components/card";
 import { currentUserSelector } from "../../redux/selectors";
 import { useSelector } from "react-redux";
 import { cardElementOptions, WidthRestriction } from "./checkout.styled";
@@ -105,7 +105,7 @@ const Checkout = () => {
   };
 
   return (
-    <CardContainer>
+    <Card size={CardSizes.FILL_PAGE}>
       <CardHeader title="Checkout" />
       <CardBody>
         <FormContainer onSubmit={handleSubmit}>
@@ -136,7 +136,7 @@ const Checkout = () => {
           </WidthRestriction>
         </FormContainer>
       </CardBody>
-    </CardContainer>
+    </Card>
   );
 };
 
