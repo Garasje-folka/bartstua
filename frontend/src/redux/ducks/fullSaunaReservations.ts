@@ -62,7 +62,6 @@ export default function reducer(
 export const fullSaunaReservationsUpdated = (
   fullSaunaReservations: Doc<FullSaunaReservationData>[]
 ): Action => {
-  console.log({ fullSaunaReservations });
   return {
     type: FULL_SAUNA_RESERVATIONS_UPDATE,
     data: { fullSaunaReservations },
