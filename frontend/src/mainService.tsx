@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { BookingType } from "utils/dist/bookingManagement/types";
 import { authChanged, currentUserSelector } from "./redux/ducks/currentUser";
 import { dropInReservationsUpdated } from "./redux/ducks/dropInReservations";
 import { fullSaunaReservationsUpdated } from "./redux/ducks/fullSaunaReservations";
-import { onDropInReservationsChanged } from "./services/bookingManagement";
-import { onFullSaunaReservationsChanged } from "./services/bookingManagement/subscribeFullSaunaReservations";
+import { onReservationsChanged } from "./services/bookingManagement/subscribeReservations";
 import { onCurrentUserChanged } from "./services/userManagement";
 
 const MainService = () => {
@@ -29,16 +29,16 @@ const MainService = () => {
       return;
     }
 
-    const unsubDropInReservationsUpdated = onDropInReservationsChanged(
-      (reservations) => {
-        dispatch(dropInReservationsUpdated(reservations));
-      }
-    );
-    const unsubFullSaunaReservationsUpdated = onFullSaunaReservationsChanged(
-      (reservations) => {
-        dispatch(fullSaunaReservationsUpdated(reservations));
-      }
-    );
+    const unsubDropInReservationsUpdated = onReservationsChanged(
+      BookingType.dropIn
+    )((reservations) => {
+      dispatch(dropInReservationsUpdated(reservations));
+    });
+    const unsubFullSaunaReservationsUpdated = onReservationsChanged(
+      BookingType.booking
+    )((reservations) => {
+      dispatch(fullSaunaReservationsUpdated(reservations));
+    });
 
     return () => {
       unsubDropInReservationsUpdated();

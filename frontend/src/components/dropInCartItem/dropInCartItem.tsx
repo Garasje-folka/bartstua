@@ -41,7 +41,10 @@ const DropInCartItem = (props: CartItemProps) => {
 
   const handleReservationDelete = async () => {
     try {
-      await cancelReservation(doc.id, BookingType.dropIn);
+      await cancelReservation(
+        doc.id,
+        isBookingFullSauna ? BookingType.booking : BookingType.dropIn
+      );
     } catch (error) {
       console.log(error);
     }
