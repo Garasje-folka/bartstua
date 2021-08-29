@@ -13,6 +13,7 @@ export type Background = {
   shaded?: boolean;
   tinted?: boolean;
   waves?: boolean;
+  gradient?: boolean;
 };
 
 const TYPES = {
@@ -22,6 +23,7 @@ const TYPES = {
   WAVE: {
     color: "#EECD98",
     waves: true,
+    gradient: true,
   },
 };
 

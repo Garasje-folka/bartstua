@@ -13,6 +13,7 @@ import {
   RegisterButton,
   CartButton,
   SignOutButton,
+  Logo,
 } from "./header.styled";
 import { useMobileScreen } from "../../hooks/useMobileScreen";
 import { DropDownNavigation } from "./dropDownNavigation";
@@ -28,11 +29,22 @@ import {
 } from "../../router/routeConstants";
 import { IconType } from "../../icons";
 import Logonobg from "../../assets/logo-nobg.png";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Header = () => {
   const history = useHistory();
   const currentUser = useSelector(currentUserSelector);
   const isMobileScreen = useMobileScreen();
+
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 100) setHasScrolled(true);
+      else setHasScrolled(false);
+    });
+  }, []);
 
   const handleSignOut = () => {
     userManagement.signOut();
@@ -76,10 +88,10 @@ const Header = () => {
   );
 
   return (
-    <StyledNavbar bg="light" expand="lg">
+    <StyledNavbar expand="lg" hasScrolled={hasScrolled}>
       <LeftAlignedContent>
         <Navbar.Brand onClick={() => history.push(HOME)}>
-          <img src={Logonobg} height="55" alt="Logo"></img>
+          <Logo src={Logonobg} height="55" alt="Logo" />
         </Navbar.Brand>
       </LeftAlignedContent>
 
