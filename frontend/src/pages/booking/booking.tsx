@@ -84,6 +84,7 @@ const Booking = () => {
             spaces={spaces}
             selectedEvents={selectedEvents}
             setSelectedEvents={setSelectedEvents}
+            isBookingFullSauna={wholeSauna}
           />
         </Card>
         <Card size={CardSizes.SMALL}>
