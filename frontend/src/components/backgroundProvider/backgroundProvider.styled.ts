@@ -10,6 +10,16 @@ export const StyleContainer = styled.div<StyledContainerProps>`
   min-height: 100vh;
   width: 100%;
   background-color: ${({ currentBackground }) => currentBackground.color};
+  ${({ currentBackground, theme }) =>
+    currentBackground.gradient &&
+    css`
+      background: radial-gradient(
+        circle at 0px 0px,
+        ${theme.colorPalette.secondary.default} 0%,
+        ${theme.colorPalette.secondary.light} 100%
+      );
+    `};
+
   ${({ currentBackground }) =>
     currentBackground.url &&
     css`
@@ -49,9 +59,10 @@ export const ContentWrapper = styled.div`
 `;
 
 export const StyledWave = styled(Wave)`
-  height: 100%;
+  height: 170%;
   width: 100%;
   object-fit: cover;
   position: fixed;
   bottom: 0;
+  opacity: 0.4;
 `;
