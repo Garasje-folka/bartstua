@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
 import { CardColors, CardSizes } from "./cardContainer";
 
-const opacity = "e2";
-
 type CardProps = {
   size?: CardSizes;
   color?: CardColors;

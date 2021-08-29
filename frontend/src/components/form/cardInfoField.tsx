@@ -1,4 +1,4 @@
-import { CardElement, useElements } from "@stripe/react-stripe-js";
+import { CardElement } from "@stripe/react-stripe-js";
 import { Form } from "react-bootstrap";
 import {
   cardElementOptions,

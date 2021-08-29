@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { useTranslation } from "react-i18next";
 import { FormContainer, InputField, SubmitButton } from "../../components/form";
-import { CardBody, CardHeader, CardSizes } from "../../components/card";
+import { CardHeader, CardSizes } from "../../components/card";
 import { currentUserSelector } from "../../redux/selectors";
 import { useSelector } from "react-redux";
 import { StyledCard as Card, LeftContainer } from "./checkout.styled";
