@@ -14,18 +14,19 @@ export const BasicCard = styled.div<CardProps>`
       case CardColors.PRIMARY: {
         return css`
           background-color: ${({ theme }) =>
-            `${theme.colorPalette.primary.default}${opacity}`};
+            `${theme.colorPalette.primary.default}${theme.card.BACKGROUND_OPACITY_SUFIX}`};
         `;
       }
       case CardColors.PRIMARY_LIGHT: {
         return css`
           background-color: ${({ theme }) =>
-            `${theme.colorPalette.primary.light}${opacity}`};
+            `${theme.colorPalette.primary.light}${theme.card.BACKGROUND_OPACITY_SUFIX}`};
         `;
       }
       default: {
         return css`
-          background-color: ${"#ffffff" + opacity};
+          background-color: ${({ theme }) =>
+            "#ffffff" + theme.card.BACKGROUND_OPACITY_SUFIX};
         `;
       }
     }

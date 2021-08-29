@@ -53,5 +53,7 @@
     "4": "Tor",
     "5": "Fre",
     "6": "Lør"
-  }
+  },
+  "label_checkout": "Betaling",
+  "label_credit_card_information": "Kortinformasjon"
 }
