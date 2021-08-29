@@ -2,12 +2,13 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    match /users/{userDoc}/dropInReservations/{reservationDoc} {
-      allow read: if userDoc == request.auth.uid;
+    match /dropInReservations/{reservationDoc} {
+      allow read: if resource.data.uid == request.auth.uid;
     }
-    match /users/{userDoc}/bookingReservations/{reservationDoc} {
-      allow read: if userDoc == request.auth.uid;
+    match /bookingReservations/{reservationDoc} {
+      allow read: if resource.data.uid == request.auth.uid;
     }
+    
     match /locations/{locationDoc}/dropInEvents/{eventDoc} {
       allow read: if true;
     }

@@ -1,28 +1,28 @@
 import { auth, firestore } from "../fireConfig";
 import { createError } from "utils/dist/helpers";
 import { userManagementErrorCodes } from "../userManagement/constants";
-import { DropInReservationData } from "utils/dist/bookingManagement/types";
+import { BookingReservationData as FullSaunaReservationData } from "utils/dist/bookingManagement/types";
 import { Doc } from "utils/dist/types";
-import { DROP_IN_RESERVATIONS } from "utils/dist/bookingManagement/constants";
+import { BOOKING_RESERVATIONS } from "utils/dist/bookingManagement/constants";
 
-export const onDropInReservationsChanged = (
-  callback: (reservations: Doc<DropInReservationData>[]) => void
+export const onFullSaunaReservationsChanged = (
+  callback: (reservations: Doc<FullSaunaReservationData>[]) => void
 ): (() => void) => {
   const currentUser = auth.currentUser;
   if (!currentUser) {
     throw createError(userManagementErrorCodes.ERROR_NO_USER);
   }
   const reservationsRef = firestore
-    .collection(DROP_IN_RESERVATIONS)
+    .collection(BOOKING_RESERVATIONS)
     .where("uid", "==", currentUser.uid);
 
   const unsubscribe = reservationsRef.onSnapshot((querySnapshot) => {
     const reservations = querySnapshot.docs.map((doc) => {
-      const data = doc.data() as DropInReservationData;
+      const data = doc.data() as FullSaunaReservationData;
       return {
         data: data,
         id: doc.id,
-      } as Doc<DropInReservationData>;
+      } as Doc<FullSaunaReservationData>;
     });
     callback(reservations);
   });

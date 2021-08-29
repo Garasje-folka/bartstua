@@ -6,7 +6,7 @@ import { State } from "../types/state";
 interface Action {
   type: string;
   data?: {
-    reservations: Doc<DropInReservationData>[];
+    dropInReservations: Doc<DropInReservationData>[];
   };
 }
 
@@ -22,7 +22,7 @@ export type DropInReservationsState = {
 const file = "ducks/dropInReservationsState/";
 
 // Actions
-const RESERVATIONS_UPDATE = file + "DROP_IN_RESERVATIONS_UPDATE";
+const DROP_IN_RESERVATIONS_UPDATE = file + "DROP_IN_RESERVATIONS_UPDATE";
 
 // Initial state
 const initialState: DropInReservationsState = {
@@ -38,8 +38,8 @@ export default function reducer(
   action: Action
 ): DropInReservationsState {
   switch (action.type) {
-    case RESERVATIONS_UPDATE:
-      const reservations = action.data?.reservations;
+    case DROP_IN_RESERVATIONS_UPDATE:
+      const reservations = action.data?.dropInReservations;
 
       return reservations
         ? {
@@ -60,15 +60,15 @@ export default function reducer(
 
 // Action Creator
 export const dropInReservationsUpdated = (
-  reservations: Doc<DropInReservationData>[]
+  dropInReservations: Doc<DropInReservationData>[]
 ): Action => {
-  return { type: RESERVATIONS_UPDATE, data: { reservations } };
+  return { type: DROP_IN_RESERVATIONS_UPDATE, data: { dropInReservations } };
 };
 
 // Selectors
 export const dropInReservationsSelector = (state: State) =>
-  state.reservations.data;
+  state.dropInReservations.data;
 
 export const dropInReservationsLoadedSelector = (state: State) => {
-  return state.reservations.status.loaded;
+  return state.dropInReservations.status.loaded;
 };

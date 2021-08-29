@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { DropInCartItem } from "../../components/dropInCartItem";
 import { Heading, Paragraph } from "../../components/text";
 import { dropInReservationsSelector } from "../../redux/ducks/dropInReservations";
+import { fullSaunaReservationsSelector } from "../../redux/ducks/fullSaunaReservations";
 import { CHECKOUT } from "../../router/routeConstants";
 import {
   Background,
@@ -16,7 +17,8 @@ import {
 } from "./cart.styled";
 
 const Cart = () => {
-  const reservations = useSelector(dropInReservationsSelector);
+  const dropInReservations = useSelector(dropInReservationsSelector);
+  const fullSaunaReservations = useSelector(fullSaunaReservationsSelector);
   const history = useHistory();
 
   return (
@@ -26,8 +28,19 @@ const Cart = () => {
           <Heading type={Heading.types.HEADING3}>Min handlekurv</Heading>
         </HeadingContainer>
         <CartContainer>
-          {reservations.map((res, index) => (
-            <DropInCartItem dropInReservationDoc={res} key={index} />
+          {dropInReservations.map((res, index) => (
+            <DropInCartItem
+              reservationDoc={res}
+              isBookingFullSauna={false}
+              key={index}
+            />
+          ))}
+          {fullSaunaReservations.map((res, index) => (
+            <DropInCartItem
+              reservationDoc={res}
+              isBookingFullSauna={true}
+              key={index}
+            />
           ))}
         </CartContainer>
         <BottomContainer>
@@ -39,7 +52,7 @@ const Cart = () => {
           </TextContainer>
           <ButtonContainer>
             <CartButton
-              disabled={reservations.length === 0}
+              disabled={dropInReservations.length === 0}
               onClick={() => {
                 history.push(CHECKOUT);
               }}

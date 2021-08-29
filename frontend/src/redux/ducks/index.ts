@@ -1,3 +1,4 @@
 import currentUser from "./currentUser";
-import reservations from "./dropInReservations";
-export { currentUser, reservations };
+import dropInReservations from "./dropInReservations";
+import fullSaunaReservations from "./fullSaunaReservations";
+export { currentUser, dropInReservations, fullSaunaReservations };

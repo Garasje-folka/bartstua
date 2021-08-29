@@ -1,5 +1,6 @@
 import { Doc } from "utils/dist/types";
 import {
+  BookingReservationData,
   BookingType,
   DropInReservationData,
 } from "utils/dist/bookingManagement/types";
@@ -18,11 +19,19 @@ import {
 } from "./dropInCartItem.styled";
 
 export type CartItemProps = {
-  dropInReservationDoc: Doc<DropInReservationData>;
+  reservationDoc: Doc<DropInReservationData> | Doc<BookingReservationData>;
+  isBookingFullSauna: boolean;
+};
+
+const isDropInChecker = (
+  reservationDoc: Doc<DropInReservationData> | Doc<BookingReservationData>,
+  isBookingFullSauna: boolean
+): reservationDoc is Doc<DropInReservationData> => {
+  return !isBookingFullSauna;
 };
 
 const DropInCartItem = (props: CartItemProps) => {
-  const { dropInReservationDoc: doc } = props;
+  const { reservationDoc: doc, isBookingFullSauna } = props;
 
   const getFormattedDate = () => {
     const dayName = getDayName(createDateFromDateDay(doc.data.time));
@@ -50,13 +59,23 @@ const DropInCartItem = (props: CartItemProps) => {
             <strong>{`Tidspunkt: `}</strong>
             {`${getHourRange(doc.data.time.hour)}`}
           </p>
-          <p>
-            <strong>{`Antall plasser: `}</strong>
-            {`${doc.data.spaces}`}
-          </p>
+          {isDropInChecker(doc, isBookingFullSauna) ? (
+            <p>
+              <strong>{`Antall plasser: `}</strong>
+              {`${doc.data.spaces}`}
+            </p>
+          ) : (
+            <p>
+              <strong>Hele badstuen</strong>
+            </p>
+          )}
           <p>
             <strong>{`Pris: `}</strong>
-            {`${doc.data.spaces * 199} kr`}
+            {`${
+              isDropInChecker(doc, isBookingFullSauna)
+                ? doc.data.spaces * 199
+                : 899
+            } kr`}
           </p>
         </VeriticalAlignedTextContainer>
         <ButtonContainer>

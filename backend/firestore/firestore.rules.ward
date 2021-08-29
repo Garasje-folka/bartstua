@@ -1,11 +1,11 @@
 rules_version = '2';
 
-match /users/{userDoc}/dropInReservations/{reservationDoc} {
-  allow read: userDoc == request.auth.uid
+match /dropInReservations/{reservationDoc} {
+  allow read: if resource.data.uid == request.auth.uid;
 }
 
-match /users/{userDoc}/bookingReservations/{reservationDoc} {
-  allow read: userDoc == request.auth.uid
+match /bookingReservations/{reservationDoc} {
+  allow read: if resource.data.uid == request.auth.uid;
 }
 
 match /locations/{locationDoc}/dropInEvents/{eventDoc} {
