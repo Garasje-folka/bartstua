@@ -12,7 +12,7 @@ import { SaunaChooser } from "./saunaChooser";
 import { EventsChooser } from "./eventsChooser";
 import { createDateDayFromDate } from "utils/dist/dates/helpers";
 import {
-  BookingReservationRequest,
+  FullSaunaReservationRequest,
   DropInEvent,
   DropInReservationRequest,
   EventLocation,
@@ -20,7 +20,7 @@ import {
 import { Button } from "../../components/button";
 import { addDropInReservations } from "../../services/bookingManagement";
 import { BookingTypeChooser } from "./bookingTypeChooser";
-import { addBookingReservations } from "../../services/bookingManagement/addBookingReservations";
+import { addFullSaunaReservations } from "../../services/bookingManagement/addFullSaunaReservations";
 
 const Booking = () => {
   const [date, setDate] = useState<Date>(new Date());
@@ -38,13 +38,13 @@ const Booking = () => {
         const reservationRequest = {
           time: e.time,
           location: EventLocation.loation1,
-        } as BookingReservationRequest;
+        } as FullSaunaReservationRequest;
 
         return reservationRequest;
       });
 
       try {
-        await addBookingReservations(requests);
+        await addFullSaunaReservations(requests);
       } catch (error) {
         console.log(error);
       }

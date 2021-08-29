@@ -35,7 +35,7 @@ const MainService = () => {
       dispatch(dropInReservationsUpdated(reservations));
     });
     const unsubFullSaunaReservationsUpdated = onReservationsChanged(
-      BookingType.booking
+      BookingType.fullSauna
     )((reservations) => {
       dispatch(fullSaunaReservationsUpdated(reservations));
     });

@@ -1,5 +1,5 @@
 import {
-  BookingReservationRequest,
+  FullSaunaReservationRequest,
   DropInReservationRequest,
 } from "./reservationRequest";
 
@@ -9,7 +9,7 @@ export enum ReservationStatus {
   payed = "payed",
 }
 
-export type BookingReservationData = BookingReservationRequest & {
+export type FullSaunaReservationData = FullSaunaReservationRequest & {
   timestamp: number;
 };
 

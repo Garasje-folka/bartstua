@@ -1,6 +1,6 @@
 export * from "./getEventRef";
 export * from "./getReservationRef";
-export * from "./deleteBookingReservation";
+export * from "./deleteFullSaunaReservation";
 export * from "./deleteDropInReservation";
 export * from "./getExpiredReservations";
 export * from "./refreshReservationTimestampsHelper";

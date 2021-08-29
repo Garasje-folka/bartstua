@@ -12,7 +12,7 @@ export const subscribeFullSaunaEvents = (
   location: EventLocation,
   callback: (event: DropInEvent[]) => void
 ) => {
-  const eventCollectionName = getEventCollectionName(BookingType.booking);
+  const eventCollectionName = getEventCollectionName(BookingType.fullSauna);
 
   const eventsQueryRef = firestore
     .collection("locations")

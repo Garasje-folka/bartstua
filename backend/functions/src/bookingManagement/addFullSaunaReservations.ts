@@ -2,8 +2,8 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as yup from "yup";
 import {
-  BookingReservationData,
-  bookingReservationRequestSchema,
+  FullSaunaReservationData,
+  fullSaunaReservationRequestSchema,
   BookingType,
   ReservationStatus,
 } from "utils/dist/bookingManagement/types";
@@ -16,10 +16,10 @@ import { getEventRef, getReservationsRef } from "./helpers";
 import { isEqualTimes } from "utils/dist/dates/helpers";
 
 const dataSchema = yup.object({
-  requests: yup.array().of(bookingReservationRequestSchema).required(),
+  requests: yup.array().of(fullSaunaReservationRequestSchema).required(),
 });
 
-export const addBookingReservations = functions.https.onCall(
+export const addFullSaunaReservations = functions.https.onCall(
   async (data, context) => {
     if (!(await checkData(data, dataSchema))) {
       throw new functions.https.HttpsError(
@@ -36,7 +36,7 @@ export const addBookingReservations = functions.https.onCall(
       );
     }
 
-    const requests = data.requests as BookingReservationData[];
+    const requests = data.requests as FullSaunaReservationData[];
 
     // Check for multiple requests for the same event
     for (let i = 0; i < requests.length - 1; i++) {
@@ -64,7 +64,7 @@ export const addBookingReservations = functions.https.onCall(
 
         const eventRef = getEventRef(
           request.location,
-          BookingType.booking,
+          BookingType.fullSauna,
           request.time
         );
         const eventSnapshot = await transaction.get(eventRef);
@@ -91,12 +91,12 @@ export const addBookingReservations = functions.https.onCall(
       for (const request of requests) {
         const eventRef = getEventRef(
           request.location,
-          BookingType.booking,
+          BookingType.fullSauna,
           request.time
         );
 
         const timestamp = createTimestamp(0);
-        const reservationRef = getReservationsRef(BookingType.booking).doc();
+        const reservationRef = getReservationsRef(BookingType.fullSauna).doc();
 
         transaction.set(reservationRef, {
           ...request,

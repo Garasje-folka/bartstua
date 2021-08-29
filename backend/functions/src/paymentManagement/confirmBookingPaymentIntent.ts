@@ -39,7 +39,6 @@ export const confirmBookingPaymentIntent = functions.https.onCall(
 
     await refreshReservationTimestampsHelper(auth.uid);
 
-    // TODO: Check if any reservations have expired, throw error if so
     await admin.firestore().runTransaction(async (transaction) => {
       const paymentRef = admin
         .firestore()
@@ -49,13 +48,12 @@ export const confirmBookingPaymentIntent = functions.https.onCall(
         .doc(paymentIntentId);
 
       const payment = await transaction.get(paymentRef);
-      // TODO: Make type safe
       const paymentReservations = payment.get(
         "reservations"
       ) as PaymentReservation[];
 
       const bookingReservations = await transaction.get(
-        getUserReservationsQuery(auth.uid, BookingType.booking)
+        getUserReservationsQuery(auth.uid, BookingType.fullSauna)
       );
 
       const dropInReservations = await transaction.get(

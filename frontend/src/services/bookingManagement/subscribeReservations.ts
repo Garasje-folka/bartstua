@@ -2,23 +2,17 @@ import { auth, firestore } from "../fireConfig";
 import { createError } from "utils/dist/helpers";
 import { userManagementErrorCodes } from "../userManagement/constants";
 import {
-  BookingReservationData as FullSaunaReservationData,
+  FullSaunaReservationData,
   BookingType,
   DropInReservationData,
 } from "utils/dist/bookingManagement/types";
 import { Doc } from "utils/dist/types";
-import {
-  BOOKING_RESERVATIONS,
-  DROP_IN_RESERVATIONS,
-} from "utils/dist/bookingManagement/constants";
+import { getReservationCollectionName } from "utils/dist/bookingManagement/helpers";
 
 export const onReservationsChanged = (reservationType: BookingType) => {
-  const reservationCollection =
-    reservationType === BookingType.booking
-      ? BOOKING_RESERVATIONS
-      : DROP_IN_RESERVATIONS;
+  const reservationCollection = getReservationCollectionName(reservationType);
 
-  type DataType = typeof reservationType extends BookingType.booking
+  type DataType = typeof reservationType extends BookingType.fullSauna
     ? FullSaunaReservationData
     : DropInReservationData;
   return (callback: (reservations: Doc<DataType>[]) => void): (() => void) => {

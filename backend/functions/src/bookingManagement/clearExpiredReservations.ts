@@ -2,38 +2,37 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { RESERVATION_CLEARING_INTERVAL } from "./constants";
 import {
-  deleteBookingReservation,
+  deleteFullSaunaReservation,
   deleteDropInReservation,
   getExpiredReservations,
 } from "./helpers";
 import {
-  BookingReservationData,
+  FullSaunaReservationData,
   BookingType,
   DropInReservationData,
 } from "utils/dist/bookingManagement/types";
 
-// TODO: rename function
 export const clearExpiredReservations = functions.pubsub
   .schedule(`every ${RESERVATION_CLEARING_INTERVAL} minutes`)
   .onRun(async (context) => {
-    // Clearing bookings
+    // Clearing full sauna reservations
     admin.firestore().runTransaction(async (transaction) => {
       const expiredReservations = await getExpiredReservations(
         transaction,
-        BookingType.booking
+        BookingType.fullSauna
       );
 
       for (const res of expiredReservations.docs) {
         const { uid, ...data } = res.data();
-        deleteBookingReservation(
+        deleteFullSaunaReservation(
           transaction,
           res.id,
-          data as BookingReservationData
+          data as FullSaunaReservationData
         );
       }
     });
 
-    // Clearing drop ins
+    // Clearing drop-in reservations
     admin.firestore().runTransaction(async (transaction) => {
       const expiredReservations = await getExpiredReservations(
         transaction,

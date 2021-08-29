@@ -1,19 +1,19 @@
 import {
-  BookingReservationData,
+  FullSaunaReservationData,
   BookingType,
 } from "utils/dist/bookingManagement/types";
 import { getEventRef } from "./getEventRef";
 import { getReservationsRef } from "./getReservationRef";
 
-export const deleteBookingReservation = (
+export const deleteFullSaunaReservation = (
   transaction: FirebaseFirestore.Transaction,
   docid: string,
-  data: BookingReservationData
+  data: FullSaunaReservationData
 ) => {
-  const reservationRef = getReservationsRef(BookingType.booking).doc(docid);
+  const reservationRef = getReservationsRef(BookingType.fullSauna).doc(docid);
   transaction.delete(reservationRef);
 
-  const eventRef = getEventRef(data.location, BookingType.booking, data.time);
+  const eventRef = getEventRef(data.location, BookingType.fullSauna, data.time);
   transaction.update(eventRef, {
     taken: false,
   });

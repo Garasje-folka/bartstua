@@ -2,7 +2,7 @@ import * as admin from "firebase-admin";
 import { USERS } from "utils/dist/userManagement/constants";
 import { PAYMENTS } from "../constants";
 import {
-  BookingReservationData,
+  FullSaunaReservationData,
   BookingType,
   DropInReservationData,
 } from "utils/dist/bookingManagement/types";
@@ -36,15 +36,15 @@ export const onPaymentSucceeded = async (
 
         const reservationsInfo = paymentSnapshot.get("reservations");
 
-        const bookings: BookingReservationData[] = [];
+        const bookings: FullSaunaReservationData[] = [];
         const dropIns: DropInReservationData[] = [];
 
         // Retrieve reservation data to send with the booking confirmation
         for (const res of reservationsInfo) {
           const reservationRef = getReservationsRef(res.type).doc(res.id);
           const snapshot = await transaction.get(reservationRef);
-          if (res.type === BookingType.booking) {
-            const data = snapshot.data() as BookingReservationData;
+          if (res.type === BookingType.fullSauna) {
+            const data = snapshot.data() as FullSaunaReservationData;
             bookings.push(data);
           } else if (res.type === BookingType.dropIn) {
             const data = snapshot.data() as DropInReservationData;

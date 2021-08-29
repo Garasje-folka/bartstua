@@ -1,4 +1,4 @@
-import { BookingReservationData as FullSaunaReservationData } from "utils/dist/bookingManagement/types";
+import { FullSaunaReservationData } from "utils/dist/bookingManagement/types";
 import { Doc } from "utils/dist/types";
 import { State } from "../types/state";
 

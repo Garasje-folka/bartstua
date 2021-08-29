@@ -1,4 +1,4 @@
-export * from "./addBookingReservations";
+export * from "./addFullSaunaReservations";
 export * from "./addDropInReservations";
 export * from "./cancelReservation";
 export * from "./clearExpiredReservations";

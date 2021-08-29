@@ -4,11 +4,11 @@ import { deleteDropInReservation, getReservationsRef } from "./helpers";
 import * as yup from "yup";
 import { checkData } from "../helpers";
 import {
-  BookingReservationData,
+  FullSaunaReservationData,
   BookingType,
   DropInReservationData,
 } from "utils/dist/bookingManagement/types";
-import { deleteBookingReservation } from "./helpers/deleteBookingReservation";
+import { deleteFullSaunaReservation } from "./helpers/deleteFullSaunaReservation";
 
 const dataSchema = yup.object({
   docid: yup.string().required(),
@@ -45,10 +45,10 @@ export const cancelReservation = functions.https.onCall(
         );
       }
 
-      if (type == BookingType.booking) {
+      if (type == BookingType.fullSauna) {
         const reservationData =
-          reservationSnapshot.data() as BookingReservationData;
-        deleteBookingReservation(transaction, data.docid, reservationData);
+          reservationSnapshot.data() as FullSaunaReservationData;
+        deleteFullSaunaReservation(transaction, data.docid, reservationData);
       } else if (type == BookingType.dropIn) {
         const reservationData =
           reservationSnapshot.data() as DropInReservationData;

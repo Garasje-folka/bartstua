@@ -65,7 +65,7 @@ const initializeEvents = async () => {
         .firestore()
         .collection("locations")
         .doc(EventLocation.loation1)
-        .collection(getEventCollectionName(BookingType.booking))
+        .collection(getEventCollectionName(BookingType.fullSauna))
         .doc(docId);
 
       batch.create(ref, {

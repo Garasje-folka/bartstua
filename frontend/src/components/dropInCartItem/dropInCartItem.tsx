@@ -1,6 +1,6 @@
 import { Doc } from "utils/dist/types";
 import {
-  BookingReservationData,
+  FullSaunaReservationData,
   BookingType,
   DropInReservationData,
 } from "utils/dist/bookingManagement/types";
@@ -19,12 +19,12 @@ import {
 } from "./dropInCartItem.styled";
 
 export type CartItemProps = {
-  reservationDoc: Doc<DropInReservationData> | Doc<BookingReservationData>;
+  reservationDoc: Doc<DropInReservationData> | Doc<FullSaunaReservationData>;
   isBookingFullSauna: boolean;
 };
 
 const isDropInChecker = (
-  reservationDoc: Doc<DropInReservationData> | Doc<BookingReservationData>,
+  reservationDoc: Doc<DropInReservationData> | Doc<FullSaunaReservationData>,
   isBookingFullSauna: boolean
 ): reservationDoc is Doc<DropInReservationData> => {
   return !isBookingFullSauna;
@@ -43,7 +43,7 @@ const DropInCartItem = (props: CartItemProps) => {
     try {
       await cancelReservation(
         doc.id,
-        isBookingFullSauna ? BookingType.booking : BookingType.dropIn
+        isBookingFullSauna ? BookingType.fullSauna : BookingType.dropIn
       );
     } catch (error) {
       console.log(error);

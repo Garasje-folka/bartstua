@@ -4,7 +4,7 @@ match /dropInReservations/{reservationDoc} {
   allow read: if resource.data.uid == request.auth.uid;
 }
 
-match /bookingReservations/{reservationDoc} {
+match /fullSaunaReservations/{reservationDoc} {
   allow read: if resource.data.uid == request.auth.uid;
 }
 
@@ -12,6 +12,6 @@ match /locations/{locationDoc}/dropInEvents/{eventDoc} {
   allow read: true
 }
 
-match /locations/{locationDoc}/bookingEvents/{eventDoc} {
+match /locations/{locationDoc}/fullSaunaEvents/{eventDoc} {
   allow read: true
 }
