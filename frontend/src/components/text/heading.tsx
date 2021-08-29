@@ -1,3 +1,5 @@
+import { Heading1 } from "./heading.styled";
+
 interface HeadingProps {
   type: string;
   children: string | string[];
@@ -24,7 +26,7 @@ const Heading: HeadingComponent = (props) => {
 
   return (
     <>
-      {type === HeadingTypes.HEADING1 && <h1>{children}</h1>}
+      {type === HeadingTypes.HEADING1 && <Heading1>{children}</Heading1>}
       {type === HeadingTypes.HEADING2 && <h2>{children}</h2>}
       {type === HeadingTypes.HEADING3 && <h3>{children}</h3>}
       {type === HeadingTypes.HEADING4 && <h4>{children}</h4>}

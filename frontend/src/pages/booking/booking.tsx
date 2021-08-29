@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import { Calendar } from "../../components/calendar/calendar";
 import {
   CalendarCard,
-  Card,
-  CardColors,
-  CardSizes,
   CenterContentProvider,
   ContentContainer,
 } from "./booking.styled";
+import { CardColors, CardSizes, Card } from "../../components/card";
 import { SaunaChooser } from "./saunaChooser";
 import { EventsChooser } from "./eventsChooser";
 import { createDateDayFromDate } from "utils/dist/dates/helpers";
