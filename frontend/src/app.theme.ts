@@ -87,7 +87,7 @@ export const themeConfig = {
     },
   },
   card: {
-    BACKGROUND_OPACITY_SUFIX: "e2",
+    BACKGROUND_OPACITY_SUFIX: "d5",
   },
 } as const;
 

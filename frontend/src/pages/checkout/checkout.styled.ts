@@ -15,8 +15,7 @@ const InnerContainer = styled.div`
 `;
 
 export const LeftContainer = styled(InnerContainer)`
-  background-color: ${({ theme }) =>
-    theme.colorPalette.blended.default + theme.card.BACKGROUND_OPACITY_SUFIX};
+  background-color: ${({ theme }) => theme.colorPalette.blended.default + "aa"};
   box-shadow: ${({ theme }) => theme.shadow.REGULAR};
 
   display: flex;
