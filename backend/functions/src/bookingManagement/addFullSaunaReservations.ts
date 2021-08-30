@@ -63,7 +63,7 @@ export const addFullSaunaReservations = functions.https.onCall(
         }
 
         const eventRef = getEventRef(
-          request.location,
+          request.saunaId,
           BookingType.fullSauna,
           request.time
         );
@@ -90,7 +90,7 @@ export const addFullSaunaReservations = functions.https.onCall(
 
       for (const request of requests) {
         const eventRef = getEventRef(
-          request.location,
+          request.saunaId,
           BookingType.fullSauna,
           request.time
         );

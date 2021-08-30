@@ -13,7 +13,6 @@ import {
   FullSaunaReservationRequest,
   DropInEvent,
   DropInReservationRequest,
-  EventLocation,
 } from "utils/dist/bookingManagement/types";
 import { Button } from "../../components/button";
 import { addDropInReservations } from "../../services/bookingManagement";
@@ -35,7 +34,7 @@ const Booking = () => {
       const requests = selectedEvents.map((e) => {
         const reservationRequest = {
           time: e.time,
-          location: EventLocation.loation1,
+          saunaId: "FAKE_SAUNA_ID",
         } as FullSaunaReservationRequest;
 
         return reservationRequest;
@@ -51,7 +50,7 @@ const Booking = () => {
         const reservationRequest = {
           time: e.time,
           spaces: spaces,
-          location: EventLocation.loation1,
+          saunaId: "FAKE_SAUNA_ID",
         } as DropInReservationRequest;
 
         return reservationRequest;

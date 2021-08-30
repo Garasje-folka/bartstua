@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
-import { DropInEvent, EventLocation } from "utils/dist/bookingManagement/types";
+import { DropInEvent } from "utils/dist/bookingManagement/types";
 import { isEqualTimes } from "utils/dist/dates/helpers";
 import { DateDay } from "utils/dist/dates/types";
 import { subscribeDropInEvents } from "../../services/bookingManagement";
@@ -42,10 +42,8 @@ const EventsChooser = (props: Props) => {
       ? subscribeFullSaunaEvents
       : subscribeDropInEvents;
 
-    const unsubscribe = subscribeEvents(
-      dateDay,
-      EventLocation.loation1,
-      (newEvents) => setEvents(newEvents)
+    const unsubscribe = subscribeEvents(dateDay, "FAKE_SAUNA_ID", (newEvents) =>
+      setEvents(newEvents)
     );
 
     return () => {

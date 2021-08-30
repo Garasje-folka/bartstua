@@ -8,10 +8,16 @@ service cloud.firestore {
     match /fullSaunaReservations/{reservationDoc} {
       allow read: if resource.data.uid == request.auth.uid;
     }
-    match /locations/{locationDoc}/dropInEvents/{eventDoc} {
+    match /saunas/{saunaDoc} {
       allow read: if true;
     }
-    match /locations/{locationDoc}/fullSaunaEvents/{eventDoc} {
+    match /saunas/{saunaDoc} {
+      allow read: if true;
+    }
+    match /saunas/{saunaDoc}/dropInEvents/{eventDoc} {
+      allow read: if true;
+    }
+    match /saunas/{saunaDoc}/fullSaunaEvents/{eventDoc} {
       allow read: if true;
     }
   }

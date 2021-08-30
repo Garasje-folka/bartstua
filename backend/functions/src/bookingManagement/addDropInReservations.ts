@@ -61,7 +61,7 @@ export const addDropInReservations = functions.https.onCall(
         }
 
         const eventRef = getEventRef(
-          request.location,
+          request.saunaId,
           BookingType.dropIn,
           request.time
         );
@@ -87,7 +87,7 @@ export const addDropInReservations = functions.https.onCall(
 
       for (const request of requests) {
         const eventRef = getEventRef(
-          request.location,
+          request.saunaId,
           BookingType.dropIn,
           request.time
         );

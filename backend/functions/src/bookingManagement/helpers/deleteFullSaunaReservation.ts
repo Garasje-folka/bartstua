@@ -13,7 +13,7 @@ export const deleteFullSaunaReservation = (
   const reservationRef = getReservationsRef(BookingType.fullSauna).doc(docid);
   transaction.delete(reservationRef);
 
-  const eventRef = getEventRef(data.location, BookingType.fullSauna, data.time);
+  const eventRef = getEventRef(data.saunaId, BookingType.fullSauna, data.time);
   transaction.update(eventRef, {
     taken: false,
   });
