@@ -5,7 +5,12 @@ import { FormContainer, InputField, SubmitButton } from "../../components/form";
 import { CardHeader, CardSizes } from "../../components/card";
 import { currentUserSelector } from "../../redux/selectors";
 import { useSelector } from "react-redux";
-import { StyledCard as Card, LeftContainer } from "./checkout.styled";
+import {
+  StyledCard as Card,
+  LeftContainer,
+  RightContainer,
+  StyledHeading,
+} from "./checkout.styled";
 import { useHistory } from "react-router-dom";
 import { HOME } from "../../router/routeConstants";
 import { Notification, NotificationType } from "../../components/notification";
@@ -18,6 +23,11 @@ import {
 } from "../../services/paymentManagement";
 import { refreshReservationTimestamps } from "../../services/bookingManagement";
 import { CardInfoField } from "../../components/form/cardInfoField";
+import SaunaData from "./dummy.json";
+import { CheckoutCartItem } from "./checkoutCartItem";
+import { dropInReservationsSelector } from "../../redux/ducks/dropInReservations";
+import { fullSaunaReservationsSelector } from "../../redux/ducks/fullSaunaReservations";
+import { Heading } from "../../components/text";
 
 const Checkout = () => {
   const [email, setEmail] = useState<string>("");
@@ -34,6 +44,8 @@ const Checkout = () => {
   const { t } = useTranslation();
   const currentUser = useSelector(currentUserSelector);
   const history = useHistory();
+  const dropInReservations = useSelector(dropInReservationsSelector);
+  const fullSaunaReservations = useSelector(fullSaunaReservationsSelector);
 
   useEffect(() => {
     // TODO: Add support for guest users
@@ -135,6 +147,36 @@ const Checkout = () => {
           )}
         </FormContainer>
       </LeftContainer>
+      <RightContainer>
+        {dropInReservations.length > 0 && (
+          <Heading type={Heading.types.HEADING3}>
+            {t("label_drop_in_reservations")}
+          </Heading>
+        )}
+        {dropInReservations
+          .map(({ data, id }) => ({
+            ...data,
+            saunaData: SaunaData.find(({ id }) => id === data.location)?.data,
+            bookingId: id,
+          }))
+          .map(
+            ({ saunaData, bookingId }) =>
+              saunaData && <CheckoutCartItem key={bookingId} {...saunaData} />
+          )}
+        {fullSaunaReservations.length > 0 && (
+          <StyledHeading type={Heading.types.HEADING3}>
+            {t("label_full_sauna_reservations")}
+          </StyledHeading>
+        )}
+        {fullSaunaReservations
+          .map(({ data }) => ({
+            ...data,
+            saunaData: SaunaData.find(({ id }) => id === data.location)?.data,
+          }))
+          .map(
+            ({ saunaData }) => saunaData && <CheckoutCartItem {...saunaData} />
+          )}
+      </RightContainer>
     </Card>
   );
 };
