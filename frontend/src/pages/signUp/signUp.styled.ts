@@ -6,7 +6,7 @@ import background from "./media/sauna2.jpg";
 export const Background = styled.div`
   width: 100%;
   height: 100%;
-  min-height: 100vh;
+  min-height: 85vh;
   display: flex;
   flex-direction: row;
 `;
@@ -39,7 +39,7 @@ export const SignInButtonsContainer = styled.div`
 `;
 
 export const SignInButton = styled(Button)`
-  background-color: #296b79;
+  background-color: ${({ theme }) => theme.colorPalette.primary.default};
   height: 35px;
   border-radius: 10px;
   color: white;
@@ -100,7 +100,7 @@ export const OuterFormContainer = styled.div`
 
 export const SignUpButton = styled(Button)`
   margin-top: 50px;
-  background-color: #296b79;
+  background-color: ${({ theme }) => theme.colorPalette.primary.default};
   height: 35px;
   border-radius: 10px;
   color: white;

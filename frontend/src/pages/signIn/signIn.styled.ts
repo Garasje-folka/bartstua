@@ -6,14 +6,12 @@ import background from "./media/sauna.jpg";
 
 export const Background = styled.div`
   width: 100%;
-  height: 100%;
-  min-height: 100vh;
+  min-height: 85vh;
   display: flex;
   flex-direction: row;
 `;
 
 export const LeftContainer = styled.div`
-  display: block;
   background-color: white;
   width: 670px;
   box-shadow: ${({ theme }) => theme.shadow.REGULAR};
@@ -40,7 +38,7 @@ export const ParagraphText = styled(Paragraph)`
 `;
 
 export const SignInButton = styled(Button)`
-  background-color: #296b79;
+  background-color: ${({ theme }) => theme.colorPalette.primary.default};
   height: 35px;
   border-radius: 10px;
   color: white;
@@ -109,7 +107,7 @@ export const StyledFormContainer = styled.div`
 `;
 
 export const SignUpButton = styled(Button)`
-  background-color: #296b79;
+  background-color: ${({ theme }) => theme.colorPalette.primary.default};
   height: 35px;
   border-radius: 10px;
   color: white;
