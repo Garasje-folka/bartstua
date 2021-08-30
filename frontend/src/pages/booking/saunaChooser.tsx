@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { SaunaData } from "utils/dist/bookingManagement/types";
 import { Doc } from "utils/dist/types";
+import { useAsyncOnMount } from "../../hooks/useAsyncOnMount";
 import { Icon, IconType } from "../../icons";
 import { getSaunas } from "../../services/bookingManagement";
 import {
@@ -16,13 +17,25 @@ import {
   Wrapper,
 } from "./saunaChooser.styled";
 
-const SaunaChooser: React.FC = () => {
+export type SaunaChooserProps = {
+  setSaunaId: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const SaunaChooser: React.FC<SaunaChooserProps> = (
+  props: SaunaChooserProps
+) => {
+  const { setSaunaId } = props;
   const [saunas, setSaunas] = useState<Doc<SaunaData>[]>([]);
   const [saunaIndex, setSaunaIndex] = useState<number>(0);
 
+  useAsyncOnMount(getSaunas, setSaunas);
+
   useEffect(() => {
-    getSaunas().then((saunas) => setSaunas(saunas));
-  });
+    if (saunas.length > 0) {
+      setSaunaId(saunas[saunaIndex].id);
+      console.log(saunas[saunaIndex].data.imageUrl);
+    }
+  }, [saunas, saunaIndex]);
 
   const updateSaunaIndex = (change: number) => {
     setSaunaIndex((prevSaunaIndex) => prevSaunaIndex + change);
@@ -30,7 +43,9 @@ const SaunaChooser: React.FC = () => {
 
   return (
     <Wrapper>
-      <StyledImage src="https://thewellsite.blob.core.windows.net/media/ysnbkxwf/the-well-finsk-sauna.jpg" />
+      {saunas.length > 0 && (
+        <StyledImage src={saunas[saunaIndex].data.imageUrl} />
+      )}
       <Content>
         <SaunaSwitcher>
           <LeftArrowButton

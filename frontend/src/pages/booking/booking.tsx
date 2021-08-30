@@ -20,6 +20,7 @@ import { BookingTypeChooser } from "./bookingTypeChooser";
 import { addFullSaunaReservations } from "../../services/bookingManagement/addFullSaunaReservations";
 
 const Booking = () => {
+  const [saunaId, setSaunaId] = useState<string>(""); // TODO: Maybe initalize as undefined?
   const [date, setDate] = useState<Date>(new Date());
   const [spaces, setSpaces] = useState<number>(1);
   const [wholeSauna, setWholeSauna] = useState<boolean>(false);
@@ -34,7 +35,7 @@ const Booking = () => {
       const requests = selectedEvents.map((e) => {
         const reservationRequest = {
           time: e.time,
-          saunaId: "FAKE_SAUNA_ID",
+          saunaId: saunaId,
         } as FullSaunaReservationRequest;
 
         return reservationRequest;
@@ -50,7 +51,7 @@ const Booking = () => {
         const reservationRequest = {
           time: e.time,
           spaces: spaces,
-          saunaId: "FAKE_SAUNA_ID",
+          saunaId: saunaId,
         } as DropInReservationRequest;
 
         return reservationRequest;
@@ -70,13 +71,14 @@ const Booking = () => {
     <CenterContentProvider>
       <ContentContainer>
         <Card size={CardSizes.BIG} color={CardColors.PRIMARY}>
-          <SaunaChooser />
+          <SaunaChooser setSaunaId={setSaunaId} />
         </Card>
         <CalendarCard size={CardSizes.SMALL}>
           <Calendar date={date} setDate={setDate} minDate={new Date()} />
         </CalendarCard>
         <Card size={CardSizes.SMALL}>
           <EventsChooser
+            saunaId={saunaId}
             dateDay={createDateDayFromDate(date)}
             spaces={spaces}
             selectedEvents={selectedEvents}

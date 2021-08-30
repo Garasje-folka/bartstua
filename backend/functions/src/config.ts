@@ -1,6 +1,7 @@
 import * as admin from "firebase-admin";
 import { PubSub } from "@google-cloud/pubsub";
 import { RESERVATION_CLEARING_INTERVAL } from "./bookingManagement/constants";
+
 import { addToDateDay, createDateDayFromDate } from "utils/dist/dates/helpers";
 import {
   BOOKING_ENDING_TIME,
@@ -11,6 +12,7 @@ import {
   getEventCollectionName,
   getEventId,
 } from "utils/dist/bookingManagement/helpers";
+
 admin.initializeApp();
 
 // Fill next two months with events
@@ -88,6 +90,9 @@ const initializeEvents = async (saunaIds: string[]) => {
 };
 
 const initializeSaunas = async () => {
+  const publicFiles = await admin.storage().bucket("public").makePublic();
+  const imageUrl = publicFiles[0][0].publicUrl;
+
   const saunaData = {
     name: "Bunker'n",
     description:
@@ -97,7 +102,7 @@ const initializeSaunas = async () => {
     capacity: 8,
     dropInPrice: 199,
     wholeSaunaPrice: 899,
-    imageUrl: "sdjkfjsfjdsfjfdsj",
+    imageUrl: imageUrl,
   };
 
   const docRef = admin.firestore().collection("saunas").doc();

@@ -19,6 +19,7 @@ import {
 } from "./eventsChooser.styled";
 
 type Props = {
+  saunaId: string;
   dateDay: DateDay;
   spaces: number;
   selectedEvents: DropInEvent[];
@@ -28,6 +29,7 @@ type Props = {
 
 const EventsChooser = (props: Props) => {
   const {
+    saunaId,
     dateDay,
     spaces,
     selectedEvents,
@@ -38,18 +40,20 @@ const EventsChooser = (props: Props) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    const subscribeEvents = isBookingFullSauna
-      ? subscribeFullSaunaEvents
-      : subscribeDropInEvents;
+    if (saunaId) {
+      const subscribeEvents = isBookingFullSauna
+        ? subscribeFullSaunaEvents
+        : subscribeDropInEvents;
 
-    const unsubscribe = subscribeEvents(dateDay, "FAKE_SAUNA_ID", (newEvents) =>
-      setEvents(newEvents)
-    );
+      const unsubscribe = subscribeEvents(dateDay, saunaId, (newEvents) =>
+        setEvents(newEvents)
+      );
 
-    return () => {
-      unsubscribe();
-    };
-  }, [dateDay, isBookingFullSauna]);
+      return () => {
+        unsubscribe();
+      };
+    }
+  }, [saunaId, dateDay, isBookingFullSauna]);
 
   const onClickCallback = (event: DropInEvent, selected: boolean) => {
     setSelectedEvents((prevVal) => {

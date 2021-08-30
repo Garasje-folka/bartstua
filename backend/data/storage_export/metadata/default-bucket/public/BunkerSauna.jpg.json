@@ -1,0 +1,19 @@
+{
+  "name": "public/BunkerSauna.jpg",
+  "bucket": "default-bucket",
+  "contentType": "image/jpeg",
+  "metageneration": 1,
+  "generation": 1630348377200,
+  "storageClass": "STANDARD",
+  "etag": "someETag",
+  "contentDisposition": "inline",
+  "contentEncoding": "identity",
+  "downloadTokens": [
+    "557fe09f-9e3f-4d42-be33-f967ae6cdd33"
+  ],
+  "timeCreated": "2021-08-30T18:32:57.199Z",
+  "updated": "2021-08-30T18:32:57.202Z",
+  "size": 245117,
+  "md5Hash": "aWoFHD8kLVIktKKl2q+Mjg==",
+  "crc32c": "1357844978"
+}
