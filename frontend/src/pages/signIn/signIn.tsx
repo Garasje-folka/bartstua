@@ -119,7 +119,7 @@ const SignIn = () => {
           <OuterFormContainer>
             <StyledFormContainer>
               <EmailField
-                ghostText="E-post"
+                label="E-post"
                 icon={IconType.EmailIcon}
                 size={InputFieldSize.SMALL}
                 onChange={handleEmailChange}
