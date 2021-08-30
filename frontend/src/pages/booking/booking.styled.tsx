@@ -10,7 +10,7 @@ export const CenterContentProvider = styled.div`
 export const ContentContainer = styled.div`
   max-width: 1200px;
   flex-grow: 1;
-  margin-top: 300px;
+  margin-top: 100px;
   flex-direction: row;
   display: flex;
   gap: ${({ theme }: { theme: Theme }) => theme.alignment.margin.LARGE};
