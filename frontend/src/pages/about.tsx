@@ -1,4 +1,4 @@
-import { CardBody, CardContainer, CardHeader } from "../components/card";
+import { CardBody, Card, CardHeader, CardSizes } from "../components/card";
 import { useTranslation } from "react-i18next";
 import { Divider } from "../components/divider";
 
@@ -6,7 +6,7 @@ const About = () => {
   const { t } = useTranslation();
 
   return (
-    <CardContainer>
+    <Card size={CardSizes.FILL_PAGE}>
       <CardHeader title={t("label_about_us")} />
       <CardBody>
         <img
@@ -70,7 +70,7 @@ const About = () => {
         </p>
         <Divider />
       </CardBody>
-    </CardContainer>
+    </Card>
   );
 };
 

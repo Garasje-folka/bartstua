@@ -1,4 +1,3 @@
-export * from "./subscribeDropInReservations";
 export * from "./subscribeDropInEvents";
 export * from "./cancelReservation";
 export * from "./refreshReservationTimestamps";

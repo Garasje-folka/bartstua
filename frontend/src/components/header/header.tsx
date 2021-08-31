@@ -11,8 +11,10 @@ import {
   Nav,
   NavLink,
   RegisterButton,
+  CartButton,
+  SignOutButton,
+  Logo,
 } from "./header.styled";
-import { Button } from "../button";
 import { useMobileScreen } from "../../hooks/useMobileScreen";
 import { DropDownNavigation } from "./dropDownNavigation";
 import { NavigationItems } from "./types/navigationItems";
@@ -22,14 +24,27 @@ import {
   HOME,
   SIGNIN,
   REGISTER,
+  CART,
+  CHECKOUT,
 } from "../../router/routeConstants";
 import { IconType } from "../../icons";
 import Logonobg from "../../assets/logo-nobg.png";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Header = () => {
   const history = useHistory();
   const currentUser = useSelector(currentUserSelector);
   const isMobileScreen = useMobileScreen();
+
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 100) setHasScrolled(true);
+      else setHasScrolled(false);
+    });
+  }, []);
 
   const handleSignOut = () => {
     userManagement.signOut();
@@ -48,12 +63,14 @@ const Header = () => {
       title: "Om Oss",
       url: ABOUT,
     },
+    {
+      title: "Betaling",
+      url: CHECKOUT,
+    },
   ];
 
   const signOutButton: React.ReactNode = (
-    <Button icon={IconType.SignOutIcon} onClick={handleSignOut}>
-      Logg ut
-    </Button>
+    <SignOutButton onClick={handleSignOut}>Logg ut</SignOutButton>
   );
 
   const signInButton: React.ReactNode = (
@@ -66,11 +83,15 @@ const Header = () => {
     </RegisterButton>
   );
 
+  const cartButton: React.ReactNode = (
+    <CartButton icon={IconType.CartIcon} onClick={() => history.push(CART)} />
+  );
+
   return (
-    <StyledNavbar bg="light" expand="lg">
+    <StyledNavbar expand="lg" hasScrolled={hasScrolled}>
       <LeftAlignedContent>
         <Navbar.Brand onClick={() => history.push(HOME)}>
-          <img src={Logonobg} height="55" alt="Logo"></img>
+          <Logo src={Logonobg} height="55" alt="Logo" />
         </Navbar.Brand>
       </LeftAlignedContent>
 
@@ -88,9 +109,13 @@ const Header = () => {
         )}
 
         {currentUser && currentUser.email ? (
-          signOutButton
+          <>
+            {cartButton}
+            {signOutButton}
+          </>
         ) : (
           <>
+            {cartButton}
             {!isMobileScreen && registerButton}
             {signInButton}
           </>

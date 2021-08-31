@@ -1,5 +1,6 @@
 import { Doc } from "utils/dist/types";
 import {
+  FullSaunaReservationData,
   BookingType,
   DropInReservationData,
 } from "utils/dist/bookingManagement/types";
@@ -8,17 +9,29 @@ import { createDateFromDateDay } from "utils/dist/dates/helpers";
 import { getDayName } from "utils/dist/dates/helpers";
 import { getHourRange } from "utils/dist/dates/helpers";
 import { dateDayToISO } from "utils/dist/dates/helpers";
-import { Button } from "../button";
-import { CardBody, CardContainer } from "../card";
-import { Heading } from "../text";
-import { VeriticalAlignedTextContainer } from "./dropInCartItem.styled";
+import {
+  BackgroundReservation,
+  ContentContainer,
+  StyledImage,
+  VeriticalAlignedTextContainer,
+  ButtonContainer,
+  DeleteButton,
+} from "./dropInCartItem.styled";
 
 export type CartItemProps = {
-  dropInReservationDoc: Doc<DropInReservationData>;
+  reservationDoc: Doc<DropInReservationData> | Doc<FullSaunaReservationData>;
+  isBookingFullSauna: boolean;
+};
+
+const isDropInChecker = (
+  reservationDoc: Doc<DropInReservationData> | Doc<FullSaunaReservationData>,
+  isBookingFullSauna: boolean
+): reservationDoc is Doc<DropInReservationData> => {
+  return !isBookingFullSauna;
 };
 
 const DropInCartItem = (props: CartItemProps) => {
-  const { dropInReservationDoc: doc } = props;
+  const { reservationDoc: doc, isBookingFullSauna } = props;
 
   const getFormattedDate = () => {
     const dayName = getDayName(createDateFromDateDay(doc.data.time));
@@ -28,37 +41,51 @@ const DropInCartItem = (props: CartItemProps) => {
 
   const handleReservationDelete = async () => {
     try {
-      await cancelReservation(doc.id, BookingType.dropIn);
+      await cancelReservation(
+        doc.id,
+        isBookingFullSauna ? BookingType.fullSauna : BookingType.dropIn
+      );
     } catch (error) {
       console.log(error);
     }
   };
   return (
-    <CardContainer>
-      <CardBody>
+    <BackgroundReservation>
+      <StyledImage src="https://thewellsite.blob.core.windows.net/media/ysnbkxwf/the-well-finsk-sauna.jpg" />
+      <ContentContainer>
         <VeriticalAlignedTextContainer>
-          <Heading type={Heading.types.HEADING4}>
-            {`Dag: ${getFormattedDate()} ` /* TODO: (haryp2309) locale */}
-          </Heading>
-          <Heading type={Heading.types.HEADING4}>
-            {
-              `Tidspunkt: ${getHourRange(
-                doc.data.time.hour
-              )}` /* TODO: (haryp2309) locale */
-            }
-          </Heading>
-          <Heading type={Heading.types.HEADING4}>
-            {
-              `Antall plasser: ${doc.data.spaces}` /* TODO: (haryp2309) locale */
-            }
-          </Heading>
-          <Heading type={Heading.types.HEADING4}>
-            {`Pris: ${doc.data.spaces * 100} kr` /* TODO: (haryp2309) locale */}
-          </Heading>
-          <Button onClick={handleReservationDelete}>Slett</Button>
+          <p>
+            <strong>{`Dag: `}</strong>
+            {`${getFormattedDate()} `}
+          </p>
+          <p>
+            <strong>{`Tidspunkt: `}</strong>
+            {`${getHourRange(doc.data.time.hour)}`}
+          </p>
+          {isDropInChecker(doc, isBookingFullSauna) ? (
+            <p>
+              <strong>{`Antall plasser: `}</strong>
+              {`${doc.data.spaces}`}
+            </p>
+          ) : (
+            <p>
+              <strong>Hele badstuen</strong>
+            </p>
+          )}
+          <p>
+            <strong>{`Pris: `}</strong>
+            {`${
+              isDropInChecker(doc, isBookingFullSauna)
+                ? doc.data.spaces * 199
+                : 899
+            } kr`}
+          </p>
         </VeriticalAlignedTextContainer>
-      </CardBody>
-    </CardContainer>
+        <ButtonContainer>
+          <DeleteButton onClick={handleReservationDelete}> Slett </DeleteButton>
+        </ButtonContainer>
+      </ContentContainer>
+    </BackgroundReservation>
   );
 };
 

@@ -28,5 +28,30 @@
   "label_book_full_sauna_short_form": "Lei hele",
   "text_description_book_drop_in": "Lei en eller flere plasser i badstuen og nyt kombinasjonen av badstu og sjøbad. Hver lørdag fra 08.00 til 20.00.",
   "label_book_drop_in": "Drop in",
-  "label_how_many_people": "Hvor mange personer?"
+  "label_how_many_people": "Hvor mange personer?",
+  "label_not_choosen_events": "Ikke valgte tidspunkter",
+  "label_choosen_events": "Valgte tidspunkter",
+  "month_names": {
+    "0": "Januar",
+    "1": "Februar",
+    "2": "Mars",
+    "3": "April",
+    "4": "Mai",
+    "5": "Juni",
+    "6": "Juli",
+    "7": "August",
+    "8": "September",
+    "9": "Oktober",
+    "10": "November",
+    "11": "Desember"
+  },
+  "short_form_week_days": {
+    "0": "Søn",
+    "1": "Man",
+    "2": "Tir",
+    "3": "Ons",
+    "4": "Tor",
+    "5": "Fre",
+    "6": "Lør"
+  }
 }

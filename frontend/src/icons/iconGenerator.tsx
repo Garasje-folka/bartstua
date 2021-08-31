@@ -8,11 +8,9 @@ import {
   FaKey,
   FaLockOpen,
   FaUser,
+  FaShoppingCart,
   FaUsers,
 } from "react-icons/fa";
-
-import { AnyStyledComponent } from "styled-components";
-import { generateStyledIcon } from "./icon.styled";
 
 export enum IconType {
   SignOutIcon,
@@ -24,6 +22,7 @@ export enum IconType {
   PasswordIcon,
   SignInIcon,
   SignUpIcon,
+  CartIcon,
   GroupIcon,
   SinglePersonIcon,
 }
@@ -48,6 +47,8 @@ const getIcon = (iconType: IconType) => {
       return FaLockOpen;
     case IconType.SignUpIcon:
       return FaUser;
+    case IconType.CartIcon:
+      return FaShoppingCart;
     case IconType.GroupIcon:
       return FaUsers;
     case IconType.SinglePersonIcon:
@@ -65,12 +66,8 @@ type Props = {
 const Icon: React.FC<Props> = (props: Props) => {
   const { icon, height, width, className } = props;
   const OriginalIcon = getIcon(icon);
-  const StyledOriginalIcon = generateStyledIcon(
-    OriginalIcon as AnyStyledComponent
-  );
-  return (
-    <StyledOriginalIcon height={height} width={width} className={className} />
-  );
+
+  return <OriginalIcon height={height} width={width} className={className} />;
 };
 
 export { Icon };

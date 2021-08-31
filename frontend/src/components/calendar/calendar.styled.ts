@@ -1,139 +1,125 @@
-import Calendar from "react-calendar";
 import styled, { css } from "styled-components";
-import { Theme } from "../../app.theme";
 
-export const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 10px;
-`;
-
-export const DateLabel = styled.span`
-  font-size: ${({ theme }: { theme: Theme }) =>
-    theme.text.size.CARD_HIGHLIGHTED};
-`;
-
-const removeExistingStyle = css`
-  background: none;
-  border: none;
-  text-decoration: none;
-`;
-
-const navigationContainer = css`
+export const OuterCalendarWrapper = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
-  padding-bottom: ${({ theme }: { theme: Theme }) =>
-    theme.alignment.padding.REGULAR};
+  align-items: center;
+  flex-direction: column;
+  max-width: 380px;
+`;
+export const CalendarWrapper = styled.div`
+  --day-wrapper-size: 40px;
+
+  display: grid;
+  grid-template-columns: repeat(7, var(--day-wrapper-size));
+  gap: ${({ theme }) => theme.spacing.REGULAR};
+  justify-content: center;
 `;
 
-const navigationButtonStyle = css`
-  ${removeExistingStyle}
-  display: flex;
+type DayNumberProps = {
+  thisMonth: boolean;
+  isSelectedDate: boolean;
+  disabled: boolean;
+};
 
-  svg {
-    margin: auto;
-  }
-`;
-
-const rightButtonStyle = css`
-  ${navigationButtonStyle}
-`;
-
-const leftButtonStyle = css`
-  ${navigationButtonStyle}
-`;
-
-const topLabelStyle = css`
-  ${removeExistingStyle}
-  max-width: 230px;
-  text-transform: uppercase;
+export const DayNumber = styled.span<DayNumberProps>`
+  color: ${({ theme, isSelectedDate, disabled }) =>
+    disabled
+      ? theme.text.color.DISABLED
+      : isSelectedDate
+      ? theme.text.color.INVERTED
+      : theme.colorPalette.primary.default};
   font-weight: ${({ theme }) => theme.text.weight.REGULAR};
+  transition: 50ms;
+  user-select: none;
 `;
 
-const topBar = css`
-  font-size: ${({ theme }: { theme: Theme }) => theme.text.size.CARD_HEADER};
+type DayWrapperProps = {
+  thisMonth: boolean;
+  isSelectedDate: boolean;
+  disabled: boolean;
+};
+
+export const DayWrapper = styled.div<DayWrapperProps>`
+  height: var(--day-wrapper-size);
+  width: var(--day-wrapper-size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: ${({ theme }) => theme.radius.SLIGHTLY_ROUND};
+  transition: 50ms;
+  background-color: ${({ theme, isSelectedDate, disabled }) =>
+    disabled
+      ? "rgba(0,0,0,0)"
+      : isSelectedDate
+      ? theme.colorPalette.secondary.default
+      : theme.colorPalette.primary.light};
+
+  opacity: ${({ thisMonth, disabled }) =>
+    disabled ? 0.5 : thisMonth ? 1 : 0.8};
+
+  ${({ disabled }) =>
+    !disabled &&
+    css`
+      :hover {
+        cursor: pointer;
+        opacity: 1;
+
+        ${DayNumber} {
+          transform: scale(1.2);
+        }
+      }
+    `};
 `;
 
-const previousMonthDayStyle = css`
-  opacity: 0.6;
+export const TopBar = styled.div`
+  display: flex;
+  height: 50px;
+  width: 100%;
+  align-self: center;
+  justify-content: center;
 `;
 
-const dayStyle = css`
-  ${removeExistingStyle}
-  margin-top: 7px;
-  margin-bottom: 7px;
+export const MonthAndYear = styled.div`
+  flex-grow: 1;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  font-weight: ${({ theme }) => theme.text.weight.REGULAR};
+  gap: 10px;
+  font-size: 1.1em;
+`;
+
+export const IconWrapper = styled.div`
+  // Alignment
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  padding: 5px;
+
+  // Button styling
+  border-radius: ${({ theme }) => theme.radius.SLIGHTLY_ROUND};
+  transition: 50ms;
+  :hover {
+    background-color: ${({ theme }) => theme.colorPalette.contrasted.light};
+    cursor: pointer;
+  }
+`;
+
+export const MonthName = styled.span``;
+
+export const YearName = styled.span`
+  opacity: 0.3;
+`;
+
+export const DayName = styled.div`
   text-align: center;
-  font-weight: ${({ theme }) => theme.text.weight.THIN};
-`;
-
-const weekDay = css`
-  ${removeExistingStyle}
-  text-align: center;
-
-  abbr {
-    ${removeExistingStyle}
-    text-transform: capitalize;
-  }
-`;
-
-const calendarStyle = css``;
-
-const arrows = css`
-  font-size: 1.6em;
-  font-weight: bold;
-`;
-
-export const StyledCalendar = styled(Calendar)`
-  ${calendarStyle}
-
-  /* Hide year-skipping button */
-  .react-calendar__navigation__prev2-button {
-    display: none;
-  }
-  .react-calendar__navigation__next2-button {
-    display: none;
-  }
-
-  .react-calendar__navigation__label {
-    ${topLabelStyle}
-  }
-
-  .react-calendar__navigation__prev-button {
-    ${leftButtonStyle}
-  }
-
-  .react-calendar__navigation__next-button {
-    ${rightButtonStyle}
-  }
-
-  .react-calendar__month-view__days__day {
-    ${dayStyle}
-  }
-
-  .react-calendar__month-view__days__day--neighboringMonth {
-    ${previousMonthDayStyle}
-  }
-
-  .react-calendar__navigation {
-    ${navigationContainer}
-  }
-
-  .react-calendar__month-view__weekdays__weekday {
-    ${weekDay}
-  }
-
-  .react-calendar__navigation__arrow {
-    ${arrows}
-  }
-
-  .react-calendar__navigation {
-    ${topBar}
-  }
-
-  /* Temporary */
-  .react-calendar__tile--active {
-    background: #006edc;
-    color: white;
-  }
+  font-size: ${({ theme }) => theme.text.size.GENERIC_SMALL};
+  font-weight: ${({ theme }) => theme.text.weight.REGULAR};
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: ${({ theme }) => theme.colorPalette.primary.default};
+  opacity: 0.4;
 `;

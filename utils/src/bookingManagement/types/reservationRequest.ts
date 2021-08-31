@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { MAX_DROP_IN_SPACES } from "../constants";
 
 export enum BookingType {
-  booking = "booking",
+  fullSauna = "full-sauna",
   dropIn = "drop-in",
 }
 
@@ -11,7 +11,7 @@ export enum EventLocation {
   loation1 = "location1",
 }
 
-export const bookingReservationRequestSchema = yup.object({
+export const fullSaunaReservationRequestSchema = yup.object({
   time: dateTimeSchema.required(),
   location: yup
     .mixed<EventLocation>()
@@ -19,16 +19,16 @@ export const bookingReservationRequestSchema = yup.object({
     .required(),
 });
 
-export type BookingReservationRequest = {
+export type FullSaunaReservationRequest = {
   time: DateTime;
   location: EventLocation;
 };
 
 export const dropInReservationDataSchema =
-  bookingReservationRequestSchema.shape({
+  fullSaunaReservationRequestSchema.shape({
     spaces: yup.number().min(1).max(MAX_DROP_IN_SPACES).required(),
   });
 
-export type DropInReservationRequest = BookingReservationRequest & {
+export type DropInReservationRequest = FullSaunaReservationRequest & {
   spaces: number;
 };

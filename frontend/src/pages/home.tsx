@@ -1,12 +1,12 @@
-import { CardContainer, CardHeader } from "../components/card";
+import { Card, CardHeader, CardSizes } from "../components/card";
 import { useTranslation } from "react-i18next";
 
 const Home = () => {
   const { t } = useTranslation();
   return (
-    <CardContainer>
+    <Card size={CardSizes.FILL_PAGE}>
       <CardHeader title={t("label_home")} />
-    </CardContainer>
+    </Card>
   );
 };
 

@@ -1,17 +1,17 @@
 rules_version = '2';
 
-match /users/{userDoc}/dropInReservations/{reservationDoc} {
-  allow read: userDoc == request.auth.uid
+match /dropInReservations/{reservationDoc} {
+  allow read: if resource.data.uid == request.auth.uid;
 }
 
-match /users/{userDoc}/bookingReservations/{reservationDoc} {
-  allow read: userDoc == request.auth.uid
+match /fullSaunaReservations/{reservationDoc} {
+  allow read: if resource.data.uid == request.auth.uid;
 }
 
-match /events/{locationDoc}/dropInEvents/{eventDoc} {
+match /locations/{locationDoc}/dropInEvents/{eventDoc} {
   allow read: true
 }
 
-match /events/{locationDoc}/bookingEvents/{eventDoc} {
+match /locations/{locationDoc}/fullSaunaEvents/{eventDoc} {
   allow read: true
 }

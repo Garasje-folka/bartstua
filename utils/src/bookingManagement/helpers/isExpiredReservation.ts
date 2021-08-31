@@ -8,6 +8,7 @@ const isExpiredReservation = (time: DateTime, timestamp: number) => {
 
   if (timestamp <= thresholdTimestamp) return true;
 
+  // TODO: Might only check the timestamp in this function
   if (isBeforeToday(time)) return true;
   if (isToday(time)) {
     const currDate = new Date();

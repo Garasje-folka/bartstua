@@ -1,11 +1,14 @@
+const headerHeight = "80px";
+
 export const themeConfig = {
   colorPalette: {
     primary: {
-      default: "#296B79",
-      light: "#CFE3EA",
+      default: "#783940",
+      light: "#f7e9e9",
     },
     secondary: {
-      default: "#ED5F50",
+      default: "#EA953D",
+      light: "#EECD98",
     },
     contrasted: {
       default: "#505050",
@@ -15,13 +18,18 @@ export const themeConfig = {
       default: "#ffffff",
       dark: "#f9f9f9",
     },
+    disabled: {
+      default: "#e6e6e6",
+    },
   },
   radius: {
     ROUND: "10px",
+    VERY_ROUND: "100px",
     SLIGHTLY_ROUND: "5px",
   },
   alignment: {
     margin: {
+      SMALL: "5px",
       REGULAR: "15px", // DEPRECATED, use spacing instead
       LARGE: "30px", // DEPRECATED, use spacing instead
       EXTRA_LARGE: "60px", // DEPRECATED, use spacing instead
@@ -41,6 +49,8 @@ export const themeConfig = {
   page: {
     width: "1200px",
     minHeight: "0px",
+    headerHeight,
+    contentHeight: `calc(100vh - ${headerHeight})`,
   },
   shadow: {
     REGULAR: "0px 4px 22px rgba(0, 0, 0, 0.25)",
@@ -59,13 +69,16 @@ export const themeConfig = {
       BOLD: "600",
     },
     color: {
+      COLORED: "#ad1111",
       PRIMARY: "#111111",
       PRIMARY_LIGHT: "#a0a0a0",
       INVERTED: "white",
+      DISABLED: "#939090",
     },
     size: {
       CARD_HEADER: "1.8rem",
       CARD_HIGHLIGHTED: "1.2rem",
+      GENERIC_SMALL: "0.7rem",
     },
     lineHeight: {
       REGULAR: "1rem",

@@ -1,13 +1,13 @@
 import { sendMail } from "./sendMail";
 import {
-  BookingReservationData,
+  FullSaunaReservationData,
   DropInReservationData,
 } from "utils/dist/bookingManagement/types";
 import { dateHourToISO } from "utils/dist/dates/helpers";
 
 const sendBookingConfirmation = async (
   email: string,
-  bookings: BookingReservationData[],
+  bookings: FullSaunaReservationData[],
   dropIns: DropInReservationData[]
 ): Promise<void> => {
   let bookingMessage: string = "";

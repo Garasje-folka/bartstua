@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
 import { Calendar } from "../../components/calendar/calendar";
-import { backgroundTypes, useBackground } from "../../hooks/useBackground";
 import {
   CalendarCard,
-  Card,
-  CardColors,
-  CardSizes,
   CenterContentProvider,
   ContentContainer,
 } from "./booking.styled";
+import { CardColors, CardSizes, Card } from "../../components/card";
 import { SaunaChooser } from "./saunaChooser";
 import { EventsChooser } from "./eventsChooser";
 import { createDateDayFromDate } from "utils/dist/dates/helpers";
 import {
-  BookingReservationRequest,
+  FullSaunaReservationRequest,
   DropInEvent,
   DropInReservationRequest,
   EventLocation,
@@ -25,19 +22,15 @@ import { addBookingReservations } from "../../services/bookingManagement/addBook
 import { BottomBar } from "./bottomBar";
 import { useHistory } from "react-router-dom";
 import { CHECKOUT } from "../../router/routeConstants";
+import { addFullSaunaReservations } from "../../services/bookingManagement/addFullSaunaReservations";
 
 const Booking = () => {
   const [date, setDate] = useState<Date>(new Date());
   const [spaces, setSpaces] = useState<number>(1);
   const [wholeSauna, setWholeSauna] = useState<boolean>(false);
   const [selectedEvents, setSelectedEvents] = useState<DropInEvent[]>([]);
-  const { switchBackground } = useBackground();
 
   const history = useHistory();
-
-  useEffect(() => {
-    switchBackground(backgroundTypes.BOOKING_WALLPAPER);
-  }, [switchBackground]);
 
   useEffect(() => {
     setSelectedEvents([]);
@@ -49,12 +42,12 @@ const Booking = () => {
         const reservationRequest = {
           time: e.time,
           location: EventLocation.loation1,
-        } as BookingReservationRequest;
+        } as FullSaunaReservationRequest;
 
         return reservationRequest;
       });
       try {
-        await addBookingReservations(requests);
+        await addFullSaunaReservations(requests);
       } catch (error) {
         console.log(error);
       }
@@ -98,9 +91,10 @@ const Booking = () => {
             spaces={spaces}
             selectedEvents={selectedEvents}
             setSelectedEvents={setSelectedEvents}
+            isBookingFullSauna={wholeSauna}
           />
         </Card>
-        <Card size={CardSizes.EXTRA_SMALL}>
+        <Card size={CardSizes.SMALL}>
           <BookingTypeChooser
             setSpaces={setSpaces}
             spaces={spaces}

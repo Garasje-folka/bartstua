@@ -1,18 +1,50 @@
-import { Theme } from "../../app.theme";
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
-  height: 100%;
-  display: flex;
+export const Content = styled.div`
+  /* Positioning properties */
+  width: 100%;
+  flex-grow: 1;
+
+  /* Grid properties */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: ${({ theme }) => theme.alignment.margin.LARGE};
-  padding: ${({ theme }: { theme: Theme }) => theme.alignment.padding.REGULAR};
-  flex-wrap: wrap;
+  align-content: start;
+  justify-content: center;
 `;
 
-export const Content = styled.div`
-  color: ${({ theme }: { theme: Theme }) => theme.text.color.INVERTED};
+export const DescriptionWrapper = styled.div`
+  display: flex;
+  gap: 30px;
+`;
+
+const Circle = styled.div`
+  --radius: 15px;
+  height: var(--radius);
+  width: var(--radius);
+  border-radius: 100%;
+`;
+
+export const SelectedCircle = styled(Circle)`
+  background: ${({ theme }) => theme.colorPalette.secondary.default};
+`;
+export const DeselectedCircle = styled(Circle)`
+  background: ${({ theme }) => theme.colorPalette.primary.default};
+`;
+
+export const Description = styled.div`
+  display: flex;
+  gap: 7px;
+  align-items: center;
+`;
+
+export const DescriptionText = styled.div`
+  font-weight: ${({ theme }) => theme.text.weight.THIN};
+`;
+
+export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
+  gap: 40px;
+  align-items: center;
 `;
