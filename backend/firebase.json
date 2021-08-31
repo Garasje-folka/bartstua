@@ -26,8 +26,5 @@
       "npm --prefix \"$RESOURCE_DIR\" run build"
     ],
     "source": "functions"
-  },
-  "storage": {
-    "rules": "storage/storage.rules"
   }
 }

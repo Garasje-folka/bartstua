@@ -90,9 +90,6 @@ const initializeEvents = async (saunaIds: string[]) => {
 };
 
 const initializeSaunas = async () => {
-  const publicFiles = await admin.storage().bucket("public").makePublic();
-  const imageUrl = publicFiles[0][0].publicUrl;
-
   const saunaData = {
     name: "Bunker'n",
     description:
@@ -102,11 +99,12 @@ const initializeSaunas = async () => {
     capacity: 8,
     dropInPrice: 199,
     wholeSaunaPrice: 899,
-    imageUrl: imageUrl,
+    imageUrl:
+      "https://firebasestorage.googleapis.com/v0/b/bartstua.appspot.com/o/public%2FBunkerSauna.jpg?alt=media",
   };
 
   const docRef = admin.firestore().collection("saunas").doc();
-  docRef.create(saunaData);
+  await docRef.create(saunaData);
   return [docRef.id];
 };
 
