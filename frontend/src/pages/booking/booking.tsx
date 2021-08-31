@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Calendar } from "../../components/calendar/calendar";
+import { Summary } from "../../components/summary/Summary.styled";
 import {
   CalendarCard,
   CenterContentProvider,
@@ -93,6 +94,7 @@ const Booking = () => {
             wholeSauna={wholeSauna}
           />
         </Card>
+        <Summary size={CardSizes.SMALL}></Summary>
 
         <Button onClick={addToCart} disabled={selectedEvents.length === 0}>
           Legg til i handlekurv
