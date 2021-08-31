@@ -23,6 +23,8 @@ import { addDropInReservations } from "../../services/bookingManagement";
 import { BookingTypeChooser } from "./bookingTypeChooser";
 import { addBookingReservations } from "../../services/bookingManagement/addBookingReservations";
 import { BottomBar } from "./bottomBar";
+import { useHistory } from "react-router-dom";
+import { CHECKOUT } from "../../router/routeConstants";
 
 const Booking = () => {
   const [date, setDate] = useState<Date>(new Date());
@@ -30,6 +32,8 @@ const Booking = () => {
   const [wholeSauna, setWholeSauna] = useState<boolean>(false);
   const [selectedEvents, setSelectedEvents] = useState<DropInEvent[]>([]);
   const { switchBackground } = useBackground();
+
+  const history = useHistory();
 
   useEffect(() => {
     switchBackground(backgroundTypes.BOOKING_WALLPAPER);
@@ -49,7 +53,6 @@ const Booking = () => {
 
         return reservationRequest;
       });
-
       try {
         await addBookingReservations(requests);
       } catch (error) {
@@ -74,6 +77,10 @@ const Booking = () => {
     }
 
     setSelectedEvents([]);
+  };
+
+  const bookNow = async () => {
+    history.push(CHECKOUT);
   };
 
   return (
@@ -104,6 +111,7 @@ const Booking = () => {
 
         <BottomBar
           onClickAddToCart={addToCart}
+          onClickBookNow={bookNow}
           selectedEvents={selectedEvents}
         ></BottomBar>
       </ContentContainer>

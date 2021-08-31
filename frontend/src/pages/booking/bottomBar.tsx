@@ -2,9 +2,11 @@ import { FunctionComponent } from "react";
 import { Button } from "react-bootstrap";
 import { DropInEvent } from "utils/dist/bookingManagement/types";
 
+import { useHistory } from "react-router-dom";
+
 type Props = {
   onClickAddToCart: () => void;
-  onClickBookNow?: () => void;
+  onClickBookNow: () => void;
   selectedEvents: DropInEvent[];
 };
 
@@ -13,6 +15,8 @@ const BottomBar: FunctionComponent<Props> = ({
   onClickBookNow,
   selectedEvents,
 }) => {
+  const history = useHistory();
+
   return (
     <div style={{ minWidth: "100%", backgroundColor: "white" }}>
       <Button onClick={onClickAddToCart} disabled={selectedEvents.length === 0}>
