@@ -1,6 +1,5 @@
 import { DateTime, dateTimeSchema } from "../../dates/types";
 import * as yup from "yup";
-import { MAX_DROP_IN_SPACES } from "../constants";
 
 export enum BookingType {
   fullSauna = "full-sauna",
@@ -8,20 +7,36 @@ export enum BookingType {
 }
 
 export const fullSaunaReservationRequestSchema = yup.object({
-  time: dateTimeSchema.required(),
   saunaId: yup.string().required(),
+  reservations: yup
+    .array()
+    .of(
+      yup.object({
+        time: dateTimeSchema.required(),
+      })
+    )
+    .required(),
 });
 
 export type FullSaunaReservationRequest = {
-  time: DateTime;
   saunaId: string;
+  reservations: {
+    time: DateTime;
+  }[];
 };
 
-export const dropInReservationDataSchema =
+export const dropInReservationRequestSchema =
   fullSaunaReservationRequestSchema.shape({
-    spaces: yup.number().min(1).max(MAX_DROP_IN_SPACES).required(),
+    reservations: yup
+      .array()
+      .of(yup.object({ spaces: yup.number().min(1).required() }))
+      .required(),
   });
 
-export type DropInReservationRequest = FullSaunaReservationRequest & {
-  spaces: number;
+export type DropInReservationRequest = {
+  saunaId: string;
+  reservations: {
+    time: DateTime;
+    spaces: number;
+  }[];
 };

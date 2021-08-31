@@ -1,17 +1,22 @@
 import * as admin from "firebase-admin";
 import { PubSub } from "@google-cloud/pubsub";
 import { RESERVATION_CLEARING_INTERVAL } from "./bookingManagement/constants";
-
-import { addToDateDay, createDateDayFromDate } from "utils/dist/dates/helpers";
 import {
-  BOOKING_ENDING_TIME,
-  BOOKING_STARTING_TIME,
-} from "utils/dist/bookingManagement/constants";
-import { BookingType } from "utils/dist/bookingManagement/types";
+  addToDateDay,
+  createDateDayFromDate,
+  createDateFromDateDay,
+} from "utils/dist/dates/helpers";
+import {
+  BookingType,
+  DropInEvent,
+  FullSaunaEvent,
+  SaunaData,
+} from "utils/dist/bookingManagement/types";
 import {
   getEventCollectionName,
   getEventId,
 } from "utils/dist/bookingManagement/helpers";
+import { Doc } from "utils/dist/types";
 
 admin.initializeApp();
 
@@ -19,69 +24,113 @@ admin.initializeApp();
 // TODO: Hardcoding sauna schedule for know,
 //       should rather be fetched from the
 //       sauna docs
-const initializeEvents = async (saunaIds: string[]) => {
+const initializeEvents = async (
+  saunaDocs: Doc<SaunaData>[],
+  numberOfDays: number
+) => {
   const batchSize = 500;
   const startDate = createDateDayFromDate(new Date());
   let batch = admin.firestore().batch();
   let writes = 0;
 
-  for (const saunaId of saunaIds) {
-    for (let i = 0; i <= 60; i++) {
-      const d = addToDateDay(startDate, i);
+  for (const saunaDoc of saunaDocs) {
+    const dropInSchedule = saunaDoc.data.dropInSchedule;
+    const wholeSaunaSchedule = saunaDoc.data.wholeSaunaSchedule;
+
+    for (let i = 0; i < numberOfDays; i++) {
+      const dateDay = addToDateDay(startDate, i);
+      const weekDay = createDateFromDateDay(dateDay).getDay();
 
       // Drop-In events
-      for (let h = BOOKING_STARTING_TIME; h < BOOKING_ENDING_TIME; h++) {
-        const time = {
-          ...d,
-          hour: h,
-          minute: 0,
-        };
-        const docId = getEventId(time);
-        const ref = admin
-          .firestore()
-          .collection("saunas")
-          .doc(saunaId)
-          .collection(getEventCollectionName(BookingType.dropIn))
-          .doc(docId);
+      if (
+        !dropInSchedule.weekdays ||
+        dropInSchedule.weekdays.includes(weekDay)
+      ) {
+        let minuteSum = dropInSchedule.startMinute;
 
-        batch.create(ref, {
-          spacesTaken: 0,
-          time: time,
-        });
+        while (
+          minuteSum + dropInSchedule.frequency <=
+          dropInSchedule.endMinute
+        ) {
+          const hour = Math.floor(minuteSum / 60);
+          const minute = minuteSum % 60;
 
-        writes++;
-        if (writes === batchSize) {
-          await batch.commit();
-          batch = admin.firestore().batch();
-          writes = 0;
+          const time = {
+            ...dateDay,
+            hour: hour,
+            minute: minute,
+          };
+
+          const docId = getEventId(time);
+          const ref = admin
+            .firestore()
+            .collection("saunas")
+            .doc(saunaDoc.id)
+            .collection(getEventCollectionName(BookingType.dropIn))
+            .doc(docId);
+
+          const dropInEvent = {
+            spacesTaken: 0,
+            time: time,
+            duration: saunaDoc.data.dropInSchedule.duration,
+          } as DropInEvent;
+
+          batch.create(ref, dropInEvent);
+
+          writes++;
+          if (writes === batchSize) {
+            await batch.commit();
+            batch = admin.firestore().batch();
+            writes = 0;
+          }
+
+          minuteSum += dropInSchedule.frequency;
         }
       }
 
-      // Booking events
-      for (let h = BOOKING_STARTING_TIME; h < BOOKING_ENDING_TIME; h += 2) {
-        const time = {
-          ...d,
-          hour: h,
-          minute: 0,
-        };
-        const docId = getEventId(time);
-        const ref = admin
-          .firestore()
-          .collection("saunas")
-          .doc(saunaId)
-          .collection(getEventCollectionName(BookingType.fullSauna))
-          .doc(docId);
+      if (
+        !wholeSaunaSchedule.weekdays ||
+        wholeSaunaSchedule.weekdays.includes(weekDay)
+      ) {
+        // Whole sauna events
+        let minuteSum = wholeSaunaSchedule.startMinute;
 
-        batch.create(ref, {
-          taken: false,
-          time: time,
-        });
+        while (
+          minuteSum + wholeSaunaSchedule.frequency <=
+          dropInSchedule.endMinute
+        ) {
+          const hour = Math.floor(minuteSum / 60);
+          const minute = minuteSum % 60;
 
-        writes++;
-        if (writes === batchSize) {
-          await batch.commit();
-          batch = admin.firestore().batch();
-          writes = 0;
+          const time = {
+            ...dateDay,
+            hour: hour,
+            minute: minute,
+          };
+          const docId = getEventId(time);
+          const ref = admin
+            .firestore()
+            .collection("saunas")
+            .doc(saunaDoc.id)
+            .collection(getEventCollectionName(BookingType.fullSauna))
+            .doc(docId);
+
+          const fullSaunaEvent = {
+            taken: false,
+            time: time,
+            duration: saunaDoc.data.wholeSaunaSchedule.duration,
+          } as FullSaunaEvent;
+
+          batch.create(ref, fullSaunaEvent);
+
+          writes++;
+          if (writes === batchSize) {
+            await batch.commit();
+            batch = admin.firestore().batch();
+            writes = 0;
+          }
+
+          minuteSum += wholeSaunaSchedule.frequency;
         }
       }
     }
@@ -101,11 +150,31 @@ const initializeSaunas = async () => {
     wholeSaunaPrice: 899,
     imageUrl:
       "https://firebasestorage.googleapis.com/v0/b/bartstua.appspot.com/o/public%2FBunkerSauna.jpg?alt=media",
-  };
+    dropInSchedule: {
+      weekdays: [6],
+      startMinute: 8 * 60,
+      endMinute: 20 * 60,
+      duration: 60,
+      frequency: 60,
+    },
+    wholeSaunaSchedule: {
+      weekdays: [0, 1, 2, 3, 4, 5],
+      startMinute: 7 * 60,
+      endMinute: 21 * 60,
+      duration: 180,
+      frequency: 180,
+    },
+  } as SaunaData;
 
   const docRef = admin.firestore().collection("saunas").doc();
   await docRef.create(saunaData);
-  return [docRef.id];
+
+  const saunaDoc = {
+    id: docRef.id,
+    data: saunaData,
+  } as Doc<SaunaData>;
+
+  return [saunaDoc];
 };
 
 if (process.env.FUNCTIONS_EMULATOR) {
@@ -117,7 +186,7 @@ if (process.env.FUNCTIONS_EMULATOR) {
       // First time running cloud functions
 
       initializeSaunas()
-        .then((saunaIds) => initializeEvents(saunaIds))
+        .then((saunaIds) => initializeEvents(saunaIds, 60))
         .catch((error) => {
           console.log(error);
         });

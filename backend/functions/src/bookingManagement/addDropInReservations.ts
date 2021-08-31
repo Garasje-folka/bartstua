@@ -3,7 +3,7 @@ import * as admin from "firebase-admin";
 import * as yup from "yup";
 import {
   BookingType,
-  dropInReservationDataSchema,
+  dropInReservationRequestSchema,
   DropInReservationRequest,
   ReservationStatus,
 } from "utils/dist/bookingManagement/types";
@@ -17,7 +17,7 @@ import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
 import { isEqualTimes } from "utils/dist/dates/helpers";
 
 const dataSchema = yup.object({
-  requests: yup.array().of(dropInReservationDataSchema).required(),
+  request: dropInReservationRequestSchema.required(),
 });
 
 export const addDropInReservations = functions.https.onCall(
@@ -37,12 +37,15 @@ export const addDropInReservations = functions.https.onCall(
       );
     }
 
-    const requests = data.requests as DropInReservationRequest[];
+    const request = data.request as DropInReservationRequest;
+    const requestReservations = request.reservations;
 
     // Check for multiple requests for the same event
-    for (let i = 0; i < requests.length - 1; i++) {
-      for (let j = i + 1; j < requests.length; j++) {
-        if (isEqualTimes(requests[i].time, requests[j].time)) {
+    for (let i = 0; i < requestReservations.length - 1; i++) {
+      for (let j = i + 1; j < requestReservations.length; j++) {
+        if (
+          isEqualTimes(requestReservations[i].time, requestReservations[j].time)
+        ) {
           throw new functions.https.HttpsError(
             "invalid-argument",
             "duplicate-requests"
@@ -52,8 +55,8 @@ export const addDropInReservations = functions.https.onCall(
     }
 
     await admin.firestore().runTransaction(async (transaction) => {
-      for (const request of requests) {
-        if (!isValidEventTime(request.time)) {
+      for (const requestReservation of requestReservations) {
+        if (!isValidEventTime(requestReservation.time)) {
           throw new functions.https.HttpsError(
             "invalid-argument",
             "invalid-time"
@@ -63,7 +66,7 @@ export const addDropInReservations = functions.https.onCall(
         const eventRef = getEventRef(
           request.saunaId,
           BookingType.dropIn,
-          request.time
+          requestReservation.time
         );
         const eventSnapshot = await transaction.get(eventRef);
 
@@ -77,7 +80,7 @@ export const addDropInReservations = functions.https.onCall(
           );
         }
 
-        if (spacesTaken + request.spaces > MAX_DROP_IN_SPACES) {
+        if (spacesTaken + requestReservation.spaces > MAX_DROP_IN_SPACES) {
           throw new functions.https.HttpsError(
             "failed-precondition",
             "not-enough-space"
@@ -85,25 +88,30 @@ export const addDropInReservations = functions.https.onCall(
         }
       }
 
-      for (const request of requests) {
+      for (const requestReservation of requestReservations) {
         const eventRef = getEventRef(
           request.saunaId,
           BookingType.dropIn,
-          request.time
+          requestReservation.time
         );
 
         const timestamp = createTimestamp(0);
         const reservationRef = getReservationsRef(BookingType.dropIn).doc();
 
-        transaction.set(reservationRef, {
-          ...request,
+        const reservation = {
+          ...requestReservation,
+          saunaId: request.saunaId,
           uid: auth.uid,
           timestamp: timestamp,
           status: ReservationStatus.active,
-        });
+        };
+
+        transaction.set(reservationRef, reservation);
 
         transaction.update(eventRef, {
-          spacesTaken: admin.firestore.FieldValue.increment(request.spaces),
+          spacesTaken: admin.firestore.FieldValue.increment(
+            requestReservation.spaces
+          ),
         });
       }
     });

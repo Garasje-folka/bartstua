@@ -1,7 +1,4 @@
-import {
-  FullSaunaReservationRequest,
-  DropInReservationRequest,
-} from "./reservationRequest";
+import { DateTime } from "../../dates/types";
 
 export enum ReservationStatus {
   active = "active",
@@ -9,10 +6,15 @@ export enum ReservationStatus {
   payed = "payed",
 }
 
-export type FullSaunaReservationData = FullSaunaReservationRequest & {
+export type FullSaunaReservationData = {
+  time: DateTime;
   timestamp: number;
+  saunaId: string;
+  duration: number;
+  status: ReservationStatus;
+  uid: string;
 };
 
-export type DropInReservationData = DropInReservationRequest & {
-  timestamp: number;
+export type DropInReservationData = FullSaunaReservationData & {
+  spaces: number;
 };

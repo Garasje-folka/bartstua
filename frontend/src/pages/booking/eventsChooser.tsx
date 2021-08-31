@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
 import { DropInEvent } from "utils/dist/bookingManagement/types";
-import { isEqualTimes } from "utils/dist/dates/helpers";
+import { isEqualTimes, isToday } from "utils/dist/dates/helpers";
 import { DateDay } from "utils/dist/dates/types";
 import { subscribeDropInEvents } from "../../services/bookingManagement";
-import { getEventStartingHour } from "../../services/bookingManagement/helpers";
 import { subscribeFullSaunaEvents } from "../../services/bookingManagement/subscribeFullSaunaEvents";
 import { EventButton } from "./eventButton";
 import {
@@ -71,12 +70,13 @@ const EventsChooser = (props: Props) => {
     return false;
   };
 
+  // Assumes that the selected day is not in the past
   const mapEvents = () => {
-    const startingHour = getEventStartingHour(dateDay);
-    if (!startingHour) return [];
-
+    const date = new Date();
+    const currentMinuteSum = date.getMinutes() + date.getHours() * 60;
     return events.map((e) => {
-      if (e.time.hour >= startingHour) {
+      const eventMinuteSum = e.time.minute + e.time.hour * 60;
+      if (!isToday(dateDay) || eventMinuteSum >= currentMinuteSum) {
         const disabled = MAX_DROP_IN_SPACES - e.spacesTaken < spaces;
         const selected = selectedEventsContains(e);
 

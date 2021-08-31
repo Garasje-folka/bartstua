@@ -33,9 +33,8 @@ const SaunaChooser: React.FC<SaunaChooserProps> = (
   useEffect(() => {
     if (saunas.length > 0) {
       setSaunaId(saunas[saunaIndex].id);
-      console.log(saunas[saunaIndex].data.imageUrl);
     }
-  }, [saunas, saunaIndex]);
+  }, [saunas, setSaunaId, saunaIndex, setSaunaIndex]);
 
   const updateSaunaIndex = (change: number) => {
     setSaunaIndex((prevSaunaIndex) => prevSaunaIndex + change);

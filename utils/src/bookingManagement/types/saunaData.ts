@@ -1,3 +1,11 @@
+export type SaunaSchedule = {
+  weekdays: number[] | null;
+  startMinute: number;
+  endMinute: number;
+  duration: number;
+  frequency: number;
+};
+
 export type SaunaData = {
   name: string;
   capacity: number;
@@ -5,4 +13,6 @@ export type SaunaData = {
   imageUrl: string;
   dropInPrice: number;
   wholeSaunaPrice: number;
+  dropInSchedule: SaunaSchedule;
+  wholeSaunaSchedule: SaunaSchedule;
 };
