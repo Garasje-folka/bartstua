@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Button } from "../../components/button";
 import { InputField } from "../../components/form";
 import { Paragraph } from "../../components/text";
-import background from "./media/sauna.jpg";
 
 export const Background = styled.div`
   width: 100%;
@@ -53,9 +52,6 @@ export const RightContainer = styled.div`
   box-shadow: ${({ theme }) => theme.shadow.REGULAR};
   display: flex;
   flex-grow: 1;
-  background-image: url(${background});
-  background-repeat: no-repeat;
-  background-position: 0vmax;
 `;
 
 export const SignInContainer = styled.div`

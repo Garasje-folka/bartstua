@@ -27,6 +27,8 @@ import { Heading, Paragraph } from "../../components/text";
 import { ParagraphText } from "./signIn.styled";
 import { IconType } from "../../icons";
 import { REGISTER } from "../../router/routeConstants";
+import { backgroundTypes, useBackground } from "../../hooks/useBackground";
+import { useEffect } from "react";
 
 const SignIn = () => {
   const [email, setEmail] = useState<string>("");
@@ -38,6 +40,11 @@ const SignIn = () => {
 
   const history = useHistory();
   const { t } = useTranslation();
+  const { switchBackground } = useBackground();
+
+  useEffect(() => {
+    switchBackground(backgroundTypes.NATURE1);
+  }, [switchBackground]);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
