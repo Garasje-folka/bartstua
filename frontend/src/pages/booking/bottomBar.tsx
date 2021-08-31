@@ -3,6 +3,12 @@ import { Button } from "react-bootstrap";
 import { DropInEvent } from "utils/dist/bookingManagement/types";
 
 import { useHistory } from "react-router-dom";
+import {
+  ButtonAddToCart,
+  ButtonBookNow,
+  ButtonHolder,
+} from "./bottomBar.styled";
+import { ButtonStyle } from "../../components/button";
 
 type Props = {
   onClickAddToCart: () => void;
@@ -18,15 +24,23 @@ const BottomBar: FunctionComponent<Props> = ({
   const history = useHistory();
 
   return (
-    <div style={{ minWidth: "100%", backgroundColor: "white" }}>
-      <Button onClick={onClickAddToCart} disabled={selectedEvents.length === 0}>
+    <ButtonHolder>
+      <ButtonAddToCart
+        onClick={onClickAddToCart}
+        disabled={selectedEvents.length === 0}
+        buttonStyle={ButtonStyle.REGULAR}
+      >
         Legg til i handlekurv
-      </Button>
+      </ButtonAddToCart>
       &nbsp;
-      <Button onClick={onClickBookNow} disabled={selectedEvents.length === 0}>
+      <ButtonBookNow
+        onClick={onClickBookNow}
+        disabled={selectedEvents.length === 0}
+        buttonStyle={ButtonStyle.REGULAR}
+      >
         Bestill nå
-      </Button>
-    </div>
+      </ButtonBookNow>
+    </ButtonHolder>
   );
 };
 

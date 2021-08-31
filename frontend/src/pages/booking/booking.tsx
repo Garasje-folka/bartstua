@@ -18,7 +18,6 @@ import {
 import { Button } from "../../components/button";
 import { addDropInReservations } from "../../services/bookingManagement";
 import { BookingTypeChooser } from "./bookingTypeChooser";
-import { addBookingReservations } from "../../services/bookingManagement/addBookingReservations";
 import { BottomBar } from "./bottomBar";
 import { useHistory } from "react-router-dom";
 import { CHECKOUT } from "../../router/routeConstants";
