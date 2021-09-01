@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { SaunaData } from "utils/dist/bookingManagement/types";
-import { Doc } from "utils/dist/types";
 import { IconType } from "../../icons";
 import {
   BookingTypeChooserWrapper,

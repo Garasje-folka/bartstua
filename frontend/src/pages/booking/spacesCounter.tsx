@@ -1,6 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { SaunaData } from "utils/dist/bookingManagement/types";
-import { Doc } from "utils/dist/types";
 import { Icon, IconType } from "../../icons";
 import {
   ActionArea,
