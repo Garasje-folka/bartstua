@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { SaunaData } from "utils/dist/bookingManagement/types";
+import { Doc } from "utils/dist/types";
 import { IconType } from "../../icons";
 import {
   BookingTypeChooserWrapper,
@@ -22,6 +24,7 @@ export type BookingTypeChooserProps = {
   setSpaces: React.Dispatch<React.SetStateAction<number>>;
   wholeSauna: boolean;
   setWholeSauna: React.Dispatch<React.SetStateAction<boolean>>;
+  saunaCapacity: number;
 };
 
 const BookingTypes = {
@@ -34,7 +37,7 @@ type BookingType = typeof BookingTypes[keyof typeof BookingTypes];
 export const BookingTypeChooser: React.FC<BookingTypeChooserProps> = (
   props: BookingTypeChooserProps
 ) => {
-  const { className, setSpaces, spaces, setWholeSauna } = props;
+  const { className, setSpaces, spaces, setWholeSauna, saunaCapacity } = props;
   const { t } = useTranslation();
 
   const [selectedBookingType, setSelectedBookingType] =
@@ -115,7 +118,11 @@ export const BookingTypeChooser: React.FC<BookingTypeChooserProps> = (
       </BookingTypeChooserWrapper>
       {showingDropInStage && (
         <CounterWrapper>
-          <SpacesCounter setSpaces={setSpaces} spaces={spaces} />
+          <SpacesCounter
+            setSpaces={setSpaces}
+            spaces={spaces}
+            saunaCapacity={saunaCapacity}
+          />
         </CounterWrapper>
       )}
     </>

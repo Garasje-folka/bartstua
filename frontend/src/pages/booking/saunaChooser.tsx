@@ -18,13 +18,13 @@ import {
 } from "./saunaChooser.styled";
 
 export type SaunaChooserProps = {
-  setSaunaId: React.Dispatch<React.SetStateAction<string>>;
+  setSauna: React.Dispatch<React.SetStateAction<Doc<SaunaData> | undefined>>;
 };
 
 const SaunaChooser: React.FC<SaunaChooserProps> = (
   props: SaunaChooserProps
 ) => {
-  const { setSaunaId } = props;
+  const { setSauna } = props;
   const [saunas, setSaunas] = useState<Doc<SaunaData>[]>([]);
   const [saunaIndex, setSaunaIndex] = useState<number>(0);
 
@@ -32,9 +32,9 @@ const SaunaChooser: React.FC<SaunaChooserProps> = (
 
   useEffect(() => {
     if (saunas.length > 0) {
-      setSaunaId(saunas[saunaIndex].id);
+      setSauna(saunas[saunaIndex]);
     }
-  }, [saunas, setSaunaId, saunaIndex, setSaunaIndex]);
+  }, [saunas, setSauna, saunaIndex, setSaunaIndex]);
 
   const updateSaunaIndex = (change: number) => {
     setSaunaIndex((prevSaunaIndex) => prevSaunaIndex + change);

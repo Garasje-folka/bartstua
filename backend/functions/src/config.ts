@@ -17,6 +17,7 @@ import {
   getEventId,
 } from "utils/dist/bookingManagement/helpers";
 import { Doc } from "utils/dist/types";
+import { SAUNAS } from "utils/dist/bookingManagement/constants";
 
 admin.initializeApp();
 
@@ -64,7 +65,7 @@ const initializeEvents = async (
           const docId = getEventId(time);
           const ref = admin
             .firestore()
-            .collection("saunas")
+            .collection(SAUNAS)
             .doc(saunaDoc.id)
             .collection(getEventCollectionName(BookingType.dropIn))
             .doc(docId);
@@ -110,7 +111,7 @@ const initializeEvents = async (
           const docId = getEventId(time);
           const ref = admin
             .firestore()
-            .collection("saunas")
+            .collection(SAUNAS)
             .doc(saunaDoc.id)
             .collection(getEventCollectionName(BookingType.fullSauna))
             .doc(docId);
@@ -166,7 +167,7 @@ const initializeSaunas = async () => {
     },
   } as SaunaData;
 
-  const docRef = admin.firestore().collection("saunas").doc();
+  const docRef = admin.firestore().collection(SAUNAS).doc();
   await docRef.create(saunaData);
 
   const saunaDoc = {

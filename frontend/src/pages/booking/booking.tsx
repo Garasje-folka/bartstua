@@ -13,14 +13,16 @@ import {
   FullSaunaReservationRequest,
   DropInEvent,
   DropInReservationRequest,
+  SaunaData,
 } from "utils/dist/bookingManagement/types";
 import { Button } from "../../components/button";
 import { addDropInReservations } from "../../services/bookingManagement";
 import { BookingTypeChooser } from "./bookingTypeChooser";
 import { addFullSaunaReservations } from "../../services/bookingManagement/addFullSaunaReservations";
+import { Doc } from "utils/dist/types";
 
 const Booking = () => {
-  const [saunaId, setSaunaId] = useState<string>(""); // TODO: Maybe initalize as undefined?
+  const [sauna, setSauna] = useState<Doc<SaunaData> | undefined>(undefined); // TODO: Maybe initalize as undefined?
   const [date, setDate] = useState<Date>(new Date());
   const [spaces, setSpaces] = useState<number>(1);
   const [wholeSauna, setWholeSauna] = useState<boolean>(false);
@@ -37,7 +39,7 @@ const Booking = () => {
       }));
 
       const request = {
-        saunaId: saunaId,
+        saunaId: sauna?.id,
         reservations: reservations,
       } as FullSaunaReservationRequest;
 
@@ -53,7 +55,7 @@ const Booking = () => {
       }));
 
       const request = {
-        saunaId: saunaId,
+        saunaId: sauna?.id,
         reservations: reservations,
       } as DropInReservationRequest;
 
@@ -71,14 +73,14 @@ const Booking = () => {
     <CenterContentProvider>
       <ContentContainer>
         <Card size={CardSizes.BIG} color={CardColors.PRIMARY}>
-          <SaunaChooser setSaunaId={setSaunaId} />
+          <SaunaChooser setSauna={setSauna} />
         </Card>
         <CalendarCard size={CardSizes.SMALL}>
           <Calendar date={date} setDate={setDate} minDate={new Date()} />
         </CalendarCard>
         <Card size={CardSizes.SMALL}>
           <EventsChooser
-            saunaId={saunaId}
+            sauna={sauna}
             dateDay={createDateDayFromDate(date)}
             spaces={spaces}
             selectedEvents={selectedEvents}
@@ -92,6 +94,7 @@ const Booking = () => {
             spaces={spaces}
             setWholeSauna={setWholeSauna}
             wholeSauna={wholeSauna}
+            saunaCapacity={sauna ? sauna.data.capacity : 0}
           />
         </Card>
 

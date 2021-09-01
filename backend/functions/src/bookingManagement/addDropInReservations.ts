@@ -13,8 +13,8 @@ import {
   isValidEventTime,
 } from "utils/dist/bookingManagement/helpers";
 import { getEventRef, getReservationsRef } from "./helpers";
-import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
 import { isEqualTimes } from "utils/dist/dates/helpers";
+import { SAUNAS } from "utils/dist/bookingManagement/constants";
 
 const dataSchema = yup.object({
   request: dropInReservationRequestSchema.required(),
@@ -55,7 +55,18 @@ export const addDropInReservations = functions.https.onCall(
     }
 
     await admin.firestore().runTransaction(async (transaction) => {
+      const saunaRef = admin
+        .firestore()
+        .collection(SAUNAS)
+        .doc(request.saunaId);
+      const sauna = await transaction.get(saunaRef);
+      const duration = sauna.get("dropInSchedule.duration") as number;
+      const capacity = sauna.get("capacity") as number;
+
       for (const requestReservation of requestReservations) {
+        // TODO: Could simplify time validation to just check if the time
+        //       is expired because we also check if corresponding event
+        //       document exists
         if (!isValidEventTime(requestReservation.time)) {
           throw new functions.https.HttpsError(
             "invalid-argument",
@@ -80,7 +91,7 @@ export const addDropInReservations = functions.https.onCall(
           );
         }
 
-        if (spacesTaken + requestReservation.spaces > MAX_DROP_IN_SPACES) {
+        if (spacesTaken + requestReservation.spaces > capacity) {
           throw new functions.https.HttpsError(
             "failed-precondition",
             "not-enough-space"
@@ -104,6 +115,7 @@ export const addDropInReservations = functions.https.onCall(
           uid: auth.uid,
           timestamp: timestamp,
           status: ReservationStatus.active,
+          duration: duration,
         };
 
         transaction.set(reservationRef, reservation);

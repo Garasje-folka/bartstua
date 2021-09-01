@@ -15,6 +15,7 @@ import {
 } from "utils/dist/bookingManagement/helpers";
 import { getEventRef, getReservationsRef } from "./helpers";
 import { isEqualTimes } from "utils/dist/dates/helpers";
+import { SAUNAS } from "utils/dist/bookingManagement/constants";
 
 const dataSchema = yup.object({
   request: fullSaunaReservationRequestSchema.required(),
@@ -55,6 +56,13 @@ export const addFullSaunaReservations = functions.https.onCall(
     }
 
     await admin.firestore().runTransaction(async (transaction) => {
+      const saunaRef = admin
+        .firestore()
+        .collection(SAUNAS)
+        .doc(request.saunaId);
+      const sauna = await transaction.get(saunaRef);
+      const duration = sauna.get("wholeSaunaSchedule.duration") as number;
+
       for (const requestReservation of requestReservations) {
         // TODO: Could simplify time validation to just check if the time
         //       is expired because we also check if corresponding event
@@ -108,6 +116,7 @@ export const addFullSaunaReservations = functions.https.onCall(
           uid: auth.uid,
           timestamp: timestamp,
           status: ReservationStatus.active,
+          duration: duration,
         } as FullSaunaReservationData;
 
         transaction.set(reservationRef, reservation);

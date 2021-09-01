@@ -6,6 +6,8 @@ export enum ReservationStatus {
   payed = "payed",
 }
 
+// TODO: Might not need duration field, but it will probably make
+//       frontend code simpler and reduce firestore queries
 export type FullSaunaReservationData = {
   time: DateTime;
   timestamp: number;

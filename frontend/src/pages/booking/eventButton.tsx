@@ -1,5 +1,6 @@
 import { DropInEvent } from "utils/dist/bookingManagement/types";
 import { StyledButton, TimeContainer } from "./eventButton.styled";
+import { getTimeRangeString } from "utils/dist/bookingManagement/helpers";
 
 type Props = {
   event: DropInEvent;
@@ -17,9 +18,9 @@ const EventButton: React.FC<Props> = (props: Props) => {
 
   return (
     <StyledButton selected={!!selected} onClick={onClick} disabled={disabled}>
-      <TimeContainer>{`${event.time.hour}:00 - ${
-        event.time.hour + 1
-      }:00`}</TimeContainer>
+      <TimeContainer>
+        {getTimeRangeString(event.time, event.duration)}
+      </TimeContainer>
     </StyledButton>
   );
 };

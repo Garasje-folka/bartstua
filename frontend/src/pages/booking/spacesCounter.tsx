@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
-import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
+import { SaunaData } from "utils/dist/bookingManagement/types";
+import { Doc } from "utils/dist/types";
 import { Icon, IconType } from "../../icons";
 import {
   ActionArea,
@@ -12,10 +13,11 @@ import {
 type Props = {
   spaces: number;
   setSpaces: React.Dispatch<React.SetStateAction<number>>;
+  saunaCapacity: number;
 };
 
 const SpacesCounter: React.FC<Props> = (props: Props) => {
-  const { spaces, setSpaces } = props;
+  const { spaces, setSpaces, saunaCapacity } = props;
   const { t } = useTranslation();
 
   const updateSpaces = (change: number) => {
@@ -51,7 +53,7 @@ const SpacesCounter: React.FC<Props> = (props: Props) => {
 
         <CounterNumber>{spaces}</CounterNumber>
         <Button
-          disabled={spaces === MAX_DROP_IN_SPACES}
+          disabled={spaces === saunaCapacity}
           icon={IconType.PlusSign}
           onClick={() => updateSpaces(1)}
         />

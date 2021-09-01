@@ -2,6 +2,7 @@ import { DateDay } from "utils/dist/dates/types";
 import { BookingType, DropInEvent } from "utils/dist/bookingManagement/types";
 import { firestore } from "../fireConfig";
 import { getEventCollectionName } from "utils/dist/bookingManagement/helpers";
+import { SAUNAS } from "utils/dist/bookingManagement/constants";
 
 export const subscribeDropInEvents = (
   date: DateDay,
@@ -11,7 +12,7 @@ export const subscribeDropInEvents = (
   const eventCollectionName = getEventCollectionName(BookingType.dropIn);
 
   const eventsQueryRef = firestore
-    .collection("saunas")
+    .collection(SAUNAS)
     .doc(saunaId)
     .collection(eventCollectionName)
     .where("time.year", "==", date.year)
