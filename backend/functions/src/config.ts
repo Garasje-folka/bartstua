@@ -1,87 +1,111 @@
 import * as admin from "firebase-admin";
 import { PubSub } from "@google-cloud/pubsub";
 import { RESERVATION_CLEARING_INTERVAL } from "./bookingManagement/constants";
+
 import { addToDateDay, createDateDayFromDate } from "utils/dist/dates/helpers";
 import {
   BOOKING_ENDING_TIME,
   BOOKING_STARTING_TIME,
 } from "utils/dist/bookingManagement/constants";
-import { BookingType, EventLocation } from "utils/dist/bookingManagement/types";
+import { BookingType } from "utils/dist/bookingManagement/types";
 import {
   getEventCollectionName,
   getEventId,
 } from "utils/dist/bookingManagement/helpers";
+
 admin.initializeApp();
 
 // Fill next two months with events
-// TODO: Fix 'Exception occurred in retry method that was not classified as transient' error
-// TODO: Hardcoding location and event duration for know,
-//       fix later
-const initializeEvents = async () => {
+// TODO: Hardcoding sauna schedule for know,
+//       should rather be fetched from the
+//       sauna docs
+const initializeEvents = async (saunaIds: string[]) => {
   const batchSize = 500;
   const startDate = createDateDayFromDate(new Date());
   let batch = admin.firestore().batch();
   let writes = 0;
-  for (let i = 0; i <= 60; i++) {
-    const d = addToDateDay(startDate, i);
 
-    // Drop-In events
-    for (let h = BOOKING_STARTING_TIME; h < BOOKING_ENDING_TIME; h++) {
-      const time = {
-        ...d,
-        hour: h,
-        minute: 0,
-      };
-      const docId = getEventId(time);
-      const ref = admin
-        .firestore()
-        .collection("locations")
-        .doc(EventLocation.loation1)
-        .collection(getEventCollectionName(BookingType.dropIn))
-        .doc(docId);
+  for (const saunaId of saunaIds) {
+    for (let i = 0; i <= 60; i++) {
+      const d = addToDateDay(startDate, i);
 
-      batch.create(ref, {
-        spacesTaken: 0,
-        time: time,
-      });
+      // Drop-In events
+      for (let h = BOOKING_STARTING_TIME; h < BOOKING_ENDING_TIME; h++) {
+        const time = {
+          ...d,
+          hour: h,
+          minute: 0,
+        };
+        const docId = getEventId(time);
+        const ref = admin
+          .firestore()
+          .collection("saunas")
+          .doc(saunaId)
+          .collection(getEventCollectionName(BookingType.dropIn))
+          .doc(docId);
 
-      writes++;
-      if (writes === batchSize) {
-        await batch.commit();
-        batch = admin.firestore().batch();
-        writes = 0;
+        batch.create(ref, {
+          spacesTaken: 0,
+          time: time,
+        });
+
+        writes++;
+        if (writes === batchSize) {
+          await batch.commit();
+          batch = admin.firestore().batch();
+          writes = 0;
+        }
       }
-    }
 
-    // Booking events
-    for (let h = BOOKING_STARTING_TIME; h < BOOKING_ENDING_TIME; h += 2) {
-      const time = {
-        ...d,
-        hour: h,
-        minute: 0,
-      };
-      const docId = getEventId(time);
-      const ref = admin
-        .firestore()
-        .collection("locations")
-        .doc(EventLocation.loation1)
-        .collection(getEventCollectionName(BookingType.fullSauna))
-        .doc(docId);
+      // Booking events
+      for (let h = BOOKING_STARTING_TIME; h < BOOKING_ENDING_TIME; h += 2) {
+        const time = {
+          ...d,
+          hour: h,
+          minute: 0,
+        };
+        const docId = getEventId(time);
+        const ref = admin
+          .firestore()
+          .collection("saunas")
+          .doc(saunaId)
+          .collection(getEventCollectionName(BookingType.fullSauna))
+          .doc(docId);
 
-      batch.create(ref, {
-        taken: false,
-        time: time,
-      });
+        batch.create(ref, {
+          taken: false,
+          time: time,
+        });
 
-      writes++;
-      if (writes === batchSize) {
-        await batch.commit();
-        batch = admin.firestore().batch();
-        writes = 0;
+        writes++;
+        if (writes === batchSize) {
+          await batch.commit();
+          batch = admin.firestore().batch();
+          writes = 0;
+        }
       }
     }
   }
   if (writes > 0) await batch.commit();
+};
+
+const initializeSaunas = async () => {
+  const saunaData = {
+    name: "Bunker'n",
+    description:
+      "Etter å ha jobbet en hel sommer har vi fått restaurert en" +
+      "badstu som har ligget ubrukt i Trondheim i all for lang tid." +
+      "Bunker´n er vårt nyeste prosjekt og noe vi er stolte av å ha fått til.",
+    capacity: 8,
+    dropInPrice: 199,
+    wholeSaunaPrice: 899,
+    imageUrl:
+      "https://firebasestorage.googleapis.com/v0/b/bartstua.appspot.com/o/public%2FBunkerSauna.jpg?alt=media",
+  };
+
+  const docRef = admin.firestore().collection("saunas").doc();
+  await docRef.create(saunaData);
+  return [docRef.id];
 };
 
 if (process.env.FUNCTIONS_EMULATOR) {
@@ -92,9 +116,12 @@ if (process.env.FUNCTIONS_EMULATOR) {
     if (!exists) {
       // First time running cloud functions
 
-      initializeEvents().catch((error) => {
-        console.log(error);
-      });
+      initializeSaunas()
+        .then((saunaIds) => initializeEvents(saunaIds))
+        .catch((error) => {
+          console.log(error);
+        });
+
       const pubsub = new PubSub({
         apiEndpoint: "localhost:8085",
       });

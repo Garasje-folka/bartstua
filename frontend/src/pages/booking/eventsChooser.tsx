@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MAX_DROP_IN_SPACES } from "utils/dist/bookingManagement/constants";
-import { DropInEvent, EventLocation } from "utils/dist/bookingManagement/types";
+import { DropInEvent } from "utils/dist/bookingManagement/types";
 import { isEqualTimes } from "utils/dist/dates/helpers";
 import { DateDay } from "utils/dist/dates/types";
 import { subscribeDropInEvents } from "../../services/bookingManagement";
@@ -19,6 +19,7 @@ import {
 } from "./eventsChooser.styled";
 
 type Props = {
+  saunaId: string;
   dateDay: DateDay;
   spaces: number;
   selectedEvents: DropInEvent[];
@@ -28,6 +29,7 @@ type Props = {
 
 const EventsChooser = (props: Props) => {
   const {
+    saunaId,
     dateDay,
     spaces,
     selectedEvents,
@@ -38,20 +40,20 @@ const EventsChooser = (props: Props) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    const subscribeEvents = isBookingFullSauna
-      ? subscribeFullSaunaEvents
-      : subscribeDropInEvents;
+    if (saunaId) {
+      const subscribeEvents = isBookingFullSauna
+        ? subscribeFullSaunaEvents
+        : subscribeDropInEvents;
 
-    const unsubscribe = subscribeEvents(
-      dateDay,
-      EventLocation.loation1,
-      (newEvents) => setEvents(newEvents)
-    );
+      const unsubscribe = subscribeEvents(dateDay, saunaId, (newEvents) =>
+        setEvents(newEvents)
+      );
 
-    return () => {
-      unsubscribe();
-    };
-  }, [dateDay, isBookingFullSauna]);
+      return () => {
+        unsubscribe();
+      };
+    }
+  }, [saunaId, dateDay, isBookingFullSauna]);
 
   const onClickCallback = (event: DropInEvent, selected: boolean) => {
     setSelectedEvents((prevVal) => {

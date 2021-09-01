@@ -14,7 +14,7 @@ export const deleteDropInReservation = (
   const reservationRef = getReservationsRef(BookingType.dropIn).doc(docid);
   transaction.delete(reservationRef);
 
-  const eventRef = getEventRef(data.location, BookingType.dropIn, data.time);
+  const eventRef = getEventRef(data.saunaId, BookingType.dropIn, data.time);
   transaction.update(eventRef, {
     spacesTaken: admin.firestore.FieldValue.increment(-data.spaces),
   });

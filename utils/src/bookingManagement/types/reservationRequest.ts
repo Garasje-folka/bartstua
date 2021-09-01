@@ -7,21 +7,14 @@ export enum BookingType {
   dropIn = "drop-in",
 }
 
-export enum EventLocation {
-  loation1 = "location1",
-}
-
 export const fullSaunaReservationRequestSchema = yup.object({
   time: dateTimeSchema.required(),
-  location: yup
-    .mixed<EventLocation>()
-    .oneOf(Object.values(EventLocation))
-    .required(),
+  saunaId: yup.string().required(),
 });
 
 export type FullSaunaReservationRequest = {
   time: DateTime;
-  location: EventLocation;
+  saunaId: string;
 };
 
 export const dropInReservationDataSchema =
