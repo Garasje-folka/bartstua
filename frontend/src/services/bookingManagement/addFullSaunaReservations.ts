@@ -4,11 +4,11 @@ import { ADD_RESERVATIONS_ERRORS } from "utils/dist/bookingManagement/errors";
 import { createError } from "utils/dist/helpers";
 
 const addFullSaunaReservations = async (
-  requests: FullSaunaReservationRequest[]
+  request: FullSaunaReservationRequest
 ) => {
   const call = firebase.functions().httpsCallable("addFullSaunaReservations");
   const data = {
-    requests,
+    request,
   };
 
   try {

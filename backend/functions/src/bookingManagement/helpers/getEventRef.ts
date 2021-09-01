@@ -5,6 +5,7 @@ import {
   getEventCollectionName,
 } from "utils/dist/bookingManagement/helpers";
 import { BookingType } from "utils/dist/bookingManagement/types";
+import { SAUNAS } from "utils/dist/bookingManagement/constants";
 
 export const getEventRef = (
   saunaId: string,
@@ -13,7 +14,7 @@ export const getEventRef = (
 ) => {
   return admin
     .firestore()
-    .collection("saunas")
+    .collection(SAUNAS)
     .doc(saunaId)
     .collection(getEventCollectionName(type))
     .doc(getEventId(time));

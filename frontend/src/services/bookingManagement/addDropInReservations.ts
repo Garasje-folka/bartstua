@@ -3,10 +3,10 @@ import { DropInReservationRequest } from "utils/dist/bookingManagement/types";
 import { ADD_RESERVATIONS_ERRORS } from "utils/dist/bookingManagement/errors";
 import { createError } from "utils/dist/helpers";
 
-const addDropInReservations = async (requests: DropInReservationRequest[]) => {
+const addDropInReservations = async (request: DropInReservationRequest) => {
   const call = firebase.functions().httpsCallable("addDropInReservations");
   const data = {
-    requests: requests,
+    request: request,
   };
 
   try {

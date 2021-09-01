@@ -7,7 +7,6 @@ import {
 import { cancelReservation } from "../../services/bookingManagement";
 import { createDateFromDateDay } from "utils/dist/dates/helpers";
 import { getDayName } from "utils/dist/dates/helpers";
-import { getHourRange } from "utils/dist/dates/helpers";
 import { dateDayToISO } from "utils/dist/dates/helpers";
 import {
   BackgroundReservation,
@@ -17,6 +16,7 @@ import {
   ButtonContainer,
   DeleteButton,
 } from "./dropInCartItem.styled";
+import { getTimeRangeString } from "utils/dist/bookingManagement/helpers";
 
 export type CartItemProps = {
   reservationDoc: Doc<DropInReservationData> | Doc<FullSaunaReservationData>;
@@ -60,7 +60,7 @@ const DropInCartItem = (props: CartItemProps) => {
           </p>
           <p>
             <strong>{`Tidspunkt: `}</strong>
-            {`${getHourRange(doc.data.time.hour)}`}
+            {`${getTimeRangeString(doc.data.time, doc.data.duration)}`}
           </p>
           {isDropInChecker(doc, isBookingFullSauna) ? (
             <p>

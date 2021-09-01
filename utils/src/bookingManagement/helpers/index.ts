@@ -4,3 +4,4 @@ export * from "./createTimestamp";
 export * from "./isExpiredReservation";
 export * from "./getEventCollectionName";
 export * from "./getReservationCollectionName";
+export * from "./getTimeRangeString";

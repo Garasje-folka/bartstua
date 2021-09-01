@@ -6,6 +6,7 @@ import {
   fullSaunaReservationRequestSchema,
   BookingType,
   ReservationStatus,
+  FullSaunaReservationRequest,
 } from "utils/dist/bookingManagement/types";
 import { checkData } from "../helpers";
 import {
@@ -14,9 +15,10 @@ import {
 } from "utils/dist/bookingManagement/helpers";
 import { getEventRef, getReservationsRef } from "./helpers";
 import { isEqualTimes } from "utils/dist/dates/helpers";
+import { SAUNAS } from "utils/dist/bookingManagement/constants";
 
 const dataSchema = yup.object({
-  requests: yup.array().of(fullSaunaReservationRequestSchema).required(),
+  request: fullSaunaReservationRequestSchema.required(),
 });
 
 export const addFullSaunaReservations = functions.https.onCall(
@@ -36,12 +38,15 @@ export const addFullSaunaReservations = functions.https.onCall(
       );
     }
 
-    const requests = data.requests as FullSaunaReservationData[];
+    const request = data.request as FullSaunaReservationRequest;
+    const requestReservations = request.reservations;
 
     // Check for multiple requests for the same event
-    for (let i = 0; i < requests.length - 1; i++) {
-      for (let j = i + 1; j < requests.length; j++) {
-        if (isEqualTimes(requests[i].time, requests[j].time)) {
+    for (let i = 0; i < requestReservations.length - 1; i++) {
+      for (let j = i + 1; j < requestReservations.length; j++) {
+        if (
+          isEqualTimes(requestReservations[i].time, requestReservations[j].time)
+        ) {
           throw new functions.https.HttpsError(
             "invalid-argument",
             "duplicate-requests"
@@ -51,11 +56,18 @@ export const addFullSaunaReservations = functions.https.onCall(
     }
 
     await admin.firestore().runTransaction(async (transaction) => {
-      for (const request of requests) {
+      const saunaRef = admin
+        .firestore()
+        .collection(SAUNAS)
+        .doc(request.saunaId);
+      const sauna = await transaction.get(saunaRef);
+      const duration = sauna.get("wholeSaunaSchedule.duration") as number;
+
+      for (const requestReservation of requestReservations) {
         // TODO: Could simplify time validation to just check if the time
         //       is expired because we also check if corresponding event
         //       document exists
-        if (!isValidEventTime(request.time)) {
+        if (!isValidEventTime(requestReservation.time)) {
           throw new functions.https.HttpsError(
             "invalid-argument",
             "invalid-time"
@@ -65,7 +77,7 @@ export const addFullSaunaReservations = functions.https.onCall(
         const eventRef = getEventRef(
           request.saunaId,
           BookingType.fullSauna,
-          request.time
+          requestReservation.time
         );
         const eventSnapshot = await transaction.get(eventRef);
 
@@ -88,22 +100,26 @@ export const addFullSaunaReservations = functions.https.onCall(
         }
       }
 
-      for (const request of requests) {
+      for (const requestReservation of requestReservations) {
         const eventRef = getEventRef(
           request.saunaId,
           BookingType.fullSauna,
-          request.time
+          requestReservation.time
         );
 
         const timestamp = createTimestamp(0);
         const reservationRef = getReservationsRef(BookingType.fullSauna).doc();
 
-        transaction.set(reservationRef, {
-          ...request,
+        const reservation = {
+          ...requestReservation,
+          saunaId: request.saunaId,
           uid: auth.uid,
           timestamp: timestamp,
           status: ReservationStatus.active,
-        });
+          duration: duration,
+        } as FullSaunaReservationData;
+
+        transaction.set(reservationRef, reservation);
 
         transaction.update(eventRef, {
           taken: true,

@@ -3,7 +3,6 @@ export * from "./createDateDay";
 export * from "./createDateFromDateDay";
 export * from "./createDateHour";
 export * from "./getDayName";
-export * from "./getHourRange";
 export * from "./isAfterToday";
 export * from "./isBeforeToday";
 export * from "./isEqualTimes";
