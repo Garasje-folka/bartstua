@@ -2,18 +2,15 @@ import styled from "styled-components";
 import { Button } from "../../components/button";
 import { InputField } from "../../components/form";
 import { Paragraph } from "../../components/text";
-import background from "./media/sauna.jpg";
 
 export const Background = styled.div`
   width: 100%;
-  height: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: row;
 `;
 
 export const LeftContainer = styled.div`
-  display: block;
   background-color: white;
   width: 670px;
   box-shadow: ${({ theme }) => theme.shadow.REGULAR};
@@ -40,7 +37,7 @@ export const ParagraphText = styled(Paragraph)`
 `;
 
 export const SignInButton = styled(Button)`
-  background-color: #296b79;
+  background-color: ${({ theme }) => theme.colorPalette.primary.default};
   height: 35px;
   border-radius: 10px;
   color: white;
@@ -55,9 +52,6 @@ export const RightContainer = styled.div`
   box-shadow: ${({ theme }) => theme.shadow.REGULAR};
   display: flex;
   flex-grow: 1;
-  background-image: url(${background});
-  background-repeat: no-repeat;
-  background-position: 0vmax;
 `;
 
 export const SignInContainer = styled.div`
@@ -109,7 +103,7 @@ export const StyledFormContainer = styled.div`
 `;
 
 export const SignUpButton = styled(Button)`
-  background-color: #296b79;
+  background-color: ${({ theme }) => theme.colorPalette.primary.default};
   height: 35px;
   border-radius: 10px;
   color: white;

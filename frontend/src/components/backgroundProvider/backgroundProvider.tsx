@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ContentWrapper, StyleContainer } from "./backgroundProvider.styled";
 import { StyledWave } from "./backgroundProvider.styled";
+import background from "./assets/sauna.jpg";
 
 type Props = {
   dummyProp?: string; // TODO: Remove dummyProp
@@ -16,9 +17,13 @@ export type Background = {
   gradient?: boolean;
 };
 
-const TYPES = {
+const TYPES: { [key: string]: Background } = {
   DEFAULT: {
-    color: "#fff",
+    color: "#ffffff",
+  },
+  NATURE1: {
+    url: background,
+    color: "#ffffff",
   },
   WAVE: {
     color: "#EECD98",
